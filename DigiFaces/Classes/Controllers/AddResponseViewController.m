@@ -206,12 +206,13 @@
     
     manager.requestSerializer = requestSerializer;
     
+    NSLog(@"POSTing to %@\nParams: %@", url, params);
     
     [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"Response : %@", responseObject);
         [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.mediaUploadManager uploadMediaFiles];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

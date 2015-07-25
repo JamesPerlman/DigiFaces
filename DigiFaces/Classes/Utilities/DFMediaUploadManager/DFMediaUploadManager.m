@@ -70,7 +70,7 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     UIImagePickerControllerSourceType type;
-    if (buttonIndex == 0) {
+    if (buttonIndex == 0 && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // Camera
         type = UIImagePickerControllerSourceTypeCamera;
     }

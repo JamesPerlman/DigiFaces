@@ -49,12 +49,17 @@
     if (!markup) {
         [self addEditButton];
     }
+    [self loadData];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+}
+
+- (void)loadData {
     [_cellsArray removeAllObjects];
     [_heightArray removeAllObjects];
     
@@ -87,7 +92,6 @@
     }
     [self.tableView reloadData];
 }
-
 -(void)addEditButton
 {
     btnEdit = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 100, 50, 50)];

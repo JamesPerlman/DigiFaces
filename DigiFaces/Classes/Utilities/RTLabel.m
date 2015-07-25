@@ -772,11 +772,21 @@
 
 - (void)setText:(NSString *)text
 {
-	_text = [text stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
-	RTLabelExtractedComponent *component = [RTLabel extractTextStyleFromText:_text paragraphReplacement:self.paragraphReplacement];
-    [self setTextComponents:component.textComponents];
-    [self setPlainText:component.plainText];
-    [self setNeedsDisplay];
+    @try {
+        _text = [text stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
+        
+        RTLabelExtractedComponent *component = [RTLabel extractTextStyleFromText:_text paragraphReplacement:self.paragraphReplacement];
+        [self setTextComponents:component.textComponents];
+        [self setPlainText:component.plainText];
+        [self setNeedsDisplay];
+    }
+    @catch (NSException *e) {
+        NSLog(@"%@", e);
+        _text = @"Some error was found.";
+    }
+    @finally {
+        // nada
+    }
 }
 
 - (void)setText:(NSString *)text extractedTextComponent:(RTLabelExtractedComponent*)extractedComponent
