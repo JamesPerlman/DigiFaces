@@ -39,6 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+    self.tableView.layoutMargins = UIEdgeInsetsZero;
+    
     [self addEditButton];
 }
 
@@ -148,7 +151,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell;
+    UITableViewCell *cell = nil;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             if (_dailyDiary.file && [_dailyDiary.file.fileType isEqualToString:@"Image"]) {
@@ -188,6 +191,9 @@
         [cell.detailTextLabel setText:[NSString stringWithFormat:@"By %@",[diary userInfo].appUserName]];
     }
     
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
     return cell;
 }
 

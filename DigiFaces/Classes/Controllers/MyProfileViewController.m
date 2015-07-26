@@ -172,7 +172,7 @@
     
     manager.requestSerializer = requestSerializer;
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateAvagar];
+    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateAvatar];
     
     [manager POST:url parameters:profilePicture success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
@@ -180,7 +180,7 @@
         [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self setProfilePicuture:[[UserManagerShared sharedManager] avatarFile].filePath];
+            [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath];
         });
         
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
@@ -196,7 +196,7 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
--(void)setProfilePicuture:(NSString*)imageUrl
+-(void)setProfilePicture:(NSString*)imageUrl
 {
     __weak typeof(self)weakSelf = self;
     
@@ -226,7 +226,7 @@
 }
 
 #pragma mark - ProfilePictureDelegate
--(void)profilePicutreDidSelect:(NSDictionary *)selectedProfile
+-(void)profilePictureDidSelect:(NSDictionary *)selectedProfile
 {
     selectedProfile = selectedProfile;
     [self updateProfilePicture:selectedProfile];

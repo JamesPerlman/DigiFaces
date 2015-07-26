@@ -66,7 +66,7 @@
     }
     else if ([segue.identifier isEqualToString:@"gallerySegue"]){
         ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        profileController.type = ProfilePicutreTypeGallery;
+        profileController.type = ProfilePictureTypeGallery;
         profileController.delegate = self;
         Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
         
@@ -444,7 +444,7 @@
 }
 
 #pragma mark - ProfilePictureDelegate
--(void)profilePicutreDidSelect:(File *)selectedProfile
+-(void)profilePictureDidSelect:(File *)selectedProfile
 {
     [self setImageURL:[selectedProfile filePath]];
 }

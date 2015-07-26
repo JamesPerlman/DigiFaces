@@ -52,6 +52,8 @@
         AppDelegate * app = [UIApplication sharedApplication].delegate;
         [app showNetworkError];
     }
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -164,7 +166,7 @@
 
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
         
-        [self setProfilePicuture:[[UserManagerShared sharedManager] avatarFile].filePath];
+        [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath];
         
         [[UserManagerShared sharedManager] setFirstName:[responseObject objectForKey:@"FirstName"]];
         [[UserManagerShared sharedManager] setLastName:[responseObject objectForKey:@"LastName"]];
@@ -180,7 +182,7 @@
 }
 
 
--(void)setProfilePicuture:(NSString*)imageUrl
+-(void)setProfilePicture:(NSString*)imageUrl
 {
     
     NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
@@ -205,14 +207,14 @@
     
     manager.requestSerializer = requestSerializer;
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateAvagar];
+    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateAvatar];
     
     [manager POST:url parameters:profilePicture success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
         [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
         
-        [self setProfilePicuture:[[UserManagerShared sharedManager] avatarFile].filePath];
+        [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath];
         
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -230,9 +232,9 @@
     
     picCell.delegate = self;
     picCell.lblUserName.text =  userNameSaved;
-    picCell.profileImage.contentMode = UIViewContentModeScaleToFill;
+    picCell.profileImage.contentMode = UIViewContentModeScaleAspectFill;
     picCell.profileImage.clipsToBounds = YES;
-    picCell.profileImage.layer.cornerRadius = 47.0;
+    picCell.profileImage.layer.cornerRadius = picCell.profileImage.frame.size.height/2.0f;
     
     if ([[UserManagerShared sharedManager] profilePic]) {
         [picCell.profileImage setImage:[[UserManagerShared sharedManager] profilePic]];
@@ -278,24 +280,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    UITableViewCell * cell = nil;
     if (indexPath.row == 0 || indexPath.row == 1) {
         NSDictionary * dict = [_dataArray objectAtIndex:indexPath.row];
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.textLabel.text = NSLocalizedString([dict objectForKey:@"Title"], [dict objectForKey:@"Title"]);
-        cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
-        return cell;
+        //cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
     }
     else{
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         
         DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row];
         [cell.textLabel setText:theme.activityTitle];
-        [cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
-        return cell;
+        //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
     }
-    
-    return nil;
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
+    return cell;
 }
 
 
@@ -325,7 +327,7 @@
 }
 
 #pragma mark - ProfilePictureCollectionViewControllerDelegate
--(void)profilePicutreDidSelect:(NSDictionary *)selectedProfile
+-(void)profilePictureDidSelect:(NSDictionary *)selectedProfile
 {
     [self updateProfilePicture:selectedProfile];
     

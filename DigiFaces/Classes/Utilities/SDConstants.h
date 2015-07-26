@@ -45,7 +45,7 @@ typedef enum {
 #define kAboutMeUpdate          @"api/Account/UpdateAboutMe"
 #define kSendHelpMessage        @"api/System/SendHelpMessage"
 #define kModeratorMessage       @"api/Account/SendMessageToModerator/{projectId}/{parentMessageId}"
-#define kUpdateAvagar           @"api/Account/UploadUserCustomAvatar"
+#define kUpdateAvatar           @"api/Account/UploadUserCustomAvatar"
 #define kAboutDigifaces         @"api/System/GetAbout/{languageCode}"
 #define kUploadCustomAvatar     @"api/Account/UploadUserCustomAvatar"
 #define kDailyDiaryInfo         @"api/Project/GetDailyDiary/{diaryId}"

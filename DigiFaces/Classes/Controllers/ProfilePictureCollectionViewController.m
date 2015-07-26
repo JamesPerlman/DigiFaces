@@ -17,11 +17,12 @@
 #import "Utility.h"
 #import "DFMediaUploadManager.h"
 
-@interface ProfilePictureCollectionViewController() <DFMediaUploadManagerDelegate>
+@interface ProfilePictureCollectionViewController() <DFMediaUploadManagerDelegate, UICollectionViewDelegateFlowLayout>
 {
     CustomAlertView * alertView;
     UIImagePickerController * imagePicker;
     BOOL requestFailed;
+    CGSize _collectionViewItemSize;
 }
 @property (nonatomic, retain) NSString * amazonFileURL;
 @property (nonatomic, retain) NSDictionary * selectedImage;
@@ -36,14 +37,17 @@
     [super viewDidLoad];
     _avatarsArray = [[NSMutableArray alloc] init];
     alertView = [[CustomAlertView alloc] init];
-    if (_type == ProfilePicutreTypeDefault) {
+    if (_type == ProfilePictureTypeDefault) {
         [_avatarsArray addObject:@""];
         [self fetchAvatarFiles];
     }
-    else if(_type == ProfilePicutreTypeGallery){
+    else if(_type == ProfilePictureTypeGallery){
         self.title = @"GALLERY";
         [_avatarsArray addObjectsFromArray:_files];
     }
+    CGFloat _collectionViewItemPadding = ((UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout).minimumInteritemSpacing;
+    CGFloat _collectionViewItemSideLength = (self.collectionView.frame.size.width/4.0f-_collectionViewItemPadding);
+    _collectionViewItemSize = CGSizeMake(_collectionViewItemSideLength, _collectionViewItemSideLength);
 }
 
 - (void)fetchAvatarFiles{
@@ -84,6 +88,13 @@
     
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return _collectionViewItemSize;
+    
+}
+
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -92,7 +103,7 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_type == ProfilePicutreTypeDefault && indexPath.row == 0) {
+    if (_type == ProfilePictureTypeDefault && indexPath.row == 0) {
         UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cameraCell" forIndexPath:indexPath];
         return cell;
     }
@@ -100,11 +111,11 @@
     ImageCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
     
     File * file = nil;
-    if (_type == ProfilePicutreTypeDefault) {
+    if (_type == ProfilePictureTypeDefault) {
         NSDictionary * f = [_avatarsArray objectAtIndex:indexPath.row];
         file = [[File alloc] initWithDictionary:f];
     }
-    else if(_type == ProfilePicutreTypeGallery){
+    else if(_type == ProfilePictureTypeGallery){
         file = [_avatarsArray objectAtIndex:indexPath.row];
     }
     
@@ -132,7 +143,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_type == ProfilePicutreTypeDefault && indexPath.row == 0) {
+    if (_type == ProfilePictureTypeDefault && indexPath.row == 0) {
         // Let DFMediaUploadManager deal with the Tap gesture on the DFMediaUploadView
     }
     else{
@@ -149,8 +160,8 @@
         
     }
     else{
-        if ([_delegate respondsToSelector:@selector(profilePicutreDidSelect:)]) {
-            [_delegate profilePicutreDidSelect:self.selectedImage];
+        if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:)]) {
+            [_delegate profilePictureDidSelect:self.selectedImage];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -195,8 +206,8 @@
                                       @"PublicFileUrl" : @""
                                       };
         
-        if ([_delegate respondsToSelector:@selector(profilePicutreDidSelect:)]) {
-            [_delegate profilePicutreDidSelect:parameters];
+        if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:)]) {
+            [_delegate profilePictureDidSelect:parameters];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }

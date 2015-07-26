@@ -10,13 +10,13 @@
 #import "File.h"
 
 typedef enum {
-    ProfilePicutreTypeDefault,
-    ProfilePicutreTypeGallery
-}ProfilePicutreType;
+    ProfilePictureTypeDefault,
+    ProfilePictureTypeGallery
+}ProfilePictureType;
 
 @protocol ProfilePictureViewControllerDelegate <NSObject>
 
--(void)profilePicutreDidSelect:(id)selectedProfile;
+-(void)profilePictureDidSelect:(id)selectedProfile;
 
 @end
 
@@ -25,7 +25,7 @@ typedef enum {
 @interface ProfilePictureCollectionViewController : UICollectionViewController
 
 @property (nonatomic, assign) id<ProfilePictureViewControllerDelegate> delegate;
-@property (nonatomic, assign) ProfilePicutreType type;
+@property (nonatomic, assign) ProfilePictureType type;
 @property (nonatomic, retain) NSArray * files;
 @property (nonatomic, retain) IBOutlet DFMediaUploadManager *mediaUploadManager;
 

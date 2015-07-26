@@ -117,10 +117,10 @@
 		4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD8501D1B45ABB40059A457 /* Reachability.m */; };
 		F420FB6A1B616270007092CB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F420FB691B616270007092CB /* libz.dylib */; };
 		F420FB6C1B616279007092CB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F420FB6B1B616279007092CB /* libsqlite3.dylib */; };
+		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4595A031B61861700D4BA38 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4595A021B61861700D4BA38 /* AWSCore.framework */; };
 		F4595A051B61864200D4BA38 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4595A041B61864200D4BA38 /* AWSS3.framework */; };
-		F4C3FD4B1B617616009EE6F9 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C3FD4A1B617616009EE6F9 /* ProfilePictureCollectionViewController.m */; };
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
@@ -370,12 +370,12 @@
 		4AD8501D1B45ABB40059A457 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		F420FB691B616270007092CB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F420FB6B1B616279007092CB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
+		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4595A021B61861700D4BA38 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
 		F4595A041B61864200D4BA38 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
-		F4C3FD491B617616009EE6F9 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
-		F4C3FD4A1B617616009EE6F9 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F4E670DA1B61669B00871FA9 /* DFMediaUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadManagerDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadManagerDelegate.h"; sourceTree = "<group>"; };
 		F4E670DB1B61669B00871FA9 /* DFMediaUploadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadView.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.h"; sourceTree = "<group>"; };
 		F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFMediaUploadView.m; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.m"; sourceTree = "<group>"; };
@@ -519,6 +519,8 @@
 				4ACDB9341B3E7E66009EFB91 /* HomeViewController.m */,
 				4ACDB9371B3E7E66009EFB91 /* MyProfileViewController.h */,
 				4ACDB9381B3E7E66009EFB91 /* MyProfileViewController.m */,
+				F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */,
+				F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */,
 				4ACDB9391B3E7E66009EFB91 /* PhotoGalleryViewController.h */,
 				4ACDB93A1B3E7E66009EFB91 /* PhotoGalleryViewController.m */,
 				4ACDB93D1B3E7E66009EFB91 /* ProjectIntroViewController.h */,
@@ -557,8 +559,6 @@
 				4AC8446B1B57FA3E006CDB45 /* CarouselViewController.m */,
 				4AC8446D1B57FA75006CDB45 /* ImageViewController.h */,
 				4AC8446E1B57FA75006CDB45 /* ImageViewController.m */,
-				F4C3FD491B617616009EE6F9 /* ProfilePictureCollectionViewController.h */,
-				F4C3FD4A1B617616009EE6F9 /* ProfilePictureCollectionViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -992,6 +992,7 @@
 				4ACDB9C51B3E7E66009EFB91 /* Company.m in Sources */,
 				4ABC3D351B3FEC110090A619 /* DefaultCell.m in Sources */,
 				4ACDB9B71B3E7E66009EFB91 /* SettingsViewController.m in Sources */,
+				F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */,
 				4ACDB9DD1B3E7E66009EFB91 /* NSString+XMLEntities.m in Sources */,
 				4ACDB9E51B3E7E66009EFB91 /* UIRefreshControl+AFNetworking.m in Sources */,
 				4ACDB9C21B3E7E66009EFB91 /* ProfilePicCell.m in Sources */,
@@ -1001,7 +1002,6 @@
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
 				4ACB9EDF1B58ECCF00E9F984 /* ImageGallary.m in Sources */,
-				F4C3FD4B1B617616009EE6F9 /* ProfilePictureCollectionViewController.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				4ACDB9E61B3E7E66009EFB91 /* UIWebView+AFNetworking.m in Sources */,
@@ -1176,6 +1176,7 @@
 					"$(PROJECT_DIR)/DigiFaces/Classes/Frameworks",
 				);
 				INFOPLIST_FILE = DigiFaces/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1197,6 +1198,7 @@
 					"$(PROJECT_DIR)/DigiFaces/Classes/Frameworks",
 				);
 				INFOPLIST_FILE = DigiFaces/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";

@@ -120,7 +120,7 @@
             
             //set image to each imageview
             __weak typeof(self) weakSelf =self;
-                    __weak typeof (imageView) weekImageView = imageView;
+             //       __weak typeof (imageView) weekImageView = imageView;
             NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[avatarsArray objectAtIndex:counter]]];
             [imageView.imageView setImageWithURLRequest:requestN placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                 [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
