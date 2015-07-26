@@ -1,5 +1,5 @@
 //
-//  CustomAertView.h
+//  CustomAlertView.h
 //  DigiFaces
 //
 //  Created by Apple on 16/06/2015.
@@ -18,7 +18,7 @@
 
 @end
 
-@interface CustomAertView : UIViewController{
+@interface CustomAlertView : UIViewController{
     
 }
 @property (nonatomic, assign) BOOL singleButton;

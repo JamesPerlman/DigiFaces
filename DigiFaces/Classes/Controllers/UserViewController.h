@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 
 @protocol PopUpDelegate;
 
@@ -24,6 +24,6 @@
 @property (nonatomic,strong)IBOutlet UITextField * username;
 @property (nonatomic,strong)IBOutlet UILabel * errorMessage;
 @property (nonatomic,strong) id<MessageToViewMain>delegate;
-@property(nonatomic,retain)CustomAertView * customAlert;
+@property(nonatomic,retain)CustomAlertView * customAlert;
 
 @end

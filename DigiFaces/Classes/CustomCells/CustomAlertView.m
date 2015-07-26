@@ -1,20 +1,21 @@
 //
-//  CustomAertView.m
+//  CustomAlertView.m
 //  DigiFaces
 //
 //  Created by Apple on 16/06/2015.
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
 
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 
-@interface CustomAertView ()
+@interface CustomAlertView ()
 {
     NSInteger _tag;
 }
+@property (nonatomic, weak) IBOutlet UIView *alertBackgroundView;
 @end
 
-@implementation CustomAertView
+@implementation CustomAlertView
 @synthesize textstrg = _textstrg;
 @synthesize fromW = _fromW;
 - (void)viewDidLoad {
@@ -30,6 +31,10 @@
     
     self.textLabel.text = _textstrg;
     // Do any additional setup after loading the view from its nib.
+    
+    self.alertBackgroundView.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+    self.alertBackgroundView.layer.borderWidth = 1.0f;
+    self.alertBackgroundView.layer.cornerRadius = 5.0f;
 }
 
 - (void)didReceiveMemoryWarning {

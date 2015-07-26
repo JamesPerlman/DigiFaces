@@ -56,8 +56,8 @@
 		4ACDB9B91B3E7E66009EFB91 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9461B3E7E66009EFB91 /* UserViewController.m */; };
 		4ACDB9BA1B3E7E66009EFB91 /* VersionViewContrller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9481B3E7E66009EFB91 /* VersionViewContrller.m */; };
 		4ACDB9BB1B3E7E66009EFB91 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB94A1B3E7E66009EFB91 /* WebViewController.m */; };
-		4ACDB9BC1B3E7E66009EFB91 /* CustomAertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB94D1B3E7E66009EFB91 /* CustomAertView.m */; };
-		4ACDB9BD1B3E7E66009EFB91 /* CustomAertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ACDB94E1B3E7E66009EFB91 /* CustomAertView.xib */; };
+		4ACDB9BC1B3E7E66009EFB91 /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB94D1B3E7E66009EFB91 /* CustomAlertView.m */; };
+		4ACDB9BD1B3E7E66009EFB91 /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ACDB94E1B3E7E66009EFB91 /* CustomAlertView.xib */; };
 		4ACDB9BE1B3E7E66009EFB91 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9501B3E7E66009EFB91 /* ImageCell.m */; };
 		4ACDB9BF1B3E7E66009EFB91 /* ImageCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9521B3E7E66009EFB91 /* ImageCollectionCell.m */; };
 		4ACDB9C01B3E7E66009EFB91 /* LoginSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9541B3E7E66009EFB91 /* LoginSegue.m */; };
@@ -120,7 +120,7 @@
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4595A031B61861700D4BA38 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4595A021B61861700D4BA38 /* AWSCore.framework */; };
 		F4595A051B61864200D4BA38 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4595A041B61864200D4BA38 /* AWSS3.framework */; };
-		F4C3FD4B1B617616009EE6F9 /* ProfilePicutreCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C3FD4A1B617616009EE6F9 /* ProfilePicutreCollectionViewController.m */; };
+		F4C3FD4B1B617616009EE6F9 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C3FD4A1B617616009EE6F9 /* ProfilePictureCollectionViewController.m */; };
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
@@ -247,9 +247,9 @@
 		4ACDB9481B3E7E66009EFB91 /* VersionViewContrller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionViewContrller.m; sourceTree = "<group>"; };
 		4ACDB9491B3E7E66009EFB91 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		4ACDB94A1B3E7E66009EFB91 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		4ACDB94C1B3E7E66009EFB91 /* CustomAertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAertView.h; sourceTree = "<group>"; };
-		4ACDB94D1B3E7E66009EFB91 /* CustomAertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAertView.m; sourceTree = "<group>"; };
-		4ACDB94E1B3E7E66009EFB91 /* CustomAertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomAertView.xib; sourceTree = "<group>"; };
+		4ACDB94C1B3E7E66009EFB91 /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAlertView.h; sourceTree = "<group>"; };
+		4ACDB94D1B3E7E66009EFB91 /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAlertView.m; sourceTree = "<group>"; };
+		4ACDB94E1B3E7E66009EFB91 /* CustomAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomAlertView.xib; sourceTree = "<group>"; };
 		4ACDB94F1B3E7E66009EFB91 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
 		4ACDB9501B3E7E66009EFB91 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
 		4ACDB9511B3E7E66009EFB91 /* ImageCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionCell.h; sourceTree = "<group>"; };
@@ -374,8 +374,8 @@
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4595A021B61861700D4BA38 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
 		F4595A041B61864200D4BA38 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
-		F4C3FD491B617616009EE6F9 /* ProfilePicutreCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePicutreCollectionViewController.h; sourceTree = "<group>"; };
-		F4C3FD4A1B617616009EE6F9 /* ProfilePicutreCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePicutreCollectionViewController.m; sourceTree = "<group>"; };
+		F4C3FD491B617616009EE6F9 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
+		F4C3FD4A1B617616009EE6F9 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F4E670DA1B61669B00871FA9 /* DFMediaUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadManagerDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadManagerDelegate.h"; sourceTree = "<group>"; };
 		F4E670DB1B61669B00871FA9 /* DFMediaUploadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadView.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.h"; sourceTree = "<group>"; };
 		F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFMediaUploadView.m; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.m"; sourceTree = "<group>"; };
@@ -508,6 +508,7 @@
 		4ACDB92C1B3E7E66009EFB91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F495B7BB1B646EF000F8295B /* Auth */,
 				4ACDB92D1B3E7E66009EFB91 /* AboutDigifacesController.h */,
 				4ACDB92E1B3E7E66009EFB91 /* AboutDigifacesController.m */,
 				4ACDB92F1B3E7E66009EFB91 /* EmailModeratorController.h */,
@@ -516,8 +517,6 @@
 				4ACDB9321B3E7E66009EFB91 /* ForgotPasswordViewController.m */,
 				4ACDB9331B3E7E66009EFB91 /* HomeViewController.h */,
 				4ACDB9341B3E7E66009EFB91 /* HomeViewController.m */,
-				4ACDB9351B3E7E66009EFB91 /* LoginViewController.h */,
-				4ACDB9361B3E7E66009EFB91 /* LoginViewController.m */,
 				4ACDB9371B3E7E66009EFB91 /* MyProfileViewController.h */,
 				4ACDB9381B3E7E66009EFB91 /* MyProfileViewController.m */,
 				4ACDB9391B3E7E66009EFB91 /* PhotoGalleryViewController.h */,
@@ -558,8 +557,8 @@
 				4AC8446B1B57FA3E006CDB45 /* CarouselViewController.m */,
 				4AC8446D1B57FA75006CDB45 /* ImageViewController.h */,
 				4AC8446E1B57FA75006CDB45 /* ImageViewController.m */,
-				F4C3FD491B617616009EE6F9 /* ProfilePicutreCollectionViewController.h */,
-				F4C3FD4A1B617616009EE6F9 /* ProfilePicutreCollectionViewController.m */,
+				F4C3FD491B617616009EE6F9 /* ProfilePictureCollectionViewController.h */,
+				F4C3FD4A1B617616009EE6F9 /* ProfilePictureCollectionViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -567,9 +566,9 @@
 		4ACDB94B1B3E7E66009EFB91 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
-				4ACDB94C1B3E7E66009EFB91 /* CustomAertView.h */,
-				4ACDB94D1B3E7E66009EFB91 /* CustomAertView.m */,
-				4ACDB94E1B3E7E66009EFB91 /* CustomAertView.xib */,
+				4ACDB94C1B3E7E66009EFB91 /* CustomAlertView.h */,
+				4ACDB94D1B3E7E66009EFB91 /* CustomAlertView.m */,
+				4ACDB94E1B3E7E66009EFB91 /* CustomAlertView.xib */,
 				4ACDB94F1B3E7E66009EFB91 /* ImageCell.h */,
 				4ACDB9501B3E7E66009EFB91 /* ImageCell.m */,
 				4ACDB9511B3E7E66009EFB91 /* ImageCollectionCell.h */,
@@ -797,6 +796,15 @@
 			path = DFMediaUploadManager;
 			sourceTree = "<group>";
 		};
+		F495B7BB1B646EF000F8295B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				4ACDB9351B3E7E66009EFB91 /* LoginViewController.h */,
+				4ACDB9361B3E7E66009EFB91 /* LoginViewController.m */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -886,7 +894,7 @@
 				19F0BE331B28BBE500E4B048 /* LaunchScreen.xib in Resources */,
 				19F0BD191B1DBC6400E4B048 /* Main.storyboard in Resources */,
 				19F0BD1B1B1DBC6400E4B048 /* Images.xcassets in Resources */,
-				4ACDB9BD1B3E7E66009EFB91 /* CustomAertView.xib in Resources */,
+				4ACDB9BD1B3E7E66009EFB91 /* CustomAlertView.xib in Resources */,
 				19328DD51B2FFDE5008BFAA6 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -993,11 +1001,11 @@
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
 				4ACB9EDF1B58ECCF00E9F984 /* ImageGallary.m in Sources */,
-				F4C3FD4B1B617616009EE6F9 /* ProfilePicutreCollectionViewController.m in Sources */,
+				F4C3FD4B1B617616009EE6F9 /* ProfilePictureCollectionViewController.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				4ACDB9E61B3E7E66009EFB91 /* UIWebView+AFNetworking.m in Sources */,
-				4ACDB9BC1B3E7E66009EFB91 /* CustomAertView.m in Sources */,
+				4ACDB9BC1B3E7E66009EFB91 /* CustomAlertView.m in Sources */,
 				4ACDB9CE1B3E7E66009EFB91 /* AFNetworkReachabilityManager.m in Sources */,
 				4ACDBA0E1B3ED814009EFB91 /* UserCell.m in Sources */,
 				4A00E8401B4BD07A000F6A6B /* TextViewCell.m in Sources */,

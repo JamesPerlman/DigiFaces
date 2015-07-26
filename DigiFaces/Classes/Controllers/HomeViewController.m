@@ -15,7 +15,7 @@
 #import "ProfilePicCell.h"
 #import "SDConstants.h"
 #import "Utility.h"
-#import "ProfilePicutreCollectionViewController.h"
+#import "ProfilePictureCollectionViewController.h"
 #import "Reachability.h"
 #import "AppDelegate.h"
 #import "DiaryTheme.h"
@@ -307,7 +307,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"profilePicSegue"]) {
         UINavigationController * navController = [segue destinationViewController];
-        ProfilePicutreCollectionViewController * profileController = (ProfilePicutreCollectionViewController*)[navController topViewController];
+        ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[navController topViewController];
         profileController.delegate = self;
     }
     else if ([segue.identifier isEqualToString:@"diaryTheme"]){

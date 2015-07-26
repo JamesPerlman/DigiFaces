@@ -13,14 +13,14 @@
 #import "UserManagerShared.h"
 #import "Utility.h"
 #import "SDConstants.h"
-#import "CustomAertView.h"
-#import "ProfilePicutreCollectionViewController.h"
+#import "CustomAlertView.h"
+#import "ProfilePictureCollectionViewController.h"
 
 #define kTagDiscardChanges  100
 
 @interface MyProfileViewController () <PopUpDelegate, ProfilePictureViewControllerDelegate>
 {
-    CustomAertView * alertview;
+    CustomAlertView * alertview;
     NSDictionary * selctedProfile;
     BOOL isTextChanged;
     NSDictionary * aboutMeDict;
@@ -45,7 +45,7 @@
     
 //    [self.aboutMe becomeFirstResponder];
     
-    alertview = [[CustomAertView alloc]initWithNibName:@"CustomAertView" bundle:nil];
+    alertview = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     alertview.delegate = self;
     
     // Do any additional setup after loading the view.
@@ -220,7 +220,7 @@
     if ([segue.identifier isEqualToString:@"profilePictureSegue"]) {
         UINavigationController * navController = segue.destinationViewController;
         
-        ProfilePicutreCollectionViewController * profileController = (ProfilePicutreCollectionViewController*)[navController topViewController];
+        ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[navController topViewController];
         profileController.delegate = self;
     }
 }

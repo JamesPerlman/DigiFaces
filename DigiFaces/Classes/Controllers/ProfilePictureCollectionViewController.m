@@ -1,25 +1,25 @@
 //
-//  ProfilePicutreCollectionViewController.m
+//  ProfilePictureCollectionViewController.m
 //  DigiFaces
 //
 //  Created by confiz on 22/06/2015.
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
 
-#import "ProfilePicutreCollectionViewController.h"
+#import "ProfilePictureCollectionViewController.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "MBProgressHUD.h"
 #import "File.h"
 #import "UIImageView+AFNetworking.h"
 #import "ImageCollectionCell.h"
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 #import "SDConstants.h"
 #import "Utility.h"
 #import "DFMediaUploadManager.h"
 
-@interface ProfilePicutreCollectionViewController() <DFMediaUploadManagerDelegate>
+@interface ProfilePictureCollectionViewController() <DFMediaUploadManagerDelegate>
 {
-    CustomAertView * alertView;
+    CustomAlertView * alertView;
     UIImagePickerController * imagePicker;
     BOOL requestFailed;
 }
@@ -29,13 +29,13 @@
 
 @end
 
-@implementation ProfilePicutreCollectionViewController
+@implementation ProfilePictureCollectionViewController
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     _avatarsArray = [[NSMutableArray alloc] init];
-    alertView = [[CustomAertView alloc] init];
+    alertView = [[CustomAlertView alloc] init];
     if (_type == ProfilePicutreTypeDefault) {
         [_avatarsArray addObject:@""];
         [self fetchAvatarFiles];

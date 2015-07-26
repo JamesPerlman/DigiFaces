@@ -20,7 +20,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    alertView = [[CustomAertView alloc] initWithNibName:@"CustomAertView" bundle:nil];
+    alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
     alertView.delegate = self;
     [_textview becomeFirstResponder];
 }

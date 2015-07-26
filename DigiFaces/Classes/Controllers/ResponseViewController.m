@@ -20,7 +20,7 @@
 #import "TextAreaResponse.h"
 #import "CommentCell.h"
 #import "Utility.h"
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 #import "RTCell.h"
 #import "DailyDiary.h"
 #import "CarouselViewController.h"
@@ -44,7 +44,7 @@ typedef enum {
 
 @property (nonatomic, retain) NSMutableArray * cellsArray;
 
-@property (nonatomic, retain) CustomAertView * customAlert;
+@property (nonatomic, retain) CustomAlertView * customAlert;
 @property (nonatomic, retain) NSMutableArray * arrResponses;
 @property (nonatomic, retain) NSMutableArray * heightArray;
 
@@ -57,7 +57,7 @@ typedef enum {
     
     _heightArray = [[NSMutableArray alloc] init];
     
-    self.customAlert = [[CustomAertView alloc]initWithNibName:@"CustomAertView" bundle:nil];
+    self.customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     [self.customAlert setSingleButton:YES];
     
     _arrResponses = [[NSMutableArray alloc] init];

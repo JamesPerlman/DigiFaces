@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 
 @protocol MessageToViewMain;
 @protocol PopUpDelegate;
 @interface LoginViewController : UIViewController<UITextFieldDelegate,MessageToViewMain,PopUpDelegate>
 
-@property(nonatomic,strong)CustomAertView * customAlert;
+@property(nonatomic,strong)CustomAlertView * customAlert;
 @property (nonatomic,strong)IBOutlet UITextField * email;
 @property (nonatomic,strong)IBOutlet UITextField * password;
 @property (nonatomic,strong)IBOutlet UILabel * errorMessage;

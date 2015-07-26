@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 
 @interface TechSupportController : UITableViewController<PopUpDelegate>
 {
-    CustomAertView * alertView;
+    CustomAlertView * alertView;
 }
 @property (weak, nonatomic) IBOutlet UITextField *txtSubject;
 

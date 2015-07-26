@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 
 @interface EmailModeratorController : UITableViewController<PopUpDelegate, UITextViewDelegate>
 {
-    CustomAertView * alertView;
+    CustomAlertView * alertView;
 }
 @property (weak, nonatomic) IBOutlet UITextView *textview;
 @property (weak, nonatomic) IBOutlet UITextField *txtSubject;

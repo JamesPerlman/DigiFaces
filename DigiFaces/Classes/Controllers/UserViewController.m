@@ -21,7 +21,7 @@
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     
         _errorMessage.hidden = YES;
-    self.customAlert = [[CustomAertView alloc]initWithNibName:@"CustomAertView" bundle:nil];
+    self.customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     [self.customAlert setSingleButton:YES];
     self.customAlert.delegate = self;
     

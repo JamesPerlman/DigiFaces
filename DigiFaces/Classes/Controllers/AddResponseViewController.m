@@ -18,8 +18,8 @@
 #import "SDConstants.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
-#import "CustomAertView.h"
-#import "ProfilePicutreCollectionViewController.h"
+#import "CustomAlertView.h"
+#import "ProfilePictureCollectionViewController.h"
 #import "DFMediaUploadManager.h"
 
 @interface AddResponseViewController () < CalendarViewControlerDelegate, UITextViewDelegate, ProfilePictureViewControllerDelegate, DFMediaUploadManagerDelegate>
@@ -32,7 +32,7 @@
 }
 
 @property (nonatomic, retain) NSMutableArray * dataArray;
-@property (nonatomic, retain) CustomAertView * alertView;
+@property (nonatomic, retain) CustomAlertView * alertView;
 
 @end
 
@@ -47,7 +47,7 @@
     [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
     selectedDate = [NSDate date];
     
-    _alertView = [[CustomAertView alloc] initWithNibName:@"CustomAertView" bundle:[NSBundle mainBundle]];
+    _alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
     
     if (_diaryTheme) {
         _constDateHeight.constant = 0;
@@ -65,7 +65,7 @@
         diaryInfoController.diaryTheme = self.diaryTheme;
     }
     else if ([segue.identifier isEqualToString:@"gallerySegue"]){
-        ProfilePicutreCollectionViewController * profileController = (ProfilePicutreCollectionViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
+        ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
         profileController.type = ProfilePicutreTypeGallery;
         profileController.delegate = self;
         Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];

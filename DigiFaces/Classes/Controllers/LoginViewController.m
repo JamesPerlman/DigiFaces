@@ -29,7 +29,7 @@
     [super viewDidLoad];
 
     
-    self.customAlert = [[CustomAertView alloc]initWithNibName:@"CustomAertView" bundle:nil];
+    self.customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     self.customAlert.delegate = self;
     _errorMessage.hidden = YES;
     

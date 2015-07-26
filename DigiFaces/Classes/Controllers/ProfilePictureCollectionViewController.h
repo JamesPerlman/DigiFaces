@@ -1,5 +1,5 @@
 //
-//  ProfilePicutreCollectionViewController.h
+//  ProfilePictureCollectionViewController.h
 //  DigiFaces
 //
 //  Created by confiz on 22/06/2015.
@@ -22,7 +22,7 @@ typedef enum {
 
 @class DFMediaUploadView, DFMediaUploadManager;
 
-@interface ProfilePicutreCollectionViewController : UICollectionViewController
+@interface ProfilePictureCollectionViewController : UICollectionViewController
 
 @property (nonatomic, assign) id<ProfilePictureViewControllerDelegate> delegate;
 @property (nonatomic, assign) ProfilePicutreType type;

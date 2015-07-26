@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
-#import "CustomAertView.h"
+#import "CustomAlertView.h"
 
 @protocol MessageToViewMain;
 
 
 @interface ProjectViewController : UIViewController
-@property(nonatomic,retain)CustomAertView * customAlert;
+@property(nonatomic,retain)CustomAlertView * customAlert;
 
 @end
