@@ -18,6 +18,8 @@
 #import "WebViewController.h"
 #import "VideoCell.h"
 #import "RTCell.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import "NSLayoutConstraint+ConvenienceMethods.h"
 
 @interface ProjectIntroViewController ()
 {
@@ -105,8 +107,7 @@
         NSAttributedString *attributedText =
         [[NSAttributedString alloc]
          initWithString:text
-         attributes:@
-         {
+         attributes:@{
          NSFontAttributeName: [UIFont systemFontOfSize:16.0f]
          }];
         CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width, CGFLOAT_MAX}
@@ -133,13 +134,14 @@
         if ([attachment.fileType isEqualToString:@"Image"]) {
             ImageCell * cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
             NSURL * url = [NSURL URLWithString:attachment.filePath];
-            [cell.image setImageWithURL:url];
+            [cell.image setImageWithURL:url placeholderImage:[UIImage imageNamed:@"blank"]];
             return cell;
         }
         else if([attachment.fileType isEqualToString:@"Video"]){
             VideoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-            
-            [cell.imageView setImageWithURL:[NSURL URLWithString:[attachment getVideoThumbURL]]];
+            cell.moviePlayerController.contentURL = [NSURL URLWithString:attachment.filePath];
+            cell.moviePlayerController.view.hidden = true;
+            [cell.imageView setImageWithURL:[NSURL URLWithString:[attachment getVideoThumbURL]] placeholderImage:[UIImage imageNamed:@"blank"]];
             return cell;
         }
     }
@@ -160,7 +162,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        [self performSegueWithIdentifier:@"webViewSegue" sender:self];
+        VideoCell *cell = (VideoCell*)[tableView cellForRowAtIndexPath:indexPath];
+        [cell.moviePlayerController setFullscreen:YES animated:YES];
+        cell.moviePlayerController.view.hidden = false;
+        [cell.moviePlayerController play];
     }
 }
 
@@ -215,4 +220,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)dealloc
+{
+    NSLog(@"LOL");
+}
 @end

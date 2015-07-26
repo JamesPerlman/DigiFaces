@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <MediaPlayer/MediaPlayer.h>
 @interface VideoCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
+@property (weak, nonatomic) IBOutlet UIImageView *videoIndicatorView;
+@property (nonatomic, retain) MPMoviePlayerController *moviePlayerController;
 @end

@@ -195,8 +195,13 @@
             }
             else{
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-                [vidCell.imageView setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
                 cell = vidCell;
+                if (module.displayFile.file) {
+                    [vidCell.imageView setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
+                    vidCell.videoIndicatorView.hidden = false;
+                } else {
+                    vidCell.videoIndicatorView.hidden = true;
+                }
             }
         }
         else if ([module themeType] == ThemeTypeDisplayText){
@@ -286,6 +291,7 @@
     id object = [_cellsArray objectAtIndex:indexPath.row];
     if ([object isKindOfClass:[Module class]]) {
         Module * module = (Module*)object;
+        
         if ([module themeType] == ThemeTypeDisplayImage) {
             [self performSegueWithIdentifier:@"webViewSegue" sender:self];
         }

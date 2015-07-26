@@ -2836,6 +2836,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="imageView" destination="hTn-0m-PNq" id="czV-Ff-GFf"/>
+                                    <outlet property="videoIndicatorView" destination="UoU-Q5-AQ2" id="IUY-KR-lh5"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textCell" rowHeight="44" id="HhV-Fh-XK8" customClass="RTCell">

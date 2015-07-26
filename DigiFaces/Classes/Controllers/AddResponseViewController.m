@@ -117,7 +117,7 @@ if (_diaryTheme) {
     
     NSDictionary * params = @{@"ActivityId" : @(activityId),
                               @"ThreadId" : @0,
-                              @"IsDraft" : @YES,
+                              @"IsDraft" : @NO,
                               @"IsActive" : @YES};
     
     NSLog(@"POSTing to %@ with params:\n %@", url, params);
