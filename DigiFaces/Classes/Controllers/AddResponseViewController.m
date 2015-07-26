@@ -406,10 +406,16 @@
 }
 
 
--(void)setImageURL:(NSString*)url
+-(void)setImageURL:(NSString*)url withImage:(UIImage*)image
 {
     DFMediaUploadView *view = self.mediaUploadManager.currentView;
     view.uploadType = DFMediaUploadTypeImage;
+    
+    view.publicURLString = url;
+    if (image) {
+        view.image = image;
+        return;
+    }
     NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:url
                                                            ]];
     [view.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -444,9 +450,9 @@
 }
 
 #pragma mark - ProfilePictureDelegate
--(void)profilePictureDidSelect:(File *)selectedProfile
+-(void)profilePictureDidSelect:(File *)selectedProfile withImage:(UIImage *)image
 {
-    [self setImageURL:[selectedProfile filePath]];
+    [self setImageURL:[selectedProfile filePath] withImage:image];
 }
 
 

@@ -25,8 +25,10 @@
     CGSize _collectionViewItemSize;
 }
 @property (nonatomic, retain) NSString * amazonFileURL;
-@property (nonatomic, retain) NSDictionary * selectedImage;
+@property (nonatomic, retain) NSDictionary * selectedImageDict;
+@property (nonatomic, strong) UIImage * selectedImage;
 @property (nonatomic, retain) NSMutableArray *avatarsArray;
+
 
 @end
 
@@ -138,7 +140,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedImage = nil;
+    self.selectedImageDict = nil;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -147,7 +149,9 @@
         // Let DFMediaUploadManager deal with the Tap gesture on the DFMediaUploadView
     }
     else{
-        self.selectedImage = [_avatarsArray objectAtIndex:indexPath.row];
+        self.selectedImageDict = [_avatarsArray objectAtIndex:indexPath.row];
+        ImageCollectionCell *cell = (ImageCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath];
+        self.selectedImage = cell.imgPicture.image;
     }
 }
 
@@ -155,13 +159,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)doneClicked:(id)sender {
-    if (self.selectedImage == nil) {
+    if (self.selectedImageDict == nil) {
         [alertView showAlertWithMessage:@"Please select an image to set as profile picture" inView:self.navigationController.view withTag:0];
         
     }
     else{
-        if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:)]) {
-            [_delegate profilePictureDidSelect:self.selectedImage];
+        if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:withImage:)]) {
+            [_delegate profilePictureDidSelect:self.selectedImageDict withImage:self.selectedImage];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -206,8 +210,8 @@
                                       @"PublicFileUrl" : @""
                                       };
         
-        if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:)]) {
-            [_delegate profilePictureDidSelect:parameters];
+        if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:withImage:)]) {
+            [_delegate profilePictureDidSelect:parameters withImage:mediaUploadView.image];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }

@@ -16,7 +16,7 @@ typedef enum {
 
 @protocol ProfilePictureViewControllerDelegate <NSObject>
 
--(void)profilePictureDidSelect:(id)selectedProfile;
+-(void)profilePictureDidSelect:(id)selectedProfile withImage:(UIImage*)image;
 
 @end
 

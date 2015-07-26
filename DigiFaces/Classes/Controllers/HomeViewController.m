@@ -166,7 +166,7 @@
 
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
         
-        [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath];
+        [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:nil];
         
         [[UserManagerShared sharedManager] setFirstName:[responseObject objectForKey:@"FirstName"]];
         [[UserManagerShared sharedManager] setLastName:[responseObject objectForKey:@"LastName"]];
@@ -182,9 +182,13 @@
 }
 
 
--(void)setProfilePicture:(NSString*)imageUrl
+-(void)setProfilePicture:(NSString*)imageUrl withImage:(UIImage*)image
 {
-    
+    if (image) {
+        [[UserManagerShared sharedManager] setProfilePic:image];
+        picCell.profileImage.image = image;
+        return;
+    }
     NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
     [picCell.profileImage setImageWithURLRequest:requestN placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
@@ -195,8 +199,11 @@
     }];
 }
 
--(void)updateProfilePicture:(NSDictionary*)profilePicture
+-(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
+    [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:image];
+    
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
     
@@ -214,7 +221,6 @@
         
         [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
         
-        [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath];
         
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -327,9 +333,9 @@
 }
 
 #pragma mark - ProfilePictureCollectionViewControllerDelegate
--(void)profilePictureDidSelect:(NSDictionary *)selectedProfile
+-(void)profilePictureDidSelect:(NSDictionary *)selectedProfile withImage:(UIImage *)image
 {
-    [self updateProfilePicture:selectedProfile];
+    [self updateProfilePicture:selectedProfile withImage:image];
     
 }
 

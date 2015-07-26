@@ -159,7 +159,7 @@
     return YES;
 }
 
--(void)updateProfilePicture:(NSDictionary*)profilePicture
+-(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
@@ -180,7 +180,7 @@
         [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath];
+            [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:image];
         });
         
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
@@ -196,8 +196,13 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
--(void)setProfilePicture:(NSString*)imageUrl
+-(void)setProfilePicture:(NSString*)imageUrl withImage:(UIImage*)image
 {
+    if (image) {
+        self.profilePicView.image = image;
+        return;
+    }
+    
     __weak typeof(self)weakSelf = self;
     
     NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
@@ -226,10 +231,10 @@
 }
 
 #pragma mark - ProfilePictureDelegate
--(void)profilePictureDidSelect:(NSDictionary *)selectedProfile
+-(void)profilePictureDidSelect:(NSDictionary *)selectedProfile withImage:(UIImage*)image
 {
     selectedProfile = selectedProfile;
-    [self updateProfilePicture:selectedProfile];
+    [self updateProfilePicture:selectedProfile withImage:image];
 }
 
 #pragma mark - Popup Delegate
