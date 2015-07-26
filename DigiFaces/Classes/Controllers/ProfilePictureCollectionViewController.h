@@ -29,4 +29,8 @@ typedef enum {
 @property (nonatomic, retain) NSArray * files;
 @property (nonatomic, retain) IBOutlet DFMediaUploadManager *mediaUploadManager;
 
+
+@property (nonatomic, retain) File * selectedImageFile;
+@property (nonatomic, strong) UIImage * selectedImage;
+
 @end

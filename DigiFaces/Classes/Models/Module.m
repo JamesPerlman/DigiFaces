@@ -36,7 +36,7 @@
         }
         
         if ([dict valueForKey:@"ImageGallery"] && [[dict valueForKey:@"ImageGallery"] isKindOfClass:[NSDictionary class]]) {
-            _imageGallary = [[ImageGallary alloc] initWithDictionary:[dict valueForKey:@"ImageGallery"]];
+            _imageGallery = [[imageGallery alloc] initWithDictionary:[dict valueForKey:@"ImageGallery"]];
         }
         
     }

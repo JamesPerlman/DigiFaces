@@ -11,7 +11,7 @@
 #import "DisplayFile.h"
 #import "TextArea.h"
 #import "MarkUp.h"
-#import "ImageGallary.h"
+#import "imageGallery.h"
 #import "SDConstants.h"
 
 
@@ -27,7 +27,7 @@
 @property (nonatomic, retain) DisplayFile * displayFile;
 @property (nonatomic, retain) TextArea * textArea;
 @property (nonatomic, retain) MarkUp * markUp;
-@property (nonatomic, retain) ImageGallary * imageGallary;
+@property (nonatomic, retain) imageGallery * imageGallery;
 
 -(instancetype) initWithDictionary:(NSDictionary*)dict;
 

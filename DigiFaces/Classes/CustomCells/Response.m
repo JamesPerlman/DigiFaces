@@ -23,7 +23,7 @@
         self.dateCreatedFormated = [dict valueForKey:@"DateCreatedFormatted"];
         self.hasImageGalleryResponse = [[dict valueForKey:@"HasImageGalleryResponses"] boolValue];
         self.hasTextAreaResponse = [[dict valueForKey:@"HasTextareaResponses"] boolValue];
-        self.imageGallaryResponse = [dict valueForKey:@"ImageGalleryResponse"];
+        self.imageGalleryResponse = [dict valueForKey:@"ImageGalleryResponse"];
         self.isActive = [[dict valueForKey:@"IsActive"] boolValue];
         self.isRead = [[dict valueForKey:@"IsRead"] boolValue];
         

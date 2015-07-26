@@ -27,6 +27,8 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constBottomViewHeight;
 @property (weak, nonatomic) IBOutlet UIButton *btnViewQuestion;
+@property (weak, nonatomic) IBOutlet UIView *imageContainerView;
+
 - (IBAction)exitOnEnd:(id)sender;
 - (IBAction)viewQuestion:(id)sender;
 - (IBAction)cameraSwitched:(id)sender;

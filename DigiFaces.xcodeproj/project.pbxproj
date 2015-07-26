@@ -40,7 +40,7 @@
 		4ACB9ED61B58EC2900E9F984 /* DisplayFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB9ED51B58EC2900E9F984 /* DisplayFile.m */; };
 		4ACB9ED91B58EC8900E9F984 /* TextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB9ED81B58EC8900E9F984 /* TextArea.m */; };
 		4ACB9EDC1B58ECA800E9F984 /* MarkUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB9EDB1B58ECA800E9F984 /* MarkUp.m */; };
-		4ACB9EDF1B58ECCF00E9F984 /* ImageGallary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB9EDE1B58ECCF00E9F984 /* ImageGallary.m */; };
+		4ACB9EDF1B58ECCF00E9F984 /* ImageGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB9EDE1B58ECCF00E9F984 /* ImageGallery.m */; };
 		4ACDB9AC1B3E7E66009EFB91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB92B1B3E7E66009EFB91 /* AppDelegate.m */; };
 		4ACDB9AD1B3E7E66009EFB91 /* AboutDigifacesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB92E1B3E7E66009EFB91 /* AboutDigifacesController.m */; };
 		4ACDB9AE1B3E7E66009EFB91 /* EmailModeratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9301B3E7E66009EFB91 /* EmailModeratorController.m */; };
@@ -121,6 +121,11 @@
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4595A031B61861700D4BA38 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4595A021B61861700D4BA38 /* AWSCore.framework */; };
 		F4595A051B61864200D4BA38 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4595A041B61864200D4BA38 /* AWSS3.framework */; };
+		F4DD49B81B64B42400F4016B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4DD49B61B64B42400F4016B /* Fabric.framework */; };
+		F4DD49B91B64B42400F4016B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4DD49B71B64B42400F4016B /* Crashlytics.framework */; };
+		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
+		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
+		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
@@ -215,8 +220,8 @@
 		4ACB9ED81B58EC8900E9F984 /* TextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextArea.m; sourceTree = "<group>"; };
 		4ACB9EDA1B58ECA800E9F984 /* MarkUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkUp.h; sourceTree = "<group>"; };
 		4ACB9EDB1B58ECA800E9F984 /* MarkUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkUp.m; sourceTree = "<group>"; };
-		4ACB9EDD1B58ECCF00E9F984 /* ImageGallary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGallary.h; sourceTree = "<group>"; };
-		4ACB9EDE1B58ECCF00E9F984 /* ImageGallary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageGallary.m; sourceTree = "<group>"; };
+		4ACB9EDD1B58ECCF00E9F984 /* ImageGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGallery.h; sourceTree = "<group>"; };
+		4ACB9EDE1B58ECCF00E9F984 /* ImageGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageGallery.m; sourceTree = "<group>"; };
 		4ACDB92A1B3E7E66009EFB91 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4ACDB92B1B3E7E66009EFB91 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4ACDB92D1B3E7E66009EFB91 /* AboutDigifacesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutDigifacesController.h; sourceTree = "<group>"; };
@@ -376,6 +381,13 @@
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4595A021B61861700D4BA38 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
 		F4595A041B61864200D4BA38 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
+		F4DD49B61B64B42400F4016B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		F4DD49B71B64B42400F4016B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
+		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
+		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
+		F4DD49C31B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+ConvenienceMethods.h"; sourceTree = "<group>"; };
+		F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+ConvenienceMethods.m"; sourceTree = "<group>"; };
 		F4E670DA1B61669B00871FA9 /* DFMediaUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadManagerDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadManagerDelegate.h"; sourceTree = "<group>"; };
 		F4E670DB1B61669B00871FA9 /* DFMediaUploadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadView.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.h"; sourceTree = "<group>"; };
 		F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFMediaUploadView.m; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.m"; sourceTree = "<group>"; };
@@ -396,8 +408,10 @@
 				19F0BE2D1B28519B00E4B048 /* QuartzCore.framework in Frameworks */,
 				19F0BD441B1F14DF00E4B048 /* SystemConfiguration.framework in Frameworks */,
 				F4595A031B61861700D4BA38 /* AWSCore.framework in Frameworks */,
+				F4DD49B91B64B42400F4016B /* Crashlytics.framework in Frameworks */,
 				19F0BD421B1F14D800E4B048 /* UIKit.framework in Frameworks */,
 				19F0BD401B1F14CC00E4B048 /* Security.framework in Frameworks */,
+				F4DD49B81B64B42400F4016B /* Fabric.framework in Frameworks */,
 				F4595A051B61864200D4BA38 /* AWSS3.framework in Frameworks */,
 				19F0BD3E1B1F14C700E4B048 /* MobileCoreServices.framework in Frameworks */,
 				19F0BD3C1B1F14BC00E4B048 /* CoreLocation.framework in Frameworks */,
@@ -492,6 +506,7 @@
 		4ACDB9291B3E7E66009EFB91 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F4DD49C21B65512600F4016B /* Categories */,
 				4AC844701B581F63006CDB45 /* Others */,
 				4ACDB92A1B3E7E66009EFB91 /* AppDelegate.h */,
 				4ACDB92B1B3E7E66009EFB91 /* AppDelegate.m */,
@@ -508,6 +523,7 @@
 		4ACDB92C1B3E7E66009EFB91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F4DD49BB1B6548B700F4016B /* PhotoGallerySelectionViewController */,
 				F495B7BB1B646EF000F8295B /* Auth */,
 				4ACDB92D1B3E7E66009EFB91 /* AboutDigifacesController.h */,
 				4ACDB92E1B3E7E66009EFB91 /* AboutDigifacesController.m */,
@@ -610,6 +626,8 @@
 		4ACDB9591B3E7E66009EFB91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4DD49B61B64B42400F4016B /* Fabric.framework */,
+				F4DD49B71B64B42400F4016B /* Crashlytics.framework */,
 				F4595A041B61864200D4BA38 /* AWSS3.framework */,
 				F4595A021B61861700D4BA38 /* AWSCore.framework */,
 			);
@@ -653,8 +671,8 @@
 				4ACB9ED81B58EC8900E9F984 /* TextArea.m */,
 				4ACB9EDA1B58ECA800E9F984 /* MarkUp.h */,
 				4ACB9EDB1B58ECA800E9F984 /* MarkUp.m */,
-				4ACB9EDD1B58ECCF00E9F984 /* ImageGallary.h */,
-				4ACB9EDE1B58ECCF00E9F984 /* ImageGallary.m */,
+				4ACB9EDD1B58ECCF00E9F984 /* ImageGallery.h */,
+				4ACB9EDE1B58ECCF00E9F984 /* ImageGallery.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -805,6 +823,25 @@
 			name = Auth;
 			sourceTree = "<group>";
 		};
+		F4DD49BB1B6548B700F4016B /* PhotoGallerySelectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */,
+				F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */,
+				F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */,
+			);
+			name = PhotoGallerySelectionViewController;
+			sourceTree = "<group>";
+		};
+		F4DD49C21B65512600F4016B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F4DD49C31B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.h */,
+				F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -815,6 +852,7 @@
 				19F0BD061B1DBC6400E4B048 /* Sources */,
 				19F0BD071B1DBC6400E4B048 /* Frameworks */,
 				19F0BD081B1DBC6400E4B048 /* Resources */,
+				F4DD49B51B64B3E100F4016B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -854,7 +892,7 @@
 				TargetAttributes = {
 					19F0BD091B1DBC6400E4B048 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 6NK34BJQZ4;
+						DevelopmentTeam = HKDB5639JA;
 					};
 					19F0BD221B1DBC6400E4B048 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -892,6 +930,7 @@
 			files = (
 				F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */,
 				19F0BE331B28BBE500E4B048 /* LaunchScreen.xib in Resources */,
+				F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */,
 				19F0BD191B1DBC6400E4B048 /* Main.storyboard in Resources */,
 				19F0BD1B1B1DBC6400E4B048 /* Images.xcassets in Resources */,
 				4ACDB9BD1B3E7E66009EFB91 /* CustomAlertView.xib in Resources */,
@@ -907,6 +946,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F4DD49B51B64B3E100F4016B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 5ed8fa25f9b2316fbd7596b648b80b7fbca9d22c cbf8bb02880cfce160b76391a38d7ddc877ad0eea6317aec8bcb3d69f46a54f0";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		19F0BD061B1DBC6400E4B048 /* Sources */ = {
@@ -971,6 +1026,7 @@
 				4ACDB9DC1B3E7E66009EFB91 /* NSString+HTML.m in Sources */,
 				4ACDB9C11B3E7E66009EFB91 /* LogoutSegue.m in Sources */,
 				4ACDB9B11B3E7E66009EFB91 /* LoginViewController.m in Sources */,
+				F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */,
 				4ACDB9D41B3E7E66009EFB91 /* MBProgressHUD.m in Sources */,
 				4ACDB9CC1B3E7E66009EFB91 /* AFHTTPRequestOperationManager.m in Sources */,
 				19F0BD101B1DBC6400E4B048 /* main.m in Sources */,
@@ -1001,10 +1057,11 @@
 				4ABC3D3E1B4048BF0090A619 /* ImagesScrollviewer.m in Sources */,
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
-				4ACB9EDF1B58ECCF00E9F984 /* ImageGallary.m in Sources */,
+				4ACB9EDF1B58ECCF00E9F984 /* ImageGallery.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				4ACDB9E61B3E7E66009EFB91 /* UIWebView+AFNetworking.m in Sources */,
+				F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */,
 				4ACDB9BC1B3E7E66009EFB91 /* CustomAlertView.m in Sources */,
 				4ACDB9CE1B3E7E66009EFB91 /* AFNetworkReachabilityManager.m in Sources */,
 				4ACDBA0E1B3ED814009EFB91 /* UserCell.m in Sources */,
@@ -1121,6 +1178,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1143,7 +1201,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1158,6 +1217,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1190,8 +1250,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DigiFaces/Frameworks",
@@ -1200,10 +1260,10 @@
 				INFOPLIST_FILE = DigiFaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

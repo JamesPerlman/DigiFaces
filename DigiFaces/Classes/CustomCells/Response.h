@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * dateCreatedFormated;
 @property (nonatomic, assign) BOOL hasImageGalleryResponse;
 @property (nonatomic, assign) BOOL hasTextAreaResponse;
-@property (nonatomic, retain) NSString * imageGallaryResponse;
+@property (nonatomic, retain) NSString * imageGalleryResponse;
 @property (nonatomic, assign) BOOL isActive;
 @property (nonatomic, assign) BOOL isDraft;
 @property (nonatomic, assign) BOOL isRead;

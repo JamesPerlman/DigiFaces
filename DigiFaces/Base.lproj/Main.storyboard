@@ -2130,7 +2130,7 @@
         <!--PROFILE PICTURE-->
         <scene sceneID="G5l-qg-sC0">
             <objects>
-                <collectionViewController id="8gN-81-gu8" customClass="ProfilePictureCollectionViewController" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="ProfilePictureCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8gN-81-gu8" customClass="ProfilePictureCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="scE-ZI-lWg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2775,13 +2775,13 @@
                                     <outlet property="label" destination="NKj-RB-t1w" id="IBc-nE-DoC"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="imageCell" rowHeight="46" id="vtV-od-xtr" customClass="ImageCell">
+                            <tableViewCell contentMode="scaleAspectFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="imageCell" rowHeight="46" id="vtV-od-xtr" customClass="ImageCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vtV-od-xtr" id="5La-6g-EXk">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPq-Hr-VOi">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HPq-Hr-VOi">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                         </imageView>
                                     </subviews>
@@ -2792,6 +2792,9 @@
                                         <constraint firstItem="HPq-Hr-VOi" firstAttribute="leading" secondItem="5La-6g-EXk" secondAttribute="leadingMargin" constant="-8" id="THM-QL-Fs0"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="image" destination="HPq-Hr-VOi" id="9Md-9l-07G"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="videoCell" rowHeight="55" id="hKO-x2-bNt" customClass="VideoCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2802,7 +2805,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mew-hx-0SC">
                                             <rect key="frame" x="0.0" y="2" width="320" height="50"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hTn-0m-PNq">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hTn-0m-PNq">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                                 </imageView>
                                             </subviews>
@@ -3285,6 +3288,7 @@
                         <outlet property="constBottomViewHeight" destination="aHc-HH-Jg4" id="lhp-9t-N87"/>
                         <outlet property="constDateHeight" destination="MEL-hn-92m" id="tin-fr-g0b"/>
                         <outlet property="constTitleHeight" destination="2oo-kZ-PZ0" id="8GI-Cc-CIr"/>
+                        <outlet property="imageContainerView" destination="mkc-9F-wH3" id="Twj-qN-uLq"/>
                         <outlet property="lblPlaceholder" destination="zNX-iw-FA3" id="tpE-yJ-rfg"/>
                         <outlet property="mediaUploadManager" destination="ZQK-hJ-Bia" id="uLr-yB-EGy"/>
                         <outlet property="txtResponse" destination="ZIM-Oe-csp" id="uFU-l1-xPw"/>
@@ -3352,11 +3356,11 @@
         <image name="top_bar_back_arrow" width="13" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xm7-nE-fcs"/>
         <segue reference="XNZ-ng-ebc"/>
         <segue reference="f8n-jW-t9J"/>
+        <segue reference="Sh4-6s-X9J"/>
+        <segue reference="3r5-SJ-zjd"/>
         <segue reference="kgY-B9-zM2"/>
-        <segue reference="EYx-dI-yCG"/>
-        <segue reference="GFi-U1-0d9"/>
+        <segue reference="CE9-GG-Yoe"/>
     </inferredMetricsTieBreakers>
 </document>

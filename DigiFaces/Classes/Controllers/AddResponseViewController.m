@@ -21,6 +21,7 @@
 #import "CustomAlertView.h"
 #import "ProfilePictureCollectionViewController.h"
 #import "DFMediaUploadManager.h"
+#import "NSLayoutConstraint+ConvenienceMethods.h"
 
 @interface AddResponseViewController () < CalendarViewControlerDelegate, UITextViewDelegate, ProfilePictureViewControllerDelegate, DFMediaUploadManagerDelegate>
 {
@@ -29,6 +30,7 @@
     CalendarViewController * calendarView;
     NSInteger threadID;
     NSDate * selectedDate;
+    ProfilePictureCollectionViewController * profileController;
 }
 
 @property (nonatomic, retain) NSMutableArray * dataArray;
@@ -39,21 +41,35 @@
 @implementation AddResponseViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+[super viewDidLoad];
+
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+[_txtResponse becomeFirstResponder];
+[_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
+selectedDate = [NSDate date];
+
+_alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
+
+if (_diaryTheme) {
+    _constDateHeight.constant = 0;
+    _constTitleHeight.constant = 0;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [_txtResponse becomeFirstResponder];
-    _dataArray = [[NSMutableArray alloc] initWithCapacity:4];
-    [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
-    selectedDate = [NSDate date];
-    
-    _alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
-    
-    if (_diaryTheme) {
-        _constDateHeight.constant = 0;
-        _constTitleHeight.constant = 0;
+    if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery])   {
+        
+        
+        profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfilePictureCollectionViewController"];
+        
+        profileController.type = ProfilePictureTypeGallery;
+        profileController.delegate = self;
+        Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
+        profileController.files = [module.imageGallery files];
+        profileController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:profileController.collectionView];
+        [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
+        
     }
-    
+}
+
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -65,12 +81,14 @@
         diaryInfoController.diaryTheme = self.diaryTheme;
     }
     else if ([segue.identifier isEqualToString:@"gallerySegue"]){
-        ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        profileController.type = ProfilePictureTypeGallery;
-        profileController.delegate = self;
-        Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
         
-        profileController.files = [module.imageGallary files];
+        /*
+         ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
+         profileController.type = ProfilePictureTypeGallery;
+         profileController.delegate = self;
+         Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
+         
+         profileController.files = [module.imageGallery files];*/
     }
 }
 
@@ -108,7 +126,7 @@
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
     
     [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-   
+    
     manager.requestSerializer = requestSerializer;
     
     
@@ -134,18 +152,6 @@
     }];
 }
 
--(NSString*)getSelectedGalleryIds
-{
-    NSString * galleryIds = @"";
-    for (NSDictionary * m in _dataArray) {
-        File * file = [m objectForKey:@"path"];
-        galleryIds = [galleryIds stringByAppendingFormat:@"%d,", (int)file.fileId];
-    }
-    if (_dataArray.count>0) {
-        galleryIds = [galleryIds substringToIndex:galleryIds.length-2];
-    }
-    return galleryIds;
-}
 
 -(void)addImageGalleryResponse
 {
@@ -153,11 +159,15 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateGalleryResponse];
     
+    NSString *selectedGalleryIds = @"";
+    if (profileController.selectedImageFile) {
+        selectedGalleryIds = @(profileController.selectedImageFile.fileId).stringValue;
+    }
     Module * imageGalleryModule = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
     NSDictionary * params = @{@"ImageGalleryResponseId" : @0,
                               @"ThreadId" : @(threadID),
-                              @"ImageGalleryId" : @(imageGalleryModule.imageGallary.imageGalleryId),
-                              @"GalleryIds" : [self getSelectedGalleryIds],
+                              @"ImageGalleryId" : @(imageGalleryModule.imageGallery.imageGalleryId),
+                              @"GalleryIds" : selectedGalleryIds,
                               @"UserId" : [[UserManagerShared sharedManager] ID],
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text};
@@ -193,7 +203,7 @@
     
     Module * textAreaModule = [_diaryTheme getModuleWithThemeType:ThemeTypeTextArea];
     
-    NSDictionary * params = @{@"TextareaResponseId" : @(1),
+    NSDictionary * params = @{@"TextareaResponseId" : @(0),
                               @"ThreadId" : @(threadID),
                               @"TextareaId" : @(textAreaModule.textArea.textareaId),
                               @"IsActive" : @YES,
@@ -218,9 +228,9 @@
         NSLog(@"Error: %@", error);
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
+            
         });
-     }];
+    }];
 }
 
 -(void)addEntryWithActivityId:(NSInteger)activityId
@@ -260,7 +270,7 @@
             __typeof(wself) sself = wself;
             [sself.mediaUploadManager uploadMediaFiles];
         });
-
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -473,14 +483,8 @@
 
 
 - (BOOL)mediaUploadManager:(DFMediaUploadManager*)mediaUploadManager shouldHandleTapForMediaUploadView:(DFMediaUploadView*)mediaUploadView {
-    if (_diaryTheme && [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery])   {
-        [self performSegueWithIdentifier:@"gallerySegue" sender:self];
-        mediaUploadManager.currentView = mediaUploadView;
-        return false;
-    }
-    else{
-        return true;
-    }
+    
+    return true;
 }
 
 

@@ -23,7 +23,7 @@
     
     [self fetchAvatarFiles];
     avatarsArray = [[NSMutableArray alloc]init];
-
+    
     // Do any additional setup after loading the view.
 }
 
@@ -54,7 +54,7 @@
     [manager GET:@"http://digifacesservices.focusforums.com/api/System/GetAvatarFiles" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+        
         NSArray * avatars = (NSArray*)responseObject;
         for(NSDictionary * temp in avatars){
             File * f = [[File alloc]init];
@@ -112,57 +112,57 @@
             if(j!=1)
                 x=x+20+imageHeight;
             if(decrement>=1)
-                {
-                  
-                    UIButton * imageView = [[UIButton alloc] initWithFrame:CGRectMake(x, y, imageWidth, imageHeight)];
-                    
-            //UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(x, y, imageWidth, imageHeight)];
-            
-            //set image to each imageview
-            __weak typeof(self) weakSelf =self;
-             //       __weak typeof (imageView) weekImageView = imageView;
-            NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[avatarsArray objectAtIndex:counter]]];
-            [imageView.imageView setImageWithURLRequest:requestN placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
-                [[UserManagerShared sharedManager] setProfilePic:[weakSelf resizeImage:image imageSize:CGSizeMake(100, 120)]];
-                
-                
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                
-            }];
-            
-            imageView.userInteractionEnabled=YES;
-            imageView.multipleTouchEnabled=YES;
-            
-            //add tag to each imageview in grid
-            
-            imageView.tag=counter;
-            NSLog(@"%d",imageView.tag);
-            
-                    [imageView addTarget:self action:@selector(handleSingleTap:) forControlEvents:UIControlEventTouchUpInside];
-            //add tap gesture to each image view in grid
-            
-//            UITapGestureRecognizer *tapRecognizer =
-//            [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                    action:@selector(handleSingleTap:)];
-//            [tapRecognizer setNumberOfTouchesRequired:1];
-//            
-//            [imageView addGestureRecognizer:tapRecognizer];
-            
-            //add each imageview to grid  scrollview
-            
-            [self.scrollView addSubview:imageView];
-            
-            counter=counter+1;
-            
-            //for scrollview widh and height set
-            if(decrement==1)
             {
-                lastx+=x;
-                lasty+=y;
                 
+                UIButton * imageView = [[UIButton alloc] initWithFrame:CGRectMake(x, y, imageWidth, imageHeight)];
+                
+                //UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(x, y, imageWidth, imageHeight)];
+                
+                //set image to each imageview
+                __weak typeof(self) weakSelf =self;
+                //       __weak typeof (imageView) weekImageView = imageView;
+                NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[avatarsArray objectAtIndex:counter]]];
+                [imageView.imageView setImageWithURLRequest:requestN placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                    [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+                    [[UserManagerShared sharedManager] setProfilePic:[weakSelf resizeImage:image imageSize:CGSizeMake(100, 120)]];
+                    
+                    
+                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                    
+                }];
+                
+                imageView.userInteractionEnabled=YES;
+                imageView.multipleTouchEnabled=YES;
+                
+                //add tag to each imageview in grid
+                
+                imageView.tag=counter;
+                NSLog(@"%d",imageView.tag);
+                
+                [imageView addTarget:self action:@selector(handleSingleTap:) forControlEvents:UIControlEventTouchUpInside];
+                //add tap gesture to each image view in grid
+                
+                //            UITapGestureRecognizer *tapRecognizer =
+                //            [[UITapGestureRecognizer alloc] initWithTarget:self
+                //                                                    action:@selector(handleSingleTap:)];
+                //            [tapRecognizer setNumberOfTouchesRequired:1];
+                //
+                //            [imageView addGestureRecognizer:tapRecognizer];
+                
+                //add each imageview to grid  scrollview
+                
+                [self.scrollView addSubview:imageView];
+                
+                counter=counter+1;
+                
+                //for scrollview widh and height set
+                if(decrement==1)
+                {
+                    lastx+=x;
+                    lasty+=y;
+                    
+                }
             }
-        }
             decrement=decrement-1;
             
         }
@@ -206,13 +206,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

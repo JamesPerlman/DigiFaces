@@ -215,7 +215,7 @@
         else if ([module themeType] == ThemeTypeImageGallery){
             
             GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
-            galleryCell.files = module.imageGallary.files;
+            galleryCell.files = module.imageGallery.files;
             [galleryCell reloadGallery];
             cell = galleryCell;
         }
@@ -270,6 +270,9 @@
         cell = responseCell;
     }
     
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
     return cell;
 }
 
@@ -332,7 +335,7 @@
     else if ([segue.identifier isEqualToString:@"gallerySegue"]){
         Module * module = [self getModuleWithThemeType:ThemeTypeImageGallery];
         CarouselViewController * carouselController = [segue destinationViewController];
-        carouselController.files = module.imageGallary.files;
+        carouselController.files = module.imageGallery.files;
         carouselController.selectedIndex = galleryItemIndex;
     }
 }

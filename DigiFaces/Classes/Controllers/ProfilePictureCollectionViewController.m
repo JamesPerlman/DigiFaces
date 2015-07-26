@@ -25,8 +25,6 @@
     CGSize _collectionViewItemSize;
 }
 @property (nonatomic, retain) NSString * amazonFileURL;
-@property (nonatomic, retain) NSDictionary * selectedImageDict;
-@property (nonatomic, strong) UIImage * selectedImage;
 @property (nonatomic, retain) NSMutableArray *avatarsArray;
 
 
@@ -48,8 +46,9 @@
         [_avatarsArray addObjectsFromArray:_files];
     }
     CGFloat _collectionViewItemPadding = ((UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout).minimumInteritemSpacing;
-    CGFloat _collectionViewItemSideLength = (self.collectionView.frame.size.width/4.0f-_collectionViewItemPadding);
+    CGFloat _collectionViewItemSideLength = ([UIScreen mainScreen].bounds.size.width/4.0f-_collectionViewItemPadding);
     _collectionViewItemSize = CGSizeMake(_collectionViewItemSideLength, _collectionViewItemSideLength);
+    
 }
 
 - (void)fetchAvatarFiles{
@@ -140,7 +139,7 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedImageDict = nil;
+    self.selectedImageFile = nil;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -149,7 +148,7 @@
         // Let DFMediaUploadManager deal with the Tap gesture on the DFMediaUploadView
     }
     else{
-        self.selectedImageDict = [_avatarsArray objectAtIndex:indexPath.row];
+        self.selectedImageFile = [_avatarsArray objectAtIndex:indexPath.row];
         ImageCollectionCell *cell = (ImageCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.selectedImage = cell.imgPicture.image;
     }
@@ -159,13 +158,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)doneClicked:(id)sender {
-    if (self.selectedImageDict == nil) {
+    if (self.selectedImageFile == nil) {
         [alertView showAlertWithMessage:@"Please select an image to set as profile picture" inView:self.navigationController.view withTag:0];
         
     }
     else{
         if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:withImage:)]) {
-            [_delegate profilePictureDidSelect:self.selectedImageDict withImage:self.selectedImage];
+            [_delegate profilePictureDidSelect:self.selectedImageFile withImage:self.selectedImage];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }
