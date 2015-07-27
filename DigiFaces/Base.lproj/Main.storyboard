@@ -4,6 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Nointernet Controller-->
         <scene sceneID="XcR-L5-Mos">
@@ -1026,21 +1031,38 @@
                                     <outlet property="label" destination="eSY-zv-WfV" id="TYg-VG-2ti"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="diaryCell" textLabel="6hC-28-C5K" rowHeight="44" style="IBUITableViewCellStyleDefault" id="0dD-sE-7L7">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="diaryCell" rowHeight="44" id="0dD-sE-7L7" customClass="DiaryEntryTableViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0dD-sE-7L7" id="Xqn-jB-X2v">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Diary Entry 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6hC-28-C5K">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCD-1K-j0c">
+                                            <rect key="frame" x="8" y="11" width="229" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TPl-cp-fNf">
+                                            <rect key="frame" x="245" y="11" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="TPl-cp-fNf" firstAttribute="leading" secondItem="uCD-1K-j0c" secondAttribute="trailing" constant="8" id="53Q-kt-Qkj"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="TPl-cp-fNf" secondAttribute="trailing" constant="-8" id="V50-kn-es5"/>
+                                        <constraint firstItem="uCD-1K-j0c" firstAttribute="leading" secondItem="Xqn-jB-X2v" secondAttribute="leadingMargin" id="eZB-ut-IXE"/>
+                                        <constraint firstItem="uCD-1K-j0c" firstAttribute="centerY" secondItem="TPl-cp-fNf" secondAttribute="centerY" id="ooF-WY-s4e"/>
+                                        <constraint firstAttribute="centerY" secondItem="uCD-1K-j0c" secondAttribute="centerY" id="zSJ-N4-URh"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.85490196080000003" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="countInfoLabel" destination="TPl-cp-fNf" id="etz-7G-m3t"/>
+                                    <outlet property="titleLabel" destination="uCD-1K-j0c" id="5Ze-HS-L2K"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="imageCell" rowHeight="105" id="J9R-wE-Goo" customClass="ImageCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1059,6 +1081,9 @@
                                         <constraint firstItem="lQy-0a-R04" firstAttribute="bottom" secondItem="R0j-08-fMf" secondAttribute="bottomMargin" constant="8" id="xg6-Lb-1sD"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="image" destination="lQy-0a-R04" id="sAI-BD-RSW"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="videoCell" rowHeight="170" id="kND-r8-R3I" customClass="VideoCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1570,7 +1595,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O0u-2d-PZC">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dK9-pp-gR0">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dK9-pp-gR0">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qMJ-DA-mHd">
@@ -3357,11 +3382,11 @@
         <image name="top_bar_back_arrow" width="13" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XNZ-ng-ebc"/>
-        <segue reference="f8n-jW-t9J"/>
-        <segue reference="Sh4-6s-X9J"/>
-        <segue reference="3r5-SJ-zjd"/>
-        <segue reference="kgY-B9-zM2"/>
+        <segue reference="veF-sC-LAA"/>
+        <segue reference="Taj-qP-dlL"/>
+        <segue reference="PJM-GU-RyY"/>
+        <segue reference="Z1a-cS-acW"/>
         <segue reference="CE9-GG-Yoe"/>
+        <segue reference="Sh4-6s-X9J"/>
     </inferredMetricsTieBreakers>
 </document>

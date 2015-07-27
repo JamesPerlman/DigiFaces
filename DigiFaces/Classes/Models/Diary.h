@@ -25,7 +25,8 @@
 
 @property (nonatomic, retain) NSMutableArray * files;
 @property (nonatomic, retain) NSMutableArray * comments;
-
+-(NSInteger)picturesCount;
+-(NSInteger)videosCount;
 -(instancetype) initWithDictionary:(NSDictionary*)dict;
 
 @end

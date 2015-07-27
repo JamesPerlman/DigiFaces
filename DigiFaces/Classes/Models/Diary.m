@@ -44,4 +44,23 @@
     return self;
 }
 
+- (NSInteger)picturesCount {
+    NSInteger x = 0;
+    for (File *f in self.files) {
+        if ([f.fileType isEqualToString:@"Image"]) {
+            x++;
+        }
+    }
+    return x;
+}
+
+- (NSInteger)videosCount {
+    NSInteger x = 0;
+    for (File *f in self.files) {
+        if ([f.fileType isEqualToString:@"Video"]) {
+            x++;
+        }
+    }
+    return x;
+}
 @end

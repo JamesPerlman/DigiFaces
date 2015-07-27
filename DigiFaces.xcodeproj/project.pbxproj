@@ -127,6 +127,9 @@
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
 		F4DD49C91B6585B800F4016B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4DD49C81B6585B700F4016B /* MediaPlayer.framework */; };
+		F4DD49CC1B65A7DC00F4016B /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49CB1B65A7DC00F4016B /* NSString+FontAwesome.m */; };
+		F4DD49CF1B65A97C00F4016B /* DiaryEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */; };
+		F4DD49D11B65AFFF00F4016B /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */; };
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
@@ -390,6 +393,11 @@
 		F4DD49C31B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+ConvenienceMethods.h"; sourceTree = "<group>"; };
 		F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+ConvenienceMethods.m"; sourceTree = "<group>"; };
 		F4DD49C81B6585B700F4016B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		F4DD49CA1B65A7DC00F4016B /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
+		F4DD49CB1B65A7DC00F4016B /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
+		F4DD49CD1B65A97C00F4016B /* DiaryEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryEntryTableViewCell.h; sourceTree = "<group>"; };
+		F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryEntryTableViewCell.m; sourceTree = "<group>"; };
+		F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		F4E670DA1B61669B00871FA9 /* DFMediaUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadManagerDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadManagerDelegate.h"; sourceTree = "<group>"; };
 		F4E670DB1B61669B00871FA9 /* DFMediaUploadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadView.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.h"; sourceTree = "<group>"; };
 		F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFMediaUploadView.m; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.m"; sourceTree = "<group>"; };
@@ -466,6 +474,7 @@
 		19F0BD0D1B1DBC6400E4B048 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */,
 				19328DD71B2FFDE5008BFAA6 /* Localizable.strings */,
 				19F0BD0F1B1DBC6400E4B048 /* main.m */,
 			);
@@ -622,6 +631,8 @@
 				4AC7D47B1B510D0B00587045 /* RTCell.m */,
 				4AA275961B5E64C200367E92 /* GalleryCell.h */,
 				4AA275971B5E64C200367E92 /* GalleryCell.m */,
+				F4DD49CD1B65A97C00F4016B /* DiaryEntryTableViewCell.h */,
+				F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -840,6 +851,8 @@
 		F4DD49C21B65512600F4016B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				F4DD49CA1B65A7DC00F4016B /* NSString+FontAwesome.h */,
+				F4DD49CB1B65A7DC00F4016B /* NSString+FontAwesome.m */,
 				F4DD49C31B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.h */,
 				F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */,
 			);
@@ -935,6 +948,7 @@
 				F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */,
 				19F0BE331B28BBE500E4B048 /* LaunchScreen.xib in Resources */,
 				F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */,
+				F4DD49D11B65AFFF00F4016B /* FontAwesome.ttf in Resources */,
 				19F0BD191B1DBC6400E4B048 /* Main.storyboard in Resources */,
 				19F0BD1B1B1DBC6400E4B048 /* Images.xcassets in Resources */,
 				4ACDB9BD1B3E7E66009EFB91 /* CustomAlertView.xib in Resources */,
@@ -986,6 +1000,7 @@
 				4ACB9ED91B58EC8900E9F984 /* TextArea.m in Sources */,
 				4ACDB9DE1B3E7E66009EFB91 /* RootViewController.m in Sources */,
 				4ACDB9ED1B3E8366009EFB91 /* DiaryInfoViewController.m in Sources */,
+				F4DD49CF1B65A97C00F4016B /* DiaryEntryTableViewCell.m in Sources */,
 				4AD850181B45A12B0059A457 /* VideoCell.m in Sources */,
 				4ACDBA111B3EDF75009EFB91 /* ImagesCell.m in Sources */,
 				4ACDB9E21B3E7E66009EFB91 /* UIButton+AFNetworking.m in Sources */,
@@ -1005,6 +1020,7 @@
 				4ACDB9B91B3E7E66009EFB91 /* UserViewController.m in Sources */,
 				4ACDB9BA1B3E7E66009EFB91 /* VersionViewContrller.m in Sources */,
 				F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */,
+				F4DD49CC1B65A7DC00F4016B /* NSString+FontAwesome.m in Sources */,
 				4ACDB9BB1B3E7E66009EFB91 /* WebViewController.m in Sources */,
 				4ACDB9CB1B3E7E66009EFB91 /* AFHTTPRequestOperation.m in Sources */,
 				4ACDB9F31B3E8816009EFB91 /* UserInfo.m in Sources */,
@@ -1160,6 +1176,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
