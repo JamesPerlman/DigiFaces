@@ -371,8 +371,8 @@
 		F4022FE61B6983510080C157 /* Thread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
 		F4022FF51B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+orderedDistinctUnionOfObjects.h"; sourceTree = "<group>"; };
 		F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+orderedDistinctUnionOfObjects.m"; sourceTree = "<group>"; };
-		F4022FF91B69E19F0080C157 /* TextareaResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextareaResponse.h; path = DigiFaces/Classes/CustomCells/TextareaResponse.h; sourceTree = SOURCE_ROOT; };
 		F4022FFA1B69E1B30080C157 /* TextareaResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextareaResponse.m; sourceTree = "<group>"; };
+		F4022FFC1B69E2080080C157 /* TextareaResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextareaResponse.h; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -793,8 +793,8 @@
 		F4022FF81B69E1760080C157 /* TextareaResponse */ = {
 			isa = PBXGroup;
 			children = (
-				F4022FF91B69E19F0080C157 /* TextareaResponse.h */,
 				F4022FFA1B69E1B30080C157 /* TextareaResponse.m */,
+				F4022FFC1B69E2080080C157 /* TextareaResponse.h */,
 			);
 			name = TextareaResponse;
 			sourceTree = "<group>";
