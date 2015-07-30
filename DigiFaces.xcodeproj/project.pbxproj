@@ -91,7 +91,6 @@
 		4ACDBA021B3EC7EA009EFB91 /* ResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDBA011B3EC7EA009EFB91 /* ResponseViewController.m */; };
 		4ACDBA051B3ECD7D009EFB91 /* Response.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDBA041B3ECD7D009EFB91 /* Response.m */; };
 		4ACDBA081B3ECDB5009EFB91 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDBA071B3ECDB5009EFB91 /* Comment.m */; };
-		4ACDBA0B1B3ED216009EFB91 /* TextareaResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDBA0A1B3ED216009EFB91 /* TextareaResponse.m */; };
 		4ACDBA0E1B3ED814009EFB91 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDBA0D1B3ED814009EFB91 /* UserCell.m */; };
 		4ACDBA111B3EDF75009EFB91 /* ImagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDBA101B3EDF75009EFB91 /* ImagesCell.m */; };
 		4AD850151B4584CD0059A457 /* LoginTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD850141B4584CD0059A457 /* LoginTableController.m */; };
@@ -336,8 +335,6 @@
 		4ACDBA041B3ECD7D009EFB91 /* Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Response.m; path = ../CustomCells/Response.m; sourceTree = "<group>"; };
 		4ACDBA061B3ECDB5009EFB91 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = ../CustomCells/Comment.h; sourceTree = "<group>"; };
 		4ACDBA071B3ECDB5009EFB91 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = ../CustomCells/Comment.m; sourceTree = "<group>"; };
-		4ACDBA091B3ED216009EFB91 /* TextareaResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextareaResponse.h; path = ../CustomCells/TextareaResponse.h; sourceTree = "<group>"; };
-		4ACDBA0A1B3ED216009EFB91 /* TextareaResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextareaResponse.m; path = ../CustomCells/TextareaResponse.m; sourceTree = "<group>"; };
 		4ACDBA0C1B3ED814009EFB91 /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
 		4ACDBA0D1B3ED814009EFB91 /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
 		4ACDBA0F1B3EDF75009EFB91 /* ImagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagesCell.h; sourceTree = "<group>"; };
@@ -876,7 +873,6 @@
 				F4864F961B6821FB000D2615 /* ImageGallery */,
 				F4864F861B6820BB000D2615 /* Response */,
 				F4864F7B1B680B79000D2615 /* Thread */,
-				F4864F851B6820A7000D2615 /* TextareaResponse */,
 				F4864F8D1B6820F3000D2615 /* UserInfo */,
 			);
 			path = ResponseObjects;
@@ -980,16 +976,6 @@
 				4ACDB93E1B3E7E66009EFB91 /* ProjectIntroViewController.m */,
 			);
 			name = ProjectIntro;
-			sourceTree = "<group>";
-		};
-		F4864F851B6820A7000D2615 /* TextareaResponse */ = {
-			isa = PBXGroup;
-			children = (
-				4ACDBA091B3ED216009EFB91 /* TextareaResponse.h */,
-				4ACDBA0A1B3ED216009EFB91 /* TextareaResponse.m */,
-			);
-			name = TextareaResponse;
-			path = ../..;
 			sourceTree = "<group>";
 		};
 		F4864F861B6820BB000D2615 /* Response */ = {
@@ -1542,7 +1528,6 @@
 				4ACB9ED61B58EC2900E9F984 /* DisplayFile.m in Sources */,
 				F4022FE41B697FC80080C157 /* APIHomeAnnouncementResponse.m in Sources */,
 				4ACDB9F91B3EB6AE009EFB91 /* NotificationsViewController.m in Sources */,
-				4ACDBA0B1B3ED216009EFB91 /* TextareaResponse.m in Sources */,
 				4ACDB9C91B3E7E66009EFB91 /* UserManagerShared.m in Sources */,
 				F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */,
 				4AC8446F1B57FA75006CDB45 /* ImageViewController.m in Sources */,
