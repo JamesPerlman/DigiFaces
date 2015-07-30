@@ -11,7 +11,7 @@
 #import "TextAreaResponse.h"
 
 @implementation Response
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -47,6 +47,6 @@
         
     }
     return self;
-}
+}*/
 
 @end

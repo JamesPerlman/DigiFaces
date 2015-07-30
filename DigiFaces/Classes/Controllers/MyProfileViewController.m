@@ -12,7 +12,10 @@
 #import "UIImageView+AFNetworking.h"
 #import "UserManagerShared.h"
 #import "Utility.h"
-#import "SDConstants.h"
+#import "AboutMe.h"
+#import "File.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #import "CustomAlertView.h"
 #import "ProfilePictureCollectionViewController.h"
 
@@ -23,8 +26,8 @@
     CustomAlertView * alertview;
     NSDictionary * selctedProfile;
     BOOL isTextChanged;
-    NSDictionary * aboutMeDict;
 }
+@property (nonatomic, weak) IBOutlet AboutMe *aboutMe;
 @end
 
 @implementation MyProfileViewController
@@ -36,14 +39,14 @@
     
     self.profilePicView.image = [[UserManagerShared sharedManager]profilePic];
     
-    self.aboutMe.text = @"";
+    self.aboutMeTextView.text = @"";
     self.titleName.text = [NSString stringWithFormat:@"%@ %@",[[UserManagerShared sharedManager]FirstName],[[UserManagerShared sharedManager]LastName]];
     
     self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.height /2;
     self.profilePicView.layer.masksToBounds = YES;
     self.profilePicView.layer.borderWidth = 0;
     
-//    [self.aboutMe becomeFirstResponder];
+    //    [self.aboutMe becomeFirstResponder];
     
     alertview = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     alertview.delegate = self;
@@ -60,90 +63,70 @@
     
     NSString * aboutMe = [[UserManagerShared sharedManager] aboutMeText];
     
-    if (![_aboutMe.text isEqualToString:@""] && ![_aboutMe.text isEqualToString:aboutMe]) {
-        [_aboutMe resignFirstResponder];
+    if (![_aboutMeTextView.text isEqualToString:@""] && ![_aboutMeTextView.text isEqualToString:aboutMe]) {
+        [_aboutMeTextView resignFirstResponder];
         [alertview showAlertWithMessage:@"Your changes will be discarded. Do you want to descard changes?" inView:self.navigationController.view withTag:kTagDiscardChanges];
     }
     else{
-        [_aboutMe resignFirstResponder];
+        [_aboutMeTextView resignFirstResponder];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
--(void)getAboutMeInfo
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
+-(void)getAboutMeInfo {
+    defwself
     
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetAboutMe];
-    url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:[NSString stringWithFormat:@"%d",[[UserManagerShared sharedManager] currentProjectID]]];
-    
-    
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
-        [self.aboutMe setText:[responseObject valueForKey:@"AboutMeText"]];
-        [self.aboutMe becomeFirstResponder];
-        aboutMeDict = responseObject;
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        [[UserManagerShared sharedManager] setAboutMeText:_aboutMe.text];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        
-        
-        [alertview showAlertWithMessage:@"An error in request, verify that your email is correct" inView:self.view withTag:0];
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
+    [DFClient makeRequest:APIPathGetAboutMe
+                   method:kGET
+                urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+               bodyParams:nil
+                  success:^(NSDictionary *response, AboutMe *result) {
+                      defsself
+                      
+                      [sself.aboutMeTextView setText:result.aboutMeText];
+                      [sself.aboutMeTextView becomeFirstResponder];
+                      sself.aboutMe = result;
+                      [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                      [[UserManagerShared sharedManager] setAboutMeText:_aboutMeTextView.text];
+                      
+                  } failure:^(NSError *error) {
+                      
+                      [alertview showAlertWithMessage:@"There was an error.  Please verify that your email is correct." inView:self.view withTag:0];
+                      
+                      [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                  }];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
 -(IBAction)postpressed:(id)sender{
     NSLog(@"Posted");
-    [_aboutMe resignFirstResponder];
-    if ([_aboutMe.text isEqualToString:@""]) {
-        [alertview showAlertWithMessage:@"Text is required." inView:self.navigationController.view withTag:0];
+    [_aboutMeTextView resignFirstResponder];
+    if ([_aboutMeTextView.text isEqualToString:@""]) {
+        [alertview showAlertWithMessage:@"Please enter something about yourself." inView:self.navigationController.view withTag:0];
         return;
     }
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-     [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:[aboutMeDict valueForKey:@"AboutMeId"], @"AboutMeId", [Utility getStringForKey:kCurrentPorjectID], @"ProjectId", [[UserManagerShared sharedManager] ID], @"UserId", _aboutMe.text, @"AboutMeText", nil];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kAboutMeUpdate];
-    
-    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-                
-        [Utility saveString:_aboutMe.text forKey:kAboutMeText];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-        [[UserManagerShared sharedManager] setAboutMeText:_aboutMe.text];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        
-        
-        [alertview showAlertWithMessage:@"An error in request, verify that your email is correct" inView:self.view withTag:0];
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
+    NSDictionary * params = @{@"AboutMeId" : self.aboutMe.aboutMeId,
+                              @"ProjectId" : [Utility getStringForKey:kCurrentPorjectID],
+                              @"UserId" : LS.myUserInfo.id,
+                              @"AboutMeText" : _aboutMeTextView.text};
+    defwself
+    [DFClient makeRequest:APIPathUpdateAboutMe
+                   method:kPOST
+                   params:params
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      [Utility saveString:_aboutMeTextView.text forKey:kAboutMeText];
+                      [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                      
+                      [[UserManagerShared sharedManager] setAboutMeText:_aboutMeTextView.text];
+                      [sself dismissViewControllerAnimated:YES completion:nil];
+                  } failure:^(NSError *error) {
+                      defsself
+                      [alertview showAlertWithMessage:@"An error in request, verify that your email is correct" inView:sself.view withTag:0];
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
@@ -152,7 +135,7 @@
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
- 
+    
     return YES;
 }
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView{
@@ -161,38 +144,28 @@
 
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
     
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    
-    //[requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateAvatar];
-    
-    [manager POST:url parameters:profilePicture success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
-        [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:image];
-        });
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        
-        
-        [alertview showAlertWithMessage:@"An error in request, verify that your email is correct" inView:self.view withTag:0];
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
+    defwself
+    [DFClient makeRequest:APIPathUploadUserCustomAvatar
+                   method:kPOST
+                   params:profilePicture
+                  success:^(NSDictionary *response, File *result) {
+                      defsself
+                      LS.myUserInfo.avatarFile = result;
+//                      [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [sself setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:image];
+                      });
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [alertview showAlertWithMessage:@"An error occurred.  Please verify that your email is correct." inView:sself.view withTag:0];
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
@@ -203,15 +176,9 @@
         return;
     }
     
-    __weak typeof(self)weakSelf = self;
-    
-    NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    [self.profilePicView setImageWithURLRequest:requestN placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        [weakSelf.profilePicView setImage:image];
-        [[UserManagerShared sharedManager] setProfilePic:[Utility resizeImage:image imageSize:CGSizeMake(100, 120)]];
+    [self.profilePicView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        [[UserManagerShared sharedManager] setProfilePic:[Utility resizeImage:image imageSize:CGSizeMake(100, 120)]];
     }];
 }
 

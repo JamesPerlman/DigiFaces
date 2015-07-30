@@ -26,32 +26,20 @@
 }
 
 -(void)check_user_projects{
-    
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
-    
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager GET:@"http://digifacesservices.focusforums.com/api/Account/GetProjects/0" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-    }];
+    defwself
+    [DFClient makeRequest:APIPathGetProjects
+                   method:kGET
+                urlParams:@{@"numberOfProjects" : @0}
+               bodyParams:nil
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                  }];
 }
 
 /*

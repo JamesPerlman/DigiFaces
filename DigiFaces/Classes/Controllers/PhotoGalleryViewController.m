@@ -12,6 +12,9 @@
 #import "UIImageView+AFNetworking.h"
 #import "UserManagerShared.h"
 #import "File.h"
+
+#import "APIFilesResponse.h"
+
 @interface PhotoGalleryViewController ()
 
 @end
@@ -22,7 +25,6 @@
     [super viewDidLoad];
     
     [self fetchAvatarFiles];
-    avatarsArray = [[NSMutableArray alloc]init];
     
     // Do any additional setup after loading the view.
 }
@@ -35,40 +37,24 @@
 
 - (void)fetchAvatarFiles{
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
-    
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager GET:@"http://digifacesservices.focusforums.com/api/System/GetAvatarFiles" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        NSArray * avatars = (NSArray*)responseObject;
-        for(NSDictionary * temp in avatars){
-            File * f = [[File alloc]init];
-            [avatarsArray addObject:[f returnFilePathFromFileObject:temp]];
-        }
-        [self CreateImageGallery];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-    }];
-    
-}
+    defwself
+    [DFClient makeRequest:APIPathGetAvatarFiles
+                   method:kGET
+                   params:nil
+                  success:^(NSDictionary *response, APIFilesResponse *result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      sself.avatars = result.files;
+                      [sself CreateImageGallery];
+
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+
+                  }];
+    }
 
 
 -(void) CreateImageGallery
@@ -90,7 +76,7 @@
     int x = 20, y = 20;
     
     //The number of images you want
-    int numOfItemsToAdd = [avatarsArray count];
+    int numOfItemsToAdd = [self.avatars count];
     
     //The height and width of your images are the screen width devided by the number of columns
     int imageHeight = (240/3), imageWidth = (256/3);
@@ -121,7 +107,7 @@
                 //set image to each imageview
                 __weak typeof(self) weakSelf =self;
                 //       __weak typeof (imageView) weekImageView = imageView;
-                NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[avatarsArray objectAtIndex:counter]]];
+                NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.avatars objectAtIndex:counter]]];
                 [imageView.imageView setImageWithURLRequest:requestN placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
                     [[UserManagerShared sharedManager] setProfilePic:[weakSelf resizeImage:image imageSize:CGSizeMake(100, 120)]];

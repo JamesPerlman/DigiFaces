@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface imageGallery : NSObject
+@interface ImageGallery : NSObject
 
-@property (nonatomic, assign) NSInteger imageGalleryId;
-@property (nonatomic, assign) NSInteger activityId;
+@property (nonatomic, strong) NSNumber * imageGalleryId;
+@property (nonatomic, strong) NSNumber * activityId;
+@property (nonatomic, strong) NSNumber * userId;
+@property (nonatomic, strong) NSString * galleryIds;
 
-@property (nonatomic, retain) NSMutableArray * files;
+
+@property (nonatomic, retain) NSArray * files;
 
 -(instancetype) initWithDictionary:(NSDictionary*)dict;
 

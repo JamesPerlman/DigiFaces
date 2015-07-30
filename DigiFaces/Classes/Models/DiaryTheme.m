@@ -10,7 +10,7 @@
 #import "Module.h"
 
 @implementation DiaryTheme
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -35,6 +35,7 @@
     
     return self;
 }
+*/
 
 -(Module*)getModuleWithThemeType:(ThemeType)type
 {

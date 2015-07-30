@@ -9,6 +9,8 @@
 #import "UserViewController.h"
 #import "MBProgressHUD.h"
 #import "HomeViewController.h"
+#import "APIIsUserNameAvailableResponse.h"
+#import "APISetUserNameResponse.h"
 
 @interface UserViewController ()
 
@@ -104,39 +106,26 @@
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"UserNameToCheck"] = username;
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
+    defwself
+    [DFClient makeRequest:APIPathIsUserNameAvailable
+                   method:kPOST
+                   params:@{@"UserNameToCheck" : username}
+                  success:^(NSDictionary *response, APIIsUserNameAvailableResponse *result) {
+                      defsself
+                      if ([result.isAvailable boolValue] == YES) {
+                          [sself set_username:username];
+                      } else {
+                          _errorMessage.text = @"User name already exists";
+                          [sself.customAlert showAlertWithMessage:@"User name already exists" inView:self.view withTag:0];
+                          [MBProgressHUD hideHUDForView:self.view animated:YES];
+                          
+                      }
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                  }];
 
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager POST:@"http://digifacesservices.focusforums.com/api/Account/IsUserNameAvailable" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        NSString * isAvailable =(NSString*) [responseObject objectForKey:@"IsAvailable"];
-        if ([isAvailable boolValue] == YES) {
-            [self set_username:username];
-        }else{
-            _errorMessage.text = @"User name already exists";
-            [self.customAlert showAlertWithMessage:@"User name already exists" inView:self.view withTag:0];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-        }
-     
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-    }];
     
 }
 
@@ -145,38 +134,27 @@
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"NewUserName"] = username;
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
     
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager POST:@"http://digifacesservices.focusforums.com/api/Account/SetUserName" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        _errorMessage.textColor = [UIColor greenColor];
-        _errorMessage.text = @"User name registered successfully";
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-        [[NSUserDefaults standardUserDefaults]setObject:username forKey:@"userName"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        
-        [self performSelector:@selector(cancelandpush) withObject:nil afterDelay:2];
-
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        _errorMessage.text = @"Server error, try again!";
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-    }];
-    
+    defwself
+    [DFClient makeRequest:APIPathSetUserName
+                   method:kPOST
+                   params:@{@"NewUserName" : username}
+                  success:^(NSDictionary *response, APISetUserNameResponse *result) {
+                      defsself
+                      _errorMessage.textColor = [UIColor greenColor];
+                      _errorMessage.text = @"User name registered successfully";
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      
+                      [[NSUserDefaults standardUserDefaults]setObject:username forKey:@"userName"];
+                      [[NSUserDefaults standardUserDefaults]synchronize];
+                      
+                      [sself performSelector:@selector(cancelandpush) withObject:nil afterDelay:2];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      _errorMessage.text = @"Server error, try again!";
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                  }];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

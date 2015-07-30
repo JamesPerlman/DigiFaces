@@ -20,7 +20,7 @@
 #import "RTCell.h"
 #import "GalleryCell.h"
 #import "MBProgressHUD.h"
-#import "SDConstants.h"
+
 #import "AFNetworking.h"
 #import "Response.h"
 #import "Utility.h"
@@ -28,6 +28,7 @@
 #import "TextAreaResponse.h"
 #import "AddResponseViewController.h"
 #import "CarouselViewController.h"
+#import "APIActivityResponsesResponse.h"
 
 @interface DiaryThemeViewController () <GalleryCellDelegate>
 {
@@ -121,36 +122,31 @@
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetResponses];
-    url = [url stringByReplacingOccurrencesOfString:@"{activityId}" withString:[NSString stringWithFormat:@"%ld", (long)_diaryTheme.activityId]];
+    defwself
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        if ([responseObject count]>0) {
-            [_cellsArray addObject:[NSString stringWithFormat:@"%d Responses", [responseObject count]]];
-            [_heightArray addObject:@40];
-        }
-        for (NSDictionary * dict in responseObject) {
-            Response * response = [[Response alloc] initWithDictionary:dict];
-            [_cellsArray addObject:response];
-            [_heightArray addObject:@160];
-        }
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
+    [DFClient makeRequest:APIPathActivityGetResponses
+                   method:kPOST
+                urlParams:@{@"activityId" : _diaryTheme.activityId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, APIActivityResponsesResponse *result) {
+                      defsself
+                      NSInteger responseCount = result.responses.count;
+                      if (responseCount>0) {
+                          [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
+                          [_heightArray addObject:@40];
+                      }
+                      for (Response * response in result.responses) {
+                          [_cellsArray addObject:response];
+                          [_heightArray addObject:@160];
+                      }
+                      [sself.tableView reloadData];
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
 }
 
 - (IBAction)closeThis:(id)sender {
@@ -205,7 +201,7 @@
             }
         }
         else if ([module themeType] == ThemeTypeDisplayText){
-        
+            
             RTCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
             
             [textCell.titleLabel setText:module.displayText.text];
@@ -250,12 +246,12 @@
             NSLog(@"Image download error");
         }];
         [responseCell.lblName setText:response.userInfo.appUserName];
-        [responseCell.lblTime setText:response.dateCreatedFormated];
+        [responseCell.lblTime setText:response.dateCreatedFormatted];
         [responseCell setImageCircular];
         [responseCell.btnComments setTitle:[NSString stringWithFormat:@"%d Comments", response.comments.count] forState:UIControlStateNormal];
         CGSize size;
-        if (response.textAreaResponse.count>0) {
-            TextAreaResponse * textResponse = [response.textAreaResponse objectAtIndex:0];
+        if (response.textareaResponses.count>0) {
+            TextareaResponse * textResponse = [response.textareaResponses objectAtIndex:0];
             [responseCell.lblResponse setText:textResponse.response];
             
             CGRect rect = [textResponse.response boundingRectWithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil];

@@ -7,8 +7,7 @@
 //
 
 #import "TechSupportController.h"
-#import "SDConstants.h"
-#import "AFHTTPRequestOperationManager.h"
+
 #import "Utility.h"
 #import "MBProgressHUD.h"
 
@@ -61,31 +60,27 @@
     
     [_textArea resignFirstResponder];
     [_txtSubject resignFirstResponder];
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kSendHelpMessage];
+
+    defwself
     
+    NSDictionary * params = @{@"SenderEmail" : LS.myUserInfo.email,
+                              @"Subject" : _txtSubject.text,
+                              @"Message" : _textArea.text};
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:[Utility getStringForKey:kEmail], @"SenderEmail",_txtSubject.text, @"Subject", _textArea.text, @"Message", nil];
-    
-    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        [alertView setSingleButton:YES];
-        [alertView showAlertWithMessage:@"Your message posted successfully" inView:self.navigationController.view withTag:kSuccessTag];
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
-    
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [DFClient makeRequest:APIPathSendHelpMessage
+                   method:kPOST
+                   params:params
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [alertView setSingleButton:YES];
+                      [alertView showAlertWithMessage:@"Your message posted successfully" inView:sself.navigationController.view withTag:kSuccessTag];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
+       [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
 }
 

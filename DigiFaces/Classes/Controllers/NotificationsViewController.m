@@ -10,16 +10,17 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "Utility.h"
-#import "SDConstants.h"
+
 #import "UserManagerShared.h"
 #import "Notification.h"
 #import "NotificationCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "ResponseViewController.h"
+#import "APINotificationsResponse.h"
 
 @interface NotificationsViewController ()
 
-@property (nonatomic, retain) NSMutableArray * arrNotifications;;
+@property (nonatomic, retain) NSArray * arrNotifications;;
 
 @end
 
@@ -44,33 +45,25 @@
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetNotifications];
-    url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:[NSString stringWithFormat:@"%d", [[UserManagerShared sharedManager] info].currentProjectID]];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        for (NSDictionary * notification in responseObject) {
-            Notification * not = [[Notification alloc] initWithDictionary:notification];
-            [_arrNotifications addObject:not];
-        }
-        
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
-}
+    defwself
+    [DFClient makeRequest:APIPathGetNotifications
+                   method:kGET
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectID}
+               bodyParams:nil
+                  success:^(NSDictionary *response, APINotificationsResponse *result) {
+                      defsself
+                      sself.arrNotifications = result.notifications;
+                      
+                      [sself.tableView reloadData];
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+
+                  }];
+    }
 
 #pragma mark - Table view data source
 

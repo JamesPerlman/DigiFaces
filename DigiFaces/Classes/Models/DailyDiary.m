@@ -10,7 +10,7 @@
 #import "Diary.h"
 
 @implementation DailyDiary
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -36,7 +36,7 @@
     }
     return self;
 }
-
+*/
 
 -(void)extractDiariesBasedOnDate
 {

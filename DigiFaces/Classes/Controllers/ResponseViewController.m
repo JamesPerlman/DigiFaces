@@ -10,7 +10,7 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "Utility.h"
-#import "SDConstants.h"
+
 #import "Response.h"
 #import "UserCell.h"
 #import "ImagesCell.h"
@@ -25,6 +25,7 @@
 #import "DailyDiary.h"
 #import "CarouselViewController.h"
 #import "UserManagerShared.h"
+#import "APIActivityResponsesResponse.h"
 
 typedef enum {
     CellTypeUser,
@@ -62,7 +63,7 @@ typedef enum {
     
     _arrResponses = [[NSMutableArray alloc] init];
     if (_responseType == ResponseControllerTypeNotification) {
-        [self getResponsesWithActivityId:_currentNotification.activityID];
+        [self getResponsesWithActivityId:_currentNotification.activityID.integerValue];
     }
     
     [Utility addPadding:5 toTextField:_txtResposne];
@@ -140,96 +141,73 @@ typedef enum {
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kDailyDiaryInfo];
-    url = [url stringByReplacingOccurrencesOfString:@"{diaryId}" withString:[NSString stringWithFormat:@"%d", diaryID]];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Data : %@", responseObject);
-        DailyDiary * dailyDiary = [[DailyDiary alloc] initWithDictionary:responseObject];
-        for (Diary * d in dailyDiary.userDiaries) {
-            if (d.responseID == _diary.responseID) {
-                _diary = d;
-                break;
-            }
-        }
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
+    defwself
+    [DFClient makeRequest:APIPathGetDailyDiary
+                   method:kPOST
+                urlParams:@{@"diaryId" : @(diaryID)}
+               bodyParams:nil
+                  success:^(NSDictionary *response, DailyDiary *dailyDiary) {
+                      defsself
+                      for (Diary * d in dailyDiary.userDiaries) {
+                          if (d.responseID == _diary.responseID) {
+                              _diary = d;
+                              break;
+                          }
+                      }
+                      [sself.tableView reloadData];
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
 }
 
 -(void)getResponsesWithActivityId:(NSInteger)activityId
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetResponses];
-    url = [url stringByReplacingOccurrencesOfString:@"{activityId}" withString:[NSString stringWithFormat:@"%d", activityId]];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        
-        _response = [[Response alloc] initWithDictionary:[responseObject firstObject]];
-        
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
+    defwself
+    [DFClient makeRequest:APIPathActivityGetResponses
+                   method:kPOST
+                urlParams:@{@"activityId" : @(activityId)}
+               bodyParams:nil
+                  success:^(NSDictionary *response, APIActivityResponsesResponse *result) {
+                      defsself
+                      sself.response = [[Response alloc] initWithDictionary:result.responses.firstObject];
+                      
+                      [sself.tableView reloadData];
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
 }
 
 -(void)addComment:(NSString*)comment withThreadId:(NSInteger)threadId
 {
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateComments];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"text/json" forHTTPHeaderField:@"Content-Type"];
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    manager.requestSerializer = requestSerializer;
     
     NSDictionary * params = @{@"CommentId" : @0,
                               @"ThreadId" : @(threadId),
                               @"Response" : comment,
                               @"IsActive" : @YES};
     
+    defwself
+    [DFClient makeRequest:APIPathActivityUpdateComment
+                   method:kPOST
+                   params:params
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself updateDiaryInfo];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
-    NSLog(@"POSTing to %@:\nAuthorization: %@\nParams:\n%@", url, [Utility getAuthToken], params);
-    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-        [self updateDiaryInfo];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
@@ -281,7 +259,7 @@ typedef enum {
 -(void)configureUserCell:(UserCell*)cell
 {
     if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
-        [cell.lblTime setText:_response.dateCreatedFormated];
+        [cell.lblTime setText:_response.dateCreatedFormatted];
         [cell.userImage setImageWithURL:[NSURL URLWithString:_response.userInfo.avatarFile.filePath]];
         [cell.lblUsername setText:_response.userInfo.appUserName];
         [cell makeImageCircular];
@@ -304,8 +282,8 @@ typedef enum {
     else if (type == CellTypeIntro){
         infoCell = [self.tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
-            if (_response.textAreaResponse.count>0) {
-                TextAreaResponse * textResponse = [_response.textAreaResponse objectAtIndex:0];
+            if (_response.textareaResponses.count>0) {
+                TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
                 [infoCell.titleLabel setText:textResponse.response];
             }
         }
@@ -352,7 +330,7 @@ typedef enum {
         [cell.textLabel setFont:[UIFont systemFontOfSize:14 weight:1]];
         return cell;
     }
-
+    
     else if (type == CellTypeComment){
         int count = 3;
         Comment * comment;
@@ -410,7 +388,7 @@ typedef enum {
         threadId = [_diary.threadId integerValue];
     }
     else if (_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification){
-        threadId = _response.activityID;
+        threadId = _response.activityId.integerValue;
     }
     [self addComment:text withThreadId:threadId];
 }
@@ -426,7 +404,7 @@ typedef enum {
         threadId = [_diary.threadId integerValue];
     }
     else if (_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification){
-        threadId = _response.threadId;
+        threadId = _response.threadId.integerValue;
     }
     
     [self addComment:_txtResposne.text withThreadId:threadId];

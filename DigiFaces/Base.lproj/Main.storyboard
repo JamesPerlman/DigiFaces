@@ -441,23 +441,38 @@
                                     <outlet property="profileImage" destination="MrM-Cm-mnp" id="FkE-Ih-FLE"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" textLabel="ePf-fK-G1B" imageView="h5I-Tq-X7u" style="IBUITableViewCellStyleDefault" id="8bk-zh-JnG">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" id="8bk-zh-JnG" customClass="HomeTableViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8bk-zh-JnG" id="phg-Ol-t3V">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ePf-fK-G1B">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehf-Bo-r4R">
+                                            <rect key="frame" x="8" y="11" width="251" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="h5I-Tq-X7u">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text=" # " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yee-wK-sg2">
+                                            <rect key="frame" x="267" y="11" width="20" height="21"/>
+                                            <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Yee-wK-sg2" firstAttribute="leading" secondItem="Ehf-Bo-r4R" secondAttribute="trailing" constant="8" id="Hgz-ws-ylh"/>
+                                        <constraint firstAttribute="centerY" secondItem="Yee-wK-sg2" secondAttribute="centerY" id="IZX-Ld-NZh"/>
+                                        <constraint firstItem="Ehf-Bo-r4R" firstAttribute="leading" secondItem="phg-Ol-t3V" secondAttribute="leadingMargin" id="X7Y-Uu-sh6"/>
+                                        <constraint firstAttribute="centerY" secondItem="Ehf-Bo-r4R" secondAttribute="centerY" id="qnN-oE-4ox"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Yee-wK-sg2" secondAttribute="trailing" constant="-8" id="yXn-dv-9eI"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="Ehf-Bo-r4R" id="qUH-Xm-yvk"/>
+                                    <outlet property="unreadItemLabel" destination="Yee-wK-sg2" id="bjg-fD-OOU"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -1058,7 +1073,6 @@
                                         <constraint firstAttribute="centerY" secondItem="uCD-1K-j0c" secondAttribute="centerY" id="zSJ-N4-URh"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.85490196080000003" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="countInfoLabel" destination="TPl-cp-fNf" id="etz-7G-m3t"/>
                                     <outlet property="titleLabel" destination="uCD-1K-j0c" id="5Ze-HS-L2K"/>
@@ -2143,7 +2157,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="aboutMe" destination="73L-HL-w8M" id="oRQ-9H-0Ut"/>
+                        <outlet property="aboutMeTextView" destination="73L-HL-w8M" id="6MX-5X-SAN"/>
                         <outlet property="profilePicView" destination="n3C-hM-PSf" id="t8Z-Om-hKx"/>
                         <outlet property="titleName" destination="omK-fU-vGG" id="t6g-ku-p1F"/>
                     </connections>
@@ -3382,11 +3396,11 @@
         <image name="top_bar_back_arrow" width="13" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="veF-sC-LAA"/>
-        <segue reference="Taj-qP-dlL"/>
-        <segue reference="PJM-GU-RyY"/>
-        <segue reference="Z1a-cS-acW"/>
-        <segue reference="CE9-GG-Yoe"/>
+        <segue reference="xm7-nE-fcs"/>
+        <segue reference="XNZ-ng-ebc"/>
+        <segue reference="f8n-jW-t9J"/>
+        <segue reference="3r5-SJ-zjd"/>
         <segue reference="Sh4-6s-X9J"/>
+        <segue reference="kgY-B9-zM2"/>
     </inferredMetricsTieBreakers>
 </document>

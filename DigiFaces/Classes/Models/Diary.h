@@ -13,18 +13,19 @@
 
 @property (nonatomic, retain) NSString * dateCreated;
 @property (nonatomic, retain) NSString * dateCreatedFormatted;
-@property (nonatomic, assign) BOOL isRead;
+@property (nonatomic, strong) NSNumber * isRead;
 @property (nonatomic, retain) NSString * response;
-@property (nonatomic, assign) NSInteger responseID;
+@property (nonatomic, strong) NSNumber * responseID;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * useID;
+@property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * threadId;
 
 
 @property (nonatomic, retain) UserInfo * userInfo;
 
-@property (nonatomic, retain) NSMutableArray * files;
-@property (nonatomic, retain) NSMutableArray * comments;
+@property (nonatomic, retain) NSArray  * files;
+@property (nonatomic, retain) NSArray  * comments;
+
 -(NSInteger)picturesCount;
 -(NSInteger)videosCount;
 -(instancetype) initWithDictionary:(NSDictionary*)dict;

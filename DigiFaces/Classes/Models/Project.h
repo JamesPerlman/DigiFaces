@@ -11,20 +11,23 @@
 
 @interface Project : NSObject
 
-@property (nonatomic, assign) NSInteger projectID;
-@property (nonatomic, assign) NSInteger companyID;
-@property (nonatomic, assign) NSInteger regionID;
+@property (nonatomic, strong) NSNumber * projectID;
+@property (nonatomic, strong) NSNumber * companyID;
+@property (nonatomic, strong) NSNumber * regionID;
 @property (nonatomic, retain) NSString * projectInternalName;
 @property (nonatomic, retain) NSString * projectName;
 @property (nonatomic, retain) NSString * projectStartDate;
 @property (nonatomic, retain) NSString * projectEndDate;
-@property (nonatomic, assign) BOOL hasDailyDiary;
-@property (nonatomic, retain) NSMutableArray * dailyDiaryList;
-@property (nonatomic, assign) BOOL isTrial;
-@property (nonatomic, assign) BOOL isActive;
+@property (nonatomic, strong) NSNumber * languageId;
+@property (nonatomic, strong) NSNumber * allowProfilePicUpload;
+@property (nonatomic, strong) NSNumber * enableAvatarLibrary;
+@property (nonatomic, strong) NSNumber * hasDailyDiary;
+@property (nonatomic, strong) NSNumber * isTrial;
+@property (nonatomic, strong) NSNumber * isActive;
+
+@property (nonatomic, retain) NSArray  * dailyDiaryList;
 
 @property (nonatomic, retain) Company * company;
 
--(instancetype)initWithDictionary:(NSDictionary*)dict;
 
 @end

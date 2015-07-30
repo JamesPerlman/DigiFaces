@@ -1,4 +1,4 @@
- //
+//
 //  HomeViewController.m
 //  DigiFaces
 //
@@ -13,13 +13,17 @@
 #import "UserManagerShared.h"
 #import "File.h"
 #import "ProfilePicCell.h"
-#import "SDConstants.h"
+
 #import "Utility.h"
 #import "ProfilePictureCollectionViewController.h"
 #import "Reachability.h"
 #import "AppDelegate.h"
 #import "DiaryTheme.h"
 #import "DiaryThemeViewController.h"
+#import "HomeTableViewCell.h"
+
+#import "APIHomeAnnouncementResponse.h"
+#import "APIProjectActivitiesResponse.h"
 
 @interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate>
 {
@@ -34,11 +38,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:38/255.0f green:218/255.0f blue:1 alpha:1]}];
-   
+    
     _dataArray = [[NSMutableArray alloc] init];
     [_dataArray addObject:@{@"Title" : @"home", @"Icon" : @"home.png"}];
     [_dataArray addObject:@{@"Title" : @"diary", @"Icon" : @"diary.png"}];
@@ -77,109 +81,66 @@
 -(void)fetchUserHomeAnnouncements{
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
     
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
+    defwself
+    [DFClient makeRequest:APIPathGetHomeAnnouncement
+                   method:kGET
+                   params:nil
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager GET:@"http://digifacesservices.focusforums.com/api/Project/GetHomeAnnouncement/{projectId}" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"User JSON: %@", responseObject);
-       
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES]; 
-    }];
 }
 
 -(void)fetchActivites{
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetActivties];
-    url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:[NSString stringWithFormat:@"%d",[[UserManagerShared sharedManager] currentProjectID]]];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"User JSON: %@", responseObject);
-        
-        for (NSDictionary * dict in responseObject) {
-            DiaryTheme * theme = [[DiaryTheme alloc] initWithDictionary:dict];
-            [_dataArray addObject:theme];
-        }
-        [self.tableView reloadData];
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
+    defwself
+    [DFClient makeRequest:APIPathProjectGetActivities
+                   method:kPOST
+                urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+               bodyParams:nil
+                  success:^(NSDictionary *response, APIProjectActivitiesResponse *result) {
+                      defsself
+                      [sself.dataArray addObjectsFromArray:result.diaryThemes];
+                      [sself.tableView reloadData];
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
 }
 
 -(void)fetchUserInfo{
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager GET:@"http://digifacesservices.focusforums.com/api/Account/UserInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"User JSON: %@", responseObject);
-        
-        NSDictionary * avatarDic = [responseObject objectForKey:@"AvatarFile"];
-        File * avatarFileObj = [[File alloc]init];
-        NSString * imageUrl = [avatarFileObj returnFilePathFromFileObject:avatarDic];
-        [Utility saveString:imageUrl forKey:kImageURL];
-        NSString * currentProjectID = [responseObject valueForKey:kCurrentPorjectID];
-        NSString * email = [responseObject valueForKey:kEmail];
-        [Utility saveString:currentProjectID forKey:kCurrentPorjectID];
-        [Utility saveString:[responseObject valueForKey:kAboutMeText] forKey:kAboutMeText];
-        [Utility saveString:email forKey:kEmail];
-        
-        [[UserManagerShared sharedManager] setUserInfoDictionary:responseObject];
-        
-
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-        [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:nil];
-        
-        [[UserManagerShared sharedManager] setFirstName:[responseObject objectForKey:@"FirstName"]];
-        [[UserManagerShared sharedManager] setLastName:[responseObject objectForKey:@"LastName"]];
-        [[UserManagerShared sharedManager] setAboutMeText:[responseObject objectForKey:@"AboutMeText"]];
-
-        [self fetchActivites];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
-}
+    defwself
+    [DFClient makeRequest:APIPathGetUserInfo
+                   method:kGET
+                   params:nil
+                  success:^(NSDictionary *response, UserInfo *result) {
+                      LS.myUserInfo = result;
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      
+                      [sself setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:nil];
+                      
+                      [sself fetchActivites];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
+    }
 
 
 -(void)setProfilePicture:(NSString*)imageUrl withImage:(UIImage*)image
@@ -201,34 +162,22 @@
 
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
-    [self setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:image];
+    [self setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:image];
     
+    defwself
+    [DFClient makeRequest:APIPathUploadUserCustomAvatar
+                   method:kPOST
+                   params:profilePicture
+                  success:^(NSDictionary *response, id result) {
+                      
+                      [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateAvatar];
-    
-    [manager POST:url parameters:profilePicture success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
-        [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
-        
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
@@ -250,7 +199,7 @@
 #pragma mark - UITableViewDeleagate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-
+    
     return _dataArray.count;
 }
 
@@ -286,18 +235,22 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = nil;
+    HomeTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     if (indexPath.row == 0 || indexPath.row == 1) {
         NSDictionary * dict = [_dataArray objectAtIndex:indexPath.row];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.textLabel.text = NSLocalizedString([dict objectForKey:@"Title"], [dict objectForKey:@"Title"]);
+        cell.titleLabel.text = NSLocalizedString([dict objectForKey:@"Title"], [dict objectForKey:@"Title"]);
+        cell.unreadCount = 0;
         //cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
     }
     else{
-        cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        
         
         DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row];
-        [cell.textLabel setText:theme.activityTitle];
+        
+        [cell.titleLabel setText:theme.activityTitle];
+        
+        cell.unreadCount = theme.unreadResponses;
+        
         //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
     }
     cell.separatorInset = UIEdgeInsetsZero;
@@ -323,6 +276,7 @@
         NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
         DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row];
         themeController.diaryTheme = theme;
+        themeController.navigationItem.title = theme.activityTitle;
     }
 }
 

@@ -7,10 +7,9 @@
 //
 
 #import "AboutDigifacesController.h"
-#import "AFHTTPRequestOperationManager.h"
 #import "MBProgressHUD.h"
 #import "Utility.h"
-#import "SDConstants.h"
+#import "About.h"
 #import "NSString+HTML.h"
 
 @implementation AboutDigifacesController
@@ -30,32 +29,15 @@
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kAboutDigifaces];
-    url = [url stringByReplacingOccurrencesOfString:@"{languageCode}" withString:@"en"];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+    [DFClient makeRequest:APIPathGetAbout method:kGET urlParams:@{@"languageCode" : @"en"} bodyParams:nil success:^(NSDictionary *response, About *result) {
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
         [_aboutLabel setFrame:CGRectMake(10, 0, _scrollView.frame.size.width - 20, _scrollView.frame.size.height)];
-        [_aboutLabel setText:[responseObject valueForKey:@"AboutText"]];
-        
+        [_aboutLabel setText:result.aboutText];
         [_scrollView setContentSize:_aboutLabel.optimumSize];
-        //_textView.text = [[[responseObject valueForKey:@"AboutText"] stringByDecodingHTMLEntities] stringByConvertingHTMLToPlainText];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+    } failure:^(NSError *error) {
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
     }];
-
+    
 }
 
 

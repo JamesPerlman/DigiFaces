@@ -15,7 +15,7 @@
 #import "CalendarViewController.h"
 #import "UserManagerShared.h"
 #import "MBProgressHUD.h"
-#import "SDConstants.h"
+
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 #import "CustomAlertView.h"
@@ -23,12 +23,16 @@
 #import "DFMediaUploadManager.h"
 #import "NSLayoutConstraint+ConvenienceMethods.h"
 
+#import "ImageGallery.h"
+#import "Thread.h"
+#import "TextareaResponse.h"
+
 @interface AddResponseViewController () < CalendarViewControlerDelegate, UITextViewDelegate, ProfilePictureViewControllerDelegate, DFMediaUploadManagerDelegate>
 {
     NSInteger selectedTag;
     UIImagePickerController * imagePicker;
     CalendarViewController * calendarView;
-    NSInteger threadID;
+    
     NSDate * selectedDate;
     ProfilePictureCollectionViewController * profileController;
 }
@@ -36,40 +40,42 @@
 @property (nonatomic, retain) NSMutableArray * dataArray;
 @property (nonatomic, retain) CustomAlertView * alertView;
 
+@property (nonatomic, strong) Thread *thread;
+
 @end
 
 @implementation AddResponseViewController
 
 - (void)viewDidLoad {
-[super viewDidLoad];
-
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-[_txtResponse becomeFirstResponder];
-[_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
-selectedDate = [NSDate date];
-
-_alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
-
-if (_diaryTheme) {
-    _constDateHeight.constant = 0;
-    _constTitleHeight.constant = 0;
+    [super viewDidLoad];
     
-    if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery])   {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [_txtResponse becomeFirstResponder];
+    [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
+    selectedDate = [NSDate date];
+    
+    _alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
+    
+    if (_diaryTheme) {
+        _constDateHeight.constant = 0;
+        _constTitleHeight.constant = 0;
         
-        
-        profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfilePictureCollectionViewController"];
-        
-        profileController.type = ProfilePictureTypeGallery;
-        profileController.delegate = self;
-        Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
-        profileController.files = [module.imageGallery files];
-        profileController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addSubview:profileController.collectionView];
-        [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
-        
+        if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery])   {
+            
+            
+            profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfilePictureCollectionViewController"];
+            
+            profileController.type = ProfilePictureTypeGallery;
+            profileController.delegate = self;
+            Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
+            profileController.files = [module.imageGallery files];
+            profileController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addSubview:profileController.collectionView];
+            [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
+            
+        }
     }
-}
-
+    
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -113,6 +119,8 @@ if (_diaryTheme) {
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
+    
+    
     NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateThread];
     
     NSDictionary * params = @{@"ActivityId" : @(activityId),
@@ -120,36 +128,32 @@ if (_diaryTheme) {
                               @"IsDraft" : @NO,
                               @"IsActive" : @YES};
     
-    NSLog(@"POSTing to %@ with params:\n %@", url, params);
+    defwself
+    [DFClient makeRequest:APIPathActivityUpdateThread
+                   method:kPOST
+                   params:params
+                  success:^(NSDictionary *response, Thread *result) {
+                      defsself
+                      sself.thread = result;
+                      
+                      if (_dailyDiary) {
+                          [sself addEntryWithActivityId:activityId];
+                      }
+                      else if(_diaryTheme){
+                          if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
+                              [sself addImageGalleryResponse];
+                          }
+                          else
+                          {
+                              [sself addTextAreaResponseWithActivityId:activityId];
+                          }
+                      }
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        threadID = [[responseObject objectForKey:@"ThreadId"] integerValue];
-        if (_dailyDiary) {
-            [self addEntryWithActivityId:activityId];
-        }
-        else if(_diaryTheme){
-            if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
-                [self addImageGalleryResponse];
-            }
-            else
-            {
-                [self addTextAreaResponseWithActivityId:activityId];
-            }
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
 }
 
 
@@ -157,80 +161,61 @@ if (_diaryTheme) {
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateGalleryResponse];
-    
     NSString *selectedGalleryIds = @"";
     if (profileController.selectedImageFile) {
-        selectedGalleryIds = @(profileController.selectedImageFile.fileId).stringValue;
+        selectedGalleryIds = profileController.selectedImageFile.fileId.stringValue;
     }
     Module * imageGalleryModule = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
     NSDictionary * params = @{@"ImageGalleryResponseId" : @0,
-                              @"ThreadId" : @(threadID),
-                              @"ImageGalleryId" : @(imageGalleryModule.imageGallery.imageGalleryId),
+                              @"ThreadId" : self.thread.threadId,
+                              @"ImageGalleryId" : imageGalleryModule.imageGallery.imageGalleryId,
                               @"GalleryIds" : selectedGalleryIds,
                               @"UserId" : [[UserManagerShared sharedManager] ID],
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text};
     
-    NSLog(@"POSTing to %@\nParams:%@", url, params);
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    defwself
+    [DFClient makeRequest:APIPathActivityUpdateImageGalleryResponse
+                   method:kPOST
+                   params:params
+                  success:^(NSDictionary *response, ImageGallery *result) {
+                      defsself
+                      [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
+                      [sself dismissViewControllerAnimated:YES completion:nil];
+                  }
+                  failure:^(NSError *error) {
+                      defsself;
+                      [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
+                  }];
     
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
 }
 
 -(void)addTextAreaResponseWithActivityId:(NSInteger)activityId
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateTextAreaResponse];
-    
     Module * textAreaModule = [_diaryTheme getModuleWithThemeType:ThemeTypeTextArea];
     
     NSDictionary * params = @{@"TextareaResponseId" : @(0),
-                              @"ThreadId" : @(threadID),
-                              @"TextareaId" : @(textAreaModule.textArea.textareaId),
+                              @"ThreadId" : self.thread.threadId,
+                              @"TextareaId" : textAreaModule.textArea.textareaId,
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text};
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    NSLog(@"POSTing to %@\nParams: %@", url, params);
-    
-    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
-        [self.mediaUploadManager uploadMediaFiles];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-            
-        });
-    }];
+    defwself
+    [DFClient makeRequest:APIPathActivityUpdateTextareaResponse
+                   method:kPOST
+                   params:params
+                  success:^(NSDictionary *response, TextareaResponse *result) {
+                      defsself
+                      [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
+                      [sself.mediaUploadManager uploadMediaFiles];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
 }
 
 -(void)addEntryWithActivityId:(NSInteger)activityId
@@ -242,59 +227,41 @@ if (_diaryTheme) {
     
     NSDictionary * params = @{@"ActivityId" : @(activityId),
                               @"DailyDiaryResponseId" : @0,
-                              @"DailyDiaryId" : @(_dailyDiary.diaryID),
-                              @"ThreadId" : @(threadID),
+                              @"DailyDiaryId" : _dailyDiary.diaryId,
+                              @"ThreadId" : self.thread.threadId,
                               @"Title" : _txtTitle.text,
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text,
                               @"DiaryDate" : [Utility stringDateFromDMYDate:selectedDate]};
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    defwself
+    [DFClient makeRequest:APIPathUpdateDailyDiary
+                   method:kPOST
+                urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+               bodyParams:params
+                  success:^(NSDictionary *response, DailyDiary *result) {
+                      NSLog(@"Uploading images (if any)");
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          defsself
+                          [sself.mediaUploadManager uploadMediaFiles];
+                      });
+                      
+                      
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    
-    NSLog(@"POSTing to %@\nParams: %@", url, params);
-    
-    manager.requestSerializer = requestSerializer;
-    
-    __weak __typeof(self) wself = self;
-    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        
-        NSLog(@"Response : %@", responseObject);
-        
-        NSLog(@"Uploading images (if any)");
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            __typeof(wself) sself = wself;
-            [sself.mediaUploadManager uploadMediaFiles];
-        });
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        __typeof(wself) sself = wself;
-        [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-    }];
 }
 
 -(void)insertThreadFileWithMediaView:(DFMediaUploadView*)mediaUploadView {
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kInsertThreadFile];
-    url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:[NSString stringWithFormat:@"%ld", (long)threadID]];
-    NSLog(@"POSTing to %@", url);
-    
     
     NSURL *publicFileURL = [NSURL URLWithString:mediaUploadView.mediaFilePath];
     NSString *fileName = [publicFileURL lastPathComponent];
     NSString *fileExtension = [fileName pathExtension];
-    // adapted from http://stackoverflow.com/a/5998683/892990
-    // Borrowed from http://stackoverflow.com/questions/5996797/determine-mime-type-of-nsdata-loaded-from-a-file
-    // itself, derived from  http://stackoverflow.com/questions/2439020/wheres-the-iphone-mime-type-database
-    /*CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)fileExtension, NULL);
-     CFStringRef mimeType = UTTypeCopyPreferredTagWithClass (UTI, kUTTagClassMIMEType);
-     CFRelease(UTI);
-     */
     NSMutableDictionary * params = @{@"FileName" : fileName,//fileType: (__bridge NSString*)mimeType,
                                      @"Extension" : fileExtension
                                      }.mutableCopy;
@@ -311,44 +278,19 @@ if (_diaryTheme) {
         params[@"FileType"] = @"Image";
     }
     
-    /*
-     {
-     >"FileId": 1,
-     "FileName": "sample string 2",
-     >"FileTypeId": 3,
-     "FileType": "sample string 4",
-     "Extension": "sample string 5",
-     "IsAmazonFile": true,
-     "AmazonKey": "sample string 7",
-     "IsViddlerFile": true,
-     "ViddlerKey": "sample string 9",
-     >"IsCameraTagFile": true,
-     >"CameraTagKey": "sample string 11",
-     >"PositionId": 12,
-     >"Position": "sample string 13",
-     "PublicFileUrl": "sample string 14"
-     }
-     */
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"text/json" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    __weak __typeof(self) wself = self;
-    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Response : %@", responseObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
-    
-    
-    // CFRelease(mimeType);
+    defwself
+    [DFClient makeRequest:APIPathActivityInsertThreadFile
+                   method:kPOST
+                urlParams:@{@"projectId" : self.thread.threadId}
+               bodyParams:[NSDictionary dictionaryWithDictionary:params]
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
 }
 
@@ -373,9 +315,9 @@ if (_diaryTheme) {
     {
         [self resignAllResponders];
         if (_diaryTheme.activityId) {
-            [self createThreadWithActivityID:_diaryTheme.activityId];
+            [self createThreadWithActivityID:_diaryTheme.activityId.integerValue];
         } else {
-            [self createThreadWithActivityID:_dailyDiary.activityId];
+            [self createThreadWithActivityID:_dailyDiary.activityId.integerValue];
         }
     }
     

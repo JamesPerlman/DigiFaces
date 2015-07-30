@@ -21,7 +21,7 @@
     UIImage * profilePic;
     NSString * aboutMe;
 }
-+ (id)sharedManager;
++ (instancetype)sharedManager;
 
 @property(nonatomic, retain) UserInfo * info;
 

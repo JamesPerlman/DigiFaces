@@ -11,25 +11,25 @@
 
 @interface Response : NSObject
 
-@property (nonatomic, assign) NSInteger activityID;
-@property (nonatomic, assign) NSInteger threadId;
+@property (nonatomic, strong) NSNumber * activityId;
+@property (nonatomic, strong) NSNumber * threadId;
 @property (nonatomic, retain) NSString * dateCreated;
-@property (nonatomic, retain) NSString * dateCreatedFormated;
-@property (nonatomic, assign) BOOL hasImageGalleryResponse;
-@property (nonatomic, assign) BOOL hasTextAreaResponse;
-@property (nonatomic, retain) NSString * imageGalleryResponse;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL isDraft;
-@property (nonatomic, assign) BOOL isRead;
+@property (nonatomic, retain) NSString * dateCreatedFormatted;
+@property (nonatomic, strong) NSNumber * hasImageGalleryResponse;
+@property (nonatomic, strong) NSNumber * hasTextareaResponse;
+@property (nonatomic, strong) NSNumber * isActive;
+@property (nonatomic, strong) NSNumber * isDraft;
+@property (nonatomic, strong) NSNumber * isRead;
 
 @property (nonatomic, retain) UserInfo * userInfo;
 
-@property (nonatomic, retain) NSMutableArray * researcherComments;
-@property (nonatomic, retain) NSMutableArray * tags;
-@property (nonatomic, retain) NSMutableArray * internalComments;
-@property (nonatomic, retain) NSMutableArray * files;
-@property (nonatomic, retain) NSMutableArray * comments;
-@property (nonatomic, retain) NSMutableArray * textAreaResponse;
+//@property (nonatomic, retain) NSArray * researcherComments;
+@property (nonatomic, retain) NSArray * tags;
+//@property (nonatomic, retain) NSArray * internalComments;
+@property (nonatomic, retain) NSArray * files;
+@property (nonatomic, retain) NSArray * comments;
+@property (nonatomic, retain) NSArray * textareaResponses;
+@property (nonatomic, retain) NSArray * imageGalleryResponses;
 
 -(instancetype) initWithDictionary:(NSDictionary*)dict;
 

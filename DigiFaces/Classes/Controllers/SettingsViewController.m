@@ -75,7 +75,7 @@
         cell.textLabel.text = NSLocalizedString(@"VERSION cell", @"VERSION 1.0") ;
         
     }
- 
+    
     
     return cell;
 }
@@ -88,47 +88,31 @@
     
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
-    
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager POST:@"http://digifacesservices.focusforums.com/api/Account/Logout" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"userName"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+    defwself
+    [DFClient logoutWithSuccess:^(NSDictionary *response, id result) {
+        defsself
         
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [self performSegueWithIdentifier:@"logoutSegue" sender:self];
+        [MBProgressHUD hideHUDForView:sself.view animated:YES];
+        [sself performSegueWithIdentifier:@"logoutSegue" sender:sself];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
+    } failure:^(NSError *error) {
+        defsself
+        [MBProgressHUD hideHUDForView:sself.view animated:YES];
     }];
+    
     
     
 }
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -9,7 +9,7 @@
 #import "Notification.h"
 
 @implementation Notification
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -27,6 +27,6 @@
         self.userID = [dict valueForKey:@"UserId"];
     }
     return self;
-}
+}*/
 
 @end

@@ -39,8 +39,18 @@
     if (self.videoCount) {
         [labelItems addObject:[NSString stringWithFormat:@"\uf03d%d", (int)self.videoCount]];
     }
-    self.countInfoLabel.text = [labelItems componentsJoinedByString:@""];
+    self.countInfoLabel.text = [labelItems componentsJoinedByString:@" "];
     
+}
+
+- (UIView*)unreadIndicator {
+    if (!_unreadIndicator) {
+        _unreadIndicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+        _unreadIndicator.layer.cornerRadius = 8;
+        _unreadIndicator.clipsToBounds = true;
+        _unreadIndicator.backgroundColor = [UIColor orangeColor];
+    }
+    return _unreadIndicator;
 }
 
 @end

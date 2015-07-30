@@ -1,0 +1,25 @@
+//
+//  DigiFaces.pch
+//  DigiFaces
+//
+//  Created by James on 7/28/15.
+//  Copyright (c) 2015 INET360. All rights reserved.
+//
+
+#ifndef DigiFaces_DigiFaces_pch
+#define DigiFaces_DigiFaces_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <AFNetworking/AFNetworking.h>
+
+#import "DFConstants.h"
+#import "DFClient.h"
+#import "LocalStorage.h"
+
+#define defwself __weak __typeof(self) wself = self;
+#define defsself __typeof(wself) sself = wself;
+
+#endif
+

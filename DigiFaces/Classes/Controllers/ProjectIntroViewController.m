@@ -7,9 +7,8 @@
 //
 
 #import "ProjectIntroViewController.h"
-#import "SDConstants.h"
+
 #import "Utility.h"
-#import "AFHTTPRequestOperationManager.h"
 #import "MBProgressHUD.h"
 #import "File.h"
 #import "ImageCell.h"
@@ -20,15 +19,15 @@
 #import "RTCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "NSLayoutConstraint+ConvenienceMethods.h"
+#import "APIHomeAnnouncementResponse.h"
 
 @interface ProjectIntroViewController ()
 {
-    File * attachment;
-    NSString * text;
-    NSString * title;
     RTCell * introCell;
 }
 @property (nonatomic, retain) NSMutableArray * dataAray;
+
+@property (nonatomic, strong) APIHomeAnnouncementResponse *announcement;
 @end
 
 @implementation ProjectIntroViewController
@@ -49,37 +48,29 @@
     NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetHomeAnnouncements];
     url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:projectId];
     
+    defwself
+    [DFClient makeRequest:APIPathGetHomeAnnouncement
+                   method:kGET
+                urlParams:@{@"projectId" : projectId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, APIHomeAnnouncementResponse *result) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      sself.announcement = result;
+                      
+                      [_dataAray removeAllObjects];
+                      [_dataAray addObject:result.file];
+                      [_dataAray addObject:result.title];
+                      [_dataAray addObject:[result.text stringByConvertingHTMLToPlainText]];
+                      
+                      [self.tableView reloadData];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-        attachment = [[File alloc] initWithDictionary:[responseObject valueForKey:@"File"]];
-        text = [[responseObject valueForKey:@"Text"] stringByConvertingHTMLToPlainText];
-        title = [responseObject valueForKey:@"Title"] ;
-        
-        [_dataAray removeAllObjects];
-        [_dataAray addObject:attachment];
-        [_dataAray addObject:title];
-        [_dataAray addObject:text];
-        
-        [self.tableView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
@@ -106,14 +97,14 @@
     else if (indexPath.row == 2){
         NSAttributedString *attributedText =
         [[NSAttributedString alloc]
-         initWithString:text
+         initWithString:self.announcement.text
          attributes:@{
          NSFontAttributeName: [UIFont systemFontOfSize:16.0f]
          }];
         CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width, CGFLOAT_MAX}
                                                    options:NSStringDrawingUsesLineFragmentOrigin
                                                    context:nil];
-        CGSize size = rect.size;
+        //CGSize size = rect.size;
         
         
         return introCell.titleLabel.optimumSize.height + 50;
@@ -130,7 +121,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0) {
-        
+        File *attachment = self.announcement.file;
         if ([attachment.fileType isEqualToString:@"Image"]) {
             ImageCell * cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
             NSURL * url = [NSURL URLWithString:attachment.filePath];
@@ -149,12 +140,12 @@
     if (indexPath.row == 1) {
         // Title
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        [cell.textLabel setText:title];
+        [cell.textLabel setText:self.announcement.title];
         return cell;
     }
     else{
         introCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-        [introCell.titleLabel setText:text];
+        [introCell.titleLabel setText:self.announcement.text];
         return introCell;
     }
 }
@@ -212,7 +203,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"webViewSegue"]) {
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        webController.url = attachment.filePath;
+        webController.url = self.announcement.file.filePath;
     }
 }
 

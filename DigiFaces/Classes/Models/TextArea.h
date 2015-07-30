@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TextArea : NSObject
+@interface Textarea : NSObject
 
-@property (nonatomic, assign) NSInteger textareaId;
-@property (nonatomic, assign) NSInteger activityId;
-@property (nonatomic, assign) NSInteger maxCharacters;
+@property (nonatomic, strong) NSNumber * textareaId;
+@property (nonatomic, strong) NSNumber * activityId;
+@property (nonatomic, strong) NSNumber * maxCharacters;
 @property (nonatomic, retain) NSString * questionText;
 @property (nonatomic, retain) NSString * placeHolder;
 

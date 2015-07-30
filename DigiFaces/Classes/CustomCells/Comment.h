@@ -11,17 +11,17 @@
 
 @interface Comment : NSObject
 
-@property (nonatomic, assign) NSInteger commentID;
+@property (nonatomic, strong) NSNumber * commentID;
 @property (nonatomic, retain) NSString * dateCreated;
 @property (nonatomic, retain) NSString * dateCreatedFormated;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL isRead;
+@property (nonatomic, strong) NSNumber * isActive;
+@property (nonatomic, strong) NSNumber * isRead;
 @property (nonatomic, retain) NSString * response;
-@property (nonatomic, assign) NSInteger threadID;
-@property (nonatomic, retain) NSString * userID;
+@property (nonatomic, strong) NSNumber * threadId;
+@property (nonatomic, retain) NSString * userId;
 
 @property (nonatomic, retain) UserInfo * userInfo;
 
--(instancetype) initWithDictionary:(NSDictionary*)dict;
+//-(instancetype) initWithDictionary:(NSDictionary*)dict;
 
 @end

@@ -11,6 +11,6 @@
 @interface MyProfileViewController : UIViewController<UITextViewDelegate>
 
 @property(nonatomic,strong)IBOutlet UILabel * titleName;
-@property(nonatomic,strong)IBOutlet UITextView * aboutMe;
+@property(nonatomic,strong)IBOutlet UITextView * aboutMeTextView;
 @property(nonatomic,strong)IBOutlet UIImageView * profilePicView;
 @end

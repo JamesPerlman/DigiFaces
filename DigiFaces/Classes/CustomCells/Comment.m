@@ -9,7 +9,7 @@
 #import "Comment.h"
 
 @implementation Comment
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -29,5 +29,5 @@
     }
     return self;
 }
-
+*/
 @end

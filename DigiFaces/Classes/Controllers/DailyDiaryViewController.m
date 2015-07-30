@@ -9,7 +9,7 @@
 #import "DailyDiaryViewController.h"
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
-#import "SDConstants.h"
+
 #import "Utility.h"
 #import "UserManagerShared.h"
 #import "DailyDiary.h"
@@ -77,28 +77,21 @@
 -(void)fetchDailyDiaryWithDiaryID:(NSInteger)diaryID
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kDailyDiaryInfo];
-    url = [url stringByReplacingOccurrencesOfString:@"{diaryId}" withString:[NSString stringWithFormat:@"%d", diaryID]];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:[Utility getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Data : %@", responseObject);
-        _dailyDiary = [[DailyDiary alloc] initWithDictionary:responseObject];
-        [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    }];
+    defwself
+    [DFClient makeRequest:APIPathGetDailyDiary
+                   method:kPOST
+                urlParams:@{@"diaryId" : @(diaryID)}
+               bodyParams:nil
+                  success:^(NSDictionary *response, DailyDiary *result) {
+                      defsself
+                      sself.dailyDiary = result;
+                      [sself.tableView reloadData];
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
 }
 
 #pragma mark - Table view data source
@@ -137,7 +130,7 @@
             return 160;
         }
         else if (indexPath.row == 1) {
-
+            
             return infoCel.titleLabel.optimumSize.height + 20;
         }
         else if (indexPath.row == 2){
@@ -180,7 +173,7 @@
             cell = infoCel;
         }
         else if (indexPath.row == 2){
-             DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell" forIndexPath:indexPath];
+            DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell" forIndexPath:indexPath];
             [headerCell.label setText:[NSString stringWithFormat:@"%lu Entries", (unsigned long)[_dailyDiary.userDiaries count]]];
             cell = headerCell;
         }
@@ -191,17 +184,18 @@
         NSArray * arrDiary = [_dailyDiary.diariesDict valueForKey:date];
         Diary * diary = [arrDiary objectAtIndex:indexPath.row];
         
-        
-        [dcell.titleLabel setText:[diary title]];
+        if (diary)
+            [dcell.titleLabel setText:[diary title]];
         dcell.commentCount = diary.comments.count;
         dcell.pictureCount = diary.picturesCount;
         dcell.videoCount = diary.videosCount;
-        
-        cell = dcell;
         if (diary.isRead) {
-            [cell setBackgroundColor:[UIColor whiteColor]];
+            dcell.accessoryView = nil;
+        } else {
+            dcell.accessoryView = dcell.unreadIndicator;
         }
-        [cell.detailTextLabel setText:[NSString stringWithFormat:@"By %@",[diary userInfo].appUserName]];
+        cell = dcell;
+        // [cell.detailTextLabel setText:[NSString stringWithFormat:@"By %@",[diary userInfo].appUserName]];
     }
     
     cell.separatorInset = UIEdgeInsetsZero;

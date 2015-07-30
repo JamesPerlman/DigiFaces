@@ -84,37 +84,32 @@
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
+    defwself
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-   // [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-//    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-  
-    manager.requestSerializer = requestSerializer;
-    
-    [manager POST:@"http://digifacesservices.focusforums.com/api/Account/ForgotPassword" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        _errorMessage.textColor = [UIColor greenColor];
-        _errorMessage.text = @"Please check your inbox, password sent";
-        
-        [_customAlert showAlertWithMessage:@"Please check your inbox, password sent" inView:self.view withTag:0];
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        [self performSelector:@selector(cancelThis:) withObject:nil afterDelay:2];
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        _errorMessage.text = @"An error in request, verify that your email is correct";
-        
-        [_customAlert showAlertWithMessage:@"An error in request, verify that your email is correct" inView:self.view withTag:0];
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-    }];
+    [DFClient makeRequest:APIPathForgotPassword
+                   method:kPOST
+                   params:@{@"Email" : email}
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      _errorMessage.textColor = [UIColor greenColor];
+                      _errorMessage.text = @"Please check your inbox, password sent";
+                      
+                      [_customAlert showAlertWithMessage:@"Please check your inbox, password sent" inView:sself.view withTag:0];
+                      
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      
+                      [sself performSelector:@selector(cancelThis:) withObject:nil afterDelay:2];
+                  }
+                  failure:^(NSError *error) {
+                      
+                      defsself
+                      
+                      _errorMessage.text = @"An error in request, verify that your email is correct";
+                      
+                      [_customAlert showAlertWithMessage:@"An error in request, verify that your email is correct" inView:sself.view withTag:0];
+                      
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                  }];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

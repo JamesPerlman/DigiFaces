@@ -11,21 +11,21 @@
 
 @interface UserInfo : NSObject
 
-@property (nonatomic, assign) NSInteger Id;
+@property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSString * userName;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * userId;
-@property (nonatomic, assign) BOOL isUserNameSet;
+@property (nonatomic, retain) NSNumber * isUserNameSet;
 @property (nonatomic, retain) NSString * appUserName;
-@property (nonatomic, assign) BOOL isModerator;
-@property (nonatomic, assign) NSInteger defaultLanguageID;
-@property (nonatomic, assign) NSInteger avatarFileID;
-@property (nonatomic, assign) NSInteger currentProjectID;
+@property (nonatomic, retain) NSNumber * isModerator;
+@property (nonatomic, retain) NSNumber * defaultLanguageID;
+@property (nonatomic, retain) NSNumber * avatarFileID;
+@property (nonatomic, retain) NSNumber * currentProjectID;
 @property (nonatomic, retain) NSString * aboutMeText;
-@property (nonatomic, assign) BOOL hasRegistered;
+@property (nonatomic, retain) NSNumber * hasRegistered;
 
 @property (nonatomic, retain) File * avatarFile;
 

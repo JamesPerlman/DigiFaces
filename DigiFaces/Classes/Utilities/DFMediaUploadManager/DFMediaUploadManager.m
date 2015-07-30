@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
 
-#import "SDConstants.h"
+
 
 #import "DFMediaUploadManager.h"
 
@@ -22,9 +22,6 @@
     void (^_uploadCompletionBlock)(BOOL success);
     BOOL _uploading;
 }
-
-@property (nonatomic, strong) AFHTTPRequestOperationManager *viddlerUploadManager;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *viddlerAuthRequestManager;
 
 @property (nonatomic, copy) NSNumber *authorID;
 @property (nonatomic, copy) NSString *groupName;
@@ -50,7 +47,7 @@
 #pragma mark - DFMediaUploadViewDelegate
 - (void)didTapMediaUploadView:(DFMediaUploadView *)view {
     if ([self.delegate respondsToSelector:@selector(mediaUploadManager:shouldHandleTapForMediaUploadView:)]) {
-      
+        
         if (![self.delegate mediaUploadManager:self shouldHandleTapForMediaUploadView:view]) {
             
             return;
@@ -184,31 +181,6 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     self.currentView = nil;
 }
-
-#pragma mark - HTTPRequestManagers
-- (AFHTTPRequestOperationManager*)viddlerUploadManager {
-    if (!_viddlerUploadManager) {
-        _viddlerUploadManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kViddlerAPIURL]];
-        _viddlerUploadManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [_viddlerUploadManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        _viddlerUploadManager.responseSerializer = [AFJSONResponseSerializer serializer];
-    }
-    return _viddlerUploadManager;
-}
-
-- (AFHTTPRequestOperationManager*)viddlerAuthRequestManager {
-    if (!_viddlerAuthRequestManager) {
-        _viddlerAuthRequestManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kFFGetViddlerCredentialsURL]];
-        _viddlerAuthRequestManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [_viddlerAuthRequestManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        _viddlerAuthRequestManager.responseSerializer = [AFJSONResponseSerializer serializer];
-        NSMutableSet *acceptableContentTypes = [NSMutableSet setWithSet:_viddlerAuthRequestManager.responseSerializer.acceptableContentTypes];
-        [acceptableContentTypes addObject:@"text/html"];
-        _viddlerAuthRequestManager.responseSerializer.acceptableContentTypes = acceptableContentTypes;
-    }
-    return _viddlerAuthRequestManager;
-}
-
 #pragma mark - Media Uploading
 
 - (void)uploadMediaFiles {
@@ -344,7 +316,14 @@
     
     __weak __typeof(self) wself = self;
     
-    [self.viddlerAuthRequestManager POST:@"" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPClient *authClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kFFGetViddlerCredentialsURL]];
+    
+    authClient.parameterEncoding = AFJSONParameterEncoding;
+    
+    
+    [authClient postPath:@"" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
         __typeof__(wself) sself = wself;
         if (!sself) { return; }
         
@@ -356,14 +335,23 @@
         // NSString *path = [NSString stringWithFormat:@"%@?key=%@&sessionid=%@&title=%@&description=%@&tags=%@&make_public=0", url, response[@"key"], response[@"sessionid"], title, description, tags];
         NSString *path = [NSString stringWithFormat:@"%@?key=%@&sessionid=%@&title=%@&description=%@&make_public=0", url, response[@"key"], response[@"sessionid"], fileName, description];
         
-        NSDictionary *param = [NSDictionary dictionary];
         
-        AFHTTPRequestOperation *uploadOperation = [sself.viddlerUploadManager POST:path parameters:param constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        AFHTTPClient *uploadClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kViddlerAPIURL]];
+        
+        
+        
+        
+        NSMutableURLRequest *urlRequest = [uploadClient multipartFormRequestWithMethod:@"POST" path:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [formData appendPartWithFileData:videoData
                                         name:@"file"
                                     fileName:fileName
                                     mimeType:@"multipart/form-data"];
-        } success:^(AFHTTPRequestOperation *operation, id response) {
+        }];
+        
+        AFHTTPRequestOperation *uploadOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+        
+        
+        [uploadOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id response) {
             __typeof(self) strongSelf = wself;
             dispatch_async(dispatch_get_main_queue(), ^{
                 id errorObj = response[@"error"];
@@ -395,6 +383,7 @@
                 mediaUploadView.progressView.progress = (float)((double)totalBytesWritten / (double)totalBytesExpectedToWrite);
             });
         }];
+        [uploadClient enqueueHTTPRequestOperation:uploadOperation];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             __typeof(self) strongSelf = wself;

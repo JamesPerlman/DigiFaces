@@ -11,13 +11,14 @@
 
 @interface DailyDiary : NSObject
 
-@property (nonatomic, assign) NSInteger diaryID;
-@property (nonatomic, assign) NSInteger activityId;
+@property (nonatomic, strong) NSNumber * diaryId;
+@property (nonatomic, strong) NSNumber * activityId;
 @property (nonatomic, retain) NSString * diaryQuestion;
+@property (nonatomic, retain) NSString * diaryIntroduction;
 
 @property (nonatomic, retain) File * file;
 
-@property (nonatomic, retain) NSMutableArray * userDiaries;
+@property (nonatomic, retain) NSArray * userDiaries;
 
 @property (nonatomic, retain) NSMutableDictionary * diariesDict;
 @property (nonatomic, retain) NSMutableArray * diariesDate;

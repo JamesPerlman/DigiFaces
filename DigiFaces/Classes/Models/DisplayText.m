@@ -9,7 +9,7 @@
 #import "DisplayText.h"
 
 @implementation DisplayText
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -19,6 +19,6 @@
         self.text = [dict valueForKey:@"Text"];
     }
     return self;
-}
+}*/
 
 @end

@@ -10,7 +10,7 @@
 
 @interface MarkUp : NSObject
 
-@property (nonatomic, assign) NSInteger markupId;
+@property (nonatomic, strong) NSNumber * markupId;
 @property (nonatomic, retain) NSString * markupUrl;
 
 -(instancetype) initWithDictionary:(NSDictionary*)dict;

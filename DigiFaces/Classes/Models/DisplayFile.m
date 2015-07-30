@@ -14,9 +14,9 @@
 {
     self = [super init];
     if (self) {
-        self.displayFileId = [[dict valueForKey:@"DisplayFileId"] integerValue];
-        self.activityId = [[dict valueForKey:@"ActivityId"] integerValue];
-        self.fileId = [[dict valueForKey:@"FileId"] integerValue];
+        self.displayFileId = [dict valueForKey:@"DisplayFileId"];
+        self.activityId = [dict valueForKey:@"ActivityId"];
+        self.fileId = [dict valueForKey:@"FileId"];
         
         if ([dict valueForKey:@"File"]) {
             _file = [[File alloc] initWithDictionary:[dict valueForKey:@"File"]];

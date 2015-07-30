@@ -8,22 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "Module.h"
-#import "SDConstants.h"
+
 
 @interface DiaryTheme : NSObject
 
-@property (nonatomic, assign) NSInteger activityId;
-@property (nonatomic, assign) NSInteger activityTypeId;
-@property (nonatomic, assign) NSInteger parentActivityId;
+@property (nonatomic, strong) NSNumber * activityId;
+@property (nonatomic, strong) NSNumber * activityTypeId;
+@property (nonatomic, strong) NSNumber * parentActivityId;
 @property (nonatomic, retain) NSString * activityTitle;
 @property (nonatomic, retain) NSString * activityDesc;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) BOOL isRead;
-@property (nonatomic, assign) NSInteger unreadResponses;
+@property (nonatomic, strong) NSNumber * isActive;
+@property (nonatomic, strong) NSNumber * isRead;
+@property (nonatomic, strong) NSNumber * unreadResponses;
 
-@property (nonatomic, retain) NSMutableArray * modules;
+@property (nonatomic, retain) NSArray * modules;
 
--(instancetype) initWithDictionary:(NSDictionary*)dict;
 -(Module*)getModuleWithThemeType:(ThemeType)type;
 
 @end

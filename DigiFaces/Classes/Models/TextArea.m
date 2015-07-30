@@ -8,8 +8,8 @@
 
 #import "TextArea.h"
 
-@implementation TextArea
-
+@implementation Textarea
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -22,6 +22,6 @@
         
     }
     return self;
-}
+}*/
 
 @end

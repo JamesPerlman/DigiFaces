@@ -11,6 +11,7 @@
 @interface DiaryEntryTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countInfoLabel;
+@property (strong, nonatomic) UIView *unreadIndicator;
 
 @property (nonatomic, assign) NSInteger videoCount;
 @property (nonatomic, assign) NSInteger pictureCount;

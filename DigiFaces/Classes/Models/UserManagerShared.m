@@ -9,7 +9,7 @@
 #import "UserManagerShared.h"
 
 @implementation UserManagerShared
-+ (id)sharedManager {
++ (instancetype)sharedManager {
     static UserManagerShared *sharedMyManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -25,12 +25,11 @@
     }
     return self;
 }
-
 -(void)setProfilePicDict:(NSDictionary*)profile
 {
     _avatarFile = [[File alloc] initWithDictionary:profile];
 }
-
+/*
 -(void)setUserInfoDictionary:(NSDictionary*)dict
 {
     self.aboutMeText = [dict valueForKey:@"AboutMeText"];
@@ -45,6 +44,6 @@
     _avatarFile = [[File alloc] initWithDictionary:[dict valueForKey:@"AvatarFile"]];
     
     _currentProject = [[Project alloc] initWithDictionary:[dict valueForKey:@"CurrentProject"]];
-}
+}*/
 
 @end

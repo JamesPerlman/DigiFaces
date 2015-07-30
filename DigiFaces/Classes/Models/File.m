@@ -17,11 +17,11 @@
         self.fileDictionary = dict;
         
         self.fileType = [dict valueForKey:@"FileType"];
-        self.fileId = [[dict valueForKey:@"FileId"] integerValue];
-        self.isCameraTag = [[dict valueForKey:@"IsCameraTagFile"] boolValue];
-        self.isAmazonFile = [[dict valueForKey:@"IsAmazonFile"] boolValue];
-        self.isViddlerFile = [[dict valueForKey:@"IsViddlerFile"] boolValue];
-        self.viddleKey = [dict valueForKey:@"ViddlerKey"];
+        self.fileId = [dict valueForKey:@"FileId"];
+        self.isCameraTagFile = [dict valueForKey:@"IsCameraTagFile"];
+        self.isAmazonFile = [dict valueForKey:@"IsAmazonFile"];
+        self.isViddlerFile = [dict valueForKey:@"IsViddlerFile"];
+        self.viddlerKey = [dict valueForKey:@"ViddlerKey"];
         self.filePath = [[self returnFilePathFromFileObject:dict] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     }
     
@@ -31,10 +31,27 @@
 -(NSString *)getVideoThumbURL
 {
     NSString * url;
-    if (self.isViddlerFile) {
-        url = [NSString stringWithFormat:@"http://cdn-thumbs.viddler.com/thumbnail_2_%@.jpg", self.viddleKey];
+    if (self.isViddlerFile.boolValue) {
+        url = [NSString stringWithFormat:@"http://cdn-thumbs.viddler.com/thumbnail_2_%@.jpg", self.viddlerKey];
     }
     return url;
+}
+
+-(NSString*)filePathURLString {
+    if (self.isAmazonFile.boolValue) {
+        return self.amazonKey;
+    } else if (self.isCameraTagFile.boolValue) {
+        return self.cameraTagKey;
+    } else if (self.isViddlerFile.boolValue) {
+        return [NSString stringWithFormat:@"http://www.viddler.com/file/%@/html5mobile", self.viddlerKey];
+    } else return nil;
+
+}
+
+-(NSURL*)filePathURL {
+    NSString *urlString = [self filePathURLString];
+    
+    return [NSURL URLWithString:urlString];
 }
 
 -(NSString*)returnFilePathFromFileObject:(NSDictionary*)fileObject{
@@ -51,7 +68,7 @@
     else if ([[fileObject objectForKey:@"IsViddlerFile"] boolValue])
     {
         NSString * key = [fileObject valueForKey:@"ViddlerKey"];
-        NSString * fileName = [fileObject valueForKey:@"FileName"];
+       // NSString * fileName = [fileObject valueForKey:@"FileName"];
         
         imageUrl = [NSString stringWithFormat:@"http://www.viddler.com/file/%@/html5mobile", key];
     }

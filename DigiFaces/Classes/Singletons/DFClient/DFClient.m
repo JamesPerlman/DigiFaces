@@ -1,0 +1,94 @@
+//
+//  DFClient.m
+//  DigiFaces
+//
+//  Created by James on 7/28/15.
+//  Copyright (c) 2015 Usasha studio. All rights reserved.
+//
+
+#import "DFClient.h"
+#import <RestKit/RestKit.h>
+#import "APITokenResponse.h"
+
+@implementation DFClient
+
++ (instancetype)sharedInstance
+{
+    static DFClient *_sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[DFClient alloc] init];
+    });
+    
+    return _sharedInstance;
+}
+
++ (void)makeRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    
+    [[self sharedInstance] makeRequest:path method:method params:params success:success failure:failure];
+}
+
++ (void)makeRequest:(NSString *)path method:(RKRequestMethod)method urlParams:(NSDictionary *)urlParams bodyParams:(NSDictionary *)bodyParams success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    NSString *modifiedPath = path;
+    for (NSString *key in urlParams.allKeys) {
+        modifiedPath = [modifiedPath stringByReplacingOccurrencesOfString:[@":" stringByAppendingString:key] withString:[NSString stringWithFormat:@"%@",urlParams[key]]];
+    }
+    [[self sharedInstance] makeRequest:modifiedPath method:method params:bodyParams success:success failure:failure];
+}
+
+- (void)makeRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    
+    RKObjectRequestOperation *operation = [[RKObjectManager sharedManager] appropriateObjectRequestOperationWithObject:nil method:method path:path parameters:params];
+    
+    
+    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        
+        NSError *error = nil;
+        
+        // parse response data
+        NSData *responseData = operation.HTTPRequestOperation.responseData;
+        NSDictionary *json = responseData.length ? [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error] : nil;
+        
+        if (error) {
+            if (failure) failure(error);
+        } else {
+            if (success) success(json, mappingResult.array.lastObject);
+        }
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        if (failure) failure(error);
+    }];
+    
+    [[RKObjectManager sharedManager] enqueueObjectRequestOperation:operation];
+}
+
+
+#pragma mark - Custom API Call Methods
+
++ (void)loginWithUsername:(NSString*)username password:(NSString *)password success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    [self makeRequest:APIPathGetToken
+               method:RKRequestMethodPOST
+               params:@{@"username" : username, @"password" : password, @"grant_type" : @"password"}
+              success:^(NSDictionary *response, APITokenResponse *result) {
+                  LS.apiAuthToken = [NSString stringWithFormat:@"Bearer %@", result.accessToken];
+                  [[RKObjectManager sharedManager].HTTPClient setDefaultHeader:@"Authorization" value:LS.apiAuthToken];
+                  if (success) success(response, result);
+              } failure:failure];
+    
+}
+
++ (void)logoutWithSuccess:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    [self makeRequest:APIPathLogout
+               method:RKRequestMethodPOST
+               params:nil
+              success:^(NSDictionary *response, id result) {
+                  
+                  LS.loginPassword = nil;
+                  LS.apiAuthToken = nil;
+                  if (success) success(response, result);
+              } failure:failure];
+    
+}
+
+
+@end

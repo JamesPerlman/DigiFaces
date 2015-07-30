@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PhotoGalleryViewController : UIViewController{
-    NSMutableArray * avatarsArray;
 
 }
 
 @property(nonatomic,strong)IBOutlet UIScrollView * scrollView;
 
+@property (nonatomic, strong) NSArray *avatars;
 @end

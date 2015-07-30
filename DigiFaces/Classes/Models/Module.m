@@ -9,7 +9,7 @@
 #import "Module.h"
 
 @implementation Module
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -36,13 +36,13 @@
         }
         
         if ([dict valueForKey:@"ImageGallery"] && [[dict valueForKey:@"ImageGallery"] isKindOfClass:[NSDictionary class]]) {
-            _imageGallery = [[imageGallery alloc] initWithDictionary:[dict valueForKey:@"ImageGallery"]];
+            _imageGallery = [[ImageGallery alloc] initWithDictionary:[dict valueForKey:@"ImageGallery"]];
         }
         
     }
     
     return self;
-}
+}*/
 
 -(ThemeType)themeType
 {

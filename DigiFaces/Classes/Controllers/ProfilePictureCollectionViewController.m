@@ -7,15 +7,15 @@
 //
 
 #import "ProfilePictureCollectionViewController.h"
-#import "AFHTTPRequestOperationManager.h"
 #import "MBProgressHUD.h"
 #import "File.h"
 #import "UIImageView+AFNetworking.h"
 #import "ImageCollectionCell.h"
 #import "CustomAlertView.h"
-#import "SDConstants.h"
+
 #import "Utility.h"
 #import "DFMediaUploadManager.h"
+#import "APIFilesResponse.h"
 
 @interface ProfilePictureCollectionViewController() <DFMediaUploadManagerDelegate, UICollectionViewDelegateFlowLayout>
 {
@@ -25,7 +25,7 @@
     CGSize _collectionViewItemSize;
 }
 @property (nonatomic, retain) NSString * amazonFileURL;
-@property (nonatomic, retain) NSMutableArray *avatarsArray;
+@property (nonatomic, retain) NSArray *avatarsArray;
 
 
 @end
@@ -35,15 +35,13 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    _avatarsArray = [[NSMutableArray alloc] init];
     alertView = [[CustomAlertView alloc] init];
     if (_type == ProfilePictureTypeDefault) {
-        [_avatarsArray addObject:@""];
         [self fetchAvatarFiles];
     }
     else if(_type == ProfilePictureTypeGallery){
         self.title = @"GALLERY";
-        [_avatarsArray addObjectsFromArray:_files];
+        self.avatarsArray = self.files;
     }
     CGFloat _collectionViewItemPadding = ((UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout).minimumInteritemSpacing;
     CGFloat _collectionViewItemSideLength = ([UIScreen mainScreen].bounds.size.width/4.0f-_collectionViewItemPadding);
@@ -54,39 +52,23 @@
 - (void)fetchAvatarFiles{
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
-    
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    manager.requestSerializer = requestSerializer;
-    
-    [manager GET:@"http://digifacesservices.focusforums.com/api/System/GetAvatarFiles" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    defwself
+    [DFClient makeRequest:APIPathGetAvatarFiles
+                   method:kGET
+                   params:nil
+                  success:^(NSDictionary *response, APIFilesResponse *result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      
+                      sself.avatarsArray = result.files;
+                      
+                      [sself.collectionView reloadData];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }];
         
-        NSArray * avatars = (NSArray*)responseObject;
-        for(NSDictionary * temp in avatars){
-            [_avatarsArray addObject:temp];
-        }
-        
-        [self.collectionView reloadData];
-        //[self CreateImageGallery];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        
-    }];
-    
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -113,7 +95,7 @@
     
     File * file = nil;
     if (_type == ProfilePictureTypeDefault) {
-        NSDictionary * f = [_avatarsArray objectAtIndex:indexPath.row];
+        NSDictionary * f = [_avatarsArray objectAtIndex:indexPath.row-1];
         file = [[File alloc] initWithDictionary:f];
     }
     else if(_type == ProfilePictureTypeGallery){

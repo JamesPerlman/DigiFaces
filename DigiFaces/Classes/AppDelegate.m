@@ -12,6 +12,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+#import "DFResponseDescriptorsProvider.h"
 @interface AppDelegate ()
 {
     Reachability * internetReachable;
@@ -108,6 +109,50 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+#pragma mark - RestKit setup
+
+- (void)setupRestKit
+{
+    
+#if DEBUG
+    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
+#endif
+    
+    // Initialize RestKit
+    NSURL *baseURL = [[NSURL alloc] initWithString:APIServerAddress];
+    
+    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"text/html"];
+    
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
+    objectManager.requestSerializationMIMEType = RKMIMETypeFormURLEncoded;
+    
+    [objectManager.HTTPClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        if (status == AFNetworkReachabilityStatusNotReachable) {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:NSLocalizedString(@"No network connection", @"No network connection")
+                                  message:NSLocalizedString(@"The Internet connection appears to be offline",
+                                                            nil)
+                                  delegate:nil
+                                  cancelButtonTitle:NSLocalizedString(@"OK",  @"OK")
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+    
+    // Enable Activity Indicator Spinner
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+
+    //    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    //    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    //    dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    //    [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
+    //
+    [objectManager addResponseDescriptorsFromArray:[[DFResponseDescriptorsProvider sharedInstance] responseDescriptors]];
+    
+  
 }
 
 @end

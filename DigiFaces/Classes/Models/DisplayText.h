@@ -10,10 +10,10 @@
 
 @interface DisplayText : NSObject
 
-@property (nonatomic, assign) NSInteger displayTextId;
-@property (nonatomic, assign) NSInteger activityId;
+@property (nonatomic, strong) NSNumber * displayTextId;
+@property (nonatomic, strong) NSNumber * activityId;
 @property (nonatomic, retain) NSString * text;
 
--(instancetype) initWithDictionary:(NSDictionary*)dict;
+//-(instancetype) initWithDictionary:(NSDictionary*)dict;
 
 @end

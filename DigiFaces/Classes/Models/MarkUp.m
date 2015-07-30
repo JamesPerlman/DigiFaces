@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        self.markupId = [[dict valueForKey:@"MarkupId"] integerValue];
+        self.markupId = [dict valueForKey:@"MarkupId"];
         self.markupUrl = [dict valueForKey:@"MarkupUrl"];
         
     }

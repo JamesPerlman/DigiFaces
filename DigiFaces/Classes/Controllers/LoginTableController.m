@@ -9,6 +9,7 @@
 #import "LoginTableController.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
+#import "UserInfo.h"
 #import "UserViewController.h"
 
 @interface LoginTableController() <PopUpDelegate, MessageToViewMain>
@@ -93,74 +94,43 @@
     NSString * username = [NSString stringWithString:_email.text ];//@"xxshabanaxx@focusforums.net";
     parameters[@"grant_type"] = @"password";
     parameters[@"username"] = username;// [username stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-    parameters[@"password"] = [NSString stringWithString:_password.text ];
+    NSString * password = [NSString stringWithString:_password.text ];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    //      [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    manager.requestSerializer = requestSerializer;
-    
-    [manager POST:@"http://digifacesservices.focusforums.com/Token" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        [[NSUserDefaults standardUserDefaults]setObject:[responseObject objectForKey:@"access_token"] forKey:@"access_token"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+    defwself
+    [DFClient loginWithUsername:username password:password success:^(NSDictionary *response, id result) {
+        defsself
+        [sself check_username_existence];
+    } failure:^(NSError *error) {
+        defsself
+        [MBProgressHUD hideHUDForView:sself.view animated:YES];
         
-        [self check_username_existence];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        self.customAlert.fromW = @"login";
-        [self.customAlert showAlertWithMessage:@"Login failed, please enter correct credentials" inView:self.view withTag:0];
+        sself.customAlert.fromW = @"login";
+        [sself.customAlert showAlertWithMessage:@"Login failed, please enter correct credentials" inView:sself.view withTag:0];
         
         _errorMessage.text = @"Login failed, please enter correct credentials";
-        
     }];
 }
 
 -(void)check_username_existence{
     
-    NSString * onlinekey = [[NSUserDefaults standardUserDefaults]objectForKey:@"access_token"];
+    defwself
     
-    NSString *finalyToken = [[NSString alloc]initWithFormat:@"Bearer %@",onlinekey ];
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [requestSerializer setValue:finalyToken forHTTPHeaderField:@"Authorization"];
-    [requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    
-    
-    manager.requestSerializer = requestSerializer;
-    
-    
-    [manager GET:@"http://digifacesservices.focusforums.com/api/Account/UserInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+    [DFClient makeRequest:APIPathGetUserInfo method:kGET params:nil success:^(NSDictionary *response, UserInfo *userInfo) {
+        defsself
         
-        NSString * usernameFetched = [responseObject objectForKey:@"AppUserName"];
-        Boolean  IsUserNameSet= (Boolean)[responseObject objectForKey:@"IsUserNameSet"];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:sself.view animated:YES];
         
-        if (IsUserNameSet) {
-            [[NSUserDefaults standardUserDefaults]setObject:usernameFetched forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            //             [self moveToUserNameScreen];
-            
-            [self moveToHomeScreen];
-        }
-        else{
-            [self moveToUserNameScreen];
-            
+        LS.myUserInfo = userInfo;
+        
+        if (userInfo.isUserNameSet.boolValue) {
+            [sself moveToHomeScreen];
+        } else {
+            [sself moveToUserNameScreen];
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
+    } failure:^(NSError *error) {
+        defsself
+        [MBProgressHUD hideHUDForView:sself.view animated:YES];
     }];
 }
 

@@ -9,7 +9,7 @@
 #import "Diary.h"
 
 @implementation Diary
-
+/*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];
@@ -62,5 +62,5 @@
         }
     }
     return x;
-}
+}*/
 @end

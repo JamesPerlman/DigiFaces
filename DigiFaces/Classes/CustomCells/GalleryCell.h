@@ -18,7 +18,7 @@
 
 @property (nonatomic, assign) IBOutlet id<GalleryCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) NSMutableArray * files;
+@property (nonatomic, strong) NSArray * files;
 
 -(void)reloadGallery;
 

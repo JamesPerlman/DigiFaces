@@ -10,7 +10,7 @@
 
 @interface CarouselViewController : UIPageViewController
 
-@property (nonatomic, retain) NSMutableArray * files;
+@property (nonatomic, retain) NSArray * files;
 @property (nonatomic, assign) NSInteger selectedIndex;
 
 

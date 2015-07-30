@@ -11,9 +11,9 @@
 
 @interface DisplayFile : NSObject
 
-@property (nonatomic, assign) NSInteger displayFileId;
-@property (nonatomic, assign) NSInteger activityId;
-@property (nonatomic, assign) NSInteger fileId;
+@property (nonatomic, strong) NSNumber * displayFileId;
+@property (nonatomic, strong) NSNumber * activityId;
+@property (nonatomic, strong) NSNumber * fileId;
 @property (nonatomic, retain) File * file;
 
 -(instancetype) initWithDictionary:(NSDictionary*)dict;
