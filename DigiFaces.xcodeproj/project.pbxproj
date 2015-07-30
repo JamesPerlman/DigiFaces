@@ -108,6 +108,7 @@
 		F4022FE71B6983510080C157 /* Thread.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FE61B6983510080C157 /* Thread.m */; };
 		F4022FF01B69A2920080C157 /* LocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F731B6809DF000D2615 /* LocalStorage.m */; };
 		F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */; };
+		F4022FFB1B69E1B30080C157 /* TextareaResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FFA1B69E1B30080C157 /* TextareaResponse.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
@@ -370,6 +371,8 @@
 		F4022FE61B6983510080C157 /* Thread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
 		F4022FF51B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+orderedDistinctUnionOfObjects.h"; sourceTree = "<group>"; };
 		F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+orderedDistinctUnionOfObjects.m"; sourceTree = "<group>"; };
+		F4022FF91B69E19F0080C157 /* TextareaResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextareaResponse.h; path = DigiFaces/Classes/CustomCells/TextareaResponse.h; sourceTree = SOURCE_ROOT; };
+		F4022FFA1B69E1B30080C157 /* TextareaResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextareaResponse.m; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -787,6 +790,15 @@
 			name = HomeAnnouncementResponse;
 			sourceTree = "<group>";
 		};
+		F4022FF81B69E1760080C157 /* TextareaResponse */ = {
+			isa = PBXGroup;
+			children = (
+				F4022FF91B69E19F0080C157 /* TextareaResponse.h */,
+				F4022FFA1B69E1B30080C157 /* TextareaResponse.m */,
+			);
+			name = TextareaResponse;
+			sourceTree = "<group>";
+		};
 		F420FB6D1B6162EE007092CB /* DFMediaUploadManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -853,6 +865,7 @@
 		F4864F771B680AC3000D2615 /* ResponseObjects */ = {
 			isa = PBXGroup;
 			children = (
+				F4022FF81B69E1760080C157 /* TextareaResponse */,
 				F4022FC31B68704E0080C157 /* AboutMe */,
 				F4022FBF1B686D970080C157 /* About */,
 				F4864F871B6820C0000D2615 /* Comment */,
@@ -1510,6 +1523,7 @@
 				F4864FB21B683450000D2615 /* DFResponseDataMapper.m in Sources */,
 				4ACDB9AC1B3E7E66009EFB91 /* AppDelegate.m in Sources */,
 				4ACDB9E71B3E7E66009EFB91 /* Utility.m in Sources */,
+				F4022FFB1B69E1B30080C157 /* TextareaResponse.m in Sources */,
 				4ACDB9AD1B3E7E66009EFB91 /* AboutDigifacesController.m in Sources */,
 				F4022FF01B69A2920080C157 /* LocalStorage.m in Sources */,
 				4ACDB9D71B3E7E66009EFB91 /* MWFeedInfo.m in Sources */,
