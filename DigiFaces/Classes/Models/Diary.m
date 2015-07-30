@@ -43,7 +43,7 @@
     }
     return self;
 }
-
+*/
 - (NSInteger)picturesCount {
     NSInteger x = 0;
     for (File *f in self.files) {
@@ -62,5 +62,5 @@
         }
     }
     return x;
-}*/
+}
 @end

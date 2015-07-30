@@ -25,7 +25,6 @@
 #import "DailyDiary.h"
 #import "CarouselViewController.h"
 #import "UserManagerShared.h"
-#import "APIActivityResponsesResponse.h"
 
 typedef enum {
     CellTypeUser,
@@ -149,7 +148,7 @@ typedef enum {
                   success:^(NSDictionary *response, DailyDiary *dailyDiary) {
                       defsself
                       for (Diary * d in dailyDiary.userDiaries) {
-                          if (d.responseID == _diary.responseID) {
+                          if (d.responseId == _diary.responseId) {
                               _diary = d;
                               break;
                           }
@@ -172,9 +171,9 @@ typedef enum {
                    method:kPOST
                 urlParams:@{@"activityId" : @(activityId)}
                bodyParams:nil
-                  success:^(NSDictionary *response, APIActivityResponsesResponse *result) {
+                  success:^(NSDictionary *response, NSArray *result) {
                       defsself
-                      sself.response = [[Response alloc] initWithDictionary:result.responses.firstObject];
+                      sself.response = [[Response alloc] initWithDictionary:result.firstObject];
                       
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];

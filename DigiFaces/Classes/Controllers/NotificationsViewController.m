@@ -16,7 +16,6 @@
 #import "NotificationCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "ResponseViewController.h"
-#import "APINotificationsResponse.h"
 
 @interface NotificationsViewController ()
 
@@ -48,11 +47,11 @@
     defwself
     [DFClient makeRequest:APIPathGetNotifications
                    method:kGET
-                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectID}
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
                bodyParams:nil
-                  success:^(NSDictionary *response, APINotificationsResponse *result) {
+                  success:^(NSDictionary *response, NSArray *result) {
                       defsself
-                      sself.arrNotifications = result.notifications;
+                      sself.arrNotifications = result;
                       
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];

@@ -25,6 +25,7 @@
 #import "ResponseViewController.h"
 #import "RTCell.h"
 #import "DiaryEntryTableViewCell.h"
+#import "NSArray+orderedDistinctUnionOfObjects.h"
 
 @interface DailyDiaryViewController ()
 {
@@ -32,6 +33,8 @@
     RTCell * infoCel;
 }
 @property (nonatomic, retain) DailyDiary * dailyDiary;
+@property (nonatomic, retain) NSArray *diariesByDateIndex;
+@property (nonatomic, retain) NSArray *diaryDates;
 
 @end
 
@@ -49,7 +52,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSInteger diaryID = [[[[[UserManagerShared sharedManager] currentProject] dailyDiaryList] objectAtIndex:0] integerValue];
+    NSNumber *diaryID = LS.myUserInfo.currentProject.dailyDiaryList[0];
     [self fetchDailyDiaryWithDiaryID:diaryID];
 }
 
@@ -73,14 +76,37 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)setDailyDiary:(DailyDiary *)dailyDiary {
+    _dailyDiary = dailyDiary;
+    
+    NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dateCreated" ascending:NO];
+    NSArray *sortedDiaries = [dailyDiary.userDiaries sortedArrayUsingDescriptors:@[dateSortDescriptor]];
+    
+    self.diaryDates = [sortedDiaries valueForKeyPath:@"@orderedDistinctUnionOfStrings.dateCreated"];
+    
+    NSMutableArray *remainingDiaries = sortedDiaries.mutableCopy;
+    
+    NSMutableArray *tmpDiariesByDateIndex = [NSMutableArray array];
+    
+    for (NSString *dateFormatted in self.diaryDates) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateCreated = %@", dateFormatted];
+        NSArray *filteredDiaries = [remainingDiaries filteredArrayUsingPredicate:predicate];
+        [remainingDiaries removeObjectsInArray:filteredDiaries];
+        [tmpDiariesByDateIndex addObject:filteredDiaries];
+    }
+    
+    self.diariesByDateIndex = [NSArray arrayWithArray:tmpDiariesByDateIndex];
+}
+
 #pragma mark - API Methods
--(void)fetchDailyDiaryWithDiaryID:(NSInteger)diaryID
+-(void)fetchDailyDiaryWithDiaryID:(NSNumber*)diaryID
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     defwself
     [DFClient makeRequest:APIPathGetDailyDiary
                    method:kPOST
-                urlParams:@{@"diaryId" : @(diaryID)}
+                urlParams:@{@"diaryId" : diaryID}
                bodyParams:nil
                   success:^(NSDictionary *response, DailyDiary *result) {
                       defsself
@@ -101,7 +127,7 @@
     if (!_dailyDiary) {
         return 0;
     }
-    return 1 + _dailyDiary.diariesDate.count;
+    return 1 + self.diaryDates.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -110,15 +136,14 @@
         return 0;
     }
     if (section == 0) {
-        if (_dailyDiary.diariesDate.count == 0) {
+        if (self.diaryDates.count == 0) {
             return 2;
         }
         return 3;
     }
     else{
-        NSString * date = [_dailyDiary.diariesDate objectAtIndex:section - 1];
-        NSArray * arr =[_dailyDiary.diariesDict valueForKey:date];
-        return arr.count;
+        
+        return [self.diariesByDateIndex[section-1] count];
     }
     return 0;
 }
@@ -150,7 +175,7 @@
         if (indexPath.row == 0) {
             if (_dailyDiary.file && [_dailyDiary.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_dailyDiary.file.filePath]];
+                NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_dailyDiary.file.filePathURLString]];
                 [imgCell.image setImageWithURLRequest:req placeholderImage:[UIImage imageNamed:@"blank"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     imgCell.image.image = image;
                 } failure:nil];
@@ -180,9 +205,7 @@
     }
     else{
         DiaryEntryTableViewCell *dcell = [tableView dequeueReusableCellWithIdentifier:@"diaryCell" forIndexPath:indexPath];
-        NSString * date = [_dailyDiary.diariesDate objectAtIndex:indexPath.section - 1];
-        NSArray * arrDiary = [_dailyDiary.diariesDict valueForKey:date];
-        Diary * diary = [arrDiary objectAtIndex:indexPath.row];
+        Diary * diary = self.diariesByDateIndex[indexPath.section-1][indexPath.row];
         
         if (diary)
             [dcell.titleLabel setText:[diary title]];
@@ -208,7 +231,8 @@
 {
     if (section > 0) {
         DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"dateHeaderCell"];
-        NSString * date = [_dailyDiary.diariesDate objectAtIndex:section-1];
+
+        NSString * date = self.diaryDates[section-1];;
         [headerCell.label setText:[Utility getMonDayYearDateFromString:date]];
         [headerCell setBackgroundColor:[UIColor whiteColor]];
         return headerCell;
@@ -234,7 +258,7 @@
             cell.moviePlayerController.view.hidden = false;
             [cell.moviePlayerController play];
         }
-        else if (indexPath.row == 1  && _dailyDiary.diariesDate.count>0) {
+        else if (indexPath.row == 1  && self.diaryDates.count>0) {
             [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
         }
     }
@@ -270,10 +294,7 @@
     }
     else if ([segue.identifier isEqualToString:@"diaryEntryDetailSegue"]){
         NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
-        NSString * date = [_dailyDiary.diariesDate objectAtIndex:indexPath.section - 1];
-        NSArray * arrDiary = [_dailyDiary.diariesDict valueForKey:date];
-        Diary * diary = [arrDiary objectAtIndex:indexPath.row];
-        
+        Diary * diary = self.diariesByDateIndex[indexPath.section-1][indexPath.row];
         ResponseViewController * responseController = [segue destinationViewController];
         responseController.diary = diary;
         responseController.responseType = ResponseControllerTypeDiaryResponse;

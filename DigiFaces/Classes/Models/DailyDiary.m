@@ -38,6 +38,7 @@
 }
 */
 
+/*
 -(void)extractDiariesBasedOnDate
 {
     _diariesDict = [[NSMutableDictionary alloc] init];
@@ -58,5 +59,5 @@
         }
     }
 }
-
+*/
 @end

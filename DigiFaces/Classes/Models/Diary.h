@@ -15,9 +15,9 @@
 @property (nonatomic, retain) NSString * dateCreatedFormatted;
 @property (nonatomic, strong) NSNumber * isRead;
 @property (nonatomic, retain) NSString * response;
-@property (nonatomic, strong) NSNumber * responseID;
+@property (nonatomic, strong) NSNumber * responseId;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * userID;
+@property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSString * threadId;
 
 

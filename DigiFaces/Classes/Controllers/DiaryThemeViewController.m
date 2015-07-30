@@ -28,7 +28,6 @@
 #import "TextAreaResponse.h"
 #import "AddResponseViewController.h"
 #import "CarouselViewController.h"
-#import "APIActivityResponsesResponse.h"
 
 @interface DiaryThemeViewController () <GalleryCellDelegate>
 {
@@ -128,14 +127,14 @@
                    method:kPOST
                 urlParams:@{@"activityId" : _diaryTheme.activityId}
                bodyParams:nil
-                  success:^(NSDictionary *response, APIActivityResponsesResponse *result) {
+                  success:^(NSDictionary *response, NSArray *result) {
                       defsself
-                      NSInteger responseCount = result.responses.count;
+                      NSInteger responseCount = result.count;
                       if (responseCount>0) {
                           [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
                           [_heightArray addObject:@40];
                       }
-                      for (Response * response in result.responses) {
+                      for (Response * response in result) {
                           [_cellsArray addObject:response];
                           [_heightArray addObject:@160];
                       }

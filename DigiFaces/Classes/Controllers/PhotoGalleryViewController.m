@@ -13,7 +13,6 @@
 #import "UserManagerShared.h"
 #import "File.h"
 
-#import "APIFilesResponse.h"
 
 @interface PhotoGalleryViewController ()
 
@@ -41,10 +40,10 @@
     [DFClient makeRequest:APIPathGetAvatarFiles
                    method:kGET
                    params:nil
-                  success:^(NSDictionary *response, APIFilesResponse *result) {
+                  success:^(NSDictionary *response, NSArray *result) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
-                      sself.avatars = result.files;
+                      sself.avatars = result;
                       [sself CreateImageGallery];
 
                   }

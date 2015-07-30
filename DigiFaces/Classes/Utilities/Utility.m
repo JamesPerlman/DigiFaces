@@ -51,7 +51,7 @@
 {
     NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
     
-    [inputFormatter setDateFormat:@"yyyy-MM-dd"];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd'T'mm:HH:ss"];
     
     NSDate * d = [inputFormatter dateFromString:date];
     

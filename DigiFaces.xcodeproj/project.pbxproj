@@ -102,16 +102,13 @@
 		F4022FC21B686DAD0080C157 /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FC11B686DAD0080C157 /* About.m */; };
 		F4022FC61B6870580080C157 /* AboutMe.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FC51B6870580080C157 /* AboutMe.m */; };
 		F4022FCB1B68789D0080C157 /* APIUploadAvatarResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FCA1B68789D0080C157 /* APIUploadAvatarResponse.m */; };
-		F4022FCF1B6892AE0080C157 /* APINotificationsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FCE1B6892AE0080C157 /* APINotificationsResponse.m */; };
-		F4022FD31B68A81F0080C157 /* APIActivityResponsesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FD21B68A81F0080C157 /* APIActivityResponsesResponse.m */; };
 		F4022FD71B68AEEE0080C157 /* ImageGalleryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FD61B68AEEE0080C157 /* ImageGalleryResponse.m */; };
 		F4022FDB1B6975670080C157 /* APIIsUserNameAvailableResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FDA1B6975670080C157 /* APIIsUserNameAvailableResponse.m */; };
 		F4022FDF1B6977090080C157 /* APISetUserNameResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FDE1B6977090080C157 /* APISetUserNameResponse.m */; };
 		F4022FE41B697FC80080C157 /* APIHomeAnnouncementResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FE31B697FC80080C157 /* APIHomeAnnouncementResponse.m */; };
 		F4022FE71B6983510080C157 /* Thread.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FE61B6983510080C157 /* Thread.m */; };
-		F4022FEB1B6991C70080C157 /* APIFilesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FEA1B6991C70080C157 /* APIFilesResponse.m */; };
-		F4022FEF1B6999B70080C157 /* APIProjectActivitiesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FEE1B6999B70080C157 /* APIProjectActivitiesResponse.m */; };
 		F4022FF01B69A2920080C157 /* LocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F731B6809DF000D2615 /* LocalStorage.m */; };
+		F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
@@ -364,10 +361,6 @@
 		F4022FC51B6870580080C157 /* AboutMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMe.m; sourceTree = "<group>"; };
 		F4022FC91B68789D0080C157 /* APIUploadAvatarResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIUploadAvatarResponse.h; sourceTree = "<group>"; };
 		F4022FCA1B68789D0080C157 /* APIUploadAvatarResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIUploadAvatarResponse.m; sourceTree = "<group>"; };
-		F4022FCD1B6892AE0080C157 /* APINotificationsResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APINotificationsResponse.h; sourceTree = "<group>"; };
-		F4022FCE1B6892AE0080C157 /* APINotificationsResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APINotificationsResponse.m; sourceTree = "<group>"; };
-		F4022FD11B68A81F0080C157 /* APIActivityResponsesResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIActivityResponsesResponse.h; sourceTree = "<group>"; };
-		F4022FD21B68A81F0080C157 /* APIActivityResponsesResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIActivityResponsesResponse.m; sourceTree = "<group>"; };
 		F4022FD51B68AEEE0080C157 /* ImageGalleryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGalleryResponse.h; sourceTree = "<group>"; };
 		F4022FD61B68AEEE0080C157 /* ImageGalleryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageGalleryResponse.m; sourceTree = "<group>"; };
 		F4022FD91B6975670080C157 /* APIIsUserNameAvailableResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIIsUserNameAvailableResponse.h; sourceTree = "<group>"; };
@@ -378,10 +371,8 @@
 		F4022FE31B697FC80080C157 /* APIHomeAnnouncementResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIHomeAnnouncementResponse.m; sourceTree = "<group>"; };
 		F4022FE51B6983510080C157 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
 		F4022FE61B6983510080C157 /* Thread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
-		F4022FE91B6991C70080C157 /* APIFilesResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIFilesResponse.h; path = ResponseContainers/APIFilesResponse.h; sourceTree = "<group>"; };
-		F4022FEA1B6991C70080C157 /* APIFilesResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIFilesResponse.m; path = ResponseContainers/APIFilesResponse.m; sourceTree = "<group>"; };
-		F4022FED1B6999B70080C157 /* APIProjectActivitiesResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIProjectActivitiesResponse.h; sourceTree = "<group>"; };
-		F4022FEE1B6999B70080C157 /* APIProjectActivitiesResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIProjectActivitiesResponse.m; sourceTree = "<group>"; };
+		F4022FF51B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+orderedDistinctUnionOfObjects.h"; sourceTree = "<group>"; };
+		F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+orderedDistinctUnionOfObjects.m"; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -772,24 +763,6 @@
 			name = APITokenResponse;
 			sourceTree = "<group>";
 		};
-		F4022FCC1B68929A0080C157 /* NotificationsResponse */ = {
-			isa = PBXGroup;
-			children = (
-				F4022FCD1B6892AE0080C157 /* APINotificationsResponse.h */,
-				F4022FCE1B6892AE0080C157 /* APINotificationsResponse.m */,
-			);
-			name = NotificationsResponse;
-			sourceTree = "<group>";
-		};
-		F4022FD01B68A8080080C157 /* ActivityResponsesResponse */ = {
-			isa = PBXGroup;
-			children = (
-				F4022FD11B68A81F0080C157 /* APIActivityResponsesResponse.h */,
-				F4022FD21B68A81F0080C157 /* APIActivityResponsesResponse.m */,
-			);
-			name = ActivityResponsesResponse;
-			sourceTree = "<group>";
-		};
 		F4022FD41B68AEDE0080C157 /* ImageGalleryResponse */ = {
 			isa = PBXGroup;
 			children = (
@@ -815,25 +788,6 @@
 				F4022FE31B697FC80080C157 /* APIHomeAnnouncementResponse.m */,
 			);
 			name = HomeAnnouncementResponse;
-			sourceTree = "<group>";
-		};
-		F4022FE81B6991A50080C157 /* FilesResponse */ = {
-			isa = PBXGroup;
-			children = (
-				F4022FE91B6991C70080C157 /* APIFilesResponse.h */,
-				F4022FEA1B6991C70080C157 /* APIFilesResponse.m */,
-			);
-			name = FilesResponse;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		F4022FEC1B69999F0080C157 /* ProjectActivitesResponse */ = {
-			isa = PBXGroup;
-			children = (
-				F4022FED1B6999B70080C157 /* APIProjectActivitiesResponse.h */,
-				F4022FEE1B6999B70080C157 /* APIProjectActivitiesResponse.m */,
-			);
-			name = ProjectActivitesResponse;
 			sourceTree = "<group>";
 		};
 		F420FB6D1B6162EE007092CB /* DFMediaUploadManager */ = {
@@ -902,38 +856,30 @@
 		F4864F771B680AC3000D2615 /* ResponseObjects */ = {
 			isa = PBXGroup;
 			children = (
-				F4022FD41B68AEDE0080C157 /* ImageGalleryResponse */,
 				F4022FC31B68704E0080C157 /* AboutMe */,
 				F4022FBF1B686D970080C157 /* About */,
-				F4864F851B6820A7000D2615 /* TextareaResponse */,
-				F4864F861B6820BB000D2615 /* Response */,
 				F4864F871B6820C0000D2615 /* Comment */,
 				F4864F881B6820C8000D2615 /* Company */,
-				F4864F891B6820CD000D2615 /* Diary */,
-				F4864F8A1B6820D4000D2615 /* File */,
-				F4864F8B1B6820D9000D2615 /* Project */,
-				F4864F8D1B6820F3000D2615 /* UserInfo */,
 				F4864F8E1B6820F7000D2615 /* DailyDiary */,
-				F4864F8F1B682103000D2615 /* Notification */,
+				F4864F891B6820CD000D2615 /* Diary */,
 				F4864F901B682107000D2615 /* DiaryTheme */,
-				F4864F911B68210D000D2615 /* Module */,
 				F4864F921B682113000D2615 /* DisplayText */,
 				F4864F931B682119000D2615 /* DisplayFile */,
+				F4864F8A1B6820D4000D2615 /* File */,
+				F4022FD41B68AEDE0080C157 /* ImageGalleryResponse */,
+				F4864F8B1B6820D9000D2615 /* Project */,
+				F4864F911B68210D000D2615 /* Module */,
+				F4864F8F1B682103000D2615 /* Notification */,
+				F4864F7A1B680B6F000D2615 /* Project */,
 				F4864F941B68211F000D2615 /* TextArea */,
 				F4864F951B682125000D2615 /* MarkUp */,
 				F4864F961B6821FB000D2615 /* ImageGallery */,
-				F4864F791B680B02000D2615 /* UserInfo */,
+				F4864F861B6820BB000D2615 /* Response */,
 				F4864F7B1B680B79000D2615 /* Thread */,
-				F4864F7A1B680B6F000D2615 /* Project */,
+				F4864F851B6820A7000D2615 /* TextareaResponse */,
+				F4864F8D1B6820F3000D2615 /* UserInfo */,
 			);
 			path = ResponseObjects;
-			sourceTree = "<group>";
-		};
-		F4864F791B680B02000D2615 /* UserInfo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UserInfo;
 			sourceTree = "<group>";
 		};
 		F4864F7A1B680B6F000D2615 /* Project */ = {
@@ -955,12 +901,8 @@
 		F4864F7C1B680B84000D2615 /* ResponseContainers */ = {
 			isa = PBXGroup;
 			children = (
-				F4022FEC1B69999F0080C157 /* ProjectActivitesResponse */,
-				F4022FE81B6991A50080C157 /* FilesResponse */,
 				F4022FE01B697FAC0080C157 /* HomeAnnouncementResponse */,
 				F4022FDC1B6976F30080C157 /* SetUserNameResponse */,
-				F4022FD01B68A8080080C157 /* ActivityResponsesResponse */,
-				F4022FCC1B68929A0080C157 /* NotificationsResponse */,
 				F4022FC71B6878800080C157 /* UploadAvatarResponse */,
 				F4864F7D1B680BA1000D2615 /* IsUserNameAvailable */,
 				F4022FC81B68788A0080C157 /* APITokenResponse */,
@@ -1409,6 +1351,8 @@
 				F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */,
 				F4022FBC1B68659F0080C157 /* NSArray+RKHelper.h */,
 				F4022FBD1B68659F0080C157 /* NSArray+RKHelper.m */,
+				F4022FF51B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.h */,
+				F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1590,11 +1534,9 @@
 				F4DD49CF1B65A97C00F4016B /* DiaryEntryTableViewCell.m in Sources */,
 				4AD850181B45A12B0059A457 /* VideoCell.m in Sources */,
 				4ACDBA111B3EDF75009EFB91 /* ImagesCell.m in Sources */,
-				F4022FD31B68A81F0080C157 /* APIActivityResponsesResponse.m in Sources */,
 				4ACDB9B61B3E7E66009EFB91 /* ProjectViewController.m in Sources */,
 				4ACDB9AE1B3E7E66009EFB91 /* EmailModeratorController.m in Sources */,
 				4ACDB9FC1B3EB9D3009EFB91 /* Notification.m in Sources */,
-				F4022FCF1B6892AE0080C157 /* APINotificationsResponse.m in Sources */,
 				4ACDBA021B3EC7EA009EFB91 /* ResponseViewController.m in Sources */,
 				4ACDB9D91B3E7E66009EFB91 /* MWFeedParser.m in Sources */,
 				4ACB9ED61B58EC2900E9F984 /* DisplayFile.m in Sources */,
@@ -1622,7 +1564,6 @@
 				4ACDB9D61B3E7E66009EFB91 /* GTMNSString+HTML.m in Sources */,
 				4AC8446C1B57FA3E006CDB45 /* CarouselViewController.m in Sources */,
 				F4864FAF1B682607000D2615 /* DFConstants.m in Sources */,
-				F4022FEF1B6999B70080C157 /* APIProjectActivitiesResponse.m in Sources */,
 				4ACDB9C81B3E7E66009EFB91 /* Project.m in Sources */,
 				4ACDBA051B3ECD7D009EFB91 /* Response.m in Sources */,
 				4ACDB9B51B3E7E66009EFB91 /* ProjectIntroViewController.m in Sources */,
@@ -1638,6 +1579,7 @@
 				4ACDB9D41B3E7E66009EFB91 /* MBProgressHUD.m in Sources */,
 				F4864FB61B6839E1000D2615 /* DFClient.m in Sources */,
 				19F0BD101B1DBC6400E4B048 /* main.m in Sources */,
+				F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */,
 				4ACB9ED01B58EAB500E9F984 /* Module.m in Sources */,
 				4AD8501B1B45AAB70059A457 /* NointernetController.m in Sources */,
 				4AC7D47C1B510D0B00587045 /* RTCell.m in Sources */,
@@ -1665,7 +1607,6 @@
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
 				4ACB9EDF1B58ECCF00E9F984 /* ImageGallery.m in Sources */,
-				F4022FEB1B6991C70080C157 /* APIFilesResponse.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */,

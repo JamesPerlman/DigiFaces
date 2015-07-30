@@ -37,6 +37,25 @@
     _password.leftView = paddingView2;
     _password.leftViewMode = UITextFieldViewModeAlways;
     
+    [self tryAutoLogin];
+    
+}
+
+- (void)tryAutoLogin {
+    if (LS.loginUsername && LS.loginPassword) {
+        defwself
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [DFClient loginWithUsername:LS.loginUsername
+                           password:LS.loginPassword
+                            success:^(NSDictionary *response, id result) {
+                                defsself
+                                [sself successfulLogin];
+                                [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                            } failure:^(NSError *error) {
+                                defsself
+                                [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                            }];
+    }
 }
 
 -(BOOL)prefersStatusBarHidden{
@@ -89,17 +108,15 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     NSString * username = [NSString stringWithString:_email.text ];//@"xxshabanaxx@focusforums.net";
-    parameters[@"grant_type"] = @"password";
-    parameters[@"username"] = username;// [username stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+   // parameters[@"grant_type"] = @"password";
+    //parameters[@"username"] = username;// [username stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSString * password = [NSString stringWithString:_password.text ];
-    
     defwself
     [DFClient loginWithUsername:username password:password success:^(NSDictionary *response, id result) {
         defsself
-        [sself check_username_existence];
+        [sself successfulLogin];
     } failure:^(NSError *error) {
         defsself
         [MBProgressHUD hideHUDForView:sself.view animated:YES];
@@ -109,6 +126,11 @@
         
         _errorMessage.text = @"Login failed, please enter correct credentials";
     }];
+}
+
+- (void)successfulLogin {
+    
+    [self check_username_existence];
 }
 
 -(void)check_username_existence{

@@ -11,7 +11,7 @@
 
 @interface Comment : NSObject
 
-@property (nonatomic, strong) NSNumber * commentID;
+@property (nonatomic, strong) NSNumber * commentId;
 @property (nonatomic, retain) NSString * dateCreated;
 @property (nonatomic, retain) NSString * dateCreatedFormated;
 @property (nonatomic, strong) NSNumber * isActive;

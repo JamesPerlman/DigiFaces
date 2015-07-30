@@ -1,5 +1,5 @@
 //
-//  APIFilesResponse.h
+//  NSArray+orderedDistinctUnionOfObjects.h
 //  DigiFaces
 //
 //  Created by James on 7/29/15.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface APIFilesResponse : NSObject
-@property (nonatomic, strong) NSArray *files;
+@interface NSArray (orderedDistinctUnionOfObjects)
+
 @end

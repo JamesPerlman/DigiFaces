@@ -13,8 +13,26 @@
 - (RKObjectMapping*)tokenMapping;
 - (RKObjectMapping*)userInfoMapping;
 - (RKObjectMapping*)aboutMapping;
+- (RKObjectMapping*)aboutMeMapping;
 - (RKObjectMapping*)fileMapping;
 - (RKObjectMapping*)projectMapping;
-- (RKObjectMapping*)notificationsResponseMapping;
 - (RKObjectMapping*)notificationMapping;
+- (RKObjectMapping*)homeAnnouncementMapping;
+- (RKObjectMapping*)dailyDiaryMapping;
+- (RKObjectMapping*)diaryMapping;
+- (RKObjectMapping*)commentMapping;
+- (RKObjectMapping*)activityResponseMapping;
+- (RKObjectMapping*)textareaResponseMapping;
+- (RKObjectMapping*)imageGalleryResponseMapping;
+- (RKObjectMapping*)imageGalleryMapping;
+- (RKObjectMapping*)diaryThemeMapping;
+- (RKObjectMapping*)moduleMapping;
+- (RKObjectMapping*)displayTextMapping;
+- (RKObjectMapping*)displayFileMapping;
+- (RKObjectMapping*)textareaMapping;
+- (RKObjectMapping*)markUpMapping;
+- (RKObjectMapping*)isUserNameAvailableResponseMapping;
+- (RKObjectMapping*)setUserNameResponseMapping;
+- (RKObjectMapping*)threadMapping;
+- (RKObjectMapping*)emptyResponseMapping;
 @end

@@ -11,9 +11,9 @@
 
 @interface Project : NSObject
 
-@property (nonatomic, strong) NSNumber * projectID;
-@property (nonatomic, strong) NSNumber * companyID;
-@property (nonatomic, strong) NSNumber * regionID;
+@property (nonatomic, strong) NSNumber * projectId;
+@property (nonatomic, strong) NSNumber * companyId;
+@property (nonatomic, strong) NSNumber * regionId;
 @property (nonatomic, retain) NSString * projectInternalName;
 @property (nonatomic, retain) NSString * projectName;
 @property (nonatomic, retain) NSString * projectStartDate;

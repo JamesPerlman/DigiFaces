@@ -10,16 +10,13 @@
 #import "DFResponseDataMapper.h"
 
 #import "APITokenResponse.h"
-#import "APINotificationsResponse.h"
-#import "APIActivityResponsesResponse.h"
 #import "APIIsUserNameAvailableResponse.h"
 #import "APISetUserNameResponse.h"
 #import "APIHomeAnnouncementResponse.h"
-#import "APIFilesResponse.h"
-#import "APIProjectActivitiesResponse.h"
 
 #import "UserInfo.h"
 #import "About.h"
+#import "AboutMe.h"
 #import "File.h"
 #import "Project.h"
 #import "Notification.h"
@@ -73,12 +70,14 @@
                                                   @"IsModerator",
                                                   @"DefaultLanguageId",
                                                   @"AvatarFileId",
-                                                  @"CurrentProject",
                                                   @"CurrentProjectId",
                                                   @"AboutMeText",
                                                   @"HasRegistered",
                                                   @"LoginProvider"].camelCaseDict];
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"AvatarFile" toKeyPath:@"avatarFile" withMapping:[self fileMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"CurrentProject" toKeyPath:@"currentProject" withMapping:[self projectMapping]]];
+    
     return mapping;
 }
 
@@ -105,6 +104,14 @@
     return mapping;
 }
 
+- (RKObjectMapping*)aboutMeMapping {
+    RKObjectMapping *mapping = MAPCLASS(AboutMe);
+    [mapping addAttributeMappingsFromDictionary:@[@"AboutMeId",
+                                                  @"ProjectId",
+                                                  @"UserId",
+                                                  @"AboutMeText"].camelCaseDict];
+    return mapping;
+}
 - (RKObjectMapping*)fileMapping {
     RKObjectMapping *mapping = MAPCLASS(File);
     [mapping addAttributeMappingsFromDictionary:@[@"FileId",
@@ -145,14 +152,6 @@
     return mapping;
 }
 
-- (RKObjectMapping*)notificationsResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(APINotificationsResponse);
-    
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:nil toKeyPath:@"notifications" withMapping:[self notificationMapping]]];
-    
-    return mapping;
-}
 
 - (RKObjectMapping*)notificationMapping {
     RKObjectMapping *mapping = MAPCLASS(Notification);
@@ -224,13 +223,6 @@
     return mapping;
 }
 
-- (RKObjectMapping*)activityResponsesMapping {
-    RKObjectMapping *mapping = MAPCLASS(APIActivityResponsesResponse);
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:nil toKeyPath:@"responses" withMapping:[self activityResponsesMapping]]];
-    
-    return mapping;
-}
 
 - (RKObjectMapping*)activityResponseMapping {
     RKObjectMapping *mapping = MAPCLASS(Response);
@@ -391,23 +383,7 @@
     return mapping;
 }
 
-- (RKObjectMapping*)avatarFilesResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(APIFilesResponse);
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:nil toKeyPath:@"files" withMapping:[self fileMapping]]];
-    
-    return mapping;
-}
-
-- (RKObjectMapping*)projectActivitesResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(APIProjectActivitiesResponse);
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:nil toKeyPath:@"diaryThemes" withMapping:[self diaryThemeMapping]]];
-    
-    return mapping;
-}
-
-- (RKObjectMapping*)emptyBodyMapping {
+- (RKObjectMapping*)emptyResponseMapping {
    return [[RKObjectMapping alloc] init];
     // return MAPCLASS(NSNull);
 }

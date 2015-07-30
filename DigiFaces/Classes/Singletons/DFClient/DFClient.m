@@ -52,7 +52,8 @@
         if (error) {
             if (failure) failure(error);
         } else {
-            if (success) success(json, mappingResult.array.lastObject);
+            id result = mappingResult.array.count > 1 ? mappingResult.array : mappingResult.firstObject;
+            if (success) success(json, result);
         }
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -71,6 +72,8 @@
                params:@{@"username" : username, @"password" : password, @"grant_type" : @"password"}
               success:^(NSDictionary *response, APITokenResponse *result) {
                   LS.apiAuthToken = [NSString stringWithFormat:@"Bearer %@", result.accessToken];
+                  LS.loginUsername = username;
+                  LS.loginPassword = password;
                   [[RKObjectManager sharedManager].HTTPClient setDefaultHeader:@"Authorization" value:LS.apiAuthToken];
                   if (success) success(response, result);
               } failure:failure];

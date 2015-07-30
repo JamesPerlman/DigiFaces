@@ -200,7 +200,7 @@
     
     NSDictionary * params = @{@"TextareaResponseId" : @(0),
                               @"ThreadId" : self.thread.threadId,
-                              @"TextareaId" : textAreaModule.textArea.textareaId,
+                              @"TextareaId" : textAreaModule.textarea.textareaId,
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text};
     defwself

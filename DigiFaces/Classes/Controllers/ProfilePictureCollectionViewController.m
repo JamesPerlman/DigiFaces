@@ -15,7 +15,6 @@
 
 #import "Utility.h"
 #import "DFMediaUploadManager.h"
-#import "APIFilesResponse.h"
 
 @interface ProfilePictureCollectionViewController() <DFMediaUploadManagerDelegate, UICollectionViewDelegateFlowLayout>
 {
@@ -56,11 +55,11 @@
     [DFClient makeRequest:APIPathGetAvatarFiles
                    method:kGET
                    params:nil
-                  success:^(NSDictionary *response, APIFilesResponse *result) {
+                  success:^(NSDictionary *response, NSArray *result) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       
-                      sself.avatarsArray = result.files;
+                      sself.avatarsArray = result;
                       
                       [sself.collectionView reloadData];
                   }

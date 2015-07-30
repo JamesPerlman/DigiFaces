@@ -8,14 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TextAreaResponse : NSObject
+@interface TextareaResponse : NSObject
 
 @property (nonatomic, retain) NSString * response;
-@property (nonatomic, assign) BOOL isActive;
-@property (nonatomic, assign) NSInteger textAreaID;
-@property (nonatomic, assign) NSInteger textAreaResponseID;
-@property (nonatomic, assign) NSInteger threadID;
+@property (nonatomic, strong) NSNumber * isActive;
+@property (nonatomic, strong) NSNumber * textareaId;
+@property (nonatomic, strong) NSNumber * textareaResponseId;
+@property (nonatomic, strong) NSNumber * threadId;
 
--(instancetype) initWithDictionary:(NSDictionary*)dict;
 
 @end

@@ -23,7 +23,6 @@
 #import "HomeTableViewCell.h"
 
 #import "APIHomeAnnouncementResponse.h"
-#import "APIProjectActivitiesResponse.h"
 
 @interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate>
 {
@@ -104,11 +103,11 @@
     defwself
     [DFClient makeRequest:APIPathProjectGetActivities
                    method:kPOST
-                urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
                bodyParams:nil
-                  success:^(NSDictionary *response, APIProjectActivitiesResponse *result) {
+                  success:^(NSDictionary *response, NSArray *diaryThemes) {
                       defsself
-                      [sself.dataArray addObjectsFromArray:result.diaryThemes];
+                      [sself.dataArray addObjectsFromArray:diaryThemes];
                       [sself.tableView reloadData];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];

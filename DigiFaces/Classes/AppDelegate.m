@@ -25,6 +25,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Fabric with:@[CrashlyticsKit]];
+    [self setupRestKit];
     // Override point for customization after application launch.
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
@@ -39,18 +40,11 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    NSString * userNameSaved = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]?[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]:@"";
     
     UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     
-    UIViewController * rootViewController = nil;
-    if (![userNameSaved isEqualToString:@""]) {
-        rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"homeController"];
-        
-    }
-    else{
-        rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"loginController"];
-    }
+    UIViewController * rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"loginController"];
+
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     
     
@@ -140,6 +134,8 @@
             [alert show];
         }
     }];
+    
+    [objectManager.HTTPClient setParameterEncoding:AFJSONParameterEncoding];
     
     // Enable Activity Indicator Spinner
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;

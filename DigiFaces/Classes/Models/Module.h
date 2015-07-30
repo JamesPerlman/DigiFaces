@@ -26,7 +26,7 @@
 
 @property (nonatomic, retain) DisplayText * displayText;
 @property (nonatomic, retain) DisplayFile * displayFile;
-@property (nonatomic, retain) Textarea * textArea;
+@property (nonatomic, retain) Textarea * textarea;
 @property (nonatomic, retain) MarkUp * markUp;
 @property (nonatomic, retain) ImageGallery * imageGallery;
 
