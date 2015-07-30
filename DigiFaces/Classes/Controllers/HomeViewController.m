@@ -24,6 +24,8 @@
 
 #import "APIHomeAnnouncementResponse.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 @interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate>
 {
     ProfilePicCell * picCell;
@@ -131,7 +133,7 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       
-                      [sself setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:nil];
+                      [sself setProfilePicture:LS.myUserInfo.avatarFile.filePathURLString withImage:nil];
                       
                       [sself fetchActivites];
                   }
@@ -144,32 +146,27 @@
 
 -(void)setProfilePicture:(NSString*)imageUrl withImage:(UIImage*)image
 {
+    /*
     if (image) {
         [[UserManagerShared sharedManager] setProfilePic:image];
         picCell.profileImage.image = image;
         return;
-    }
-    NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    [picCell.profileImage setImageWithURLRequest:requestN placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        
-        [[UserManagerShared sharedManager] setProfilePic:[Utility resizeImage:image imageSize:CGSizeMake(100, 120)]];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        NSLog(@"Image download failed");
-    }];
+    }*/
+    [picCell.profileImage sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
 }
 
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
-    [self setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:image];
+    [self setProfilePicture:LS.myUserInfo.avatarFile.filePathURLString withImage:image];
     
     defwself
     [DFClient makeRequest:APIPathUploadUserCustomAvatar
                    method:kPOST
                    params:profilePicture
                   success:^(NSDictionary *response, id result) {
-                      
-                      [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
+                      defsself
+                      LS.myUserInfo.avatarFile = [[File alloc] initWithDictionary:profilePicture];
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -190,9 +187,7 @@
     picCell.profileImage.clipsToBounds = YES;
     picCell.profileImage.layer.cornerRadius = picCell.profileImage.frame.size.height/2.0f;
     
-    if ([[UserManagerShared sharedManager] profilePic]) {
-        [picCell.profileImage setImage:[[UserManagerShared sharedManager] profilePic]];
-    }
+        [picCell.profileImage sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
 }
 
 #pragma mark - UITableViewDeleagate
@@ -248,7 +243,7 @@
         
         [cell.titleLabel setText:theme.activityTitle];
         
-        cell.unreadCount = theme.unreadResponses;
+        cell.unreadCount = theme.unreadResponses.integerValue;
         
         //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
     }

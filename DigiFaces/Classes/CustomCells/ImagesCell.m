@@ -39,7 +39,7 @@
         [btn setBackgroundColor:[UIColor lightGrayColor]];
         [btn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         if ([file.fileType isEqualToString:@"Image"]) {
-            NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:file.filePath]];
+            NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:file.filePathURLString]];
             [[btn imageView] setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                 [btn setImage:image forState:UIControlStateNormal];
             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

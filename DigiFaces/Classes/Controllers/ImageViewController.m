@@ -22,7 +22,7 @@
     [self.view setBackgroundColor:[UIColor lightGrayColor]];
     [_imageView setFrame:CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height)];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:_imageFile.filePath]];
+    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:_imageFile.filePathURLString]];
     [_imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
         [_imageView setImage:image];

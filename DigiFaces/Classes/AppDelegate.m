@@ -118,10 +118,10 @@
     NSURL *baseURL = [[NSURL alloc] initWithString:APIServerAddress];
     
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"text/html"];
+    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"text/plain"];
     
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     objectManager.requestSerializationMIMEType = RKMIMETypeFormURLEncoded;
-    
     [objectManager.HTTPClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         if (status == AFNetworkReachabilityStatusNotReachable) {
             UIAlertView *alert = [[UIAlertView alloc]

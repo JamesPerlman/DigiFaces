@@ -30,14 +30,14 @@
 - (void)updateCountLabel {
     NSMutableArray *labelItems = [NSMutableArray array];
     if (self.commentCount) {
-        [labelItems addObject:[NSString stringWithFormat:@"\uf0e5%d", (int)self.commentCount]];
+        [labelItems addObject:[NSString stringWithFormat:@"\uf0e5 %d", (int)self.commentCount]];
     }
     if (self.pictureCount) {
-        [labelItems addObject:[NSString stringWithFormat:@"\uf03e%d", (int)self.videoCount]];
+        [labelItems addObject:[NSString stringWithFormat:@"\uf03e %d", (int)self.pictureCount]];
     }
 
     if (self.videoCount) {
-        [labelItems addObject:[NSString stringWithFormat:@"\uf03d%d", (int)self.videoCount]];
+        [labelItems addObject:[NSString stringWithFormat:@"\uf03d %d", (int)self.videoCount]];
     }
     self.countInfoLabel.text = [labelItems componentsJoinedByString:@" "];
     

@@ -18,14 +18,46 @@
         
         self.fileType = [dict valueForKey:@"FileType"];
         self.fileId = [dict valueForKey:@"FileId"];
+        self.fileName = dict[@"FileName"];
         self.isCameraTagFile = [dict valueForKey:@"IsCameraTagFile"];
         self.isAmazonFile = [dict valueForKey:@"IsAmazonFile"];
         self.isViddlerFile = [dict valueForKey:@"IsViddlerFile"];
         self.viddlerKey = [dict valueForKey:@"ViddlerKey"];
+        self.amazonKey = dict[@"AmazonKey"];
+        self.cameraTagKey = dict[@"CameraTagKey"];
+        
         self.filePath = [[self returnFilePathFromFileObject:dict] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     }
     
     return self;
+}
+
+- (NSDictionary*)dictionary {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSArray *keys = @[@"fileId",
+                      @"fileName",
+                      @"fileTypeId",
+                      @"fileType",
+                      @"extension",
+                      @"isAmazonFile",
+                      @"amazonKey",
+                      @"isViddlerFile",
+                      @"viddlerKey",
+                      @"isCameraTagFile",
+                      @"cameraTagKey",
+                      @"positionId",
+                      @"position",
+                      @"publicFileUrl",
+                      @"filePath"];
+    for (NSString *key in keys) {
+        @try {
+            NSString *keyCapitalizedFirstLetter = [[key substringToIndex:1] capitalizedString];
+            NSString *keyRestOfString = [key substringFromIndex:1];
+            NSString *Key = [keyCapitalizedFirstLetter stringByAppendingString:keyRestOfString];
+            dict[Key] = [self valueForKey:key];
+        } @catch (NSException *exc) {}
+    }
+    return [NSDictionary dictionaryWithDictionary:dict];
 }
 
 -(NSString *)getVideoThumbURL
@@ -44,6 +76,8 @@
         return self.cameraTagKey;
     } else if (self.isViddlerFile.boolValue) {
         return [NSString stringWithFormat:@"http://www.viddler.com/file/%@/html5mobile", self.viddlerKey];
+    } else if (self.amazonKey) {
+        return self.amazonKey;
     } else return nil;
 
 }

@@ -184,7 +184,7 @@
             else{
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
                 [vidCell.imageView setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL] placeholderImage:[UIImage imageNamed:@"blank"]];
-                vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePath];
+                vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePathURLString];
                 vidCell.moviePlayerController.view.hidden = true;
                 cell = vidCell;
             }
@@ -282,7 +282,7 @@
     }
     else if ([segue.identifier isEqualToString:@"webViewSegue"]){
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        webController.url = [_dailyDiary.file filePath];
+        webController.url = [_dailyDiary.file filePathURLString];
     }
     else if ([segue.identifier isEqualToString:@"themeSegue"]){
         DiaryThemeViewController * themeController = [segue destinationViewController];

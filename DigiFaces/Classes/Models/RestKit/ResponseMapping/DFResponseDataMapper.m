@@ -384,8 +384,7 @@
 }
 
 - (RKObjectMapping*)emptyResponseMapping {
-   return [[RKObjectMapping alloc] init];
-    // return MAPCLASS(NSNull);
+    return MAPCLASS(NSNull);
 }
 
 

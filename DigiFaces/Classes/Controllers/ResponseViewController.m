@@ -26,6 +26,8 @@
 #import "CarouselViewController.h"
 #import "UserManagerShared.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 typedef enum {
     CellTypeUser,
     CellTypeTitle,
@@ -62,7 +64,7 @@ typedef enum {
     
     _arrResponses = [[NSMutableArray alloc] init];
     if (_responseType == ResponseControllerTypeNotification) {
-        [self getResponsesWithActivityId:_currentNotification.activityID.integerValue];
+        [self getResponsesWithActivityId:_currentNotification.activityId.integerValue];
     }
     
     [Utility addPadding:5 toTextField:_txtResposne];
@@ -259,13 +261,13 @@ typedef enum {
 {
     if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
         [cell.lblTime setText:_response.dateCreatedFormatted];
-        [cell.userImage setImageWithURL:[NSURL URLWithString:_response.userInfo.avatarFile.filePath]];
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_response.userInfo.avatarFile.filePathURLString]];
         [cell.lblUsername setText:_response.userInfo.appUserName];
         [cell makeImageCircular];
     }
     else{
         [cell.lblTime setText:_diary.dateCreatedFormatted];
-        [cell.userImage setImageWithURL:[NSURL URLWithString:_diary.userInfo.avatarFile.filePath]];
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_diary.userInfo.avatarFile.filePathURLString]];
         [cell.lblUsername setText:_diary.userInfo.appUserName];
         [cell makeImageCircular];
     }
@@ -352,7 +354,7 @@ typedef enum {
         
         [cell.lblDate setText:comment.dateCreatedFormated];
         [cell.lblUserName setText:comment.userInfo.appUserName];
-        [cell.userImage setImageWithURL:[NSURL URLWithString:comment.userInfo.avatarFile.filePath]];
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:comment.userInfo.avatarFile.filePathURLString]];
         [cell.infoLabel setText:comment.response];
         
         NSInteger height = 75;
@@ -376,7 +378,12 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CellType type = [[_cellsArray objectAtIndex:indexPath.row] integerValue];
-    return [self getCellForType:type forIndexPath:indexPath];
+    UITableViewCell *cell = [self getCellForType:type forIndexPath:indexPath];
+    
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
+    return cell;
 }
 
 #pragma mark - CommentCellDelegate

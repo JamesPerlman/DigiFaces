@@ -40,7 +40,7 @@
     self.profilePicView.image = [[UserManagerShared sharedManager]profilePic];
     
     self.aboutMeTextView.text = @"";
-    self.titleName.text = [NSString stringWithFormat:@"%@ %@",[[UserManagerShared sharedManager]FirstName],[[UserManagerShared sharedManager]LastName]];
+    self.titleName.text = [NSString stringWithFormat:@"%@ %@",LS.myUserInfo.firstName,LS.myUserInfo.lastName];
     
     self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.height /2;
     self.profilePicView.layer.masksToBounds = YES;
@@ -78,7 +78,7 @@
     
     [DFClient makeRequest:APIPathGetAboutMe
                    method:kGET
-                urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
                bodyParams:nil
                   success:^(NSDictionary *response, AboutMe *result) {
                       defsself
@@ -155,7 +155,7 @@
 //                      [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
                       
                       dispatch_async(dispatch_get_main_queue(), ^{
-                          [sself setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePath withImage:image];
+                          [sself setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePathURLString withImage:image];
                       });
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];

@@ -404,7 +404,7 @@
 #pragma mark - ProfilePictureDelegate
 -(void)profilePictureDidSelect:(File *)selectedProfile withImage:(UIImage *)image
 {
-    [self setImageURL:[selectedProfile filePath] withImage:image];
+    [self setImageURL:[selectedProfile filePathURLString] withImage:image];
 }
 
 

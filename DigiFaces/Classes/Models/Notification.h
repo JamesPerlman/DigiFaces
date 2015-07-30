@@ -12,16 +12,16 @@
 @interface Notification : NSObject
 
 @property (nonatomic, retain) UserInfo * commenterUserInfo;
-@property (nonatomic, strong) NSNumber * activityID;
+@property (nonatomic, strong) NSNumber * activityId;
 @property (nonatomic, retain) NSString * dateCreated;
 @property (nonatomic, retain) NSString * dateCreatedFormated;
 @property (nonatomic, strong) NSNumber * isDailyNotification;
 @property (nonatomic, strong) NSNumber * isRead;
-@property (nonatomic, strong) NSNumber * notificationID;
+@property (nonatomic, strong) NSNumber * notificationId;
 @property (nonatomic, retain) NSString * notificationType;
-@property (nonatomic, strong) NSNumber * notificationTypeID;
-@property (nonatomic, strong) NSNumber * projectID;
-@property (nonatomic, retain) NSString * userID;
+@property (nonatomic, strong) NSNumber * notificationTypeId;
+@property (nonatomic, strong) NSNumber * projectId;
+@property (nonatomic, retain) NSString * userId;
 
 
 @end

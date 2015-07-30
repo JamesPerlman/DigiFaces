@@ -80,7 +80,7 @@
     NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notificationCell" forIndexPath:indexPath];
 
     Notification * notification = [_arrNotifications objectAtIndex:indexPath.row];
-    [cell.userImage setImageWithURL:[NSURL URLWithString:notification.commenterUserInfo.avatarFile.filePath]];
+    [cell.userImage setImageWithURL:[NSURL URLWithString:notification.commenterUserInfo.avatarFile.filePathURLString]];
     [cell.lblUserName setText:notification.commenterUserInfo.appUserName];
     [cell.lblDate setText:notification.dateCreatedFormated];
     // Configure the cell...

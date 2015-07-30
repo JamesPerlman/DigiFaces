@@ -16,6 +16,8 @@
 #import "Utility.h"
 #import "DFMediaUploadManager.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 @interface ProfilePictureCollectionViewController() <DFMediaUploadManagerDelegate, UICollectionViewDelegateFlowLayout>
 {
     CustomAlertView * alertView;
@@ -94,21 +96,14 @@
     
     File * file = nil;
     if (_type == ProfilePictureTypeDefault) {
-        NSDictionary * f = [_avatarsArray objectAtIndex:indexPath.row-1];
-        file = [[File alloc] initWithDictionary:f];
+        file = [_avatarsArray objectAtIndex:indexPath.row-1];
     }
     else if(_type == ProfilePictureTypeGallery){
         file = [_avatarsArray objectAtIndex:indexPath.row];
     }
     
     
-    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:[file filePath]]];
-    [cell.imgPicture setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        [cell.imgPicture setImage:image];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        
-    }];
-    
+    [cell.imgPicture sd_setImageWithURL:file.filePathURL placeholderImage:nil];
     return cell;
 }
 
@@ -145,7 +140,7 @@
     }
     else{
         if ([_delegate respondsToSelector:@selector(profilePictureDidSelect:withImage:)]) {
-            [_delegate profilePictureDidSelect:self.selectedImageFile withImage:self.selectedImage];
+            [_delegate profilePictureDidSelect:self.selectedImageFile.dictionary withImage:self.selectedImage];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -176,8 +171,8 @@
     else{
         NSDictionary * parameters = @{@"FileId" : @"",
                                       @"FileName" : @"",
-                                      @"FileTypeId" : @"",
-                                      @"FileType" : @"Image",
+                                      @"FileTypeId" : @"1",
+                                      @"FileType" : @"Picture",
                                       @"Extension" : @"png",
                                       @"IsAmazonFile" : @YES,
                                       @"AmazonKey" : mediaUploadView.publicURLString,

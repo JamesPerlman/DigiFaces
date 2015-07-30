@@ -28,7 +28,7 @@
 #import "TextAreaResponse.h"
 #import "AddResponseViewController.h"
 #import "CarouselViewController.h"
-
+#import <SDWebImage/UIImageView+WebCache.h>
 @interface DiaryThemeViewController () <GalleryCellDelegate>
 {
     UIButton * btnEdit;
@@ -179,13 +179,13 @@
         if ([module themeType] == ThemeTypeDisplayImage) {
             if (module.displayFile.file && [module.displayFile.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:module.displayFile.file.filePath]];
+                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:module.displayFile.file.filePathURLString]];
                 [imgCell.image setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     [imgCell.image setImage:image];
                 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                     NSLog(@"Error");
                 }];
-                //[imgCell.image setImageWithURL:[NSURL URLWithString:module.displayFile.file.filePath]];
+                //[imgCell.image setImageWithURL:[NSURL URLWithString:module.displayFile.file.filePathURLString]];
                 cell = imgCell;
             }
             else{
@@ -238,7 +238,7 @@
         
         ResponseViewCell * responseCell = [tableView dequeueReusableCellWithIdentifier:@"responseCell" forIndexPath:indexPath];
         
-        NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:response.userInfo.avatarFile.filePath]];
+        NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:response.userInfo.avatarFile.filePathURLString]];
         [responseCell.userImage setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             [responseCell.userImage setImage:image];
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

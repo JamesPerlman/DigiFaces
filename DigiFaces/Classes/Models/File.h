@@ -31,9 +31,10 @@
 
 -(NSString*)getVideoThumbURL;
 -(NSDictionary*)getFileDictionary;
+-(NSDictionary*)dictionary;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dict;
--(NSString*)returnFilePathFromFileObject:(NSDictionary*)fileObject;
 
 - (NSString*)filePathURLString;
+- (NSURL*)filePathURL;
 @end
