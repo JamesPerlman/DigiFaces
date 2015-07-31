@@ -390,6 +390,7 @@
 		F4864FB11B683450000D2615 /* DFResponseDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFResponseDataMapper.m; sourceTree = "<group>"; };
 		F4864FB31B6835E4000D2615 /* APITokenResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APITokenResponse.h; sourceTree = "<group>"; };
 		F4864FB41B6835E4000D2615 /* APITokenResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APITokenResponse.m; sourceTree = "<group>"; };
+		F49814E21B6B5515003571C6 /* Textarea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Textarea.h; sourceTree = "<group>"; };
 		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
 		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
 		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
@@ -1133,6 +1134,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACB9ED81B58EC8900E9F984 /* Textarea.m */,
+				F49814E21B6B5515003571C6 /* Textarea.h */,
 			);
 			name = TextArea;
 			path = ../..;
