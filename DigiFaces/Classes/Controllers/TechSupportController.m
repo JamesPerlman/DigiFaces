@@ -22,7 +22,7 @@
     alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
     [alertView setSingleButton:YES];
     alertView.delegate = self;
-    [_textArea becomeFirstResponder];
+    [self.txtSubject becomeFirstResponder];
 }
 
 - (IBAction)cancelThis:(id)sender {

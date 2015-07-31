@@ -22,7 +22,6 @@ extern NSString * const APIPathGetAboutMe;
 extern NSString * const APIPathUpdateAboutMe;
 extern NSString * const APIPathUploadUserCustomAvatar;
 extern NSString * const APIPathSendMessageToModerator;
-extern NSString * const APIPathGetProjects;
 extern NSString * const APIPathGetNotifications;
 extern NSString * const APIPathIsUserNameAvailable;
 extern NSString * const APIPathSetUserName;
@@ -36,12 +35,14 @@ extern NSString * const APIPathActivityUpdateThread;
 extern NSString * const APIPathActivityUpdateImageGalleryResponse;
 extern NSString * const APIPathActivityUpdateTextareaResponse;
 extern NSString * const APIPathActivityInsertThreadFile;
+extern NSString * const APIPathActivityMarkThreadRead;
 
 // project
 extern NSString * const APIPathGetHomeAnnouncement;
 extern NSString * const APIPathGetDailyDiary;
 extern NSString * const APIPathUpdateDailyDiary;
 extern NSString * const APIPathProjectGetActivities;
+extern NSString * const APIPathProjectMarkActivityRead;
 
 // system
 extern NSString * const APIPathGetAbout;

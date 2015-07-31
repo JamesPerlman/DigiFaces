@@ -26,7 +26,7 @@
         self.amazonKey = dict[@"AmazonKey"];
         self.cameraTagKey = dict[@"CameraTagKey"];
         
-        self.filePath = [[self returnFilePathFromFileObject:dict] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+      
     }
     
     return self;
@@ -69,7 +69,7 @@
     return url;
 }
 
--(NSString*)filePathURLString {
+-(NSString*)filePath {
     if (self.isAmazonFile.boolValue) {
         return self.amazonKey;
     } else if (self.isCameraTagFile.boolValue) {
@@ -83,7 +83,7 @@
 }
 
 -(NSURL*)filePathURL {
-    NSString *urlString = [self filePathURLString];
+    NSString *urlString = [self filePath];
     
     return [NSURL URLWithString:urlString];
 }

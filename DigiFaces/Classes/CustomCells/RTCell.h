@@ -8,8 +8,28 @@
 #import "RTLabel.h"
 
 #import <UIKit/UIKit.h>
+@class RTCell;
+@protocol ExpandableTextCellDelegate <NSObject>
+
+- (void)textCellDidChangeSize:(RTCell*)cell;
+
+@end
 
 @interface RTCell : UITableViewCell
+@property (nonatomic, assign) id<ExpandableTextCellDelegate>delegate;
 @property (weak, nonatomic) IBOutlet RTLabel *titleLabel;
+
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIButton *moreLessButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *moreLessButtonHeightConstraint;
+
+- (void)setText:(NSString*)text;
+- (void)minimize;
+- (void)maximize;
+- (CGFloat)height;
+- (CGFloat)fullHeight;
+- (CGFloat)maxHeight;
+- (IBAction)moreLessToggle:(id)sender;
 
 @end

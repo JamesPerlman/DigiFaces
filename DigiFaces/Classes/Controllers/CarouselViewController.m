@@ -36,7 +36,7 @@
         else
         {
             WebViewController * webController = [self.storyboard instantiateViewControllerWithIdentifier:@"webController"];
-            webController.url = file.filePathURLString;
+            webController.url = file.filePath;
             webController.delegate = self;
             [self.controllers addObject:webController];
         }

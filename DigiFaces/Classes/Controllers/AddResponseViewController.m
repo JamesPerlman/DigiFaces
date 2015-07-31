@@ -50,7 +50,7 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [_txtResponse becomeFirstResponder];
+    [self.txtTitle becomeFirstResponder];
     [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
     selectedDate = [NSDate date];
     
@@ -404,7 +404,7 @@
 #pragma mark - ProfilePictureDelegate
 -(void)profilePictureDidSelect:(File *)selectedProfile withImage:(UIImage *)image
 {
-    [self setImageURL:[selectedProfile filePathURLString] withImage:image];
+    [self setImageURL:[selectedProfile filePath] withImage:image];
 }
 
 

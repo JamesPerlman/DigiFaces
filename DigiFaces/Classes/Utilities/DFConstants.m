@@ -33,6 +33,7 @@ NSString * const APIPathActivityUpdateThread = @"api/Activity/UpdateThread";
 NSString * const APIPathActivityUpdateImageGalleryResponse = @"api/Activity/UpdateImageGalleryResponse";
 NSString * const APIPathActivityUpdateTextareaResponse = @"api/Activity/UpdateTextareaResponse";
 NSString * const APIPathActivityInsertThreadFile = @"api/Activity/InsertThreadFile/:projectId";
+NSString * const APIPathActivityMarkThreadRead = @"api/Activity/MarkThreadRead/:threadId";
 
 // system
 NSString * const APIPathGetAbout = @"api/System/GetAbout/:languageCode";
@@ -44,6 +45,7 @@ NSString * const APIPathGetHomeAnnouncement = @"api/Project/GetHomeAnnouncement/
 NSString * const APIPathGetDailyDiary = @"api/Project/GetDailyDiary/:diaryId";
 NSString * const APIPathUpdateDailyDiary = @"api/Project/UpdateDailyDiary/:projectId";
 NSString * const APIPathProjectGetActivities = @"api/Project/GetActivities/:projectId";
+NSString * const APIPathProjectMarkActivityRead = @"api/Project/MarkActivityRead/:activityId";
 
 
 #pragma mark - LocalStorage keys

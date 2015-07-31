@@ -152,7 +152,7 @@ typedef enum {
             }
             
             ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-            [imgCell.image setImageWithURL:[NSURL URLWithString:file.filePathURLString]];
+            [imgCell.image setImageWithURL:file.filePathURL];
             cell = imgCell;
         }
             break;

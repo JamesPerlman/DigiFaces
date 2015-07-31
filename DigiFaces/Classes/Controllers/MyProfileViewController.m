@@ -27,7 +27,7 @@
     NSDictionary * selctedProfile;
     BOOL isTextChanged;
 }
-@property (nonatomic, weak) IBOutlet AboutMe *aboutMe;
+@property (nonatomic, strong) AboutMe *aboutMe;
 @end
 
 @implementation MyProfileViewController
@@ -37,7 +37,7 @@
     
     [self getAboutMeInfo];
     
-    self.profilePicView.image = [[UserManagerShared sharedManager]profilePic];
+    [self.profilePicView sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
     
     self.aboutMeTextView.text = @"";
     self.titleName.text = [NSString stringWithFormat:@"%@ %@",LS.myUserInfo.firstName,LS.myUserInfo.lastName];
@@ -87,7 +87,7 @@
                       [sself.aboutMeTextView becomeFirstResponder];
                       sself.aboutMe = result;
                       [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-                      [[UserManagerShared sharedManager] setAboutMeText:_aboutMeTextView.text];
+                      LS.myUserInfo.aboutMeText = _aboutMeTextView.text;
                       
                   } failure:^(NSError *error) {
                       
@@ -119,8 +119,7 @@
                       [Utility saveString:_aboutMeTextView.text forKey:kAboutMeText];
                       [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                       
-                      [[UserManagerShared sharedManager] setAboutMeText:_aboutMeTextView.text];
-                      [sself dismissViewControllerAnimated:YES completion:nil];
+                      LS.myUserInfo.aboutMeText = _aboutMeTextView.text;                      [sself dismissViewControllerAnimated:YES completion:nil];
                   } failure:^(NSError *error) {
                       defsself
                       [alertview showAlertWithMessage:@"An error in request, verify that your email is correct" inView:sself.view withTag:0];
@@ -155,7 +154,7 @@
 //                      [[UserManagerShared sharedManager] setProfilePicDict:profilePicture];
                       
                       dispatch_async(dispatch_get_main_queue(), ^{
-                          [sself setProfilePicture:[[UserManagerShared sharedManager] avatarFile].filePathURLString withImage:image];
+                          [sself setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:image];
                       });
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -176,10 +175,7 @@
         return;
     }
     
-    [self.profilePicView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-        [[UserManagerShared sharedManager] setProfilePic:[Utility resizeImage:image imageSize:CGSizeMake(100, 120)]];
-    }];
+    [self.profilePicView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"]];
 }
 
 

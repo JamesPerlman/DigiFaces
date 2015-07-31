@@ -26,11 +26,11 @@
 #import "RTCell.h"
 #import "DiaryEntryTableViewCell.h"
 #import "NSArray+orderedDistinctUnionOfObjects.h"
-
-@interface DailyDiaryViewController ()
+static NSString *infoCellReuseIdentifier = @"textCell";
+@interface DailyDiaryViewController ()<ExpandableTextCellDelegate>
 {
     UIButton * btnEdit;
-    RTCell * infoCel;
+    RTCell * infoCell;
 }
 @property (nonatomic, retain) DailyDiary * dailyDiary;
 @property (nonatomic, retain) NSArray *diariesByDateIndex;
@@ -112,6 +112,12 @@
                       defsself
                       sself.dailyDiary = result;
                       [sself.tableView reloadData];
+                      infoCell = [sself.tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier];
+                      if (result.userDiaries.count) {
+                          [infoCell minimize];
+                      } else {
+                          [infoCell maximize];
+                      }
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
                   failure:^(NSError *error) {
@@ -148,6 +154,11 @@
     return 0;
 }
 
+-(void)textCellDidChangeSize:(RTCell *)cell {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
@@ -155,8 +166,17 @@
             return 160;
         }
         else if (indexPath.row == 1) {
-            
-            return infoCel.titleLabel.optimumSize.height + 20;
+            // if there are responses, show the more/less button
+            if (!infoCell) {
+                infoCell = [self.tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier];
+                [infoCell setText:_dailyDiary.diaryQuestion];
+            }
+            if (self.dailyDiary.userDiaries.count) {
+                NSLog(@"%f", infoCell.height);
+                return infoCell.height;
+            } else {
+                return infoCell.fullHeight;
+            }
         }
         else if (indexPath.row == 2){
             return 40;
@@ -175,7 +195,7 @@
         if (indexPath.row == 0) {
             if (_dailyDiary.file && [_dailyDiary.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_dailyDiary.file.filePathURLString]];
+                NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_dailyDiary.file.filePath]];
                 [imgCell.image setImageWithURLRequest:req placeholderImage:[UIImage imageNamed:@"blank"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     imgCell.image.image = image;
                 } failure:nil];
@@ -184,18 +204,17 @@
             else{
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
                 [vidCell.imageView setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL] placeholderImage:[UIImage imageNamed:@"blank"]];
-                vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePathURLString];
+                vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePath];
                 vidCell.moviePlayerController.view.hidden = true;
                 cell = vidCell;
             }
         }
         else if (indexPath.row == 1) {
-            infoCel = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-            if (![_dailyDiary.diaryQuestion isEqual:[NSNull null]]) {
-                [infoCel.titleLabel setText:_dailyDiary.diaryQuestion];
-            }
+            infoCell = [tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier forIndexPath:indexPath];
+            infoCell.delegate = self;
+            [infoCell setText:_dailyDiary.diaryQuestion];
             
-            cell = infoCel;
+            cell = infoCell;
         }
         else if (indexPath.row == 2){
             DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell" forIndexPath:indexPath];
@@ -231,11 +250,11 @@
 {
     if (section > 0) {
         DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"dateHeaderCell"];
-
+        
         NSString * date = self.diaryDates[section-1];;
         [headerCell.label setText:[Utility getMonDayYearDateFromString:date]];
         [headerCell setBackgroundColor:[UIColor whiteColor]];
-        return headerCell;
+        return headerCell.contentView;
     }
     else{
         return nil;
@@ -259,7 +278,8 @@
             [cell.moviePlayerController play];
         }
         else if (indexPath.row == 1  && self.diaryDates.count>0) {
-            [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
+            [infoCell moreLessToggle:nil];
+            // [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
         }
     }
     else{
@@ -282,7 +302,7 @@
     }
     else if ([segue.identifier isEqualToString:@"webViewSegue"]){
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        webController.url = [_dailyDiary.file filePathURLString];
+        webController.url = [_dailyDiary.file filePath];
     }
     else if ([segue.identifier isEqualToString:@"themeSegue"]){
         DiaryThemeViewController * themeController = [segue destinationViewController];

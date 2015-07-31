@@ -25,7 +25,6 @@
 @property (nonatomic, retain) NSString * position;
 @property (nonatomic, retain) NSString * publicFileUrl;
 
-@property (nonatomic, retain) NSString * filePath;
 
 @property (nonatomic, retain) NSDictionary * fileDictionary;
 
@@ -35,6 +34,6 @@
 
 -(instancetype)initWithDictionary:(NSDictionary*)dict;
 
-- (NSString*)filePathURLString;
+- (NSString*)filePath;
 - (NSURL*)filePathURL;
 @end

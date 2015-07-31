@@ -21,7 +21,7 @@
     [super viewDidLoad];
     alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
     alertView.delegate = self;
-    [_textview becomeFirstResponder];
+    [self.txtSubject becomeFirstResponder];
 }
 
 - (IBAction)cancelThis:(id)sender {

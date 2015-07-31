@@ -109,7 +109,7 @@
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *image = info[UIImagePickerControllerEditedImage];
     
     NSData *mediaData;
     

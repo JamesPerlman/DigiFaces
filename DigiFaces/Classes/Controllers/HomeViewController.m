@@ -30,7 +30,7 @@
 {
     ProfilePicCell * picCell;
 }
-@property (nonatomic ,retain) NSMutableArray * dataArray;
+@property (nonatomic ,retain) NSArray * dataArray;
 
 @end
 
@@ -44,9 +44,6 @@
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:38/255.0f green:218/255.0f blue:1 alpha:1]}];
     
-    _dataArray = [[NSMutableArray alloc] init];
-    [_dataArray addObject:@{@"Title" : @"home", @"Icon" : @"home.png"}];
-    [_dataArray addObject:@{@"Title" : @"diary", @"Icon" : @"diary.png"}];
     
     _imageNames = [[NSArray alloc]initWithObjects:@"home.png",@"diary.png",@"chat.png",@"friedship.png",@"talking.png",@"chat.png", nil];
     
@@ -87,7 +84,7 @@
     [DFClient makeRequest:APIPathGetHomeAnnouncement
                    method:kGET
                    params:nil
-                  success:^(NSDictionary *response, id result) {
+                  success:^(NSDictionary *response, APIHomeAnnouncementResponse *result) {
                       defsself
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -109,7 +106,7 @@
                bodyParams:nil
                   success:^(NSDictionary *response, NSArray *diaryThemes) {
                       defsself
-                      [sself.dataArray addObjectsFromArray:diaryThemes];
+                      sself.dataArray = diaryThemes;
                       [sself.tableView reloadData];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -133,7 +130,7 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       
-                      [sself setProfilePicture:LS.myUserInfo.avatarFile.filePathURLString withImage:nil];
+                      [sself setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:nil];
                       
                       [sself fetchActivites];
                   }
@@ -143,21 +140,38 @@
                   }];
     }
 
+- (void)fetchProjects {
+    defwself
+    [DFClient makeRequest:APIPathGetProjects
+                   method:kGET
+                urlParams:@{@"numberOfProjects" : @0}
+               bodyParams:nil
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                  }];
+}
 
 -(void)setProfilePicture:(NSString*)imageUrl withImage:(UIImage*)image
 {
-    /*
+    
     if (image) {
-        [[UserManagerShared sharedManager] setProfilePic:image];
         picCell.profileImage.image = image;
         return;
-    }*/
+    }
     [picCell.profileImage sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
 }
 
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
-    [self setProfilePicture:LS.myUserInfo.avatarFile.filePathURLString withImage:image];
+    File *profilePictureFile = [[File alloc] initWithDictionary:profilePicture];
+
+    [self setProfilePicture:profilePictureFile.filePath withImage:image];
     
     defwself
     [DFClient makeRequest:APIPathUploadUserCustomAvatar
@@ -165,7 +179,7 @@
                    params:profilePicture
                   success:^(NSDictionary *response, id result) {
                       defsself
-                      LS.myUserInfo.avatarFile = [[File alloc] initWithDictionary:profilePicture];
+                      LS.myUserInfo.avatarFile = profilePictureFile;
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
                   failure:^(NSError *error) {
@@ -194,7 +208,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return _dataArray.count;
+    return _dataArray.count + 1 + LS.myUserInfo.currentProject.hasDailyDiary.integerValue;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -202,7 +216,7 @@
         // Project Introduction
         [self performSegueWithIdentifier:@"projectIntroSegue" sender:self];
     }
-    else if (indexPath.row == 1){
+    else if (indexPath.row == 1 && LS.myUserInfo.currentProject.hasDailyDiary.boolValue){
         [self performSegueWithIdentifier:@"dailyDiarySegue" sender:self];
     }
     else
@@ -230,26 +244,41 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if (indexPath.row == 0 || indexPath.row == 1) {
-        NSDictionary * dict = [_dataArray objectAtIndex:indexPath.row];
-        cell.titleLabel.text = NSLocalizedString([dict objectForKey:@"Title"], [dict objectForKey:@"Title"]);
+    
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
+    
+    if (indexPath.row == 0) {
+        
+        // show home item
+        cell.titleLabel.text = @"Home";
         cell.unreadCount = 0;
+        cell.unreadItemIndicator.hidden = true;
+        
         //cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
-    }
-    else{
+    } else {
+        
+        NSUInteger indexAdjustment = 1;
+        if (LS.myUserInfo.currentProject.hasDailyDiary.boolValue) {
+            ++indexAdjustment;
+            if (indexPath.row == 1) {
+                cell.titleLabel.text = @"Diary";
+                cell.unreadCount = 0;
+                cell.unreadItemIndicator.hidden = true;
+                return cell;
+            }
+        }
         
         
-        DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row];
+        DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row-indexAdjustment];
         
         [cell.titleLabel setText:theme.activityTitle];
         
         cell.unreadCount = theme.unreadResponses.integerValue;
-        
+        cell.unreadItemIndicator.hidden = theme.isRead.boolValue;
         //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
     }
-    cell.separatorInset = UIEdgeInsetsZero;
-    cell.layoutMargins = UIEdgeInsetsZero;
-    cell.preservesSuperviewLayoutMargins = NO;
     return cell;
 }
 
@@ -268,7 +297,7 @@
     else if ([segue.identifier isEqualToString:@"diaryTheme"]){
         DiaryThemeViewController * themeController = [segue destinationViewController];
         NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
-        DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row];
+        DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row - 1 - LS.myUserInfo.currentProject.hasDailyDiary.integerValue];
         themeController.diaryTheme = theme;
         themeController.navigationItem.title = theme.activityTitle;
     }

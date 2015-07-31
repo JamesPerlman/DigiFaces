@@ -12,5 +12,5 @@
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *unreadItemLabel;
 @property (nonatomic, setter=setUnreadCount:) NSInteger unreadCount;
-
+@property (nonatomic, weak) IBOutlet UIView *unreadItemIndicator;
 @end

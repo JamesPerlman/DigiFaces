@@ -48,7 +48,7 @@
     [imageView setFrame:CGRectMake(0, 0, _itemSize.width - _padding.left - _padding.right, _itemSize.height - _padding.top - _padding.left)];
     
     if ([file.fileType isEqualToString:@"Image"]) {
-        [imageView setImageWithURL:[NSURL URLWithString:file.filePathURLString]];
+        [imageView setImageWithURL:[NSURL URLWithString:file.filePath]];
     }
     
     return imageView;

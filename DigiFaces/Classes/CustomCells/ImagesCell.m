@@ -8,7 +8,7 @@
 
 #import "ImagesCell.h"
 #import "File.h"
-#import "UIImageView+AFNetworking.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface ImagesCell()
 
@@ -39,12 +39,7 @@
         [btn setBackgroundColor:[UIColor lightGrayColor]];
         [btn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         if ([file.fileType isEqualToString:@"Image"]) {
-            NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:file.filePathURLString]];
-            [[btn imageView] setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                [btn setImage:image forState:UIControlStateNormal];
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                NSLog(@"Failed to download iamge");
-            }];
+            [[btn imageView] sd_setImageWithURL:file.filePathURL];
         }
         [self addSubview:btn];
         xOffset += self.frame.size.height - 5;

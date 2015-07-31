@@ -124,13 +124,13 @@
         File *attachment = self.announcement.file;
         if ([attachment.fileType isEqualToString:@"Image"]) {
             ImageCell * cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-            NSURL * url = [NSURL URLWithString:attachment.filePathURLString];
+            NSURL * url = [NSURL URLWithString:attachment.filePath];
             [cell.image setImageWithURL:url placeholderImage:[UIImage imageNamed:@"blank"]];
             return cell;
         }
         else if([attachment.fileType isEqualToString:@"Video"]){
             VideoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-            cell.moviePlayerController.contentURL = [NSURL URLWithString:attachment.filePathURLString];
+            cell.moviePlayerController.contentURL = [NSURL URLWithString:attachment.filePath];
             cell.moviePlayerController.view.hidden = true;
             [cell.imageView setImageWithURL:[NSURL URLWithString:[attachment getVideoThumbURL]] placeholderImage:[UIImage imageNamed:@"blank"]];
             return cell;
@@ -203,7 +203,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"webViewSegue"]) {
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        webController.url = self.announcement.file.filePathURLString;
+        webController.url = self.announcement.file.filePath;
     }
 }
 

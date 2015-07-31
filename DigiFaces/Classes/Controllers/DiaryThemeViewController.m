@@ -179,13 +179,13 @@
         if ([module themeType] == ThemeTypeDisplayImage) {
             if (module.displayFile.file && [module.displayFile.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:module.displayFile.file.filePathURLString]];
+                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:module.displayFile.file.filePath]];
                 [imgCell.image setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     [imgCell.image setImage:image];
                 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                     NSLog(@"Error");
                 }];
-                //[imgCell.image setImageWithURL:[NSURL URLWithString:module.displayFile.file.filePathURLString]];
+                //[imgCell.image setImageWithURL:[NSURL URLWithString:module.displayFile.file.filePath]];
                 cell = imgCell;
             }
             else{
@@ -238,7 +238,7 @@
         
         ResponseViewCell * responseCell = [tableView dequeueReusableCellWithIdentifier:@"responseCell" forIndexPath:indexPath];
         
-        NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:response.userInfo.avatarFile.filePathURLString]];
+        NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:response.userInfo.avatarFile.filePath]];
         [responseCell.userImage setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
             [responseCell.userImage setImage:image];
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

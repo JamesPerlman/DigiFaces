@@ -261,13 +261,13 @@ typedef enum {
 {
     if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
         [cell.lblTime setText:_response.dateCreatedFormatted];
-        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_response.userInfo.avatarFile.filePathURLString]];
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_response.userInfo.avatarFile.filePath]];
         [cell.lblUsername setText:_response.userInfo.appUserName];
         [cell makeImageCircular];
     }
     else{
         [cell.lblTime setText:_diary.dateCreatedFormatted];
-        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_diary.userInfo.avatarFile.filePathURLString]];
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_diary.userInfo.avatarFile.filePath]];
         [cell.lblUsername setText:_diary.userInfo.appUserName];
         [cell makeImageCircular];
     }
@@ -354,7 +354,7 @@ typedef enum {
         
         [cell.lblDate setText:comment.dateCreatedFormated];
         [cell.lblUserName setText:comment.userInfo.appUserName];
-        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:comment.userInfo.avatarFile.filePathURLString]];
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:comment.userInfo.avatarFile.filePath]];
         [cell.infoLabel setText:comment.response];
         
         NSInteger height = 75;
