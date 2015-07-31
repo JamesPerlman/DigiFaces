@@ -214,7 +214,6 @@
 		4ACB9ED21B58EBA400E9F984 /* DisplayText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayText.m; sourceTree = "<group>"; };
 		4ACB9ED41B58EC2900E9F984 /* DisplayFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayFile.h; sourceTree = "<group>"; };
 		4ACB9ED51B58EC2900E9F984 /* DisplayFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayFile.m; sourceTree = "<group>"; };
-		4ACB9ED71B58EC8900E9F984 /* Textarea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Textarea.h; sourceTree = "<group>"; };
 		4ACB9ED81B58EC8900E9F984 /* Textarea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Textarea.m; sourceTree = "<group>"; };
 		4ACB9EDA1B58ECA800E9F984 /* MarkUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkUp.h; sourceTree = "<group>"; };
 		4ACB9EDB1B58ECA800E9F984 /* MarkUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkUp.m; sourceTree = "<group>"; };
@@ -1133,7 +1132,6 @@
 		F4864F941B68211F000D2615 /* TextArea */ = {
 			isa = PBXGroup;
 			children = (
-				4ACB9ED71B58EC8900E9F984 /* Textarea.h */,
 				4ACB9ED81B58EC8900E9F984 /* Textarea.m */,
 			);
 			name = TextArea;
