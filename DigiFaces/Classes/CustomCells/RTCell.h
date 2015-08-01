@@ -11,7 +11,7 @@
 @class RTCell;
 @protocol ExpandableTextCellDelegate <NSObject>
 
-- (void)textCellDidChangeSize:(RTCell*)cell;
+- (void)textCellDidTapMore:(RTCell*)cell;
 
 @end
 
@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UILabel *bodyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *moreLessButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *moreLessButtonHeightConstraint;
 

@@ -33,6 +33,7 @@
 {
     UIButton * btnEdit;
     NSInteger galleryItemIndex;
+    NSNumber *_currentResponseIndex;
 }
 @property (nonatomic, retain) NSMutableArray * cellsArray;
 @property (nonatomic, retain) NSMutableArray * heightArray;
@@ -56,6 +57,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (_currentResponseIndex) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_currentResponseIndex.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    }
     
 }
 
@@ -131,7 +135,7 @@
                       defsself
                       NSInteger responseCount = result.count;
                       if (responseCount>0) {
-                          [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
+                          [_cellsArray addObject:[NSString stringWithFormat:@"%d Comment%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
                           [_heightArray addObject:@40];
                       }
                       for (Response * response in result) {
@@ -247,7 +251,7 @@
         [responseCell.lblName setText:response.userInfo.appUserName];
         [responseCell.lblTime setText:response.dateCreatedFormatted];
         [responseCell setImageCircular];
-        [responseCell.btnComments setTitle:[NSString stringWithFormat:@"%d Comments", response.comments.count] forState:UIControlStateNormal];
+        [responseCell.btnComments setTitle:[NSString stringWithFormat:@"%d Comment%@", response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
         CGSize size;
         if (response.textareaResponses.count>0) {
             TextareaResponse * textResponse = [response.textareaResponses objectAtIndex:0];
@@ -324,6 +328,7 @@
     }
     else if ([segue.identifier isEqualToString:@"responseSegue"]){
         NSInteger index = [self.tableView indexPathForSelectedRow].row;
+        _currentResponseIndex = @(index);
         Response * response = [_cellsArray objectAtIndex:index];
         ResponseViewController * responseController = [segue destinationViewController];
         responseController.responseType = ResponseControllerTypeDiaryTheme;

@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSMutableDictionary * diariesDict;
 @property (nonatomic, retain) NSMutableArray * diariesDate;
 
+- (void)checkForUnreadComments;
 -(instancetype)initWithDictionary:(NSDictionary*)dict;
 
 @end

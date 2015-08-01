@@ -17,6 +17,7 @@
 {
     NSInteger month, year, day;
     UIButton * selectedDay;
+    UIColor *btnColor;
 }
 
 @property (nonatomic, retain) NSArray * weekNames;
@@ -31,26 +32,29 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    _weekNames = [[NSArray alloc] initWithObjects:@"Monday", @"Tuesday", @"Wednesday",@"Thursday",@"Friday",@"Saturday",@"Sunday", nil];
-    _monthDays = [[NSArray alloc] initWithObjects:@31, @28, @31, @30, @31, @30, @31, @31, @30, @31, @30, @31, nil];
+    _weekNames = @[@"Monday", @"Tuesday", @"Wednesday",@"Thursday",@"Friday",@"Saturday",@"Sunday"];
+    _monthDays = @[@31, @28, @31, @30, @31, @30, @31, @31, @30, @31, @30, @31];
     
     _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    btnColor = [UIColor colorWithRed:24.0f/255.0f green:186.0f/255.0f blue:252.0f/255.0f alpha:1.0f];
     
     [self getMonthYear];
     [self loadCalendar];
 }
 
--(NSInteger)dayOfWeek:(NSString*)day
+-(NSInteger)dayOfWeek:(NSString*)someDay
 {
     NSInteger dayNumber = 0;
     for (NSString * s in _weekNames) {
-        if ([s isEqualToString:day]) {
+        if ([s isEqualToString:someDay]) {
             break;
         }
         dayNumber++;
     }
     return dayNumber;
 }
+
 
 -(void)getMonthYear
 {
@@ -146,6 +150,8 @@
         [btn setFrame:rect];
         
         [self.contentView addSubview:btn];
+        
+        
         xOffset += kDayWidth;
         if (xOffset>kCalendarWidth) {
             xOffset = 0;
@@ -169,23 +175,37 @@
 -(void)dayClicked:(UIButton*)sender
 {
     if (selectedDay) {
-//        [selectedDay setBackgroundColor:[UIColor clearColor]];
+        //        [selectedDay setBackgroundColor:[UIColor clearColor]];
         [selectedDay setSelected:NO];
     }
     selectedDay = sender;
     [sender setSelected:YES];
-//    [sender setBackgroundColor:[UIColor blueColor]];
+    //    [sender setBackgroundColor:[UIColor blueColor]];
 }
 
 -(UIButton*)getButtonForDay:(NSInteger)d
 {
     UIButton * btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kDayWidth, kDayHeight)];
     [btn setTitle:[NSString stringWithFormat:@"%d", d+1] forState:UIControlStateNormal];
-    btn.tag = d;
-    [btn setBackgroundImage:[UIImage imageNamed:@"btnCalendar"] forState:UIControlStateSelected];
+    if (d+1 == day) {
+        btn.layer.borderColor = [btnColor CGColor];
+        static CGFloat sideLength = kDayWidth > kDayHeight ? kDayWidth : kDayHeight;
+        btn.layer.cornerRadius = sideLength/2.0f;
+        btn.layer.borderWidth = 1.0f;
+        [btn setSelected:true];
+        selectedDay = btn;
+    }
+    if (d+1 > day) {
+        
+        [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        btn.enabled = false;
+    } else {
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(dayClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setBackgroundImage:[UIImage imageNamed:@"btnCalendar"] forState:UIControlStateSelected];
+        btn.tag = d;
+    }
     [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(dayClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     return btn;
 }

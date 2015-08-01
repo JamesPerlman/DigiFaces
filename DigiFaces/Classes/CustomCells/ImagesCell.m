@@ -10,7 +10,9 @@
 #import "File.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface ImagesCell()
+@interface ImagesCell() {
+    NSMapTable *imageViewsForGestureRecognizers;
+}
 
 @property (nonatomic, retain) NSArray* imagesArray;
 
@@ -20,6 +22,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    imageViewsForGestureRecognizers = [NSMapTable weakToWeakObjectsMapTable];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -34,24 +37,33 @@
     int xOffset = 5;
     int tagIndex = 0;
     for (File * file in files) {
-        UIButton * btn = [[UIButton alloc] initWithFrame:CGRectMake(xOffset, 5, self.frame.size.height-10, self.frame.size.height -10)];
-        btn.tag = tagIndex++;
-        [btn setBackgroundColor:[UIColor lightGrayColor]];
-        [btn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 5, self.frame.size.height-10, self.frame.size.height -10)];
+        iv.tag = tagIndex++;
+        [iv setBackgroundColor:[UIColor lightGrayColor]];
+        
+        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+        tapGR.numberOfTouchesRequired = 1;
+        [iv addGestureRecognizer:tapGR];
+        iv.userInteractionEnabled = true;
+        
+        [imageViewsForGestureRecognizers setObject:iv forKey:tapGR];
+        
         if ([file.fileType isEqualToString:@"Image"]) {
-            [[btn imageView] sd_setImageWithURL:file.filePathURL];
+            [iv sd_setImageWithURL:file.filePathURL];
+        } else if ([file.fileType isEqualToString:@"Video"]) {
+            [iv sd_setImageWithURL:[NSURL URLWithString:[file getVideoThumbURL]]];
         }
-        [self addSubview:btn];
+        [self.contentView addSubview:iv];
         xOffset += self.frame.size.height - 5;
     }
     
 }
-
--(void)buttonClicked:(UIButton*)btn
+-(void)imageViewTapped:(UITapGestureRecognizer*)gr
 {
-    File * file = [_imagesArray objectAtIndex:btn.tag];
+    UIImageView *iv = [imageViewsForGestureRecognizers objectForKey:gr];
+    File * file = [_imagesArray objectAtIndex:iv.tag];
     if ([_delegate respondsToSelector:@selector(imageCell:didClickOnButton:atIndex:atFile:)]) {
-        [_delegate imageCell:self didClickOnButton:btn atIndex:btn.tag atFile:file];
+        [_delegate imageCell:self didClickOnButton:iv atIndex:iv.tag atFile:file];
     }
 }
 

@@ -42,7 +42,10 @@
              DESCRIPTOR(APIPathActivityUpdateComment,               kPOST, commentMapping),
              DESCRIPTOR(APIPathActivityUpdateImageGalleryResponse,  kPOST, imageGalleryResponseMapping),
              DESCRIPTOR(APIPathActivityUpdateTextareaResponse,      kPOST, textareaResponseMapping),
-             DESCRIPTOR(APIPathActivityMarkThreadRead,              kPOST, emptyResponseMapping),             DESCRIPTOR(APIPathForgotPassword,                      kPOST, emptyResponseMapping),
+             DESCRIPTOR(APIPathActivityMarkThreadRead,              kPOST, emptyResponseMapping),
+             DESCRIPTOR(APIPathActivityMarkCommentRead,             kPOST, emptyResponseMapping),
+             
+             DESCRIPTOR(APIPathForgotPassword,                      kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathGetAbout,                            kGET,  aboutMapping),
              DESCRIPTOR(APIPathGetAboutMe,                          kGET,  aboutMeMapping),
              DESCRIPTOR(APIPathGetAvatarFiles,                      kGET,  fileMapping),

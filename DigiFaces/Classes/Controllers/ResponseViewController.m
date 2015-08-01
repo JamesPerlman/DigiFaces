@@ -56,6 +56,9 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.diary) {
+        self.navigationItem.title = self.diary.title;
+    }
     
     _heightArray = [[NSMutableArray alloc] init];
     
@@ -79,10 +82,10 @@ typedef enum {
     [_cellsArray addObject:@(CellTypeUser)];
     [_heightArray addObject:@75];
     // Title Cell
-    if (_diary) {
-        [_cellsArray addObject:@(CellTypeTitle)];
-        [_heightArray addObject:@44];
-    }
+    /*if (_diary) {
+     [_cellsArray addObject:@(CellTypeTitle)];
+     [_heightArray addObject:@44];
+     }*/
     // Intro Cell
     [_cellsArray addObject:@(CellTypeIntro)];
     [_heightArray addObject:@90];
@@ -108,6 +111,22 @@ typedef enum {
         }
     }
     
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self organizeData];
+}
+
+- (void)organizeData {
+    
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"commentId" ascending:NO];
+    
+    if (self.response) {
+        self.response.comments = [self.response.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+    }
+    if (self.diary) {
+        self.diary.comments = [self.diary.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+    }
+    
+    
 }
 - (IBAction)cancelThis:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -123,7 +142,7 @@ typedef enum {
 
 -(void)updateDiaryInfo
 {
-    NSInteger diaryID = [[[[[UserManagerShared sharedManager] currentProject] dailyDiaryList] objectAtIndex:0] integerValue];
+    NSInteger diaryID = [LS.myUserInfo.currentProject.dailyDiaryList.firstObject integerValue];
     [self fetchDailyDiaryWithDiaryID:diaryID];
 }
 
@@ -196,22 +215,38 @@ typedef enum {
                               @"IsActive" : @YES};
     
     defwself
-    [DFClient makeRequest:APIPathActivityUpdateComment
-                   method:kPOST
-                   params:params
-                  success:^(NSDictionary *response, id result) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself updateDiaryInfo];
-                  }
-                  failure:^(NSError *error) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                  }];
+    [DFClient makeJSONRequest:APIPathActivityUpdateComment
+                       method:kPOST
+                       params:params
+                      success:^(NSDictionary *response, Comment *result) {
+                          defsself
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                          [sself addCommentToDataModel:result];
+                          sself.txtResposne.text = @"";
+                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                      }
+                      failure:^(NSError *error) {
+                          defsself
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      }];
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
+- (void)addCommentToDataModel:(Comment*)comment {
+    comment.userInfo = LS.myUserInfo;
+    if (self.response) {
+    self.response.comments = [self.response.comments arrayByAddingObject:comment];
+    }
+    if (self.diary) {
+        self.diary.comments = [self.diary.comments arrayByAddingObject:comment];
+
+    }
+    [self organizeData];
+    [_cellsArray addObject:@(CellTypeComment)];
+    [_heightArray addObject:@110];
+    [self.tableView reloadData];
+}
 
 -(void)keyboardWillShow:(NSNotification*)notification
 {
@@ -259,18 +294,18 @@ typedef enum {
 
 -(void)configureUserCell:(UserCell*)cell
 {
+    id target;
     if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
-        [cell.lblTime setText:_response.dateCreatedFormatted];
-        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_response.userInfo.avatarFile.filePath]];
-        [cell.lblUsername setText:_response.userInfo.appUserName];
-        [cell makeImageCircular];
+        target = _response;
     }
     else{
-        [cell.lblTime setText:_diary.dateCreatedFormatted];
-        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:_diary.userInfo.avatarFile.filePath]];
-        [cell.lblUsername setText:_diary.userInfo.appUserName];
-        [cell makeImageCircular];
+        target = _diary;
     }
+    
+    [cell.lblTime setText:[target dateCreatedFormatted]];
+    [cell.userImage sd_setImageWithURL:[NSURL URLWithString:[[[target userInfo] avatarFile]filePath]]];
+    [cell.lblUsername setText:[[target userInfo] appUserName]];
+    [cell makeImageCircular];
 }
 
 -(UITableViewCell*)getCellForType:(CellType)type forIndexPath:(NSIndexPath*)indexPath
@@ -320,7 +355,7 @@ typedef enum {
         else if (_responseType == ResponseControllerTypeDiaryResponse){
             counts = _diary.comments.count;
         }
-        [cell.textLabel setText:[NSString stringWithFormat:@"%ld Responses", (long)counts]];
+        [cell.textLabel setText:[NSString stringWithFormat:@"%ld Comment%@", (long)counts, (counts==1)?@"" : @"s"]];
         return cell;
     }
     else if (type == CellTypeTitle){
@@ -333,21 +368,21 @@ typedef enum {
     }
     
     else if (type == CellTypeComment){
-        int count = 3;
         Comment * comment;
         if(_responseType == ResponseControllerTypeDiaryResponse){
-            count++; // Only diary have title
-            if (_diary.files.count>0) {
-                count++;
-            }
+            NSInteger count= _cellsArray.count - _diary.comments.count;
             comment = [_diary.comments objectAtIndex:indexPath.row - count];
         }
         else if ((_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification))
         {
-            if (_response.files.count>0) {
-                count++;
-            }
+            NSInteger count = _cellsArray.count - _response.comments.count;
+            NSLog(@"%d", (int)(indexPath.row - count));
             comment = [_response.comments objectAtIndex:indexPath.row - count];
+        }
+        
+        if (comment && !comment.isRead.boolValue) {
+            // mark comment read
+            [self markCommentRead:comment];
         }
         
         NotificationCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"userCommentCell" forIndexPath:indexPath];
@@ -370,6 +405,18 @@ typedef enum {
     return nil;
 }
 
+- (void)markCommentRead:(Comment*)comment {
+    [DFClient makeRequest:APIPathActivityMarkCommentRead
+                   method:kPOST
+                urlParams:@{@"commentId" : comment.commentId}
+               bodyParams:nil
+                  success:nil
+                  failure:^(NSError *error) {
+                      comment.isRead = @NO;
+                  }];
+    comment.isRead = @YES;
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -379,10 +426,14 @@ typedef enum {
     
     CellType type = [[_cellsArray objectAtIndex:indexPath.row] integerValue];
     UITableViewCell *cell = [self getCellForType:type forIndexPath:indexPath];
-    
-    cell.separatorInset = UIEdgeInsetsZero;
-    cell.layoutMargins = UIEdgeInsetsZero;
-    cell.preservesSuperviewLayoutMargins = NO;
+    if (type != CellTypeUser && type != CellTypeIntro) {
+        
+        cell.separatorInset = UIEdgeInsetsZero;
+        cell.layoutMargins = UIEdgeInsetsZero;
+        cell.preservesSuperviewLayoutMargins = NO;
+    } else {
+        cell.separatorInset = UIEdgeInsetsMake(0, cell.bounds.size.width, 0, 0);
+    }
     return cell;
 }
 
@@ -414,7 +465,6 @@ typedef enum {
     }
     
     [self addComment:_txtResposne.text withThreadId:threadId];
-    _txtResposne.text = @"";
 }
 - (IBAction)exitOnend:(id)sender {
     [sender resignFirstResponder];

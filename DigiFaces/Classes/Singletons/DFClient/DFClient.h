@@ -25,7 +25,11 @@ typedef void (^APIFailureBlock)(NSError *error);
 
 @interface DFClient : NSObject
 
++ (void)makeJSONRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure;
+
 + (void)makeRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure;
+
++ (void)makeJSONRequest:(NSString*)path method:(RKRequestMethod)method urlParams:(NSDictionary*)urlParams bodyParams:(NSDictionary*)bodyParams success:(APISuccessBlock)success failure:(APIFailureBlock)failure;
 
 + (void)makeRequest:(NSString*)path method:(RKRequestMethod)method urlParams:(NSDictionary*)urlParams bodyParams:(NSDictionary*)bodyParams success:(APISuccessBlock)success failure:(APIFailureBlock)failure;
 

@@ -31,6 +31,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 {
     UIButton * btnEdit;
     RTCell * infoCell;
+    NSIndexPath *_selectedDiaryEntryIndexPath;
 }
 @property (nonatomic, retain) DailyDiary * dailyDiary;
 @property (nonatomic, retain) NSArray *diariesByDateIndex;
@@ -47,13 +48,20 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     self.tableView.layoutMargins = UIEdgeInsetsZero;
     
     [self addEditButton];
+    
+    NSNumber *diaryID = LS.myUserInfo.currentProject.dailyDiaryList[0];
+    [self fetchDailyDiaryWithDiaryID:diaryID];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSNumber *diaryID = LS.myUserInfo.currentProject.dailyDiaryList[0];
-    [self fetchDailyDiaryWithDiaryID:diaryID];
+    if (self.dailyDiary) {
+        [self.dailyDiary checkForUnreadComments];
+    }
+    if (_selectedDiaryEntryIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[_selectedDiaryEntryIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 -(void)addEditButton
@@ -111,7 +119,11 @@ static NSString *infoCellReuseIdentifier = @"textCell";
                   success:^(NSDictionary *response, DailyDiary *result) {
                       defsself
                       sself.dailyDiary = result;
+#warning This is a patch.  Revise if necessary
+                      [result checkForUnreadComments];
+                      
                       [sself.tableView reloadData];
+                      [sself.view bringSubviewToFront:btnEdit];
                       infoCell = [sself.tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier];
                       if (result.userDiaries.count) {
                           [infoCell minimize];
@@ -154,9 +166,8 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     return 0;
 }
 
--(void)textCellDidChangeSize:(RTCell *)cell {
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
+-(void)textCellDidTapMore:(RTCell *)cell {
+    [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -213,7 +224,6 @@ static NSString *infoCellReuseIdentifier = @"textCell";
             infoCell = [tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier forIndexPath:indexPath];
             infoCell.delegate = self;
             [infoCell setText:_dailyDiary.diaryQuestion];
-            
             cell = infoCell;
         }
         else if (indexPath.row == 2){
@@ -253,7 +263,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         
         NSString * date = self.diaryDates[section-1];;
         [headerCell.label setText:[Utility getMonDayYearDateFromString:date]];
-        [headerCell setBackgroundColor:[UIColor whiteColor]];
+        [headerCell.contentView setBackgroundColor:[UIColor whiteColor]];
         return headerCell.contentView;
     }
     else{
@@ -278,12 +288,11 @@ static NSString *infoCellReuseIdentifier = @"textCell";
             [cell.moviePlayerController play];
         }
         else if (indexPath.row == 1  && self.diaryDates.count>0) {
-            [infoCell moreLessToggle:nil];
-            // [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
+            [self textCellDidTapMore:nil];
         }
     }
     else{
-        
+        _selectedDiaryEntryIndexPath = indexPath;
         [self performSegueWithIdentifier:@"diaryEntryDetailSegue" sender:self];
     }
     

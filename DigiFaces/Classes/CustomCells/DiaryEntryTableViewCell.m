@@ -39,7 +39,7 @@
     if (self.videoCount) {
         [labelItems addObject:[NSString stringWithFormat:@"\uf03d %d", (int)self.videoCount]];
     }
-    self.countInfoLabel.text = [labelItems componentsJoinedByString:@" "];
+    self.countInfoLabel.text = [[labelItems componentsJoinedByString:@" "] stringByAppendingString:@" "];
     
 }
 

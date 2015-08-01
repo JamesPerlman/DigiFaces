@@ -10,7 +10,22 @@
 #import "Diary.h"
 
 @implementation DailyDiary
+
+- (void)checkForUnreadComments {
+    /* Faizan said the server side still needed some work here - The problem is that each Diary.IsRead = false, even when there are new comments.  This should be removed to save client energy, once that problem is fixed. */
+    
+    // mark user diaries unread if they have comments that are unread
+    for (Diary *diary in self.userDiaries) {
+        for (Comment *comment in diary.comments) {
+            if (!comment.isRead.boolValue) {
+                diary.isRead = false;
+                break;
+            }
+        }
+    }
+}
 /*
+ 
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
     self = [super init];

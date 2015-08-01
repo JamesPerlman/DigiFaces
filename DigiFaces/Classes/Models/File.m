@@ -64,7 +64,7 @@
 {
     NSString * url;
     if (self.isViddlerFile.boolValue) {
-        url = [NSString stringWithFormat:@"http://cdn-thumbs.viddler.com/thumbnail_2_%@.jpg", self.viddlerKey];
+        url = [NSString stringWithFormat:@"http://thumbs.cdn-ec.viddler.com/thumbnail_2_%@_v1.jpg", self.viddlerKey];
     }
     return url;
 }
@@ -84,7 +84,8 @@
 
 -(NSURL*)filePathURL {
     NSString *urlString = [self filePath];
-    
+    urlString = [urlString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    urlString = [urlString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     return [NSURL URLWithString:urlString];
 }
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
 
+#import "NSString+StripHTML.h"
 #import "RTCell.h"
 
 @interface RTCell () {
@@ -22,15 +23,19 @@
     moreLessButtonInitialHeightConstraintConstant = self.moreLessButtonHeightConstraint.constant;
 }
 
-
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.moreLessButton.hidden = (self.height > self.fullHeight);
+    
+}
 - (IBAction)moreLessToggle:(id)sender {
-    if (expanded) {
+    /*if (expanded) {
         [self minimize];
     } else {
         [self maximize];
-    }
-    if ([self.delegate respondsToSelector:@selector(textCellDidChangeSize:)]) {
-        [self.delegate textCellDidChangeSize:self];
+    }*/
+    if ([self.delegate respondsToSelector:@selector(textCellDidTapMore:)]) {
+        [self.delegate textCellDidTapMore:self];
     }
 }
 
@@ -56,14 +61,24 @@
 }
 
 - (CGFloat)fullHeight {
-    return [self.webView sizeThatFits:CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX)].height + self.moreLessButton.frame.size.height + 20.0f;
+    CGSize sizeThatFits = [self.bodyLabel sizeThatFits:CGSizeMake(self.bodyLabel.frame.size.width, CGFLOAT_MAX)];
+    return sizeThatFits.height + self.moreLessButton.frame.size.height ;
 }
 
 - (CGFloat)maxHeight {
     return ([UIScreen mainScreen].bounds.size.height*.4f);
 }
+- (BOOL)hasMoreToShow {
+    UILabel *item = self.bodyLabel;
+    CGSize sizeOfText = [item.text boundingRectWithSize: CGSizeMake(item.intrinsicContentSize.width, CGFLOAT_MAX)
+                                                 options: (NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                              attributes: [NSDictionary dictionaryWithObject:item.font forKey:NSFontAttributeName] context: nil].size;
+    // item.intrinsicContentSize.height < sizeOfText.height
+    return ( sizeOfText.height > self.height);
+}
+
 - (void)setText:(NSString *)text {
-    [self.webView loadHTMLString:text baseURL:nil];
+    self.bodyLabel.text = [text stripHTML];
 }
 
 @end

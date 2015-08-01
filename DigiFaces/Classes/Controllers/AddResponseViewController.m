@@ -49,6 +49,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.txtTitle.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.txtTitle.placeholder attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:24.0f/255.0f green:186.0f/255.0f blue:252.0f/255.0f alpha:1.0f]}];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [self.txtTitle becomeFirstResponder];
     [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
@@ -129,7 +131,7 @@
                               @"IsActive" : @YES};
     
     defwself
-    [DFClient makeRequest:APIPathActivityUpdateThread
+    [DFClient makeJSONRequest:APIPathActivityUpdateThread
                    method:kPOST
                    params:params
                   success:^(NSDictionary *response, Thread *result) {
@@ -137,6 +139,7 @@
                       sself.thread = result;
                       
                       if (_dailyDiary) {
+                          
                           [sself addEntryWithActivityId:activityId];
                       }
                       else if(_diaryTheme){
@@ -268,7 +271,7 @@
     
     if (mediaUploadView.uploadType == DFMediaUploadTypeVideo) {
         params[@"IsViddlerFile"] = @YES;
-        params[@"ViddlerKey"] = mediaUploadView.publicURLString;
+        params[@"ViddlerKey"] = mediaUploadView.resourceKey;
         params[@"FileTypeId"] = @2;
         params[@"FileType"] = @"Video";
     } else if (mediaUploadView.uploadType == DFMediaUploadTypeImage) {
@@ -279,7 +282,7 @@
     }
     
     defwself
-    [DFClient makeRequest:APIPathActivityInsertThreadFile
+    [DFClient makeJSONRequest:APIPathActivityInsertThreadFile
                    method:kPOST
                 urlParams:@{@"projectId" : self.thread.threadId}
                bodyParams:[NSDictionary dictionaryWithDictionary:params]

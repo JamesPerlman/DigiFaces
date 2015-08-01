@@ -12,7 +12,7 @@
 #import "MBProgressHUD.h"
 #import "File.h"
 #import "ImageCell.h"
-#import "UIImageView+AFNetworking.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "NSString+HTML.h"
 #import "WebViewController.h"
 #import "VideoCell.h"
@@ -95,17 +95,17 @@
         return 44;
     }
     else if (indexPath.row == 2){
-        NSAttributedString *attributedText =
+        /*NSAttributedString *attributedText =
         [[NSAttributedString alloc]
          initWithString:self.announcement.text
          attributes:@{
          NSFontAttributeName: [UIFont systemFontOfSize:16.0f]
          }];
-        CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width, CGFLOAT_MAX}
-                                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                                   context:nil];
+       // CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width, CGFLOAT_MAX}
+        //                                           options:NSStringDrawingUsesLineFragmentOrigin
+          //                                         context:nil];
         //CGSize size = rect.size;
-        
+        */
         
         return introCell.titleLabel.optimumSize.height + 50;
     }
@@ -124,15 +124,16 @@
         File *attachment = self.announcement.file;
         if ([attachment.fileType isEqualToString:@"Image"]) {
             ImageCell * cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-            NSURL * url = [NSURL URLWithString:attachment.filePath];
-            [cell.image setImageWithURL:url placeholderImage:[UIImage imageNamed:@"blank"]];
+            [cell.image sd_setImageWithURL:attachment.filePathURL placeholderImage:[UIImage imageNamed:@"blank"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                
+            }];
             return cell;
         }
         else if([attachment.fileType isEqualToString:@"Video"]){
             VideoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
             cell.moviePlayerController.contentURL = [NSURL URLWithString:attachment.filePath];
             cell.moviePlayerController.view.hidden = true;
-            [cell.imageView setImageWithURL:[NSURL URLWithString:[attachment getVideoThumbURL]] placeholderImage:[UIImage imageNamed:@"blank"]];
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[attachment getVideoThumbURL]] placeholderImage:[UIImage imageNamed:@"blank"]];
             return cell;
         }
     }
@@ -152,11 +153,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        VideoCell *cell = (VideoCell*)[tableView cellForRowAtIndexPath:indexPath];
-        [cell.moviePlayerController setFullscreen:YES animated:YES];
-        cell.moviePlayerController.view.hidden = false;
-        [cell.moviePlayerController play];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (indexPath.row == 0 && [cell isKindOfClass:[VideoCell class]] ) {
+        VideoCell *vcell = (VideoCell*)cell;
+        [vcell.moviePlayerController setFullscreen:YES animated:YES];
+        vcell.moviePlayerController.view.hidden = false;
+        [vcell.moviePlayerController play];
     }
 }
 

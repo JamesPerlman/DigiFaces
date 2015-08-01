@@ -16,7 +16,9 @@
 
 -(void)makeImageCircular
 {
-    [self.userImage.layer setCornerRadius:20];
+    [self.userImage.layer setCornerRadius:self.userImage.frame.size.height/2.0f];
+    self.userImage.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.userImage.layer.borderWidth = 1.0f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

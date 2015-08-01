@@ -135,7 +135,6 @@
         }
     }];
     
-    [objectManager.HTTPClient setParameterEncoding:AFJSONParameterEncoding];
     
     // Enable Activity Indicator Spinner
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;

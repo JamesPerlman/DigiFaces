@@ -36,6 +36,7 @@ extern NSString * const APIPathActivityUpdateImageGalleryResponse;
 extern NSString * const APIPathActivityUpdateTextareaResponse;
 extern NSString * const APIPathActivityInsertThreadFile;
 extern NSString * const APIPathActivityMarkThreadRead;
+extern NSString * const APIPathActivityMarkCommentRead;
 
 // project
 extern NSString * const APIPathGetHomeAnnouncement;

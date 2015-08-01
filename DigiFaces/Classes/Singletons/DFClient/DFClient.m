@@ -23,17 +23,38 @@
     return _sharedInstance;
 }
 
+
++ (void)makeJSONRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    [RKObjectManager sharedManager].requestSerializationMIMEType = RKMIMETypeJSON;
+    [[self sharedInstance] makeRequest:path method:method params:params success:success failure:failure];
+}
+
 + (void)makeRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    
+    [RKObjectManager sharedManager].requestSerializationMIMEType = RKMIMETypeFormURLEncoded;
     
     [[self sharedInstance] makeRequest:path method:method params:params success:success failure:failure];
 }
 
++ (void)makeJSONRequest:(NSString *)path method:(RKRequestMethod)method urlParams:(NSDictionary *)urlParams bodyParams:(NSDictionary *)bodyParams success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    [RKObjectManager sharedManager].requestSerializationMIMEType = RKMIMETypeJSON;
+    
+    [[self sharedInstance] makeRequest:[self modifiedPath:path withURLParameters:urlParams] method:method params:bodyParams success:success failure:failure];
+}
+
 + (void)makeRequest:(NSString *)path method:(RKRequestMethod)method urlParams:(NSDictionary *)urlParams bodyParams:(NSDictionary *)bodyParams success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    
+    [RKObjectManager sharedManager].requestSerializationMIMEType = RKMIMETypeFormURLEncoded;
+    
+    [[self sharedInstance] makeRequest:[self modifiedPath:path withURLParameters:urlParams] method:method params:bodyParams success:success failure:failure];
+}
+
++ (NSString*)modifiedPath:(NSString*)path withURLParameters:(NSDictionary*)urlParams {
     NSString *modifiedPath = path;
     for (NSString *key in urlParams.allKeys) {
         modifiedPath = [modifiedPath stringByReplacingOccurrencesOfString:[@":" stringByAppendingString:key] withString:[NSString stringWithFormat:@"%@",urlParams[key]]];
     }
-    [[self sharedInstance] makeRequest:modifiedPath method:method params:bodyParams success:success failure:failure];
+    return modifiedPath;
 }
 
 - (void)makeRequest:(NSString*)path method:(RKRequestMethod)method params:(NSDictionary*)params success:(APISuccessBlock)success failure:(APIFailureBlock)failure {

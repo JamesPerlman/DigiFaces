@@ -326,8 +326,9 @@
         
         __typeof__(wself) sself = wself;
         if (!sself) { return; }
-        
-        NSDictionary *response = responseObject;
+        NSError* error;
+
+        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&error];
         // NSString *tags = [NSString stringWithFormat:@"GROUP_%@_Thread_%@_Author_%@", sself.groupName, sself.threadID, sself.authorID];
         NSString *description = @"UploadedFile";
         //http://api.viddler.com/api/v2/viddler.videos.upload.json?key=[key]&sessionid=[sessionid]&title=[title]&description=[description]&tags=[tags]&make_public=0
@@ -351,10 +352,19 @@
         AFHTTPRequestOperation *uploadOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
         
         
-        [uploadOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id response) {
+        [uploadOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             __typeof(self) strongSelf = wself;
             dispatch_async(dispatch_get_main_queue(), ^{
-                id errorObj = response[@"error"];
+                
+                NSError* error;
+                
+                NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&error];
+                id errorObj;
+                if (error) {
+                    errorObj = error.description;
+                } else {
+                    errorObj = response[@"error"];
+                }
                 if (errorObj == nil)
                 {
                     

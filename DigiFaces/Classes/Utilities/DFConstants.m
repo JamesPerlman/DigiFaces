@@ -34,6 +34,7 @@ NSString * const APIPathActivityUpdateImageGalleryResponse = @"api/Activity/Upda
 NSString * const APIPathActivityUpdateTextareaResponse = @"api/Activity/UpdateTextareaResponse";
 NSString * const APIPathActivityInsertThreadFile = @"api/Activity/InsertThreadFile/:projectId";
 NSString * const APIPathActivityMarkThreadRead = @"api/Activity/MarkThreadRead/:threadId";
+NSString * const APIPathActivityMarkCommentRead = @"api/Activity/MarkCommentRead/:commentId";
 
 // system
 NSString * const APIPathGetAbout = @"api/System/GetAbout/:languageCode";
