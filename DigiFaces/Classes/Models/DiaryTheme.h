@@ -20,9 +20,11 @@
 @property (nonatomic, strong) NSNumber * isActive;
 @property (nonatomic, strong) NSNumber * isRead;
 @property (nonatomic, strong) NSNumber * unreadResponses;
+@property (nonatomic, strong) NSArray  * responses;
 
 @property (nonatomic, retain) NSArray * modules;
 
 -(Module*)getModuleWithThemeType:(ThemeType)type;
 
+- (void)reorganizeResponses;
 @end

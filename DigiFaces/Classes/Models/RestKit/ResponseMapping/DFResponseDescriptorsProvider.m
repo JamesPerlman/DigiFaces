@@ -63,7 +63,7 @@
              DESCRIPTOR(APIPathSendMessageToModerator,              kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathSetUserName,                         kPOST, setUserNameResponseMapping),
              DESCRIPTOR(APIPathUpdateAboutMe,                       kPOST, emptyResponseMapping),
-             DESCRIPTOR(APIPathUpdateDailyDiary,                    kPOST, dailyDiaryMapping),
+             DESCRIPTOR(APIPathUpdateDailyDiary,                    kPOST, dailyDiaryResponseMapping),
              DESCRIPTOR(APIPathUploadUserCustomAvatar,              kPOST, emptyResponseMapping)
              ];
 }

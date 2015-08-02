@@ -16,6 +16,7 @@
 #import "Module.h"
 #import "GalleryCell.h"
 #import "CarouselViewController.h"
+#import "NSString+StripHTML.h"
 
 typedef enum {
     CellsTypeImage,
@@ -76,6 +77,8 @@ typedef enum {
     if (!_isViewOnly) {
         [self addEditButton];
     }
+    
+    
 }
 
 -(Module*)getModuleForThemeType:(ThemeType)type
@@ -127,7 +130,7 @@ typedef enum {
         return 160;
     }
     if (indexPath.row == 1) {
-        return infoCell.titleLabel.optimumSize.height + 20;
+        return infoCell.fullHeight;
     }
     return 0;
 }
@@ -137,7 +140,7 @@ typedef enum {
     
     UITableViewCell *cell;
     
-    CellsType type = [[_cellsArray objectAtIndex:indexPath.row] integerValue];
+    CellsType type = (CellsType)[_cellsArray[indexPath.row] integerValue];
     
     switch (type) {
         case CellsTypeImage:
@@ -176,11 +179,11 @@ typedef enum {
         {
             infoCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
             if (_dailyDiary) {
-                [infoCell.titleLabel setText:_dailyDiary.diaryQuestion];
+                [infoCell.bodyLabel setText:[_dailyDiary.diaryQuestion stripHTML]];
             }
             else{
                 Module * module = [self getModuleForThemeType:ThemeTypeDisplayText];
-                [infoCell.titleLabel setText:module.displayText.text];
+                [infoCell.bodyLabel setText:[module.displayText.text stripHTML]];
             }
             cell = infoCell;
         }

@@ -9,6 +9,14 @@
 #import "Diary.h"
 
 @implementation Diary
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.comments = @[];
+    }
+    return self;
+}
 /*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {

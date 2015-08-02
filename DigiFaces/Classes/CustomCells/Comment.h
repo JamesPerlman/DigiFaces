@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSNumber * commentId;
 @property (nonatomic, retain) NSString * dateCreated;
-@property (nonatomic, retain) NSString * dateCreatedFormated;
+@property (nonatomic, retain) NSString * dateCreatedFormatted;
 @property (nonatomic, strong) NSNumber * isActive;
 @property (nonatomic, strong) NSNumber * isRead;
 @property (nonatomic, retain) NSString * response;

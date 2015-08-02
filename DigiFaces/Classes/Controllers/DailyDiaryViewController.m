@@ -26,8 +26,10 @@
 #import "RTCell.h"
 #import "DiaryEntryTableViewCell.h"
 #import "NSArray+orderedDistinctUnionOfObjects.h"
+
+#import "DiaryResponseDelegate.h"
 static NSString *infoCellReuseIdentifier = @"textCell";
-@interface DailyDiaryViewController ()<ExpandableTextCellDelegate>
+@interface DailyDiaryViewController ()<ExpandableTextCellDelegate, DiaryResponseDelegate>
 {
     UIButton * btnEdit;
     RTCell * infoCell;
@@ -58,9 +60,12 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     [super viewWillAppear:animated];
     if (self.dailyDiary) {
         [self.dailyDiary checkForUnreadComments];
-    }
-    if (_selectedDiaryEntryIndexPath) {
-        [self.tableView reloadRowsAtIndexPaths:@[_selectedDiaryEntryIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self setupDateSortedDataArrays];
+        [self.tableView reloadData];
+    } else {
+        if (_selectedDiaryEntryIndexPath) {
+            [self.tableView reloadRowsAtIndexPaths:@[_selectedDiaryEntryIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
     }
 }
 
@@ -85,20 +90,24 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 }
 
 
-- (void)setDailyDiary:(DailyDiary *)dailyDiary {
-    _dailyDiary = dailyDiary;
+- (void)setupDateSortedDataArrays {
+    NSSortDescriptor *idSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"threadId" ascending:NO];
+    NSArray *sortedDiaries = [self.dailyDiary.userDiaries sortedArrayUsingDescriptors:@[idSortDescriptor]];
     
-    NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dateCreated" ascending:NO];
-    NSArray *sortedDiaries = [dailyDiary.userDiaries sortedArrayUsingDescriptors:@[dateSortDescriptor]];
+    NSArray *dates = [sortedDiaries valueForKeyPath:@"@orderedDistinctUnionOfStrings.dateCreated"];
     
-    self.diaryDates = [sortedDiaries valueForKeyPath:@"@orderedDistinctUnionOfStrings.dateCreated"];
+    NSMutableArray *mutableDates = [NSMutableArray array];
+    for (NSString *date in dates) {
+        [mutableDates addObject:[date substringToIndex:[date rangeOfString:@"T"].location]];
+    }
+    self.diaryDates = [NSArray arrayWithArray:mutableDates];
     
     NSMutableArray *remainingDiaries = sortedDiaries.mutableCopy;
     
     NSMutableArray *tmpDiariesByDateIndex = [NSMutableArray array];
     
-    for (NSString *dateFormatted in self.diaryDates) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateCreated = %@", dateFormatted];
+    for (NSString *dateCreated in self.diaryDates) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateCreated BEGINSWITH %@", dateCreated];
         NSArray *filteredDiaries = [remainingDiaries filteredArrayUsingPredicate:predicate];
         [remainingDiaries removeObjectsInArray:filteredDiaries];
         [tmpDiariesByDateIndex addObject:filteredDiaries];
@@ -117,10 +126,12 @@ static NSString *infoCellReuseIdentifier = @"textCell";
                 urlParams:@{@"diaryId" : diaryID}
                bodyParams:nil
                   success:^(NSDictionary *response, DailyDiary *result) {
+                      LS.myUserInfo.currentProject.dailyDiary = result;
                       defsself
                       sself.dailyDiary = result;
-#warning This is a patch.  Revise if necessary
+#warning This is a patch.  Revise if necessary. Go to -checkForUnreadComments for more info
                       [result checkForUnreadComments];
+                      [sself setupDateSortedDataArrays];
                       
                       [sself.tableView reloadData];
                       [sself.view bringSubviewToFront:btnEdit];
@@ -241,7 +252,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         dcell.commentCount = diary.comments.count;
         dcell.pictureCount = diary.picturesCount;
         dcell.videoCount = diary.videosCount;
-        if (diary.isRead) {
+        if (diary.isRead.boolValue) {
             dcell.accessoryView = nil;
         } else {
             dcell.accessoryView = dcell.unreadIndicator;
@@ -261,7 +272,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     if (section > 0) {
         DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"dateHeaderCell"];
         
-        NSString * date = self.diaryDates[section-1];;
+        NSString * date = self.diaryDates[section-1];
         [headerCell.label setText:[Utility getMonDayYearDateFromString:date]];
         [headerCell.contentView setBackgroundColor:[UIColor whiteColor]];
         return headerCell.contentView;
@@ -327,9 +338,13 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         ResponseViewController * responseController = [segue destinationViewController];
         responseController.diary = diary;
         responseController.responseType = ResponseControllerTypeDiaryResponse;
+        responseController.delegate = self;
     }
 }
 
+- (void)didSetDailyDiary:(DailyDiary *)dailyDiary {
+    self.dailyDiary = dailyDiary;
+}
 - (IBAction)closeThis:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

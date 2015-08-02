@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSNumber * responseId;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * userId;
-@property (nonatomic, retain) NSString * threadId;
+@property (nonatomic, strong) NSNumber * threadId;
 
 
 @property (nonatomic, retain) UserInfo * userInfo;

@@ -25,6 +25,7 @@
 #import "DailyDiary.h"
 #import "CarouselViewController.h"
 #import "UserManagerShared.h"
+#import "NSString+StripHTML.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -49,6 +50,7 @@ typedef enum {
 @property (nonatomic, retain) CustomAlertView * customAlert;
 @property (nonatomic, retain) NSMutableArray * arrResponses;
 @property (nonatomic, retain) NSMutableArray * heightArray;
+@property (nonatomic, strong) DailyDiary *dailyDiary;
 
 @end
 
@@ -115,6 +117,23 @@ typedef enum {
     [self organizeData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    BOOL allRead = true;
+    for (Comment *comment in self.diary.comments) {
+        if (!comment.isRead.boolValue) {
+            allRead = false;
+            break;
+        }
+    }
+    if (allRead) self.diary.isRead = @YES;
+    
+    if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
+        [self.delegate didSetDailyDiary:self.dailyDiary];
+    }
+}
+
 - (void)organizeData {
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"commentId" ascending:NO];
@@ -167,13 +186,15 @@ typedef enum {
                 urlParams:@{@"diaryId" : @(diaryID)}
                bodyParams:nil
                   success:^(NSDictionary *response, DailyDiary *dailyDiary) {
+                      LS.myUserInfo.currentProject.dailyDiary = dailyDiary;
                       defsself
                       for (Diary * d in dailyDiary.userDiaries) {
-                          if (d.responseId == _diary.responseId) {
-                              _diary = d;
+                          if ([d.threadId isEqualToNumber:_diary.threadId]) {
+                              sself.diary = d;
                               break;
                           }
                       }
+                      sself.dailyDiary = dailyDiary;
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
@@ -195,7 +216,7 @@ typedef enum {
                   success:^(NSDictionary *response, NSArray *result) {
                       defsself
                       sself.response = [[Response alloc] initWithDictionary:result.firstObject];
-                      
+                      [sself organizeData];
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
@@ -320,14 +341,14 @@ typedef enum {
         if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
             if (_response.textareaResponses.count>0) {
                 TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
-                [infoCell.titleLabel setText:textResponse.response];
+                [infoCell.bodyLabel setText:[textResponse.response stripHTML]];
             }
         }
         else if (_responseType == ResponseControllerTypeDiaryResponse){
-            [infoCell.titleLabel setText:_diary.response];
+            [infoCell.bodyLabel setText:[_diary.response stripHTML]];
         }
         
-        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(90, infoCell.titleLabel.optimumSize.height + 20))];
+        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(90, infoCell.fullHeight))];
         
         return infoCell;
     }
@@ -387,10 +408,10 @@ typedef enum {
         
         NotificationCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"userCommentCell" forIndexPath:indexPath];
         
-        [cell.lblDate setText:comment.dateCreatedFormated];
+        [cell.lblDate setText:comment.dateCreatedFormatted];
         [cell.lblUserName setText:comment.userInfo.appUserName];
         [cell.userImage sd_setImageWithURL:[NSURL URLWithString:comment.userInfo.avatarFile.filePath]];
-        [cell.infoLabel setText:comment.response];
+        [cell.contentLabel setText:[comment.response stripHTML]];
         
         NSInteger height = 75;
         CGRect boundingRect = [comment.response boundingRectWithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil];

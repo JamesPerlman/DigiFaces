@@ -82,6 +82,13 @@
             ReferencedContainer = "container:DigiFaces.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "RKLogLevel.RestKit.ObjectMapping"
+            value = "Trace"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

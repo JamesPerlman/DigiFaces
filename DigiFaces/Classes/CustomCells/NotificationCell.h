@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RTLabel.h"
 
 @interface NotificationCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *lblUserName;
 @property (weak, nonatomic) IBOutlet UILabel *lblDate;
 @property (weak, nonatomic) IBOutlet UILabel *lblInfo;
-@property (weak, nonatomic) IBOutlet RTLabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
 -(void)makeImageCircular;
 

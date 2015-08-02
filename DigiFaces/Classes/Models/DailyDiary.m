@@ -18,11 +18,21 @@
     for (Diary *diary in self.userDiaries) {
         for (Comment *comment in diary.comments) {
             if (!comment.isRead.boolValue) {
-                diary.isRead = false;
+                diary.isRead = @NO;
                 break;
             }
         }
     }
+}
+- (NSInteger)numberOfUnreadResponses {
+    [self checkForUnreadComments];
+    NSInteger n = 0;
+    for (Diary *diary in self.userDiaries) {
+        if (!diary.isRead.boolValue) {
+            n++;
+        }
+    }
+    return n;
 }
 /*
  

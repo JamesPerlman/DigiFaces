@@ -21,6 +21,7 @@
 #import "Project.h"
 #import "Notification.h"
 #import "DailyDiary.h"
+#import "DailyDiaryResponse.h"
 #import "Diary.h"
 #import "Comment.h"
 #import "Response.h"
@@ -159,7 +160,7 @@
     [mapping addAttributeMappingsFromDictionary:@[@"CommenterUserInfo",
                                                   @"ActivityId",
                                                   @"DateCreated",
-                                                  @"DateCreatedFormated",
+                                                  @"DateCreatedFormatted",
                                                   @"IsDailyNotification",
                                                   @"IsRead",
                                                   @"NotificationId",
@@ -184,6 +185,20 @@
     
     
     return mapping;
+}
+
+- (RKObjectMapping*)dailyDiaryResponseMapping {
+    RKObjectMapping *mapping = MAPCLASS(DailyDiaryResponse);
+    [mapping addAttributeMappingsFromDictionary:@[@"DailyDiaryResponseId",
+                                                      @"DailyDiaryId",
+                                                      @"ThreadId",
+                                                      @"Title",
+                                                      @"Response",
+                                                      @"DiaryDate",
+                                                  @"IsActive"].camelCaseDict];
+    return mapping;
+    
+
 }
 
 - (RKObjectMapping*)diaryMapping {
@@ -211,7 +226,7 @@
     
     [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
                                                   @"DateCreated",
-                                                  @"DateCreatedFormated",
+                                                  @"DateCreatedFormatted",
                                                   @"IsActive",
                                                   @"IsRead",
                                                   @"Response",

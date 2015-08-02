@@ -82,10 +82,10 @@
     Notification * notification = [_arrNotifications objectAtIndex:indexPath.row];
     [cell.userImage setImageWithURL:[NSURL URLWithString:notification.commenterUserInfo.avatarFile.filePath]];
     [cell.lblUserName setText:notification.commenterUserInfo.appUserName];
-    [cell.lblDate setText:notification.dateCreatedFormated];
+    [cell.lblDate setText:notification.dateCreatedFormatted];
     // Configure the cell...
     [cell makeImageCircular];
-    if (notification.isRead) {
+    if (notification.isRead.boolValue) {
         [cell setBackgroundColor:[UIColor whiteColor]];
     }
     

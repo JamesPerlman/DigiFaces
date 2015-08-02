@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSMutableArray * diariesDate;
 
 - (void)checkForUnreadComments;
+- (NSInteger)numberOfUnreadResponses;
 -(instancetype)initWithDictionary:(NSDictionary*)dict;
 
 @end

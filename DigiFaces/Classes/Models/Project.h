@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Company.h"
+#import "DailyDiary.h"
 
 @interface Project : NSObject
 
@@ -29,5 +30,7 @@
 
 @property (nonatomic, retain) Company * company;
 
+// User-defined (not returned from server)
+@property (nonatomic, strong) DailyDiary *dailyDiary;
 
 @end

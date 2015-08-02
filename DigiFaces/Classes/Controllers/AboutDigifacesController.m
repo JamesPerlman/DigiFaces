@@ -18,7 +18,6 @@
 {
     [super viewDidLoad];
     
-    [_aboutLabel setFrame:CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height)];
     
     [self fetchAboutDigifacesText];
     
@@ -29,13 +28,17 @@
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
+    defwself
     [DFClient makeRequest:APIPathGetAbout method:kGET urlParams:@{@"languageCode" : @"en"} bodyParams:nil success:^(NSDictionary *response, About *result) {
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        [_aboutLabel setFrame:CGRectMake(10, 0, _scrollView.frame.size.width - 20, _scrollView.frame.size.height)];
-        [_aboutLabel setText:result.aboutText];
-        [_scrollView setContentSize:_aboutLabel.optimumSize];
+        defsself
+        [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+        [sself.webView loadHTMLString:result.aboutText baseURL:nil];
+        if (result.aboutTitle.length) {
+            sself.navigationItem.title = result.aboutTitle;
+        }
     } failure:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        defsself
+        [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
     }];
     
 }

@@ -14,7 +14,7 @@
 @property (nonatomic, retain) UserInfo * commenterUserInfo;
 @property (nonatomic, strong) NSNumber * activityId;
 @property (nonatomic, retain) NSString * dateCreated;
-@property (nonatomic, retain) NSString * dateCreatedFormated;
+@property (nonatomic, retain) NSString * dateCreatedFormatted;
 @property (nonatomic, strong) NSNumber * isDailyNotification;
 @property (nonatomic, strong) NSNumber * isRead;
 @property (nonatomic, strong) NSNumber * notificationId;

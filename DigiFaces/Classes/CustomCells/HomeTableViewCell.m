@@ -24,7 +24,7 @@
 
 - (void)setUnreadCount:(NSInteger)unreadCount {
     if (unreadCount) {
-        self.unreadItemLabel.text = [NSString stringWithFormat:@" %@ ", @(unreadCount)];
+        self.unreadItemLabel.text = [NSString stringWithFormat:@"%@", @(unreadCount)];
         self.unreadItemLabel.hidden = false;
     } else {
         self.unreadItemLabel.hidden = true;

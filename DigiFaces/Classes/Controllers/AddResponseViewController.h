@@ -10,7 +10,10 @@
 #import "DailyDiary.h"
 #import "DiaryTheme.h"
 #import "DFMediaUploadManager.h"
+#import "AddResponseDelegate.h"
 @interface AddResponseViewController : UIViewController
+
+@property (nonatomic, assign) id<AddResponseDelegate> delegate;
 
 @property (nonatomic, retain) DailyDiary * dailyDiary;
 @property (nonatomic, retain) DiaryTheme * diaryTheme;

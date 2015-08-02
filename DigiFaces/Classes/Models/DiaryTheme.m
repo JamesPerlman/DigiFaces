@@ -10,6 +10,15 @@
 #import "Module.h"
 
 @implementation DiaryTheme
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.responses = @[];
+    }
+    return self;
+}
 /*
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
@@ -45,6 +54,11 @@
         }
     }
     return nil;
+}
+
+- (void)reorganizeResponses {
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"threadId" ascending:NO];
+    self.responses = [self.responses sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
 
 @end

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DailyDiary.h"
 #import "DiaryTheme.h"
-
-@interface DiaryThemeViewController : UITableViewController
+#import "AddResponseDelegate.h"
+@interface DiaryThemeViewController : UITableViewController<AddResponseDelegate>
 
 @property (nonatomic, retain) DailyDiary * dailyDiary;
 @property (nonatomic, retain) DiaryTheme * diaryTheme;

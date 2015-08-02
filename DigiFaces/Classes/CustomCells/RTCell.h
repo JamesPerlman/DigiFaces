@@ -5,8 +5,6 @@
 //  Created by confiz on 11/07/2015.
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
-#import "RTLabel.h"
-
 #import <UIKit/UIKit.h>
 @class RTCell;
 @protocol ExpandableTextCellDelegate <NSObject>
@@ -17,7 +15,6 @@
 
 @interface RTCell : UITableViewCell
 @property (nonatomic, assign) id<ExpandableTextCellDelegate>delegate;
-@property (weak, nonatomic) IBOutlet RTLabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;

@@ -12,6 +12,7 @@
 #import "Diary.h"
 #import "Response.h"
 
+#import "DiaryResponseDelegate.h"
 typedef enum {
     ResponseControllerTypeNotification,
     ResponseControllerTypeDiaryResponse,
@@ -19,6 +20,8 @@ typedef enum {
 }ResponseControllerType;
 
 @interface ResponseViewController : UIViewController
+@property (nonatomic, assign) id<DiaryResponseDelegate>delegate;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 

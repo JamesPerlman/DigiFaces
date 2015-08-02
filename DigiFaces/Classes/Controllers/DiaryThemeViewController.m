@@ -20,6 +20,7 @@
 #import "RTCell.h"
 #import "GalleryCell.h"
 #import "MBProgressHUD.h"
+#import "NSString+StripHTML.h"
 
 #import "AFNetworking.h"
 #import "Response.h"
@@ -29,6 +30,8 @@
 #import "AddResponseViewController.h"
 #import "CarouselViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "NSString+StripHTML.h"
+
 @interface DiaryThemeViewController () <GalleryCellDelegate>
 {
     UIButton * btnEdit;
@@ -50,7 +53,7 @@
     if (!markup) {
         [self addEditButton];
     }
-    [self loadData];
+    [self loadData:true];
     
 }
 
@@ -62,8 +65,21 @@
     }
     
 }
+- (void)didAddDiaryThemeResponse:(Response *)response {
+    [self loadData:false];
+}
 
-- (void)loadData {
+
+- (void)addDiaryThemeResponsesToDataArray {
+    [self.diaryTheme reorganizeResponses];
+    for (Response * response in self.diaryTheme.responses) {
+        [_cellsArray addObject:response];
+        [_heightArray addObject:@160];
+    }
+    
+}
+
+- (void)loadData:(BOOL)fromServer {
     [_cellsArray removeAllObjects];
     [_heightArray removeAllObjects];
     
@@ -92,7 +108,11 @@
             [_cellsArray addObject:text];
             [_heightArray addObject:@44];
         }
-        [self getResponses];
+        if (fromServer) {
+            [self getResponses];
+        } else {
+            [self addDiaryThemeResponsesToDataArray];
+        }
     }
     [self.tableView reloadData];
 }
@@ -121,6 +141,7 @@
     return nil;
 }
 
+
 -(void)getResponses
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -135,13 +156,11 @@
                       defsself
                       NSInteger responseCount = result.count;
                       if (responseCount>0) {
-                          [_cellsArray addObject:[NSString stringWithFormat:@"%d Comment%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
+                          [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
                           [_heightArray addObject:@40];
                       }
-                      for (Response * response in result) {
-                          [_cellsArray addObject:response];
-                          [_heightArray addObject:@160];
-                      }
+                      sself.diaryTheme.responses = result;
+                      [sself addDiaryThemeResponsesToDataArray];
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       
@@ -207,12 +226,12 @@
             
             RTCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
             
-            [textCell.titleLabel setText:module.displayText.text];
+            [textCell.bodyLabel setText:[module.displayText.text stripHTML]];
             if (_heightArray.count>2) {
-                [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(textCell.titleLabel.optimumSize.height, 90))];
+                [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(textCell.fullHeight, 100))];
             }
             else{
-                [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(textCell.titleLabel.optimumSize.height + 20)];
+                [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(textCell.fullHeight)];
             }
             cell = textCell;
         }
@@ -255,7 +274,7 @@
         CGSize size;
         if (response.textareaResponses.count>0) {
             TextareaResponse * textResponse = [response.textareaResponses objectAtIndex:0];
-            [responseCell.lblResponse setText:textResponse.response];
+            [responseCell.lblResponse setText:[textResponse.response stripHTML]];
             
             CGRect rect = [textResponse.response boundingRectWithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil];
             size = rect.size;
@@ -270,6 +289,7 @@
             height += 55;
         }
         [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
+        
         
         cell = responseCell;
     }
@@ -337,6 +357,7 @@
     else if ([segue.identifier isEqualToString:@"addThemeEntrySegue"]){
         AddResponseViewController * addResponseController = (AddResponseViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
         addResponseController.diaryTheme = _diaryTheme;
+        addResponseController.delegate = self;
     }
     else if ([segue.identifier isEqualToString:@"gallerySegue"]){
         Module * module = [self getModuleWithThemeType:ThemeTypeImageGallery];
@@ -362,5 +383,7 @@
     galleryItemIndex = index;
     [self performSegueWithIdentifier:@"gallerySegue" sender:self];
 }
+
+
 
 @end

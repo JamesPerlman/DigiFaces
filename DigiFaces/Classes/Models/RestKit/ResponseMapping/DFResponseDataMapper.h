@@ -19,6 +19,7 @@
 - (RKObjectMapping*)notificationMapping;
 - (RKObjectMapping*)homeAnnouncementMapping;
 - (RKObjectMapping*)dailyDiaryMapping;
+- (RKObjectMapping*)dailyDiaryResponseMapping;
 - (RKObjectMapping*)diaryMapping;
 - (RKObjectMapping*)commentMapping;
 - (RKObjectMapping*)activityResponseMapping;

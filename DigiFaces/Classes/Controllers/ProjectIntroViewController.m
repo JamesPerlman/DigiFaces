@@ -20,6 +20,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "NSLayoutConstraint+ConvenienceMethods.h"
 #import "APIHomeAnnouncementResponse.h"
+#import "NSString+StripHTML.h"
 
 @interface ProjectIntroViewController ()
 {
@@ -40,14 +41,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self fetchProjectAnnouncements:[Utility getStringForKey:kCurrentPorjectID]];
+    [self fetchProjectAnnouncements:LS.myUserInfo.currentProjectId];
 }
 
 -(void)fetchProjectAnnouncements:(NSString*)projectId
 {
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kGetHomeAnnouncements];
-    url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:projectId];
-    
     defwself
     [DFClient makeRequest:APIPathGetHomeAnnouncement
                    method:kGET
@@ -107,7 +105,7 @@
         //CGSize size = rect.size;
         */
         
-        return introCell.titleLabel.optimumSize.height + 50;
+        return introCell.fullHeight + 30;
     }
     
     return 0;
@@ -146,7 +144,7 @@
     }
     else{
         introCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-        [introCell.titleLabel setText:self.announcement.text];
+        [introCell.bodyLabel setText:[self.announcement.text stripHTML]];
         return introCell;
     }
 }

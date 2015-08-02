@@ -31,7 +31,6 @@
 		4ABC3D3B1B4001460090A619 /* ResponseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABC3D3A1B4001460090A619 /* ResponseViewCell.m */; };
 		4ABC3D3E1B4048BF0090A619 /* ImagesScrollviewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABC3D3D1B4048BF0090A619 /* ImagesScrollviewer.m */; };
 		4AC49FE11B4AEEBB003CE06E /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC49FE01B4AEEBB003CE06E /* CommentCell.m */; };
-		4AC7D4791B510C6300587045 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7D4781B510C6300587045 /* RTLabel.m */; };
 		4AC7D47C1B510D0B00587045 /* RTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7D47B1B510D0B00587045 /* RTCell.m */; };
 		4AC8446C1B57FA3E006CDB45 /* CarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC8446B1B57FA3E006CDB45 /* CarouselViewController.m */; };
 		4AC8446F1B57FA75006CDB45 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC8446E1B57FA75006CDB45 /* ImageViewController.m */; };
@@ -110,6 +109,8 @@
 		F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */; };
 		F4022FFB1B69E1B30080C157 /* TextareaResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FFA1B69E1B30080C157 /* TextareaResponse.m */; };
 		F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */; };
+		F426699E1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F426699D1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m */; };
+		F42669D71B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669D61B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
@@ -198,8 +199,6 @@
 		4ABC3D3D1B4048BF0090A619 /* ImagesScrollviewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagesScrollviewer.m; sourceTree = "<group>"; };
 		4AC49FDF1B4AEEBB003CE06E /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
 		4AC49FE01B4AEEBB003CE06E /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
-		4AC7D4771B510C6300587045 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
-		4AC7D4781B510C6300587045 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		4AC7D47A1B510D0B00587045 /* RTCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCell.h; sourceTree = "<group>"; };
 		4AC7D47B1B510D0B00587045 /* RTCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCell.m; sourceTree = "<group>"; };
 		4AC8446A1B57FA3E006CDB45 /* CarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselViewController.h; sourceTree = "<group>"; };
@@ -375,6 +374,12 @@
 		F4022FFC1B69E2080080C157 /* TextareaResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextareaResponse.h; sourceTree = "<group>"; };
 		F40FE1BB1B6C2C5F003C4DE7 /* NSString+StripHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StripHTML.h"; sourceTree = "<group>"; };
 		F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StripHTML.m"; sourceTree = "<group>"; };
+		F426699C1B6D7D4D00A6E6D7 /* DailyDiaryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyDiaryResponse.h; sourceTree = "<group>"; };
+		F426699D1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyDiaryResponse.m; sourceTree = "<group>"; };
+		F426699F1B6D837300A6E6D7 /* AddResponseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddResponseDelegate.h; sourceTree = "<group>"; };
+		F42669D51B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKCustomBOOLTransformer.h; path = Others/RKCustomBOOLTransformer.h; sourceTree = "<group>"; };
+		F42669D61B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKCustomBOOLTransformer.m; path = Others/RKCustomBOOLTransformer.m; sourceTree = "<group>"; };
+		F42669D81B6DAEBD00A6E6D7 /* DiaryResponseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryResponseDelegate.h; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -504,19 +509,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4AC7D4761B510C5600587045 /* RTLabels */ = {
-			isa = PBXGroup;
-			children = (
-				4AC7D4771B510C6300587045 /* RTLabel.h */,
-				4AC7D4781B510C6300587045 /* RTLabel.m */,
-			);
-			name = RTLabels;
-			sourceTree = "<group>";
-		};
 		4AC844701B581F63006CDB45 /* Others */ = {
 			isa = PBXGroup;
 			children = (
 				4AC844711B581FB6006CDB45 /* PageViewLoadedDelegate.h */,
+				F42669D51B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.h */,
+				F42669D61B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -637,7 +635,6 @@
 			isa = PBXGroup;
 			children = (
 				F420FB6D1B6162EE007092CB /* DFMediaUploadManager */,
-				4AC7D4761B510C5600587045 /* RTLabels */,
 				4AD8501C1B45ABB40059A457 /* Reachability.h */,
 				4AD8501D1B45ABB40059A457 /* Reachability.m */,
 				4ACDB97F1B3E7E66009EFB91 /* MBProgressHUD.h */,
@@ -816,6 +813,15 @@
 			path = DFMediaUploadManager;
 			sourceTree = "<group>";
 		};
+		F426699B1B6D7D3200A6E6D7 /* DailyDiaryResponse */ = {
+			isa = PBXGroup;
+			children = (
+				F426699C1B6D7D4D00A6E6D7 /* DailyDiaryResponse.h */,
+				F426699D1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m */,
+			);
+			name = DailyDiaryResponse;
+			sourceTree = "<group>";
+		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -874,6 +880,7 @@
 				F4864F871B6820C0000D2615 /* Comment */,
 				F4864F881B6820C8000D2615 /* Company */,
 				F4864F8E1B6820F7000D2615 /* DailyDiary */,
+				F426699B1B6D7D3200A6E6D7 /* DailyDiaryResponse */,
 				F4864F891B6820CD000D2615 /* Diary */,
 				F4864F901B682107000D2615 /* DiaryTheme */,
 				F4864F921B682113000D2615 /* DisplayText */,
@@ -1249,6 +1256,7 @@
 			children = (
 				4ACDBA001B3EC7EA009EFB91 /* ResponseViewController.h */,
 				4ACDBA011B3EC7EA009EFB91 /* ResponseViewController.m */,
+				F42669D81B6DAEBD00A6E6D7 /* DiaryResponseDelegate.h */,
 			);
 			name = Response;
 			sourceTree = "<group>";
@@ -1267,6 +1275,7 @@
 			children = (
 				F4E670E21B61720E00871FA9 /* AddResponseViewController.h */,
 				F4E670E31B61720E00871FA9 /* AddResponseViewController.m */,
+				F426699F1B6D837300A6E6D7 /* AddResponseDelegate.h */,
 			);
 			name = AddResponse;
 			sourceTree = "<group>";
@@ -1573,6 +1582,7 @@
 				4ACDB9B51B3E7E66009EFB91 /* ProjectIntroViewController.m in Sources */,
 				4ACDB9C71B3E7E66009EFB91 /* File.m in Sources */,
 				4ACDB9DA1B3E7E66009EFB91 /* MWFeedParserAppDelegate.m in Sources */,
+				F42669D71B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m in Sources */,
 				F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */,
 				4ACDB9F61B3E9A14009EFB91 /* DailyDiary.m in Sources */,
 				F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */,
@@ -1584,6 +1594,7 @@
 				4ACDB9D41B3E7E66009EFB91 /* MBProgressHUD.m in Sources */,
 				F4864FB61B6839E1000D2615 /* DFClient.m in Sources */,
 				19F0BD101B1DBC6400E4B048 /* main.m in Sources */,
+				F426699E1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m in Sources */,
 				F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */,
 				4ACB9ED01B58EAB500E9F984 /* Module.m in Sources */,
 				4AD8501B1B45AAB70059A457 /* NointernetController.m in Sources */,
@@ -1597,7 +1608,6 @@
 				4ACDB9B31B3E7E66009EFB91 /* PhotoGalleryViewController.m in Sources */,
 				4ACDBA081B3ECDB5009EFB91 /* Comment.m in Sources */,
 				F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */,
-				4AC7D4791B510C6300587045 /* RTLabel.m in Sources */,
 				4ACDB9C51B3E7E66009EFB91 /* Company.m in Sources */,
 				4ABC3D351B3FEC110090A619 /* DefaultCell.m in Sources */,
 				4ACDB9B71B3E7E66009EFB91 /* SettingsViewController.m in Sources */,

@@ -32,6 +32,7 @@
 }
 @property (nonatomic ,retain) NSArray * dataArray;
 
+
 @end
 
 @implementation HomeViewController
@@ -76,6 +77,20 @@
     
 }
 
+-(void)fetchDailyDiary:(NSNumber*)diaryId {
+    defwself
+    [DFClient makeRequest:APIPathGetDailyDiary
+                   method:kPOST
+                urlParams:@{@"diaryId" : diaryId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, DailyDiary *result) {
+                      LS.myUserInfo.currentProject.dailyDiary = result;
+                      defsself
+                      [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                  }
+                  failure:nil];
+}
+
 -(void)fetchUserHomeAnnouncements{
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -110,6 +125,7 @@
                       [sself.tableView reloadData];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself fetchDailyDiary:LS.myUserInfo.currentProject.dailyDiaryList.firstObject];
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -264,7 +280,7 @@
             ++indexAdjustment;
             if (indexPath.row == 1) {
                 cell.titleLabel.text = @"Diary";
-                cell.unreadCount = 0;
+                cell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
                 cell.unreadItemIndicator.hidden = true;
                 return cell;
             }
