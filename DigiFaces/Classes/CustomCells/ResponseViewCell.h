@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ImagesScrollviewer.h"
 
-@interface ResponseViewCell : UITableViewCell
+@interface ResponseViewCell : UITableViewCell<UICollectionViewDataSource, UICollectionViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, weak) UIViewController *viewController;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
@@ -18,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnComments;
 @property (nonatomic, retain) NSArray * files;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *responseHeightConst;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
 - (IBAction)commentClicked:(id)sender;
 -(void)setImageCircular;
 

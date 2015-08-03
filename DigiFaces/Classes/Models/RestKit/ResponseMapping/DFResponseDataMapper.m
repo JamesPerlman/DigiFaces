@@ -294,6 +294,8 @@
 - (RKObjectMapping*)imageGalleryMapping {
     RKObjectMapping *mapping = MAPCLASS(ImageGallery);
     
+    [mapping addAttributeMappingsFromDictionary:@[@"ImageGalleryId", @"ActivityId"].camelCaseDict];
+    
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Files" toKeyPath:@"files" withMapping:[self fileMapping]]];
     
     return mapping;

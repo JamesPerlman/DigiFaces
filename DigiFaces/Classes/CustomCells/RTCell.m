@@ -62,7 +62,7 @@
 
 - (CGFloat)fullHeight {
     CGSize sizeThatFits = [self.bodyLabel sizeThatFits:CGSizeMake(self.bodyLabel.frame.size.width, CGFLOAT_MAX)];
-    return sizeThatFits.height + self.moreLessButton.frame.size.height ;
+    return sizeThatFits.height + 8 + self.moreLessButton.frame.size.height + 8 ;
 }
 
 - (CGFloat)maxHeight {

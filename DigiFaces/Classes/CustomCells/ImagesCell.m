@@ -9,7 +9,7 @@
 #import "ImagesCell.h"
 #import "File.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-
+#import <MHVideoPhotoGallery/MHGallery.h>
 @interface ImagesCell() {
     NSMapTable *imageViewsForGestureRecognizers;
 }
@@ -38,6 +38,7 @@
     int tagIndex = 0;
     for (File * file in files) {
         UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 5, self.frame.size.height-10, self.frame.size.height -10)];
+        iv.contentMode = UIViewContentModeScaleAspectFill;
         iv.tag = tagIndex++;
         [iv setBackgroundColor:[UIColor lightGrayColor]];
         
@@ -61,10 +62,49 @@
 -(void)imageViewTapped:(UITapGestureRecognizer*)gr
 {
     UIImageView *iv = [imageViewsForGestureRecognizers objectForKey:gr];
-    File * file = [_imagesArray objectAtIndex:iv.tag];
+   // File * file = [_imagesArray objectAtIndex:iv.tag];
+    NSInteger index = iv.tag;
+    /*
     if ([_delegate respondsToSelector:@selector(imageCell:didClickOnButton:atIndex:atFile:)]) {
         [_delegate imageCell:self didClickOnButton:iv atIndex:iv.tag atFile:file];
+    }*/
+    
+    
+    NSMutableArray *galleryDataMutable = [NSMutableArray array];
+    
+    for (File *f in self.imagesArray) {
+        MHGalleryType galleryType;
+        MHGalleryItem *item;
+        if ([f.fileType isEqualToString:@"Video"]) {
+            galleryType = MHGalleryTypeVideo;
+            item = [MHGalleryItem itemWithURL:f.filePath galleryType:galleryType];
+        } else {
+            galleryType = MHGalleryTypeImage;
+            item = [MHGalleryItem itemWithURL:f.filePath galleryType:galleryType];
+        }
+        [galleryDataMutable addObject:item];
     }
+    
+    
+    MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarHidden];
+    gallery.galleryItems = [NSArray arrayWithArray:galleryDataMutable];
+    gallery.presentationIndex = index;
+    
+    __weak MHGalleryController *blockGallery = gallery;
+    
+    defwself
+    gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition, MHGalleryViewMode viewMode){
+        
+        defsself
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
+            [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
+        });
+        
+    };
+    [self.viewController presentMHGalleryController:gallery animated:YES completion:nil];
 }
+
 
 @end

@@ -24,6 +24,7 @@
 #import "NSLayoutConstraint+ConvenienceMethods.h"
 
 #import "ImageGallery.h"
+#import "ImageGalleryResponse.h"
 #import "Thread.h"
 #import "Diary.h"
 #import "DiaryTheme.h"
@@ -59,7 +60,6 @@
     //self.txtTitle.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.txtTitle.placeholder attributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:24.0f/255.0f green:186.0f/255.0f blue:252.0f/255.0f alpha:1.0f]}];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [self.txtTitle becomeFirstResponder];
     [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
     selectedDate = [NSDate date];
     
@@ -83,6 +83,10 @@
             [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
             
         }
+        [self.txtResponse becomeFirstResponder];
+    } else {
+        
+        [self.txtTitle becomeFirstResponder];
     }
     
 }
@@ -124,8 +128,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showAlertWithMessage:(NSString*)message {
+    [_alertView showAlertWithMessage:message inView:self.navigationController.view withTag:0];
+}
+
 -(void)createThreadWithActivityID:(NSInteger)activityId
 {
+    if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery] && !profileController.selectedImageFile) {
+        
+        [self showAlertWithMessage:@"You must select an image before posting a response."];
+        return;
+    }
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
     
@@ -155,7 +168,7 @@
                           sself.createdDiary.userInfo = LS.myUserInfo;
                           sself.createdDiary.comments = @[];
                           sself.createdDiary.files = @[];
-                          sself.dailyDiary.userDiaries = [sself.dailyDiary.userDiaries arrayByAddingObject:sself.createdDiary];
+                          sself.dailyDiary.userDiaries = [@[sself.createdDiary] arrayByAddingObjectsFromArray:sself.dailyDiary.userDiaries];
                           
                           [sself addEntryWithActivityId:activityId];
                       }
@@ -166,7 +179,7 @@
                           sself.createdResponse.files = @[];
                           sself.createdResponse.comments = @[];
                           sself.createdResponse.userInfo = LS.myUserInfo;
-                          sself.diaryTheme.responses = [sself.diaryTheme.responses arrayByAddingObject:sself.createdResponse];
+                          sself.diaryTheme.responses = [@[sself.createdResponse] arrayByAddingObjectsFromArray:sself.diaryTheme.responses];
                           if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
                               [sself addImageGalleryResponse];
                           }
@@ -197,7 +210,7 @@
                               @"ThreadId" : self.thread.threadId,
                               @"ImageGalleryId" : imageGalleryModule.imageGallery.imageGalleryId,
                               @"GalleryIds" : selectedGalleryIds,
-                              @"UserId" : LS.myUserInfo.userId,
+                              @"UserId" : LS.myUserInfo.id,
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text};
     
@@ -206,11 +219,11 @@
     [DFClient makeJSONRequest:APIPathActivityUpdateImageGalleryResponse
                    method:kPOST
                    params:params
-                  success:^(NSDictionary *response, ImageGallery *result) {
+                  success:^(NSDictionary *response, ImageGalleryResponse *result) {
                       defsself
-                      [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
-                      [sself dismissViewControllerAnimated:YES completion:nil];
                       sself.createdResponse.imageGalleryResponses = @[result];
+                      sself.createdResponse.files = @[profileController.selectedImageFile];
+                      [sself closeThis:nil];
                   }
                   failure:^(NSError *error) {
                       defsself;
@@ -346,11 +359,11 @@
     if (_dailyDiary && [_txtTitle.text isEqualToString:@""]) {
         // Error
         [self resignAllResponders];
-        [_alertView showAlertWithMessage:@"Title is required" inView:self.navigationController.view withTag:0];
+        [self showAlertWithMessage:@"Title is required."];
     }
     else if ([_txtResponse.text isEqualToString:@""]){
         [self resignAllResponders];
-        [_alertView showAlertWithMessage:@"Response is required." inView:self.navigationController.view withTag:0];
+        [self showAlertWithMessage:@"Response is required."];
     }
     else
     {

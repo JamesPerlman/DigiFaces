@@ -324,7 +324,7 @@ typedef enum {
     }
     
     [cell.lblTime setText:[target dateCreatedFormatted]];
-    [cell.userImage sd_setImageWithURL:[NSURL URLWithString:[[[target userInfo] avatarFile]filePath]]];
+    [cell.userImage sd_setImageWithURL:[[target userInfo] avatarFile].filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
     [cell.lblUsername setText:[[target userInfo] appUserName]];
     [cell makeImageCircular];
 }
@@ -342,19 +342,21 @@ typedef enum {
             if (_response.textareaResponses.count>0) {
                 TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
                 [infoCell.bodyLabel setText:[textResponse.response stripHTML]];
+            } else {
+                [infoCell.bodyLabel setText:@""];
             }
         }
         else if (_responseType == ResponseControllerTypeDiaryResponse){
             [infoCell.bodyLabel setText:[_diary.response stripHTML]];
         }
         
-        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(90, infoCell.fullHeight))];
+        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(infoCell.fullHeight+32.f)];
         
         return infoCell;
     }
     else if (type == CellTypeImages){
         ImagesCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"imagesScrollCell"];
-        cell.delegate = self;
+        cell.viewController = self;
         NSArray * files;
         if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
             files = _response.files;
@@ -410,7 +412,7 @@ typedef enum {
         
         [cell.lblDate setText:comment.dateCreatedFormatted];
         [cell.lblUserName setText:comment.userInfo.appUserName];
-        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:comment.userInfo.avatarFile.filePath]];
+        [cell.userImage sd_setImageWithURL:comment.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
         [cell.contentLabel setText:[comment.response stripHTML]];
         
         NSInteger height = 75;

@@ -110,7 +110,8 @@
 		F4022FFB1B69E1B30080C157 /* TextareaResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FFA1B69E1B30080C157 /* TextareaResponse.m */; };
 		F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */; };
 		F426699E1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F426699D1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m */; };
-		F42669D71B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669D61B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m */; };
+		F42669DB1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DA1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m */; };
+		F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
@@ -377,9 +378,12 @@
 		F426699C1B6D7D4D00A6E6D7 /* DailyDiaryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyDiaryResponse.h; sourceTree = "<group>"; };
 		F426699D1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyDiaryResponse.m; sourceTree = "<group>"; };
 		F426699F1B6D837300A6E6D7 /* AddResponseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddResponseDelegate.h; sourceTree = "<group>"; };
-		F42669D51B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKCustomBOOLTransformer.h; path = Others/RKCustomBOOLTransformer.h; sourceTree = "<group>"; };
-		F42669D61B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKCustomBOOLTransformer.m; path = Others/RKCustomBOOLTransformer.m; sourceTree = "<group>"; };
 		F42669D81B6DAEBD00A6E6D7 /* DiaryResponseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryResponseDelegate.h; sourceTree = "<group>"; };
+		F42669D91B6EA82000A6E6D7 /* DFCollectionViewImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFCollectionViewImageCell.h; sourceTree = "<group>"; };
+		F42669DA1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFCollectionViewImageCell.m; sourceTree = "<group>"; };
+		F42669DC1B6EDBCA00A6E6D7 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		F42669DF1B6EF8AD00A6E6D7 /* ImageGalleryDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGalleryDelegate.h; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -513,8 +517,6 @@
 			isa = PBXGroup;
 			children = (
 				4AC844711B581FB6006CDB45 /* PageViewLoadedDelegate.h */,
-				F42669D51B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.h */,
-				F42669D61B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -571,47 +573,50 @@
 		4ACDB94B1B3E7E66009EFB91 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				4AC49FDF1B4AEEBB003CE06E /* CommentCell.h */,
+				4AC49FE01B4AEEBB003CE06E /* CommentCell.m */,
 				4ACDB94C1B3E7E66009EFB91 /* CustomAlertView.h */,
 				4ACDB94D1B3E7E66009EFB91 /* CustomAlertView.m */,
 				4ACDB94E1B3E7E66009EFB91 /* CustomAlertView.xib */,
+				4ABC3D331B3FEC110090A619 /* DefaultCell.h */,
+				4ABC3D341B3FEC110090A619 /* DefaultCell.m */,
+				F42669D91B6EA82000A6E6D7 /* DFCollectionViewImageCell.h */,
+				F42669DA1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m */,
+				F4DD49CD1B65A97C00F4016B /* DiaryEntryTableViewCell.h */,
+				F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */,
+				4AA275961B5E64C200367E92 /* GalleryCell.h */,
+				4AA275971B5E64C200367E92 /* GalleryCell.m */,
+				F4864F681B670E06000D2615 /* HomeTableViewCell.h */,
+				F4864F691B670E06000D2615 /* HomeTableViewCell.m */,
 				4ACDB94F1B3E7E66009EFB91 /* ImageCell.h */,
 				4ACDB9501B3E7E66009EFB91 /* ImageCell.m */,
 				4ACDB9511B3E7E66009EFB91 /* ImageCollectionCell.h */,
 				4ACDB9521B3E7E66009EFB91 /* ImageCollectionCell.m */,
+				4ACDBA0F1B3EDF75009EFB91 /* ImagesCell.h */,
+				4ACDBA101B3EDF75009EFB91 /* ImagesCell.m */,
+				F42669DF1B6EF8AD00A6E6D7 /* ImageGalleryDelegate.h */,
+				4ABC3D3C1B4048BF0090A619 /* ImagesScrollviewer.h */,
+				4ABC3D3D1B4048BF0090A619 /* ImagesScrollviewer.m */,
 				4ACDB9531B3E7E66009EFB91 /* LoginSegue.h */,
 				4ACDB9541B3E7E66009EFB91 /* LoginSegue.m */,
 				4ACDB9551B3E7E66009EFB91 /* LogoutSegue.h */,
 				4ACDB9561B3E7E66009EFB91 /* LogoutSegue.m */,
-				4ACDB9571B3E7E66009EFB91 /* ProfilePicCell.h */,
-				4ACDB9581B3E7E66009EFB91 /* ProfilePicCell.m */,
 				4ACDB9FD1B3EC155009EFB91 /* NotificationCell.h */,
 				4ACDB9FE1B3EC155009EFB91 /* NotificationCell.m */,
-				4ACDBA0C1B3ED814009EFB91 /* UserCell.h */,
-				4ACDBA0D1B3ED814009EFB91 /* UserCell.m */,
-				4ACDBA0F1B3EDF75009EFB91 /* ImagesCell.h */,
-				4ACDBA101B3EDF75009EFB91 /* ImagesCell.m */,
-				4ABC3D331B3FEC110090A619 /* DefaultCell.h */,
-				4ABC3D341B3FEC110090A619 /* DefaultCell.m */,
+				4ACDB9571B3E7E66009EFB91 /* ProfilePicCell.h */,
+				4ACDB9581B3E7E66009EFB91 /* ProfilePicCell.m */,
 				4ABC3D391B4001460090A619 /* ResponseViewCell.h */,
 				4ABC3D3A1B4001460090A619 /* ResponseViewCell.m */,
-				4ABC3D3C1B4048BF0090A619 /* ImagesScrollviewer.h */,
-				4ABC3D3D1B4048BF0090A619 /* ImagesScrollviewer.m */,
-				4AD850161B45A12B0059A457 /* VideoCell.h */,
-				4AD850171B45A12B0059A457 /* VideoCell.m */,
-				4AC49FDF1B4AEEBB003CE06E /* CommentCell.h */,
-				4AC49FE01B4AEEBB003CE06E /* CommentCell.m */,
+				4AC7D47A1B510D0B00587045 /* RTCell.h */,
+				4AC7D47B1B510D0B00587045 /* RTCell.m */,
 				4A00E83B1B4BD060000F6A6B /* TextFieldCell.h */,
 				4A00E83C1B4BD060000F6A6B /* TextFieldCell.m */,
 				4A00E83E1B4BD07A000F6A6B /* TextViewCell.h */,
 				4A00E83F1B4BD07A000F6A6B /* TextViewCell.m */,
-				4AC7D47A1B510D0B00587045 /* RTCell.h */,
-				4AC7D47B1B510D0B00587045 /* RTCell.m */,
-				4AA275961B5E64C200367E92 /* GalleryCell.h */,
-				4AA275971B5E64C200367E92 /* GalleryCell.m */,
-				F4DD49CD1B65A97C00F4016B /* DiaryEntryTableViewCell.h */,
-				F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */,
-				F4864F681B670E06000D2615 /* HomeTableViewCell.h */,
-				F4864F691B670E06000D2615 /* HomeTableViewCell.m */,
+				4ACDBA0C1B3ED814009EFB91 /* UserCell.h */,
+				4ACDBA0D1B3ED814009EFB91 /* UserCell.m */,
+				4AD850161B45A12B0059A457 /* VideoCell.h */,
+				4AD850171B45A12B0059A457 /* VideoCell.m */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -1366,6 +1371,8 @@
 				F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */,
 				F40FE1BB1B6C2C5F003C4DE7 /* NSString+StripHTML.h */,
 				F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */,
+				F42669DC1B6EDBCA00A6E6D7 /* GTMNSString+HTML.h */,
+				F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1547,6 +1554,7 @@
 				4ACDB9ED1B3E8366009EFB91 /* DiaryInfoViewController.m in Sources */,
 				F4DD49CF1B65A97C00F4016B /* DiaryEntryTableViewCell.m in Sources */,
 				4AD850181B45A12B0059A457 /* VideoCell.m in Sources */,
+				F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */,
 				4ACDBA111B3EDF75009EFB91 /* ImagesCell.m in Sources */,
 				4ACDB9B61B3E7E66009EFB91 /* ProjectViewController.m in Sources */,
 				4ACDB9AE1B3E7E66009EFB91 /* EmailModeratorController.m in Sources */,
@@ -1582,7 +1590,6 @@
 				4ACDB9B51B3E7E66009EFB91 /* ProjectIntroViewController.m in Sources */,
 				4ACDB9C71B3E7E66009EFB91 /* File.m in Sources */,
 				4ACDB9DA1B3E7E66009EFB91 /* MWFeedParserAppDelegate.m in Sources */,
-				F42669D71B6DA1F200A6E6D7 /* RKCustomBOOLTransformer.m in Sources */,
 				F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */,
 				4ACDB9F61B3E9A14009EFB91 /* DailyDiary.m in Sources */,
 				F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */,
@@ -1596,6 +1603,7 @@
 				19F0BD101B1DBC6400E4B048 /* main.m in Sources */,
 				F426699E1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m in Sources */,
 				F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */,
+				F42669DB1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m in Sources */,
 				4ACB9ED01B58EAB500E9F984 /* Module.m in Sources */,
 				4AD8501B1B45AAB70059A457 /* NointernetController.m in Sources */,
 				4AC7D47C1B510D0B00587045 /* RTCell.m in Sources */,

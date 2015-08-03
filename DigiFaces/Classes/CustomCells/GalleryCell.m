@@ -8,7 +8,9 @@
 
 #import "GalleryCell.h"
 #import "File.h"
-#import "UIImageView+AFNetworking.h"
+#import <SDWebImage/UIButton+WebCache.h>
+
+#import <MHVideoPhotoGallery/MHGallery.h>
 
 @implementation GalleryCell
 
@@ -34,14 +36,46 @@
 
 -(void) buttonClicked:(UIButton*)sender
 {
-    if ([_delegate respondsToSelector:@selector(galleryCell:didClickOnIndex:)]) {
-        [_delegate galleryCell:self didClickOnIndex:sender.tag];
+    NSMutableArray *galleryDataMutable = [NSMutableArray array];
+    
+    for (File *f in self.files) {
+        MHGalleryType galleryType;
+        MHGalleryItem *item;
+        if ([f.fileType isEqualToString:@"Video"]) {
+            galleryType = MHGalleryTypeVideo;
+            item = [MHGalleryItem itemWithURL:f.filePath galleryType:galleryType];
+        } else {
+            galleryType = MHGalleryTypeImage;
+            item = [MHGalleryItem itemWithURL:f.filePath galleryType:galleryType];
+        }
+        [galleryDataMutable addObject:item];
     }
+    
+    
+    MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarHidden];
+    gallery.galleryItems = [NSArray arrayWithArray:galleryDataMutable];
+    gallery.presentationIndex = sender.tag;
+    
+    __weak MHGalleryController *blockGallery = gallery;
+    
+    defwself
+    gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition, MHGalleryViewMode viewMode){
+        
+        defsself
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
+            [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
+        });
+        
+    };
+    [self.viewController presentMHGalleryController:gallery animated:YES completion:nil];
 }
 
 -(UIButton*)getImageWithFile:(File*)file
 {
-    UIButton * imageView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     NSString * url;
     if ([file.fileType isEqualToString:@"Image"]) {
         url = file.filePath;
@@ -49,15 +83,9 @@
     else{
         url = file.getVideoThumbURL;
     }
-    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    __weak typeof(imageView) weakImage = imageView;
-    [imageView.imageView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        [weakImage setImage:image forState:UIControlStateNormal];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        NSLog(@"Faile to download Image");
-    }];
+    [button sd_setImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
     
-    return imageView;
+    return button;
 }
 
 -(void)removeEverything
@@ -66,7 +94,6 @@
         if ([vu isKindOfClass:[UIButton class]]) {
             [vu removeFromSuperview];
         }
-        
     }
 }
 

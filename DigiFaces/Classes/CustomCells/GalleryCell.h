@@ -10,12 +10,12 @@
 
 @protocol GalleryCellDelegate <NSObject>
 
--(void)galleryCell:(id)cel didClickOnIndex:(NSInteger)index;
+-(void)galleryCell:(id)cell didClickOnIndex:(NSInteger)index;
 
 @end
 
 @interface GalleryCell : UITableViewCell
-
+@property (nonatomic, weak) UIViewController *viewController;
 @property (nonatomic, assign) IBOutlet id<GalleryCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray * files;

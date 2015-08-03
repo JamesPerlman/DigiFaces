@@ -17,6 +17,7 @@
 
 @interface ImagesCell : UITableViewCell
 
+@property (weak, nonatomic) UIViewController *viewController;
 @property (weak, nonatomic) id<ImageCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 -(void)setImagesFiles:(NSArray*)files;

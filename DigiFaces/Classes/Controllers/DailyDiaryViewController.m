@@ -26,6 +26,7 @@
 #import "RTCell.h"
 #import "DiaryEntryTableViewCell.h"
 #import "NSArray+orderedDistinctUnionOfObjects.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #import "DiaryResponseDelegate.h"
 static NSString *infoCellReuseIdentifier = @"textCell";
@@ -217,15 +218,13 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         if (indexPath.row == 0) {
             if (_dailyDiary.file && [_dailyDiary.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_dailyDiary.file.filePath]];
-                [imgCell.image setImageWithURLRequest:req placeholderImage:[UIImage imageNamed:@"blank"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                    imgCell.image.image = image;
-                } failure:nil];
+                [imgCell.image sd_setImageWithURL:_dailyDiary.file.filePathURL];
+                
                 cell = imgCell;
             }
             else{
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-                [vidCell.imageView setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL] placeholderImage:[UIImage imageNamed:@"blank"]];
+                [vidCell.imageView sd_setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL]];
                 vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePath];
                 vidCell.moviePlayerController.view.hidden = true;
                 cell = vidCell;
@@ -258,7 +257,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
             dcell.accessoryView = dcell.unreadIndicator;
         }
         cell = dcell;
-        // [cell.detailTextLabel setText:[NSString stringWithFormat:@"By %@",[diary userInfo].appUserName]];
+        // [cell.detailTextLabel setText:[NSString stringWithFormat:@"By %@",diary userInfo.appUserName];
     }
     
     cell.separatorInset = UIEdgeInsetsZero;
@@ -293,10 +292,14 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        if (indexPath.row == 0 && _dailyDiary.file && [_dailyDiary.file.fileType isEqualToString:@"Video"]) {
-            VideoCell *cell = (VideoCell*)[tableView cellForRowAtIndexPath:indexPath];
-            cell.moviePlayerController.view.hidden = false;
-            [cell.moviePlayerController play];
+        if (indexPath.row == 0 && _dailyDiary.file) {
+            if ([_dailyDiary.file.fileType isEqualToString:@"Video"]) {
+                VideoCell *cell = (VideoCell*)[tableView cellForRowAtIndexPath:indexPath];
+                cell.moviePlayerController.view.hidden = false;
+                [cell.moviePlayerController play];
+            } else {
+                [self performSegueWithIdentifier:@"webViewSegue" sender:nil];
+            }
         }
         else if (indexPath.row == 1  && self.diaryDates.count>0) {
             [self textCellDidTapMore:nil];
@@ -323,6 +326,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     else if ([segue.identifier isEqualToString:@"webViewSegue"]){
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
         webController.url = [_dailyDiary.file filePath];
+        webController.navigationItem.title = self.navigationItem.title;
     }
     else if ([segue.identifier isEqualToString:@"themeSegue"]){
         DiaryThemeViewController * themeController = [segue destinationViewController];

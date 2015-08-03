@@ -16,7 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"Video"];
     // Do any additional setup after loading the view.
     NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [_webview loadRequest:request];

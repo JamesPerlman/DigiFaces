@@ -11,7 +11,6 @@
 #import "NointernetController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "RKCustomBOOLTransformer.h"
 
 #import "DFResponseDescriptorsProvider.h"
 @interface AppDelegate ()
@@ -147,8 +146,6 @@
     //    [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     //
     [objectManager addResponseDescriptorsFromArray:[[DFResponseDescriptorsProvider sharedInstance] responseDescriptors]];
-    [[RKValueTransformer defaultValueTransformer]
-     insertValueTransformer:[RKCustomBOOLTransformer defaultTransformer] atIndex:0];
     
   
 }

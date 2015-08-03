@@ -31,6 +31,7 @@
 #import "CarouselViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NSString+StripHTML.h"
+#import "ImageGalleryResponse.h"
 
 @interface DiaryThemeViewController () <GalleryCellDelegate>
 {
@@ -71,10 +72,27 @@
 
 
 - (void)addDiaryThemeResponsesToDataArray {
-    [self.diaryTheme reorganizeResponses];
+    ResponseViewCell *responseCell = [self.tableView dequeueReusableCellWithIdentifier:@"responseCell"];
+    CGFloat commentIndicatorHeight = responseCell.btnComments.frame.size.height;
     for (Response * response in self.diaryTheme.responses) {
+        if (response.textareaResponses.count>0) {
+            TextareaResponse * textResponse = response.textareaResponses.firstObject;
+            [responseCell.lblResponse setText:[textResponse.response stripHTML]];
+            
+        }
+        
+        CGFloat height = 16 + responseCell.userImage.frame.size.height;
+        
+        CGFloat labelHeight = [responseCell.lblResponse sizeThatFits:CGSizeMake(responseCell.lblResponse.frame.size.width, CGFLOAT_MAX)].height;
+        height += 8 + ((labelHeight>90.0f) ? 90.0f : labelHeight)  + 8;
+        
+        if (response.files.count) {
+            height += responseCell.collectionView.frame.size.height; // V: -(8)-collectionView
+        }
+        height += 8+commentIndicatorHeight+16; // -(8)-commentIndicator
+        
         [_cellsArray addObject:response];
-        [_heightArray addObject:@160];
+        [_heightArray addObject:@(height)];
     }
     
 }
@@ -152,14 +170,24 @@
                    method:kPOST
                 urlParams:@{@"activityId" : _diaryTheme.activityId}
                bodyParams:nil
-                  success:^(NSDictionary *response, NSArray *result) {
+                  success:^(NSDictionary *response, id result) {
                       defsself
-                      NSInteger responseCount = result.count;
+                      NSInteger responseCount;
+                      if ([result isKindOfClass:[NSArray class]]) {
+                         responseCount = [result count];
+                          sself.diaryTheme.responses = result;
+                      } else if ([result isKindOfClass:[Response class]]) {
+                          responseCount = 1;
+                          sself.diaryTheme.responses = @[result];
+                      } else {
+                          responseCount = 0;
+                          sself.diaryTheme.responses = @[];
+                      }
+                      
                       if (responseCount>0) {
                           [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responseCount, (responseCount==1)?@"":@"s"]];
                           [_heightArray addObject:@40];
                       }
-                      sself.diaryTheme.responses = result;
                       [sself addDiaryThemeResponsesToDataArray];
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -202,13 +230,8 @@
         if ([module themeType] == ThemeTypeDisplayImage) {
             if (module.displayFile.file && [module.displayFile.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:module.displayFile.file.filePath]];
-                [imgCell.image setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                    [imgCell.image setImage:image];
-                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                    NSLog(@"Error");
-                }];
-                //[imgCell.image setImageWithURL:[NSURL URLWithString:module.displayFile.file.filePath]];
+                [imgCell.image sd_setImageWithURL:module.displayFile.file.filePathURL];
+                
                 cell = imgCell;
             }
             else{
@@ -238,6 +261,7 @@
         else if ([module themeType] == ThemeTypeImageGallery){
             
             GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
+            galleryCell.viewController = self;
             galleryCell.files = module.imageGallery.files;
             [galleryCell reloadGallery];
             cell = galleryCell;
@@ -257,39 +281,48 @@
         cell = defaultCell;
     }
     else{
-        Response * response = [_cellsArray objectAtIndex:indexPath.row];
+        Response * response = (Response*)[_cellsArray objectAtIndex:indexPath.row];
         
         ResponseViewCell * responseCell = [tableView dequeueReusableCellWithIdentifier:@"responseCell" forIndexPath:indexPath];
         
-        NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:response.userInfo.avatarFile.filePath]];
-        [responseCell.userImage setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            [responseCell.userImage setImage:image];
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            NSLog(@"Image download error");
-        }];
+        responseCell.viewController = self;
+        [responseCell.userImage sd_setImageWithURL:response.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
+        
         [responseCell.lblName setText:response.userInfo.appUserName];
         [responseCell.lblTime setText:response.dateCreatedFormatted];
         [responseCell setImageCircular];
         [responseCell.btnComments setTitle:[NSString stringWithFormat:@"%d Comment%@", response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
-        CGSize size;
-        if (response.textareaResponses.count>0) {
-            TextareaResponse * textResponse = [response.textareaResponses objectAtIndex:0];
-            [responseCell.lblResponse setText:[textResponse.response stripHTML]];
-            
-            CGRect rect = [textResponse.response boundingRectWithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil];
-            size = rect.size;
-            responseCell.responseHeightConst.constant = MIN(size.height + 5, 50);
+        
+        if (response.imageGalleryResponses.count>0) {
+            ImageGalleryResponse * imageGalleryResponse = response.imageGalleryResponses.firstObject;
+            [responseCell.lblResponse setText:[imageGalleryResponse.response stripHTML]];
         }
         
-        [responseCell setFiles:response.files];
+        if (response.textareaResponses.count>0) {
+            TextareaResponse * textResponse = response.textareaResponses.firstObject;
+            [responseCell.lblResponse setText:[textResponse.response stripHTML]];
+            
+            
+            //responseCell.responseHeightConst.constant = MIN(size.height + 5, 50);
+        }
         
+        
+        if (response.files.count) {
+            responseCell.collectionViewHeightConstraint.constant = 50;
+        } else {
+            responseCell.collectionViewHeightConstraint.constant = 0;
+        }
+        [responseCell setFiles:response.files];
+        [responseCell layoutIfNeeded];
+        
+        /*
         NSInteger height = 105 + MIN(size.height + 5, 50);
         
         if (response.files.count>0) {
             height += 55;
         }
         [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
-        
+        */
         
         cell = responseCell;
     }
@@ -312,6 +345,7 @@
         Module * module = (Module*)object;
         
         if ([module themeType] == ThemeTypeDisplayImage) {
+            // do nothing, let the display image cell handle this
             [self performSegueWithIdentifier:@"webViewSegue" sender:self];
         }
         else if ([module themeType] == ThemeTypeDisplayText){
@@ -345,6 +379,7 @@
         Module * module = [_cellsArray objectAtIndex:0];
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
         webController.url = [module.displayFile.file filePath];
+        webController.navigationItem.title = _diaryTheme.activityTitle;
     }
     else if ([segue.identifier isEqualToString:@"responseSegue"]){
         NSInteger index = [self.tableView indexPathForSelectedRow].row;
@@ -378,12 +413,11 @@
 }
 
 #pragma mark - GalleryCellDelegate
--(void)galleryCell:(id)cel didClickOnIndex:(NSInteger)index
+-(void)galleryCell:(id)cell didClickOnIndex:(NSInteger)index
 {
     galleryItemIndex = index;
+    
     [self performSegueWithIdentifier:@"gallerySegue" sender:self];
 }
-
-
 
 @end
