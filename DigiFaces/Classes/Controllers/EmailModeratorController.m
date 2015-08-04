@@ -109,4 +109,9 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [_txtSubject becomeFirstResponder];
+    return YES;
+}
+
 @end

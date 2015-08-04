@@ -17,25 +17,27 @@
 #import "UserInfo.h"
 #import "About.h"
 #import "AboutMe.h"
+#import "Announcement.h"
 #import "APIAlertCounts.h"
-#import "File.h"
-#import "Project.h"
-#import "Notification.h"
+#import "Comment.h"
 #import "DailyDiary.h"
 #import "DailyDiaryResponse.h"
 #import "Diary.h"
-#import "Comment.h"
-#import "Response.h"
-#import "TextareaResponse.h"
-#import "ImageGallery.h"
-#import "ImageGalleryResponse.h"
 #import "DiaryTheme.h"
-#import "Thread.h"
-#import "Module.h"
 #import "DisplayText.h"
 #import "DisplayFile.h"
-#import "Textarea.h"
+#import "File.h"
+#import "ImageGallery.h"
+#import "ImageGalleryResponse.h"
 #import "MarkUp.h"
+#import "Message.h"
+#import "Module.h"
+#import "Notification.h"
+#import "Project.h"
+#import "Response.h"
+#import "Textarea.h"
+#import "TextareaResponse.h"
+#import "Thread.h"
 
 
 #import "NSArray+RKHelper.h"
@@ -108,6 +110,19 @@
                                                  @"AnnouncementUnreadCount",
                                                  @"MessagesUnreadCount",
                                                   @"NotificationsUnreadCount"].camelCaseDict];
+    return mapping;
+}
+
+- (RKObjectMapping*)announcementMapping {
+    RKObjectMapping *mapping = MAPCLASS(Announcement);
+    [mapping addAttributeMappingsFromDictionary:@[@"AnnouncementId",
+                                                  @"Title",
+                                                  @"Text",
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted",
+                                                  @"IsRead"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Files" toKeyPath:@"files" withMapping:[self fileMapping]]];
     return mapping;
 }
 
@@ -277,6 +292,21 @@
     return mapping;
 }
 
+- (RKObjectMapping*)markUpMapping {
+    RKObjectMapping *mapping = MAPCLASS(MarkUp);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"MarkupId",
+                                                  @"MarkupUrl"].camelCaseDict];
+    
+    return mapping;
+}
+
+- (RKObjectMapping*)messageMapping {
+    RKObjectMapping *mapping = MAPCLASS(Message);
+    
+    return mapping;
+}
+
 - (RKObjectMapping*)moduleMapping {
     RKObjectMapping *mapping = MAPCLASS(Module);
     
@@ -300,14 +330,6 @@
     return mapping;
 }
 
-- (RKObjectMapping*)markUpMapping {
-    RKObjectMapping *mapping = MAPCLASS(MarkUp);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"MarkupId",
-                                                  @"MarkupUrl"].camelCaseDict];
-    
-    return mapping;
-}
 
 - (RKObjectMapping*)notificationMapping {
     RKObjectMapping *mapping = MAPCLASS(Notification);

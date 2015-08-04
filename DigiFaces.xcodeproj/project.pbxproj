@@ -124,6 +124,10 @@
 		F4864FB21B683450000D2615 /* DFResponseDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB11B683450000D2615 /* DFResponseDataMapper.m */; };
 		F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB41B6835E4000D2615 /* APITokenResponse.m */; };
 		F4864FB61B6839E1000D2615 /* DFClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F6E1B680859000D2615 /* DFClient.m */; };
+		F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */; };
+		F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */; };
+		F4A759DA1B71522600B94176 /* Announcement.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D91B71522600B94176 /* Announcement.m */; };
+		F4A759DE1B7153E900B94176 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759DD1B7153E900B94176 /* Message.m */; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -416,6 +420,14 @@
 		F4864FB31B6835E4000D2615 /* APITokenResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APITokenResponse.h; sourceTree = "<group>"; };
 		F4864FB41B6835E4000D2615 /* APITokenResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APITokenResponse.m; sourceTree = "<group>"; };
 		F49814E21B6B5515003571C6 /* Textarea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Textarea.h; sourceTree = "<group>"; };
+		F4A759D01B7150E300B94176 /* ConversationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsTableViewController.h; sourceTree = "<group>"; };
+		F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsTableViewController.m; sourceTree = "<group>"; };
+		F4A759D41B71510400B94176 /* AnnouncementsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementsTableViewController.h; sourceTree = "<group>"; };
+		F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnouncementsTableViewController.m; sourceTree = "<group>"; };
+		F4A759D81B71522600B94176 /* Announcement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Announcement.h; sourceTree = "<group>"; };
+		F4A759D91B71522600B94176 /* Announcement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Announcement.m; sourceTree = "<group>"; };
+		F4A759DC1B7153E900B94176 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		F4A759DD1B7153E900B94176 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
 		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
 		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
@@ -551,12 +563,13 @@
 		4ACDB92C1B3E7E66009EFB91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F42669EE1B71396400A6E6D7 /* MessagesMenuTableViewController */,
 				F4864FA81B6822D4000D2615 /* About */,
+				F4A759D31B7150E700B94176 /* Announcements */,
 				F495B7BB1B646EF000F8295B /* Auth */,
 				F4864FA21B6822A6000D2615 /* AddResponse */,
 				F4864FA51B6822BC000D2615 /* Calendar */,
 				F4864FA61B6822C2000D2615 /* Carousel */,
+				F4A759CF1B7150C800B94176 /* Conversations */,
 				F4864F9E1B682289000D2615 /* DailyDiary */,
 				F4864F9D1B682281000D2615 /* DiaryInfo */,
 				F4864FA11B68229F000D2615 /* DiaryTheme */,
@@ -566,6 +579,7 @@
 				F4864F801B681D99000D2615 /* Home */,
 				F4864FA71B6822CC000D2615 /* Image */,
 				F4864FA31B6822AD000D2615 /* LoginTable */,
+				F42669EE1B71396400A6E6D7 /* MessagesMenuTableViewController */,
 				F4864F811B681D9F000D2615 /* MyProfile */,
 				F4864FA41B6822B4000D2615 /* NoInternetController */,
 				F4864F9F1B682295000D2615 /* Notifications */,
@@ -923,6 +937,7 @@
 				F4022FF81B69E1760080C157 /* TextareaResponse */,
 				F4022FC31B68704E0080C157 /* AboutMe */,
 				F4022FBF1B686D970080C157 /* About */,
+				F4A759D71B71521600B94176 /* Announcement */,
 				F4864F871B6820C0000D2615 /* Comment */,
 				F4864F881B6820C8000D2615 /* Company */,
 				F4864F8E1B6820F7000D2615 /* DailyDiary */,
@@ -934,6 +949,7 @@
 				F4864F8A1B6820D4000D2615 /* File */,
 				F4022FD41B68AEDE0080C157 /* ImageGalleryResponse */,
 				F4864F8B1B6820D9000D2615 /* Project */,
+				F4A759DB1B7153D900B94176 /* Message */,
 				F4864F911B68210D000D2615 /* Module */,
 				F4864F8F1B682103000D2615 /* Notification */,
 				F4864F7A1B680B6F000D2615 /* Project */,
@@ -1390,6 +1406,43 @@
 			name = Auth;
 			sourceTree = "<group>";
 		};
+		F4A759CF1B7150C800B94176 /* Conversations */ = {
+			isa = PBXGroup;
+			children = (
+				F4A759D01B7150E300B94176 /* ConversationsTableViewController.h */,
+				F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */,
+			);
+			name = Conversations;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F4A759D31B7150E700B94176 /* Announcements */ = {
+			isa = PBXGroup;
+			children = (
+				F4A759D41B71510400B94176 /* AnnouncementsTableViewController.h */,
+				F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */,
+			);
+			name = Announcements;
+			sourceTree = "<group>";
+		};
+		F4A759D71B71521600B94176 /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				F4A759D81B71522600B94176 /* Announcement.h */,
+				F4A759D91B71522600B94176 /* Announcement.m */,
+			);
+			name = Announcement;
+			sourceTree = "<group>";
+		};
+		F4A759DB1B7153D900B94176 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				F4A759DC1B7153E900B94176 /* Message.h */,
+				F4A759DD1B7153E900B94176 /* Message.m */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
 		F4DD49BB1B6548B700F4016B /* PhotoGallerySection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1653,6 +1706,7 @@
 				4ACB9ED01B58EAB500E9F984 /* Module.m in Sources */,
 				4AD8501B1B45AAB70059A457 /* NointernetController.m in Sources */,
 				4AC7D47C1B510D0B00587045 /* RTCell.m in Sources */,
+				F4A759DE1B7153E900B94176 /* Message.m in Sources */,
 				F4022FDF1B6977090080C157 /* APISetUserNameResponse.m in Sources */,
 				4ACDB9FF1B3EC155009EFB91 /* NotificationCell.m in Sources */,
 				F4022FCB1B68789D0080C157 /* APIUploadAvatarResponse.m in Sources */,
@@ -1661,7 +1715,9 @@
 				4ACDB9BF1B3E7E66009EFB91 /* ImageCollectionCell.m in Sources */,
 				4ACDB9B31B3E7E66009EFB91 /* PhotoGalleryViewController.m in Sources */,
 				4ACDBA081B3ECDB5009EFB91 /* Comment.m in Sources */,
+				F4A759DA1B71522600B94176 /* Announcement.m in Sources */,
 				F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */,
+				F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */,
 				4ACDB9C51B3E7E66009EFB91 /* Company.m in Sources */,
 				F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */,
 				4ABC3D351B3FEC110090A619 /* DefaultCell.m in Sources */,
@@ -1675,6 +1731,7 @@
 				F4022FBE1B68659F0080C157 /* NSArray+RKHelper.m in Sources */,
 				4ABC3D3E1B4048BF0090A619 /* ImagesScrollviewer.m in Sources */,
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
+				F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */,
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
 				4ACB9EDF1B58ECCF00E9F984 /* ImageGallery.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,

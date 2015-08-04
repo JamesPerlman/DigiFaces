@@ -388,13 +388,18 @@
 
 - (void)didTapAnnouncements {
     
+    [self.popover dismissPopoverAnimated:YES];
 }
 
 - (void)didTapConversations {
     
+    [self.popover dismissPopoverAnimated:YES];
 }
 
 - (void)didTapNotifications {
+    
+    [self performSegueWithIdentifier:@"toNotifications" sender:nil];
+    [self.popover dismissPopoverAnimated:YES];
     
 }
 

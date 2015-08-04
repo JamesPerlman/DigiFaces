@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CustomAlertView.h"
 
-@interface EmailModeratorController : UITableViewController<PopUpDelegate, UITextViewDelegate>
+@interface EmailModeratorController : UITableViewController<PopUpDelegate, UITextViewDelegate, UITextFieldDelegate>
 {
     CustomAlertView * alertView;
 }

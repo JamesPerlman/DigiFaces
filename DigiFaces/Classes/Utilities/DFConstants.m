@@ -48,7 +48,8 @@ NSString * const APIPathGetDailyDiary = @"api/Project/GetDailyDiary/:diaryId";
 NSString * const APIPathUpdateDailyDiary = @"api/Project/UpdateDailyDiary/:projectId";
 NSString * const APIPathProjectGetActivities = @"api/Project/GetActivities/:projectId";
 NSString * const APIPathProjectMarkActivityRead = @"api/Project/MarkActivityRead/:activityId";
-
+NSString * const APIPathProjectMarkAnnouncementRead = @"api/Project/MarkAnnouncementRead/:announcementId";
+NSString * const APIPathProjectGetAnnouncements = @"api/Project/GetAnnouncements/:projectId";
 
 #pragma mark - LocalStorage keys
 NSString * const LSAuthTokenKey = @"com.digifaces.api.auth_token";
