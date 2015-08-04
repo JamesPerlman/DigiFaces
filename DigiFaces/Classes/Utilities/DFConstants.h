@@ -39,6 +39,7 @@ extern NSString * const APIPathActivityMarkThreadRead;
 extern NSString * const APIPathActivityMarkCommentRead;
 
 // project
+extern NSString * const APIPathGetAlertCounts;
 extern NSString * const APIPathGetHomeAnnouncement;
 extern NSString * const APIPathGetDailyDiary;
 extern NSString * const APIPathUpdateDailyDiary;

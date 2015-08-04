@@ -42,6 +42,7 @@ NSString * const APIPathGetAvatarFiles = @"api/System/GetAvatarFiles";
 NSString * const APIPathSendHelpMessage = @"api/System/SendHelpMessage";
 
 // project
+NSString * const APIPathGetAlertCounts = @"api/Project/GetAlertsCount/:projectId";
 NSString * const APIPathGetHomeAnnouncement = @"api/Project/GetHomeAnnouncement/:projectId";
 NSString * const APIPathGetDailyDiary = @"api/Project/GetDailyDiary/:diaryId";
 NSString * const APIPathUpdateDailyDiary = @"api/Project/UpdateDailyDiary/:projectId";

@@ -21,16 +21,20 @@
 #import "DiaryTheme.h"
 #import "DiaryThemeViewController.h"
 #import "HomeTableViewCell.h"
-
+#import <WYPopoverController/WYPopoverController.h>
 #import "APIHomeAnnouncementResponse.h"
+#import "APIAlertCounts.h"
+#import "MessagesMenuTableViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate>
+@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, MessagesMenuDelegate>
 {
     ProfilePicCell * picCell;
 }
 @property (nonatomic ,retain) NSArray * dataArray;
+
+@property (nonatomic, strong) MessagesMenuTableViewController *messagesVC;
 
 
 @end
@@ -56,7 +60,15 @@
         [app showNetworkError];
     }
     
+    // Initialize the refresh control.
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(fetchActivites)
+                  forControlEvents:UIControlEventValueChanged];
     
+    
+    self.messagesVC = [[MessagesMenuTableViewController alloc] init];
+    self.messagesVC.delegate = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -87,6 +99,7 @@
                       LS.myUserInfo.currentProject.dailyDiary = result;
                       defsself
                       [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                      [sself fetchAlertCounts];
                   }
                   failure:nil];
 }
@@ -130,7 +143,9 @@
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Something went wrong when loading your activities.  Pull down to refresh the data.", nil) inView:sself.view withTag:0];
                   }];
+    [self.refreshControl endRefreshing];
 }
 
 -(void)fetchUserInfo{
@@ -154,7 +169,7 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }];
-    }
+}
 
 - (void)fetchProjects {
     defwself
@@ -186,7 +201,7 @@
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
     File *profilePictureFile = [[File alloc] initWithDictionary:profilePicture];
-
+    
     [self setProfilePicture:profilePictureFile.filePath withImage:image];
     
     defwself
@@ -217,7 +232,7 @@
     picCell.profileImage.clipsToBounds = YES;
     picCell.profileImage.layer.cornerRadius = picCell.profileImage.frame.size.height/2.0f;
     
-        [picCell.profileImage sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
+    [picCell.profileImage sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
 }
 
 #pragma mark - UITableViewDeleagate
@@ -281,7 +296,7 @@
             if (indexPath.row == 1) {
                 cell.titleLabel.text = @"Diary";
                 cell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
-                cell.unreadItemIndicator.hidden = true;
+                
                 return cell;
             }
         }
@@ -329,6 +344,40 @@
 -(void)profilePictureDidSelect:(NSDictionary *)selectedProfile withImage:(UIImage *)image
 {
     [self updateProfilePicture:selectedProfile withImage:image];
+    
+}
+
+#pragma mark - Notifications n stuff
+
+-(void)fetchAlertCounts {
+    defwself
+    [DFClient makeRequest:APIPathGetAlertCounts
+                   method:RKRequestMethodGET
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
+               bodyParams:nil success:^(NSDictionary *response, APIAlertCounts *result) {
+                   defsself
+                   sself.alertCountLabel.hidden = !(result.totalUnreadCount.boolValue);
+                   sself.alertCountLabel.text = [NSString stringWithFormat:@" %@ ", result.totalUnreadCount];
+                   [sself.messagesVC setAlertCounts:result];
+               }
+                  failure:nil];
+}
+
+
+- (IBAction)didTapAlerts:(id)sender {
+    WYPopoverController *popoverController = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
+    [popoverController presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItem permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
+}
+
+- (void)didTapAnnouncements {
+    
+}
+
+- (void)didTapConversations {
+    
+}
+
+- (void)didTapNotifications {
     
 }
 

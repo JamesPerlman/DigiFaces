@@ -14,6 +14,7 @@
 - (RKObjectMapping*)userInfoMapping;
 - (RKObjectMapping*)aboutMapping;
 - (RKObjectMapping*)aboutMeMapping;
+- (RKObjectMapping*)alertCountsMapping;
 - (RKObjectMapping*)fileMapping;
 - (RKObjectMapping*)projectMapping;
 - (RKObjectMapping*)notificationMapping;

@@ -37,26 +37,9 @@
     _password.leftView = paddingView2;
     _password.leftViewMode = UITextFieldViewModeAlways;
     
-    [self tryAutoLogin];
     
 }
 
-- (void)tryAutoLogin {
-    if (LS.loginUsername && LS.loginPassword) {
-        defwself
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [DFClient loginWithUsername:LS.loginUsername
-                           password:LS.loginPassword
-                            success:^(NSDictionary *response, id result) {
-                                defsself
-                                [sself successfulLogin];
-                                [MBProgressHUD hideHUDForView:sself.view animated:YES];
-                            } failure:^(NSError *error) {
-                                defsself
-                                [MBProgressHUD hideHUDForView:sself.view animated:YES];
-                            }];
-    }
-}
 
 -(BOOL)prefersStatusBarHidden{
     return YES;

@@ -11,6 +11,7 @@
 #import "DailyDiary.h"
 #import "Diary.h"
 #import "Response.h"
+#import "HPGrowingTextView.h"
 
 #import "DiaryResponseDelegate.h"
 typedef enum {
@@ -31,7 +32,8 @@ typedef enum {
 @property (nonatomic, retain) Response * response;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constBottomSpace;
 - (IBAction)sendComment:(id)sender;
-@property (weak, nonatomic) IBOutlet UITextView *txtResposne;
+@property (weak, nonatomic) IBOutlet HPGrowingTextView *txtResposne;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *responseHeight;
 - (IBAction)exitOnend:(id)sender;
 
 @end

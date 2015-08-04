@@ -38,7 +38,7 @@ typedef enum {
     CellTypeComment
 }CellType;
 
-@interface ResponseViewController () <CommentCellDelegate, ImageCellDelegate>
+@interface ResponseViewController () <CommentCellDelegate, ImageCellDelegate, HPGrowingTextViewDelegate>
 {
     NSInteger contentHeight;
     RTCell *infoCell;
@@ -72,7 +72,7 @@ typedef enum {
         [self getResponsesWithActivityId:_currentNotification.activityId.integerValue];
     }
     
-    [Utility addPadding:5 toTextField:_txtResposne];
+    //[Utility addPadding:5 toTextField:_txtResposne];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -107,17 +107,24 @@ typedef enum {
         }
     }
     else if (_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification){
-        for (int i=0;i<_response.comments.count; i++) {
-            [_cellsArray addObject:@(CellTypeComment)];
-            [_heightArray addObject:@110];
-        }
         if (_response.files.count) {
             [_cellsArray addObject:@(CellTypeImages)];
             [_heightArray addObject:@85];
         }
+        for (int i=0;i<_response.comments.count; i++) {
+            [_cellsArray addObject:@(CellTypeComment)];
+            [_heightArray addObject:@110];
+        }
     }
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+  //  self.txtResposne.layer.borderColor = [UIColor lightGrayColor].CGColor;
+  //  self.txtResposne.layer.borderWidth = 1.0f;
+    self.txtResposne.layer.cornerRadius = 4.0f;
+    self.txtResposne.clipsToBounds = true;
+    self.txtResposne.placeholder = NSLocalizedString(@"Leave a comment...", nil);
+    self.txtResposne.delegate = self;
    // [self organizeData];
 }
 
@@ -419,9 +426,8 @@ typedef enum {
         [cell.userImage sd_setImageWithURL:comment.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
         [cell setContentText:comment.response];
         
-        NSInteger height = 75;
-        CGRect boundingRect = [comment.response boundingRectWithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil];
-        height += boundingRect.size.height + 10;
+        CGFloat height = [cell.contentLabel sizeThatFits:CGSizeMake(cell.contentLabel.frame.size.width, CGFLOAT_MAX)].height;
+        height += cell.userImage.frame.size.height + 32;
         
         [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
         
@@ -492,6 +498,13 @@ typedef enum {
     }
     
     [self addComment:_txtResposne.text withThreadId:threadId];
+}
+-(void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height {
+    self.responseHeight.constant = height;
+    [UIView animateWithDuration:self.txtResposne.animationDuration animations:^{
+        [self.txtResposne layoutIfNeeded];
+    }];
+    
 }
 - (IBAction)exitOnend:(id)sender {
     [sender resignFirstResponder];

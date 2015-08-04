@@ -43,7 +43,7 @@
     
     UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     
-    UIViewController * rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"loginController"];
+    UIViewController * rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"autoLoginController"];
 
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     

@@ -113,6 +113,9 @@
 		F42669DB1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DA1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m */; };
 		F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */; };
 		F42669E31B70310500A6E6D7 /* UILabel+setHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */; };
+		F42669ED1B7125D500A6E6D7 /* ForkNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669EC1B7125D500A6E6D7 /* ForkNavViewController.m */; };
+		F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F01B71399800A6E6D7 /* MessagesMenuTableViewController.m */; };
+		F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
@@ -388,6 +391,12 @@
 		F42669E01B70023200A6E6D7 /* AddResponseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddResponseViewController.h; sourceTree = "<group>"; };
 		F42669E11B70310500A6E6D7 /* UILabel+setHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+setHTML.h"; sourceTree = "<group>"; };
 		F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+setHTML.m"; sourceTree = "<group>"; };
+		F42669EB1B7125D500A6E6D7 /* ForkNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForkNavViewController.h; sourceTree = "<group>"; };
+		F42669EC1B7125D500A6E6D7 /* ForkNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForkNavViewController.m; sourceTree = "<group>"; };
+		F42669EF1B71399800A6E6D7 /* MessagesMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesMenuTableViewController.h; sourceTree = "<group>"; };
+		F42669F01B71399800A6E6D7 /* MessagesMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesMenuTableViewController.m; sourceTree = "<group>"; };
+		F42669F31B713B7900A6E6D7 /* APIAlertCounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIAlertCounts.h; sourceTree = "<group>"; };
+		F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIAlertCounts.m; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -542,6 +551,7 @@
 		4ACDB92C1B3E7E66009EFB91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F42669EE1B71396400A6E6D7 /* MessagesMenuTableViewController */,
 				F4864FA81B6822D4000D2615 /* About */,
 				F495B7BB1B646EF000F8295B /* Auth */,
 				F4864FA21B6822A6000D2615 /* AddResponse */,
@@ -552,6 +562,7 @@
 				F4864FA11B68229F000D2615 /* DiaryTheme */,
 				F4864F7E1B681D83000D2615 /* EmailModerator */,
 				F4864F7F1B681D91000D2615 /* ForgotPassword */,
+				F42669EA1B7125B800A6E6D7 /* Fork */,
 				F4864F801B681D99000D2615 /* Home */,
 				F4864FA71B6822CC000D2615 /* Image */,
 				F4864FA31B6822AD000D2615 /* LoginTable */,
@@ -830,6 +841,33 @@
 			name = DailyDiaryResponse;
 			sourceTree = "<group>";
 		};
+		F42669EA1B7125B800A6E6D7 /* Fork */ = {
+			isa = PBXGroup;
+			children = (
+				F42669EB1B7125D500A6E6D7 /* ForkNavViewController.h */,
+				F42669EC1B7125D500A6E6D7 /* ForkNavViewController.m */,
+			);
+			name = Fork;
+			sourceTree = "<group>";
+		};
+		F42669EE1B71396400A6E6D7 /* MessagesMenuTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F42669EF1B71399800A6E6D7 /* MessagesMenuTableViewController.h */,
+				F42669F01B71399800A6E6D7 /* MessagesMenuTableViewController.m */,
+			);
+			name = MessagesMenuTableViewController;
+			sourceTree = "<group>";
+		};
+		F42669F21B713B5600A6E6D7 /* UnreadAnnouncementCounts */ = {
+			isa = PBXGroup;
+			children = (
+				F42669F31B713B7900A6E6D7 /* APIAlertCounts.h */,
+				F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */,
+			);
+			name = UnreadAnnouncementCounts;
+			sourceTree = "<group>";
+		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -928,6 +966,7 @@
 		F4864F7C1B680B84000D2615 /* ResponseContainers */ = {
 			isa = PBXGroup;
 			children = (
+				F42669F21B713B5600A6E6D7 /* UnreadAnnouncementCounts */,
 				F4022FE01B697FAC0080C157 /* HomeAnnouncementResponse */,
 				F4022FDC1B6976F30080C157 /* SetUserNameResponse */,
 				F4022FC71B6878800080C157 /* UploadAvatarResponse */,
@@ -1541,6 +1580,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */,
 				4ACDB9DB1B3E7E66009EFB91 /* NSDate+InternetDateTime.m in Sources */,
 				F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */,
 				4ACDB9D51B3E7E66009EFB91 /* DetailTableViewController.m in Sources */,
@@ -1623,6 +1663,7 @@
 				4ACDBA081B3ECDB5009EFB91 /* Comment.m in Sources */,
 				F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */,
 				4ACDB9C51B3E7E66009EFB91 /* Company.m in Sources */,
+				F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */,
 				4ABC3D351B3FEC110090A619 /* DefaultCell.m in Sources */,
 				4ACDB9B71B3E7E66009EFB91 /* SettingsViewController.m in Sources */,
 				F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */,
@@ -1637,6 +1678,7 @@
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
 				4ACB9EDF1B58ECCF00E9F984 /* ImageGallery.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
+				F42669ED1B7125D500A6E6D7 /* ForkNavViewController.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */,
 				F4022FE71B6983510080C157 /* Thread.m in Sources */,

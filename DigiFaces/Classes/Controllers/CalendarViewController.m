@@ -197,7 +197,7 @@
     }
     if (d+1 > day) {
         
-        [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithWhite:0.75f alpha:1.0f] forState:UIControlStateNormal];
         btn.enabled = false;
     } else {
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.unreadItemLabel.layer.cornerRadius = self.unreadItemLabel.frame.size.height/2.0f;
-    self.unreadItemLabel.clipsToBounds = true;
+    self.unreadItemIndicator.layer.cornerRadius = self.unreadItemIndicator.frame.size.height/2.0f;
+    self.unreadItemIndicator.clipsToBounds = true;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -23,12 +23,13 @@
 }
 
 - (void)setUnreadCount:(NSInteger)unreadCount {
+    self.unreadItemIndicator.hidden = !(BOOL)unreadCount;/*
     if (unreadCount) {
         self.unreadItemLabel.text = [NSString stringWithFormat:@"%@", @(unreadCount)];
         self.unreadItemLabel.hidden = false;
     } else {
         self.unreadItemLabel.hidden = true;
-    }
+    }*/
 }
 
 @end

@@ -17,6 +17,7 @@
 #import "UserInfo.h"
 #import "About.h"
 #import "AboutMe.h"
+#import "APIAlertCounts.h"
 #import "File.h"
 #import "Project.h"
 #import "Notification.h"
@@ -98,6 +99,15 @@
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ImageGalleryResponse" toKeyPath:@"imageGalleryResponses" withMapping:[self imageGalleryResponseMapping]]];
     
     
+    return mapping;
+}
+
+- (RKObjectMapping*)alertCountsMapping {
+    RKObjectMapping *mapping = MAPCLASS(APIAlertCounts);
+    [mapping addAttributeMappingsFromDictionary:@[@"TotalUnreadCount",
+                                                 @"AnnouncementUnreadCount",
+                                                 @"MessagesUnreadCount",
+                                                  @"NotificationsUnreadCount"].camelCaseDict];
     return mapping;
 }
 

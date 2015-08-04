@@ -48,6 +48,7 @@
              DESCRIPTOR(APIPathForgotPassword,                      kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathGetAbout,                            kGET,  aboutMapping),
              DESCRIPTOR(APIPathGetAboutMe,                          kGET,  aboutMeMapping),
+             DESCRIPTOR(APIPathGetAlertCounts,                      kGET, alertCountsMapping),
              DESCRIPTOR(APIPathGetAvatarFiles,                      kGET,  fileMapping),
              DESCRIPTOR(APIPathGetDailyDiary,                       kPOST, dailyDiaryMapping),
              DESCRIPTOR(APIPathGetHomeAnnouncement,                 kGET,  homeAnnouncementMapping),
