@@ -36,6 +36,10 @@
 
 @property (nonatomic, strong) MessagesMenuTableViewController *messagesVC;
 
+@property (nonatomic, weak) IBOutlet UIButton *messagesButton;
+
+
+@property (nonatomic, strong) WYPopoverController *popover;
 
 @end
 
@@ -69,7 +73,11 @@
     
     self.messagesVC = [[MessagesMenuTableViewController alloc] init];
     self.messagesVC.delegate = self;
+    self.alertCountLabel.layer.cornerRadius = self.alertCountLabel.frame.size.height/2.0f;
+    self.alertCountLabel.clipsToBounds = true;
+    self.alertCountLabel.hidden = true;
 }
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -363,10 +371,19 @@
                   failure:nil];
 }
 
+- (WYPopoverController*)popover {
+    if (!_popover) {
+        _popover = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
+        _popover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 120.0f);
+
+    }
+    return _popover;
+}
 
 - (IBAction)didTapAlerts:(id)sender {
-    WYPopoverController *popoverController = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
-    [popoverController presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItem permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
+    if (self.popover)
+     [self.popover presentPopoverFromRect:[self.view convertRect:self.messagesButton.bounds fromView:self.messagesButton] inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
+    
 }
 
 - (void)didTapAnnouncements {

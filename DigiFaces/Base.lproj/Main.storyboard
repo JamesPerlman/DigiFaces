@@ -576,6 +576,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="alertCountLabel" destination="Equ-R7-uwQ" id="mP0-cI-FnO"/>
+                        <outlet property="messagesButton" destination="pbe-7A-WgM" id="aTa-XA-94C"/>
                         <segue destination="NIu-n6-dsh" kind="push" identifier="projectIntroSegue" id="v7h-oQ-d3S"/>
                         <segue destination="zNc-EN-tgW" kind="push" id="EOt-oH-8wp"/>
                         <segue destination="yxy-qI-3fe" kind="push" identifier="dailyDiarySegue" id="NaF-gN-24L"/>

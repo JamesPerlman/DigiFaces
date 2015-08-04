@@ -16,12 +16,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.scrollEnabled = false;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,6 +37,10 @@
 
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 40.0f;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -47,8 +52,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notificationMenuItemCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notificationMenuItemCell"];
     
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notificationMenuItemCell"];
+    }
     // Configure the cell...
     NSInteger i = indexPath.row;
     if (i == 0) {
@@ -58,30 +66,53 @@
         cell.textLabel.text = @"Announcements";
         [self configureCell:cell withCount:self.alertCounts.announcementUnreadCount];
     } else if (i == 2) {
-        cell.textLabel.text = @"Messages";
+        cell.textLabel.text = @"Conversations";
         [self configureCell:cell withCount:self.alertCounts.messagesUnreadCount];
     }
     
     
     return cell;
 }
-         
+#pragma mark - TableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger i = indexPath.row;
+    if (i == 0) {
+        if ([self.delegate respondsToSelector:@selector(didTapNotifications)]) {
+            [self.delegate didTapNotifications];
+        }
+    } else if (i == 1) {
+        if ([self.delegate respondsToSelector:@selector(didTapAnnouncements)]) {
+            [self.delegate didTapAnnouncements];
+        }
+    } else if (i == 2) {
+        if ([self.delegate respondsToSelector:@selector(didTapConversations)]) {
+            [self.delegate didTapConversations];
+        }
+    }
+}
     
 - (void)configureCell:(UITableViewCell*)cell withCount:(NSNumber*)count {
     NSInteger n = count.integerValue;
     UIView *av = nil;
     if (n) {
-        UILabel *label = (UILabel*)cell.accessoryView;
+        UILabel *label = (UILabel*)(cell.accessoryView);
         
         if (label == nil) {
             label = [[UILabel alloc] init];
             label.backgroundColor = [UIColor orangeColor];
+            label.textColor = [UIColor whiteColor];
             label.text = @"0";
-            [label layoutIfNeeded];
+            cell.accessoryView = label;
+            [label sizeToFit];
             label.layer.cornerRadius = label.bounds.size.height/2.0f;
+            label.clipsToBounds = true;
         }
         
         label.text = [NSString stringWithFormat:@" %@ ", count];
+        [label sizeToFit];
+        av = label;
     }
     
     cell.accessoryView = av;
