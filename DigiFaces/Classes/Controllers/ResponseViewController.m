@@ -111,10 +111,14 @@ typedef enum {
             [_cellsArray addObject:@(CellTypeComment)];
             [_heightArray addObject:@110];
         }
+        if (_response.files.count) {
+            [_cellsArray addObject:@(CellTypeImages)];
+            [_heightArray addObject:@85];
+        }
     }
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self organizeData];
+   // [self organizeData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -216,7 +220,7 @@ typedef enum {
                   success:^(NSDictionary *response, NSArray *result) {
                       defsself
                       sself.response = [[Response alloc] initWithDictionary:result.firstObject];
-                      [sself organizeData];
+                     // [sself organizeData];
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
@@ -244,7 +248,7 @@ typedef enum {
                           [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                           [sself addCommentToDataModel:result];
                           sself.txtResposne.text = @"";
-                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_cellsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                       }
                       failure:^(NSError *error) {
                           defsself
@@ -257,13 +261,13 @@ typedef enum {
 - (void)addCommentToDataModel:(Comment*)comment {
     comment.userInfo = LS.myUserInfo;
     if (self.response) {
-    self.response.comments = [self.response.comments arrayByAddingObject:comment];
+        self.response.comments = [self.response.comments arrayByAddingObject:comment];
     }
     if (self.diary) {
         self.diary.comments = [self.diary.comments arrayByAddingObject:comment];
 
     }
-    [self organizeData];
+    //[self organizeData];
     [_cellsArray addObject:@(CellTypeComment)];
     [_heightArray addObject:@110];
     [self.tableView reloadData];
@@ -341,16 +345,16 @@ typedef enum {
         if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
             if (_response.textareaResponses.count>0) {
                 TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
-                [infoCell.bodyLabel setText:[textResponse.response stripHTML]];
+                [infoCell setText:textResponse.response];
             } else {
                 [infoCell.bodyLabel setText:@""];
             }
         }
         else if (_responseType == ResponseControllerTypeDiaryResponse){
-            [infoCell.bodyLabel setText:[_diary.response stripHTML]];
+            [infoCell setText:_diary.response];
         }
         
-        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(infoCell.fullHeight+32.f)];
+        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(infoCell.fullHeight)];
         
         return infoCell;
     }
@@ -413,7 +417,7 @@ typedef enum {
         [cell.lblDate setText:comment.dateCreatedFormatted];
         [cell.lblUserName setText:comment.userInfo.appUserName];
         [cell.userImage sd_setImageWithURL:comment.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
-        [cell.contentLabel setText:[comment.response stripHTML]];
+        [cell setContentText:comment.response];
         
         NSInteger height = 75;
         CGRect boundingRect = [comment.response boundingRectWithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil];

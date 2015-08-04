@@ -70,6 +70,7 @@ typedef enum {
     ThemeTypeMarkup,
     ThemeTypeImageGallery,
     ThemeTypeTextArea,
+    ThemeTypeVideoResponse,
     ThemeTypeNone
 }ThemeType;
 

@@ -6,9 +6,8 @@
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
 
-#import "NSString+StripHTML.h"
 #import "RTCell.h"
-
+#import "UILabel+setHTML.h"
 @interface RTCell () {
     CGFloat moreLessButtonInitialHeightConstraintConstant;
     BOOL expanded;
@@ -61,8 +60,9 @@
 }
 
 - (CGFloat)fullHeight {
-    CGSize sizeThatFits = [self.bodyLabel sizeThatFits:CGSizeMake(self.bodyLabel.frame.size.width, CGFLOAT_MAX)];
-    return sizeThatFits.height + 8 + self.moreLessButton.frame.size.height + 8 ;
+    CGSize sizeThatFits = [self.bodyLabel sizeThatFits:CGSizeMake(self.bodyLabel.frame.size.width-16.0f, CGFLOAT_MAX)];
+    CGFloat mlbh = self.moreLessButton?self.moreLessButton.frame.size.height:0.0f;
+    return sizeThatFits.height + 8.0f + mlbh + 8.0f ;
 }
 
 - (CGFloat)maxHeight {
@@ -78,7 +78,7 @@
 }
 
 - (void)setText:(NSString *)text {
-    self.bodyLabel.text = [text stripHTML];
+    [self.bodyLabel setHTML:text];
 }
 
 @end

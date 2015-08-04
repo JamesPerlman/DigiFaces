@@ -112,6 +112,7 @@
 		F426699E1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F426699D1B6D7D4D00A6E6D7 /* DailyDiaryResponse.m */; };
 		F42669DB1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DA1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m */; };
 		F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */; };
+		F42669E31B70310500A6E6D7 /* UILabel+setHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
@@ -384,6 +385,9 @@
 		F42669DC1B6EDBCA00A6E6D7 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		F42669DF1B6EF8AD00A6E6D7 /* ImageGalleryDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageGalleryDelegate.h; sourceTree = "<group>"; };
+		F42669E01B70023200A6E6D7 /* AddResponseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddResponseViewController.h; sourceTree = "<group>"; };
+		F42669E11B70310500A6E6D7 /* UILabel+setHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+setHTML.h"; sourceTree = "<group>"; };
+		F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+setHTML.m"; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
@@ -415,12 +419,11 @@
 		F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryEntryTableViewCell.m; sourceTree = "<group>"; };
 		F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		F4E670DA1B61669B00871FA9 /* DFMediaUploadManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadManagerDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadManagerDelegate.h"; sourceTree = "<group>"; };
-		F4E670DB1B61669B00871FA9 /* DFMediaUploadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadView.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.h"; sourceTree = "<group>"; };
+		F4E670DB1B61669B00871FA9 /* DFMediaUploadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadView.h; sourceTree = "<group>"; };
 		F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFMediaUploadView.m; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.m"; sourceTree = "<group>"; };
 		F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DFMediaUploadView.xib; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.xib"; sourceTree = "<group>"; };
 		F4E670DE1B61669B00871FA9 /* DFMediaUploadViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadViewDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadViewDelegate.h"; sourceTree = "<group>"; };
-		F4E670E21B61720E00871FA9 /* AddResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddResponseViewController.h; path = "../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Controllers/AddResponseViewController.h"; sourceTree = "<group>"; };
-		F4E670E31B61720E00871FA9 /* AddResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddResponseViewController.m; path = "../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Controllers/AddResponseViewController.m"; sourceTree = "<group>"; };
+		F4E670E31B61720E00871FA9 /* AddResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddResponseViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1278,7 +1281,7 @@
 		F4864FA21B6822A6000D2615 /* AddResponse */ = {
 			isa = PBXGroup;
 			children = (
-				F4E670E21B61720E00871FA9 /* AddResponseViewController.h */,
+				F42669E01B70023200A6E6D7 /* AddResponseViewController.h */,
 				F4E670E31B61720E00871FA9 /* AddResponseViewController.m */,
 				F426699F1B6D837300A6E6D7 /* AddResponseDelegate.h */,
 			);
@@ -1373,6 +1376,8 @@
 				F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */,
 				F42669DC1B6EDBCA00A6E6D7 /* GTMNSString+HTML.h */,
 				F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */,
+				F42669E11B70310500A6E6D7 /* UILabel+setHTML.h */,
+				F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1572,6 +1577,7 @@
 				4ACDB9BA1B3E7E66009EFB91 /* VersionViewContrller.m in Sources */,
 				F4022FD71B68AEEE0080C157 /* ImageGalleryResponse.m in Sources */,
 				F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */,
+				F42669E31B70310500A6E6D7 /* UILabel+setHTML.m in Sources */,
 				F4DD49CC1B65A7DC00F4016B /* NSString+FontAwesome.m in Sources */,
 				F4864FAC1B682519000D2615 /* DFResponseDescriptorsProvider.m in Sources */,
 				4ACDB9BB1B3E7E66009EFB91 /* WebViewController.m in Sources */,

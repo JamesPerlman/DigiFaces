@@ -33,4 +33,5 @@ typedef enum {
 @property (nonatomic, retain) File * selectedImageFile;
 @property (nonatomic, strong) UIImage * selectedImage;
 
+
 @end

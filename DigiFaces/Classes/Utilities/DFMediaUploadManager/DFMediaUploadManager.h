@@ -28,5 +28,6 @@
 - (void)uploadMediaFiles;
 - (BOOL)uploadMediaFileForView:(DFMediaUploadView*)mediaUploadView;
 - (BOOL)hasMedia;
+- (BOOL)isUploadingDone;
 
 @end

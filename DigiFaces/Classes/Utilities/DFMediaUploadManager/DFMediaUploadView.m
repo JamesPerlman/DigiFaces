@@ -110,8 +110,8 @@
 
 - (void)setUploading:(BOOL)uploading {
     _uploading = uploading;
+    self.tapGestureRecognizer.enabled = !uploading;
     if (uploading) {
-        self.tapGestureRecognizer.enabled = false;
         [UIView animateWithDuration:0.25 animations:^{
             self.progressView.alpha = 1;
             

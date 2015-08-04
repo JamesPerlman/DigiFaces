@@ -31,7 +31,7 @@ typedef enum {
 @property (nonatomic, retain) Response * response;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constBottomSpace;
 - (IBAction)sendComment:(id)sender;
-@property (weak, nonatomic) IBOutlet UITextField *txtResposne;
+@property (weak, nonatomic) IBOutlet UITextView *txtResposne;
 - (IBAction)exitOnend:(id)sender;
 
 @end

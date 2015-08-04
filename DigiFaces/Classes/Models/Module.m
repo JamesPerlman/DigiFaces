@@ -61,6 +61,9 @@
     else if ([self.activityType isEqualToString:@"Textarea"]){
         return ThemeTypeTextArea;
     }
+    else if ([self.activityType isEqualToString:@"VideoResponse"]) {
+        return ThemeTypeVideoResponse;
+    }
     return ThemeTypeNone;
 }
 

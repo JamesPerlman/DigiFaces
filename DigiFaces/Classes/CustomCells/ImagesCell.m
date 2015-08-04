@@ -36,9 +36,13 @@
     self.imagesArray = files;
     int xOffset = 5;
     int tagIndex = 0;
+    for (UIView *view in self.scrollView.subviews) {
+        [view removeFromSuperview];
+    }
     for (File * file in files) {
         UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 5, self.frame.size.height-10, self.frame.size.height -10)];
         iv.contentMode = UIViewContentModeScaleAspectFill;
+        iv.clipsToBounds = true;
         iv.tag = tagIndex++;
         [iv setBackgroundColor:[UIColor lightGrayColor]];
         

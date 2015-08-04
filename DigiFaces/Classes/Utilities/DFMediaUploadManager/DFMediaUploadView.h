@@ -32,6 +32,7 @@ IB_DESIGNABLE @interface DFMediaUploadView : UIView
 @property (nonatomic, copy) NSString *mediaFilePath;
 
 @property (nonatomic, assign) IBInspectable BOOL allowsVideo;
+@property (nonatomic, assign) IBInspectable BOOL allowsPhoto;
 
 @property (nonatomic, readonly) NSData* media;
 

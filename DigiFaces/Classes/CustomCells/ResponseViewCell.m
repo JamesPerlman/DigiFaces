@@ -13,6 +13,8 @@
 
 #import <MHVideoPhotoGallery/MHGallery.h>
 
+#import "UILabel+setHTML.h"
+
 @implementation ResponseViewCell
 
 - (void)awakeFromNib {
@@ -119,6 +121,11 @@
         
     };
     [self.viewController presentMHGalleryController:gallery animated:YES completion:nil];
+}
+
+
+- (void)setResponseText:(NSString *)text {
+    [self.lblResponse setHTML:text];
 }
 
 @end

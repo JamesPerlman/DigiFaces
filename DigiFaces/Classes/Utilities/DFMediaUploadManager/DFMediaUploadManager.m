@@ -85,14 +85,19 @@
     
     self.imagePickerController.sourceType = type;
     self.imagePickerController.allowsEditing = YES;
-    NSLog(@"%d", self.currentView.allowsVideo);
+    NSArray *mediaTypes = @[];
     if (self.currentView.allowsVideo) {
-        self.imagePickerController.mediaTypes = @[(NSString*)kUTTypeMovie, (NSString*)kUTTypeImage];
-    } else {
-        self.imagePickerController.mediaTypes = @[(NSString*)kUTTypeImage];
+        mediaTypes = @[(NSString*)kUTTypeMovie];
     }
     
-    [self.viewController presentViewController:self.imagePickerController animated:YES completion:nil];
+    if (self.currentView.allowsPhoto) {
+        mediaTypes = [mediaTypes arrayByAddingObject:(NSString*)kUTTypeImage];
+    }
+    
+    if (mediaTypes.count) {
+        self.imagePickerController.mediaTypes = mediaTypes;
+        [self.viewController presentViewController:self.imagePickerController animated:YES completion:nil];
+    }
 }
 #pragma mark - UIImagePickerController
 - (UIImagePickerController*)imagePickerController {
@@ -224,19 +229,18 @@
     }
     return false;
 }
-- (void)checkIfUploadingIsDone {
+- (BOOL)isUploadingDone {
     int i = 0;
+    int n = 0;
     for (DFMediaUploadView *view in self.mediaUploadViews) {
         if (view.uploaded) {
             i++;
         }
-    }
-    if (i == self.mediaUploadViews.count) {
-        // yes!
-        if ([self.delegate respondsToSelector:@selector(mediaUploadManagerDidFinishAllUploads:)]) {
-            [self.delegate mediaUploadManagerDidFinishAllUploads:self];
+        if (view.hasMedia) {
+            n++;
         }
     }
+    return i==n;
 }
 
 #pragma mark - AWS
@@ -327,7 +331,7 @@
         __typeof__(wself) sself = wself;
         if (!sself) { return; }
         NSError* error;
-
+        
         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&error];
         // NSString *tags = [NSString stringWithFormat:@"GROUP_%@_Thread_%@_Author_%@", sself.groupName, sself.threadID, sself.authorID];
         NSString *description = @"UploadedFile";

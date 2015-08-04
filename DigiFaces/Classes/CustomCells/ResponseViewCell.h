@@ -25,4 +25,6 @@
 - (IBAction)commentClicked:(id)sender;
 -(void)setImageCircular;
 
+- (void)setResponseText:(NSString*)text;
+
 @end

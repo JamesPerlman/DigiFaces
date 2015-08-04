@@ -30,10 +30,10 @@
                     </connections>
                 </imageView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTY-UQ-Dj7">
-                    <rect key="frame" x="562" y="8" width="30" height="30"/>
+                    <rect key="frame" x="572" y="8" width="20" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="5b1-5Q-U9J"/>
-                        <constraint firstAttribute="height" constant="30" id="Wxo-qT-QUq"/>
+                        <constraint firstAttribute="width" constant="20" id="5b1-5Q-U9J"/>
+                        <constraint firstAttribute="height" constant="20" id="Wxo-qT-QUq"/>
                     </constraints>
                     <state key="normal" image="tobbar_loading_cross">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

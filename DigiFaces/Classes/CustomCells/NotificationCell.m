@@ -7,6 +7,7 @@
 //
 
 #import "NotificationCell.h"
+#import "UILabel+setHTML.h"
 
 @implementation NotificationCell
 
@@ -24,6 +25,10 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setContentText:(NSString *)text {
+    [self.contentLabel setHTML:text];
 }
 
 @end

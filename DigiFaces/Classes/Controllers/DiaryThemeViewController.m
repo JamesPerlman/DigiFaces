@@ -55,6 +55,7 @@
         [self addEditButton];
     }
     [self loadData:true];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
 }
 
@@ -77,7 +78,7 @@
     for (Response * response in self.diaryTheme.responses) {
         if (response.textareaResponses.count>0) {
             TextareaResponse * textResponse = response.textareaResponses.firstObject;
-            [responseCell.lblResponse setText:[textResponse.response stripHTML]];
+            [responseCell setResponseText:textResponse.response];
             
         }
         
@@ -249,7 +250,7 @@
             
             RTCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
             
-            [textCell.bodyLabel setText:[module.displayText.text stripHTML]];
+            [textCell setText:module.displayText.text];
             if (_heightArray.count>2) {
                 [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(textCell.fullHeight, 100))];
             }
@@ -295,12 +296,12 @@
         
         if (response.imageGalleryResponses.count>0) {
             ImageGalleryResponse * imageGalleryResponse = response.imageGalleryResponses.firstObject;
-            [responseCell.lblResponse setText:[imageGalleryResponse.response stripHTML]];
+            [responseCell setResponseText:imageGalleryResponse.response];
         }
         
         if (response.textareaResponses.count>0) {
             TextareaResponse * textResponse = response.textareaResponses.firstObject;
-            [responseCell.lblResponse setText:[textResponse.response stripHTML]];
+            [responseCell setResponseText:textResponse.response];
             
             
             //responseCell.responseHeightConst.constant = MIN(size.height + 5, 50);

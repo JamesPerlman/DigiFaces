@@ -10,6 +10,7 @@
 #import "DailyDiary.h"
 #import "DiaryTheme.h"
 #import "DFMediaUploadManager.h"
+#import "DFMediaUploadView.h"
 #import "AddResponseDelegate.h"
 @interface AddResponseViewController : UIViewController
 
@@ -17,6 +18,9 @@
 
 @property (nonatomic, retain) DailyDiary * dailyDiary;
 @property (nonatomic, retain) DiaryTheme * diaryTheme;
+
+@property (weak, nonatomic) IBOutlet DFMediaUploadView *videoUploadView;
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 
 @property (nonatomic, retain) IBOutlet DFMediaUploadManager * mediaUploadManager;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constTitleHeight;

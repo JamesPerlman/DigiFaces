@@ -144,7 +144,7 @@
     }
     else{
         introCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-        [introCell.bodyLabel setText:[self.announcement.text stripHTML]];
+        [introCell setText:self.announcement.text];
         return introCell;
     }
 }

@@ -54,48 +54,6 @@
 
 #pragma mark - Let the mapping begin
 
-- (RKObjectMapping*)tokenMapping {
-    RKObjectMapping *mapping = MAPCLASS(APITokenResponse);
-    [mapping addAttributeMappingsFromDictionary:@{@"access_token" : @"accessToken"}];
-    return mapping;
-}
-
-- (RKObjectMapping*)userInfoMapping {
-    RKObjectMapping *mapping = MAPCLASS(UserInfo);
-    [mapping addAttributeMappingsFromDictionary:@[@"Id",
-                                                  @"Email",
-                                                  @"FirstName",
-                                                  @"LastName",
-                                                  @"IsUserNameSet",
-                                                  @"AppUserName",
-                                                  @"IsModerator",
-                                                  @"DefaultLanguageId",
-                                                  @"AvatarFileId",
-                                                  @"CurrentProjectId",
-                                                  @"AboutMeText",
-                                                  @"HasRegistered",
-                                                  @"LoginProvider"].camelCaseDict];
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"AvatarFile" toKeyPath:@"avatarFile" withMapping:[self fileMapping]]];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"CurrentProject" toKeyPath:@"currentProject" withMapping:[self projectMapping]]];
-    
-    return mapping;
-}
-
-- (RKObjectMapping*)homeAnnouncementMapping {
-    RKObjectMapping *mapping = MAPCLASS(APIHomeAnnouncementResponse);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"HomeAnnouncementId",
-                                                  @"Title",
-                                                  @"Text",
-                                                  @"DateCreated",
-                                                  @"DateCreatedFormatted"].camelCaseDict];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"File" toKeyPath:@"file" withMapping:[self fileMapping]]];
-    
-    return mapping;
-}
-
 - (RKObjectMapping*)aboutMapping {
     RKObjectMapping *mapping = MAPCLASS(About);
     [mapping addAttributeMappingsFromDictionary:@[@"AboutId",
@@ -113,131 +71,6 @@
                                                   @"AboutMeText"].camelCaseDict];
     return mapping;
 }
-- (RKObjectMapping*)fileMapping {
-    RKObjectMapping *mapping = MAPCLASS(File);
-    [mapping addAttributeMappingsFromDictionary:@[@"FileId",
-                                                  @"FileName",
-                                                  @"FileTypeId",
-                                                  @"FileType",
-                                                  @"Extension",
-                                                  @"IsAmazonFile",
-                                                  @"AmazonKey",
-                                                  @"IsViddlerFile",
-                                                  @"ViddlerKey",
-                                                  @"IsCameraTagFile",
-                                                  @"CameraTagKey",
-                                                  @"PositionId",
-                                                  @"Position",
-                                                  @"PublicFileUrl"].camelCaseDict];
-    return mapping;
-}
-
-- (RKObjectMapping*)projectMapping {
-    RKObjectMapping *mapping = MAPCLASS(Project);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"ProjectId",
-                                                  @"CompanyId",
-                                                  @"RegionId",
-                                                  @"ProjectInternalName",
-                                                  @"ProjectName",
-                                                  @"ProjectStartDate",
-                                                  @"ProjectEndDate",
-                                                  @"LanguageId",
-                                                  @"AllowProfilePicUpload",
-                                                  @"EnableAvatarLibrary",
-                                                  @"HasDailyDiary",
-                                                  @"DailyDiaryList",
-                                                  @"IsTrial",
-                                                  @"IsActive"].camelCaseDict];
-    
-    return mapping;
-}
-
-
-- (RKObjectMapping*)notificationMapping {
-    RKObjectMapping *mapping = MAPCLASS(Notification);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"CommenterUserInfo",
-                                                  @"ActivityId",
-                                                  @"DateCreated",
-                                                  @"DateCreatedFormatted",
-                                                  @"IsDailyNotification",
-                                                  @"IsRead",
-                                                  @"NotificationId",
-                                                  @"NotificationType",
-                                                  @"NotificationTypeId",
-                                                  @"ProjectId",
-                                                  @"UserId"].camelCaseDict];
-    return mapping;
-}
-
-- (RKObjectMapping*)dailyDiaryMapping {
-    RKObjectMapping *mapping = MAPCLASS(DailyDiary);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"DiaryId",
-                                                  @"ActivityId",
-                                                  @"DiaryQuestion",
-                                                  @"DiaryIntroduction"].camelCaseDict];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserDiaries" toKeyPath:@"userDiaries" withMapping:[self diaryMapping]]];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"File" toKeyPath:@"file" withMapping:[self fileMapping]]];
-    
-    
-    return mapping;
-}
-
-- (RKObjectMapping*)dailyDiaryResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(DailyDiaryResponse);
-    [mapping addAttributeMappingsFromDictionary:@[@"DailyDiaryResponseId",
-                                                      @"DailyDiaryId",
-                                                      @"ThreadId",
-                                                      @"Title",
-                                                      @"Response",
-                                                      @"DiaryDate",
-                                                  @"IsActive"].camelCaseDict];
-    return mapping;
-    
-
-}
-
-- (RKObjectMapping*)diaryMapping {
-    RKObjectMapping *mapping = MAPCLASS(Diary);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"DateCreated",
-                                                  @"DateCreatedFormatted",
-                                                  @"IsRead",
-                                                  @"Response",
-                                                  @"ResponseId",
-                                                  @"Title",
-                                                  @"UserId",
-                                                  @"ThreadId"].camelCaseDict];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Files" toKeyPath:@"files" withMapping:[self fileMapping]]];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Comments" toKeyPath:@"comments" withMapping:[self commentMapping]]];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
-    return mapping;
-}
-
-- (RKObjectMapping*)commentMapping {
-    RKObjectMapping *mapping = MAPCLASS(Comment);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
-                                                  @"DateCreated",
-                                                  @"DateCreatedFormatted",
-                                                  @"IsActive",
-                                                  @"IsRead",
-                                                  @"Response",
-                                                  @"ThreadId",
-                                                  @"UserId"].camelCaseDict];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
-    
-    return mapping;
-}
-
 
 - (RKObjectMapping*)activityResponseMapping {
     RKObjectMapping *mapping = MAPCLASS(Response);
@@ -262,19 +95,146 @@
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"TextareaResponse" toKeyPath:@"textareaResponses" withMapping:[self textareaResponseMapping]]];
     
-        [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ImageGalleryResponse" toKeyPath:@"imageGalleryResponses" withMapping:[self imageGalleryResponseMapping]]];
-
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ImageGalleryResponse" toKeyPath:@"imageGalleryResponses" withMapping:[self imageGalleryResponseMapping]]];
+    
     
     return mapping;
 }
 
-- (RKObjectMapping*)textareaResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(TextareaResponse);
-    [mapping addAttributeMappingsFromDictionary:@[@"Response",
+- (RKObjectMapping*)commentMapping {
+    RKObjectMapping *mapping = MAPCLASS(Comment);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted",
                                                   @"IsActive",
-                                                  @"TextareaId",
-                                                  @"TextareaResponseId",
+                                                  @"IsRead",
+                                                  @"Response",
+                                                  @"ThreadId",
+                                                  @"UserId"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
+    
+    return mapping;
+}
+
+- (RKObjectMapping*)dailyDiaryMapping {
+    RKObjectMapping *mapping = MAPCLASS(DailyDiary);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"DiaryId",
+                                                  @"ActivityId",
+                                                  @"DiaryQuestion",
+                                                  @"DiaryIntroduction"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserDiaries" toKeyPath:@"userDiaries" withMapping:[self diaryMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"File" toKeyPath:@"file" withMapping:[self fileMapping]]];
+    
+    
+    return mapping;
+}
+
+- (RKObjectMapping*)dailyDiaryResponseMapping {
+    RKObjectMapping *mapping = MAPCLASS(DailyDiaryResponse);
+    [mapping addAttributeMappingsFromDictionary:@[@"DailyDiaryResponseId",
+                                                  @"DailyDiaryId",
+                                                  @"ThreadId",
+                                                  @"Title",
+                                                  @"Response",
+                                                  @"DiaryDate",
+                                                  @"IsActive"].camelCaseDict];
+    return mapping;
+    
+    
+}
+
+- (RKObjectMapping*)diaryMapping {
+    RKObjectMapping *mapping = MAPCLASS(Diary);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"DateCreated",
+                                                  @"DateCreatedFormatted",
+                                                  @"IsRead",
+                                                  @"Response",
+                                                  @"ResponseId",
+                                                  @"Title",
+                                                  @"UserId",
                                                   @"ThreadId"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Files" toKeyPath:@"files" withMapping:[self fileMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Comments" toKeyPath:@"comments" withMapping:[self commentMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
+    return mapping;
+}
+
+- (RKObjectMapping*)diaryThemeMapping {
+    RKObjectMapping *mapping = MAPCLASS(DiaryTheme);
+    [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
+                                                  @"ActivityTypeId",
+                                                  @"ParentActivityId",
+                                                  @"ActivityTitle",
+                                                  @"ActivityDesc",
+                                                  @"IsActive",
+                                                  @"IsRead",
+                                                  @"UnreadResponses"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Modules" toKeyPath:@"modules" withMapping:[self moduleMapping]]];
+    
+    return mapping;
+}
+
+- (RKObjectMapping*)displayFileMapping {
+    RKObjectMapping *mapping = MAPCLASS(DisplayFile);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"DisplayFileId",
+                                                  @"ActivityId",
+                                                  @"FileId"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"File" toKeyPath:@"file" withMapping:[self fileMapping]]];
+    
+    return mapping;
+}
+
+- (RKObjectMapping*)displayTextMapping {
+    RKObjectMapping *mapping = MAPCLASS(DisplayText);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"DisplayTextId",
+                                                  @"ActivityId",
+                                                  @"Text"].camelCaseDict];
+    
+    return mapping;
+}
+
+- (RKObjectMapping*)fileMapping {
+    RKObjectMapping *mapping = MAPCLASS(File);
+    [mapping addAttributeMappingsFromDictionary:@[@"FileId",
+                                                  @"FileName",
+                                                  @"FileTypeId",
+                                                  @"FileType",
+                                                  @"Extension",
+                                                  @"IsAmazonFile",
+                                                  @"AmazonKey",
+                                                  @"IsViddlerFile",
+                                                  @"ViddlerKey",
+                                                  @"IsCameraTagFile",
+                                                  @"CameraTagKey",
+                                                  @"PositionId",
+                                                  @"Position",
+                                                  @"PublicFileUrl"].camelCaseDict];
+    return mapping;
+}
+
+- (RKObjectMapping*)homeAnnouncementMapping {
+    RKObjectMapping *mapping = MAPCLASS(APIHomeAnnouncementResponse);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"HomeAnnouncementId",
+                                                  @"Title",
+                                                  @"Text",
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"File" toKeyPath:@"file" withMapping:[self fileMapping]]];
     
     return mapping;
 }
@@ -301,19 +261,9 @@
     return mapping;
 }
 
-- (RKObjectMapping*)diaryThemeMapping {
-    RKObjectMapping *mapping = MAPCLASS(DiaryTheme);
-    [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
-                                                  @"ActivityTypeId",
-                                                  @"ParentActivityId",
-                                                  @"ActivityTitle",
-                                                  @"ActivityDesc",
-                                                  @"IsActive",
-                                                  @"IsRead",
-                                                  @"UnreadResponses"].camelCaseDict];
-    
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Modules" toKeyPath:@"modules" withMapping:[self moduleMapping]]];
-    
+- (RKObjectMapping*)isUserNameAvailableResponseMapping {
+    RKObjectMapping *mapping = MAPCLASS(APIIsUserNameAvailableResponse);
+    [mapping addAttributeMappingsFromDictionary:@[@"IsAvailable", @"Error"].camelCaseDict];
     return mapping;
 }
 
@@ -340,25 +290,59 @@
     return mapping;
 }
 
-- (RKObjectMapping*)displayTextMapping {
-    RKObjectMapping *mapping = MAPCLASS(DisplayText);
+- (RKObjectMapping*)markUpMapping {
+    RKObjectMapping *mapping = MAPCLASS(MarkUp);
     
-    [mapping addAttributeMappingsFromDictionary:@[
-                                                  ].camelCaseDict];
+    [mapping addAttributeMappingsFromDictionary:@[@"MarkupId",
+                                                  @"MarkupUrl"].camelCaseDict];
     
     return mapping;
 }
-- (RKObjectMapping*)displayFileMapping {
-    RKObjectMapping *mapping = MAPCLASS(DisplayFile);
+
+- (RKObjectMapping*)notificationMapping {
+    RKObjectMapping *mapping = MAPCLASS(Notification);
     
-    [mapping addAttributeMappingsFromDictionary:@[@"DisplayFileId",
+    [mapping addAttributeMappingsFromDictionary:@[@"CommenterUserInfo",
                                                   @"ActivityId",
-                                                  @"FileId"].camelCaseDict];
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted",
+                                                  @"IsDailyNotification",
+                                                  @"IsRead",
+                                                  @"NotificationId",
+                                                  @"NotificationType",
+                                                  @"NotificationTypeId",
+                                                  @"ProjectId",
+                                                  @"UserId"].camelCaseDict];
+    return mapping;
+}
+
+- (RKObjectMapping*)projectMapping {
+    RKObjectMapping *mapping = MAPCLASS(Project);
     
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"File" toKeyPath:@"file" withMapping:[self fileMapping]]];
+    [mapping addAttributeMappingsFromDictionary:@[@"ProjectId",
+                                                  @"CompanyId",
+                                                  @"RegionId",
+                                                  @"ProjectInternalName",
+                                                  @"ProjectName",
+                                                  @"ProjectStartDate",
+                                                  @"ProjectEndDate",
+                                                  @"LanguageId",
+                                                  @"AllowProfilePicUpload",
+                                                  @"EnableAvatarLibrary",
+                                                  @"HasDailyDiary",
+                                                  @"DailyDiaryList",
+                                                  @"IsTrial",
+                                                  @"IsActive"].camelCaseDict];
     
     return mapping;
 }
+
+- (RKObjectMapping*)setUserNameResponseMapping {
+    RKObjectMapping *mapping = MAPCLASS(APISetUserNameResponse);
+    [mapping addAttributeMappingsFromDictionary:@{@"NewUserName" : @"userName"}];
+    return mapping;
+}
+
 - (RKObjectMapping*)textareaMapping {
     RKObjectMapping *mapping = MAPCLASS(Textarea);
     
@@ -370,24 +354,15 @@
     
     return mapping;
 }
-- (RKObjectMapping*)markUpMapping {
-    RKObjectMapping *mapping = MAPCLASS(MarkUp);
-    
-    [mapping addAttributeMappingsFromDictionary:@[@"MarkupId",
-                                                  @"MarkupUrl"].camelCaseDict];
-    
-    return mapping;
-}
 
-- (RKObjectMapping*)isUserNameAvailableResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(APIIsUserNameAvailableResponse);
-    [mapping addAttributeMappingsFromDictionary:@[@"IsAvailable", @"Error"].camelCaseDict];
-    return mapping;
-}
-
-- (RKObjectMapping*)setUserNameResponseMapping {
-    RKObjectMapping *mapping = MAPCLASS(APISetUserNameResponse);
-    [mapping addAttributeMappingsFromDictionary:@{@"NewUserName" : @"userName"}];
+- (RKObjectMapping*)textareaResponseMapping {
+    RKObjectMapping *mapping = MAPCLASS(TextareaResponse);
+    [mapping addAttributeMappingsFromDictionary:@[@"Response",
+                                                  @"IsActive",
+                                                  @"TextareaId",
+                                                  @"TextareaResponseId",
+                                                  @"ThreadId"].camelCaseDict];
+    
     return mapping;
 }
 
@@ -397,6 +372,34 @@
                                                   @"ActivityId",
                                                   @"IsDraft",
                                                   @"IsActive"].camelCaseDict];
+    return mapping;
+}
+
+- (RKObjectMapping*)tokenMapping {
+    RKObjectMapping *mapping = MAPCLASS(APITokenResponse);
+    [mapping addAttributeMappingsFromDictionary:@{@"access_token" : @"accessToken"}];
+    return mapping;
+}
+
+- (RKObjectMapping*)userInfoMapping {
+    RKObjectMapping *mapping = MAPCLASS(UserInfo);
+    [mapping addAttributeMappingsFromDictionary:@[@"Id",
+                                                  @"Email",
+                                                  @"FirstName",
+                                                  @"LastName",
+                                                  @"IsUserNameSet",
+                                                  @"AppUserName",
+                                                  @"IsModerator",
+                                                  @"DefaultLanguageId",
+                                                  @"AvatarFileId",
+                                                  @"CurrentProjectId",
+                                                  @"AboutMeText",
+                                                  @"HasRegistered",
+                                                  @"LoginProvider"].camelCaseDict];
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"AvatarFile" toKeyPath:@"avatarFile" withMapping:[self fileMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"CurrentProject" toKeyPath:@"currentProject" withMapping:[self projectMapping]]];
+    
     return mapping;
 }
 

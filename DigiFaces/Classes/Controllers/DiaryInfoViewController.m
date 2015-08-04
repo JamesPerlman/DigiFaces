@@ -52,6 +52,7 @@ typedef enum {
         [_cellsArray addObject:@(CellsTypeText)];
     }
     else if (_diaryTheme){
+        self.navigationItem.title = _diaryTheme.activityTitle;
         Module * m = [self getModuleForThemeType:ThemeTypeDisplayImage];
         if (m) {
             if ([m.displayFile.file.fileType isEqualToString:@"Image"]) {
@@ -130,6 +131,14 @@ typedef enum {
         return 160;
     }
     if (indexPath.row == 1) {
+        infoCell = [tableView dequeueReusableCellWithIdentifier:@"textCell"];
+        if (_dailyDiary) {
+            [infoCell setText:_dailyDiary.diaryQuestion];
+        }
+        else{
+            Module * module = [self getModuleForThemeType:ThemeTypeDisplayText];
+            [infoCell setText:module.displayText.text];
+        }
         return infoCell.fullHeight;
     }
     return 0;
@@ -179,11 +188,11 @@ typedef enum {
         {
             infoCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
             if (_dailyDiary) {
-                [infoCell.bodyLabel setText:[_dailyDiary.diaryQuestion stripHTML]];
+                [infoCell setText:_dailyDiary.diaryQuestion];
             }
             else{
                 Module * module = [self getModuleForThemeType:ThemeTypeDisplayText];
-                [infoCell.bodyLabel setText:[module.displayText.text stripHTML]];
+                [infoCell setText:module.displayText.text];
             }
             cell = infoCell;
         }

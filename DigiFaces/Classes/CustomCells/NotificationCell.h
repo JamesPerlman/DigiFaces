@@ -17,4 +17,5 @@
 
 -(void)makeImageCircular;
 
+- (void)setContentText:(NSString*)text;
 @end

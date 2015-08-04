@@ -32,7 +32,7 @@
 #import "TextareaResponse.h"
 #import "Response.h"
 
-@interface AddResponseViewController () < CalendarViewControlerDelegate, UITextViewDelegate, ProfilePictureViewControllerDelegate, DFMediaUploadManagerDelegate>
+@interface AddResponseViewController () < CalendarViewControlerDelegate, UITextViewDelegate, ProfilePictureViewControllerDelegate, DFMediaUploadManagerDelegate, PopUpDelegate>
 {
     NSInteger selectedTag;
     UIImagePickerController * imagePicker;
@@ -40,6 +40,10 @@
     
     NSDate * selectedDate;
     ProfilePictureCollectionViewController * profileController;
+    BOOL _uploaded;
+    BOOL willClose;
+    
+    id lastFocusedField;
 }
 
 @property (nonatomic, retain) NSMutableArray * dataArray;
@@ -50,6 +54,7 @@
 @property (nonatomic, strong) Response *createdResponse;
 @property (nonatomic, strong) Diary *createdDiary;
 
+@property (nonatomic, assign) BOOL textActive;
 @end
 
 @implementation AddResponseViewController
@@ -64,14 +69,13 @@
     selectedDate = [NSDate date];
     
     _alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
+    _alertView.delegate = self;
     
     if (_diaryTheme) {
         _constDateHeight.constant = 0;
         _constTitleHeight.constant = 0;
         
         if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery])   {
-            
-            
             profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfilePictureCollectionViewController"];
             
             profileController.type = ProfilePictureTypeGallery;
@@ -82,6 +86,9 @@
             [self.view addSubview:profileController.collectionView];
             [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
             
+        } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse]) {
+            [self.cameraButton setImage:[UIImage imageNamed:@"videocam_blue"] forState:UIControlStateNormal];
+            self.videoUploadView.hidden = false;
         }
         [self.txtResponse becomeFirstResponder];
     } else {
@@ -138,6 +145,10 @@
         
         [self showAlertWithMessage:@"You must select an image before posting a response."];
         return;
+    } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse] && !self.videoUploadView.hasMedia) {
+        
+        [self showAlertWithMessage:@"You must select a video before posting a response."];
+        return;
     }
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
@@ -151,48 +162,48 @@
     
     defwself
     [DFClient makeJSONRequest:APIPathActivityUpdateThread
-                   method:kPOST
-                   params:params
-                  success:^(NSDictionary *response, Thread *result) {
-                      defsself
-                      sself.thread = result;
-                      
-                      if (_dailyDiary) {
-                          sself.createdDiary = [[Diary alloc] init];
-                          NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                          formatter.dateFormat = @"yyyy-MM-dd'T'hh:mm:ss";
-                          sself.createdDiary.dateCreatedFormatted = @"Today";//[formatter stringFromDate:[NSDate date]];
-                          sself.createdDiary.dateCreated = [formatter stringFromDate:[NSDate date]];
-                          sself.createdDiary.isRead = @YES;
-                          sself.createdDiary.threadId = result.threadId;
-                          sself.createdDiary.userInfo = LS.myUserInfo;
-                          sself.createdDiary.comments = @[];
-                          sself.createdDiary.files = @[];
-                          sself.dailyDiary.userDiaries = [@[sself.createdDiary] arrayByAddingObjectsFromArray:sself.dailyDiary.userDiaries];
+                       method:kPOST
+                       params:params
+                      success:^(NSDictionary *response, Thread *result) {
+                          defsself
+                          sself.thread = result;
                           
-                          [sself addEntryWithActivityId:activityId];
-                      }
-                      else if(_diaryTheme){
-                          sself.createdResponse = [[Response alloc] init];
-                          sself.createdResponse.threadId = result.threadId;
-                          sself.createdResponse.dateCreatedFormatted = @"Just now";
-                          sself.createdResponse.files = @[];
-                          sself.createdResponse.comments = @[];
-                          sself.createdResponse.userInfo = LS.myUserInfo;
-                          sself.diaryTheme.responses = [@[sself.createdResponse] arrayByAddingObjectsFromArray:sself.diaryTheme.responses];
-                          if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
-                              [sself addImageGalleryResponse];
+                          if (_dailyDiary) {
+                              sself.createdDiary = [[Diary alloc] init];
+                              NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                              formatter.dateFormat = @"yyyy-MM-dd'T'hh:mm:ss";
+                              sself.createdDiary.dateCreatedFormatted = @"Today";//[formatter stringFromDate:[NSDate date]];
+                              sself.createdDiary.dateCreated = [formatter stringFromDate:[NSDate date]];
+                              sself.createdDiary.isRead = @YES;
+                              sself.createdDiary.threadId = result.threadId;
+                              sself.createdDiary.userInfo = LS.myUserInfo;
+                              sself.createdDiary.comments = @[];
+                              sself.createdDiary.files = @[];
+                              sself.dailyDiary.userDiaries = [@[sself.createdDiary] arrayByAddingObjectsFromArray:sself.dailyDiary.userDiaries];
+                              
+                              [sself addEntryWithActivityId:activityId];
                           }
-                          else
-                          {
-                              [sself addTextAreaResponseWithActivityId:activityId];
+                          else if(_diaryTheme){
+                              sself.createdResponse = [[Response alloc] init];
+                              sself.createdResponse.threadId = result.threadId;
+                              sself.createdResponse.dateCreatedFormatted = @"Just now";
+                              sself.createdResponse.files = @[];
+                              sself.createdResponse.comments = @[];
+                              sself.createdResponse.userInfo = LS.myUserInfo;
+                              sself.diaryTheme.responses = [@[sself.createdResponse] arrayByAddingObjectsFromArray:sself.diaryTheme.responses];
+                              if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
+                                  [sself addImageGalleryResponse];
+                              }
+                              else
+                              {
+                                  [sself addTextAreaResponseWithActivityId:activityId];
+                              }
                           }
                       }
-                  }
-                  failure:^(NSError *error) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                  }];
+                      failure:^(NSError *error) {
+                          defsself
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      }];
     
 }
 
@@ -217,18 +228,18 @@
     
     defwself
     [DFClient makeJSONRequest:APIPathActivityUpdateImageGalleryResponse
-                   method:kPOST
-                   params:params
-                  success:^(NSDictionary *response, ImageGalleryResponse *result) {
-                      defsself
-                      sself.createdResponse.imageGalleryResponses = @[result];
-                      sself.createdResponse.files = @[profileController.selectedImageFile];
-                      [sself closeThis:nil];
-                  }
-                  failure:^(NSError *error) {
-                      defsself;
-                      [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
-                  }];
+                       method:kPOST
+                       params:params
+                      success:^(NSDictionary *response, ImageGalleryResponse *result) {
+                          defsself
+                          sself.createdResponse.imageGalleryResponses = @[result];
+                          sself.createdResponse.files = @[profileController.selectedImageFile];
+                          [sself forceClose];
+                      }
+                      failure:^(NSError *error) {
+                          defsself;
+                          [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
+                      }];
     
     
 }
@@ -236,29 +247,28 @@
 -(void)addTextAreaResponseWithActivityId:(NSInteger)activityId
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
-    Module * textAreaModule = [_diaryTheme getModuleWithThemeType:ThemeTypeTextArea];
+    Module *module = [_diaryTheme getModuleWithThemeType:ThemeTypeTextArea] ?: [_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse];
     
     NSDictionary * params = @{@"TextareaResponseId" : @(0),
                               @"ThreadId" : self.thread.threadId,
-                              @"TextareaId" : textAreaModule.textarea.textareaId,
+                              @"TextareaId" : module.textarea.textareaId,
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text};
     defwself
     [DFClient makeJSONRequest:APIPathActivityUpdateTextareaResponse
-                   method:kPOST
-                   params:params
-                  success:^(NSDictionary *response, TextareaResponse *result) {
-                      defsself
-                      [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
-                      [sself.mediaUploadManager uploadMediaFiles];
-                      
-                      sself.createdResponse.textareaResponses = @[result];
-                  }
-                  failure:^(NSError *error) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                  }];
+                       method:kPOST
+                       params:params
+                      success:^(NSDictionary *response, TextareaResponse *result) {
+                          defsself
+                          [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
+                          [sself.mediaUploadManager uploadMediaFiles];
+                          
+                          sself.createdResponse.textareaResponses = @[result];
+                      }
+                      failure:^(NSError *error) {
+                          defsself
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      }];
 }
 
 -(void)addEntryWithActivityId:(NSInteger)activityId
@@ -279,25 +289,25 @@
     
     defwself
     [DFClient makeJSONRequest:APIPathUpdateDailyDiary
-                   method:kPOST
-                urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
-               bodyParams:params
-                  success:^(NSDictionary *response, DailyDiaryResponse *result) {
-                      NSLog(@"Uploading images (if any)");
-                      
-                      dispatch_async(dispatch_get_main_queue(), ^{
+                       method:kPOST
+                    urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+                   bodyParams:params
+                      success:^(NSDictionary *response, DailyDiaryResponse *result) {
+                          NSLog(@"Uploading images (if any)");
+                          
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              defsself
+                              sself.createdDiary.response = result.response;
+                              sself.createdDiary.title = result.title;
+                              [sself.mediaUploadManager uploadMediaFiles];
+                          });
+                          
+                      }
+                      failure:^(NSError *error) {
                           defsself
-                          sself.createdDiary.response = result.response;
-                          sself.createdDiary.title = result.title;
-                          [sself.mediaUploadManager uploadMediaFiles];
-                      });
-                      
-                  }
-                  failure:^(NSError *error) {
-                      defsself
-                      
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                  }];
+                          
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      }];
     
 }
 
@@ -325,18 +335,18 @@
     
     defwself
     [DFClient makeJSONRequest:APIPathActivityInsertThreadFile
-                   method:kPOST
-                urlParams:@{@"projectId" : self.thread.threadId}
-               bodyParams:[NSDictionary dictionaryWithDictionary:params]
-                  success:^(NSDictionary *response, File *result) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself addFileToWhateverObjectIsCreated:result];
-                  }
-                  failure:^(NSError *error) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                  }];
+                       method:kPOST
+                    urlParams:@{@"projectId" : self.thread.threadId}
+                   bodyParams:[NSDictionary dictionaryWithDictionary:params]
+                      success:^(NSDictionary *response, File *result) {
+                          defsself
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                          [sself addFileToWhateverObjectIsCreated:result];
+                      }
+                      failure:^(NSError *error) {
+                          defsself
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      }];
     
 }
 
@@ -347,6 +357,10 @@
     }
     if (self.createdResponse) {
         self.createdResponse.files = [self.createdResponse.files arrayByAddingObject:file];
+    }
+    if ([self.mediaUploadManager isUploadingDone]) {
+       _uploaded = true;
+        [self forceClose];
     }
 }
 -(void)resignAllResponders
@@ -377,8 +391,42 @@
     
 }
 
+-(void)cacellButtonTappedWithTag:(NSInteger)tag {
+    if (willClose) {
+        willClose = false;
+    }
+}
+
+-(void)okayButtonTappedWithTag:(NSInteger)tag {
+    if (willClose) {
+        [self forceClose];
+    }
+}
+
 - (IBAction)closeThis:(id)sender {
     [self resignAllResponders];
+    if (!_uploaded) {
+        BOOL hasUnsavedContent = false;
+        for (DFMediaUploadView *v in self.mediaUploadManager.mediaUploadViews) {
+            if (v.hasMedia && !v.uploaded) {
+                hasUnsavedContent = true;
+                break;
+            }
+        }
+        if ((self.txtTitle.text.length && self.dailyDiary) || (self.txtResponse.text.length)) {
+            hasUnsavedContent = true;
+        }
+        if (hasUnsavedContent) {
+            [self showAlertWithMessage:@"Are you sure you want to discard your post?"];
+            willClose = true;
+            return;
+        }
+    }
+    [self forceClose];
+}
+
+- (void)forceClose {
+    
     if (self.diaryTheme) {
         if ([self.delegate respondsToSelector:@selector(didAddDiaryThemeResponse:)]) {
             [self.delegate didAddDiaryThemeResponse:self.createdResponse];
@@ -398,9 +446,14 @@
 }
 
 - (IBAction)cameraSwitched:(id)sender {
-    [_txtResponse resignFirstResponder];
-    [_txtTitle resignFirstResponder];
-    
+    if (self.textActive) {
+        [_txtResponse resignFirstResponder];
+        [_txtTitle resignFirstResponder];
+        
+        [self setTextActive:false];
+    } else {
+        [lastFocusedField becomeFirstResponder];
+    }
 }
 
 - (IBAction)selectDate:(id)sender {
@@ -451,6 +504,28 @@
     }
 }
 
+- (void)setTextActive:(BOOL)active {
+    _textActive = active;
+    NSString *imageName = active? @"camera":@"keyboard";
+    [self.cameraButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+}
+- (void)textViewDidBeginEditing:(UITextView*)textView {
+    lastFocusedField = textView;
+    [self setTextActive:true];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField*)textField {
+    lastFocusedField = textField;
+    
+    [self setTextActive:true];
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField {
+    [self.txtResponse becomeFirstResponder];
+    return true;
+}
+
 #pragma mark - CalendarViewDelegate
 -(void)calendarController:(id)controller didSelectDate:(NSDate *)date
 {
@@ -478,9 +553,7 @@
     [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
 }
 
--(void)mediaUploadManagerDidFinishAllUploads:(DFMediaUploadManager *)mediaUploadManager {
-    [self closeThis:self];
-}
+
 
 
 - (BOOL)mediaUploadManager:(DFMediaUploadManager*)mediaUploadManager shouldHandleTapForMediaUploadView:(DFMediaUploadView*)mediaUploadView {
