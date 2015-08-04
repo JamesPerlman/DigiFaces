@@ -24,6 +24,8 @@ NSString * const APIPathGetNotifications = @"api/Account/GetNotifications/:proje
 NSString * const APIPathIsUserNameAvailable = @"api/Account/IsUserNameAvailable";
 NSString * const APIPathSetUserName = @"api/Account/SetUserName";
 NSString * const APIPathForgotPassword = @"api/Account/ForgotPassword";
+NSString * const APIPathReplyFromModerator = @"api/Account/ReplyFromModerator/:projectId/:parentMessageId";
+NSString * const APIPathMarkMessageRead = @"api/Account/MarkMessageRead/:messageId";
 NSString * const APIPathLogout = @"api/Account/Logout";
 
 // activity

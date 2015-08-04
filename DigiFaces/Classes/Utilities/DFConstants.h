@@ -26,6 +26,8 @@ extern NSString * const APIPathGetNotifications;
 extern NSString * const APIPathIsUserNameAvailable;
 extern NSString * const APIPathSetUserName;
 extern NSString * const APIPathForgotPassword;
+extern NSString * const APIPathReplyFromModerator;
+extern NSString * const APIPathMarkMessageRead;
 extern NSString * const APIPathLogout;
 
 // activity
