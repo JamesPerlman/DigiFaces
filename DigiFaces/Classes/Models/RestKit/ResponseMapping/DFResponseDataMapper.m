@@ -334,17 +334,21 @@
 - (RKObjectMapping*)notificationMapping {
     RKObjectMapping *mapping = MAPCLASS(Notification);
     
-    [mapping addAttributeMappingsFromDictionary:@[@"CommenterUserInfo",
-                                                  @"ActivityId",
+    [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
                                                   @"DateCreated",
                                                   @"DateCreatedFormatted",
-                                                  @"IsDailyNotification",
+                                                  @"IsDailyDiaryNotification",
                                                   @"IsRead",
                                                   @"NotificationId",
                                                   @"NotificationType",
                                                   @"NotificationTypeId",
+                                                  @"ReferenceId",
+                                                  @"ReferenceId2",
                                                   @"ProjectId",
                                                   @"UserId"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"CommenterUserInfo" toKeyPath:@"commenterUserInfo" withMapping:[self userInfoMapping]]];
+    
     return mapping;
 }
 

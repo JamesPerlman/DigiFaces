@@ -7,16 +7,30 @@
 //
 
 #import "AnnouncementsTableViewController.h"
+#import "CustomAlertView.h"
+#import "MBProgressHUD.h"
+#import "Announcement.h"
+#import "AnnouncementCell.h"
+#import "UILabel+setHTML.h"
 
-@interface AnnouncementsTableViewController ()
+@interface AnnouncementsTableViewController () {
+    CustomAlertView *customAlert;
+}
+
+@property (nonatomic, strong) NSArray *announcements;
 
 @end
+
+
+static NSString *announcementCellReuseIdentifier = @"announcementCell";
 
 @implementation AnnouncementsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    customAlert = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
+    [customAlert setSingleButton:YES];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -29,29 +43,56 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Server interaction
+
+- (void)getAnnouncements {
+    defwself
+    [DFClient makeRequest:APIPathProjectGetAnnouncements
+                   method:kGET
+                   params:@{@"projectId" : LS.myUserInfo.currentProjectId}
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      if ([result isKindOfClass:[NSArray class]]) {
+                          sself.announcements = result;
+                      } else if ([result isKindOfClass:[Announcement class]]) {
+                          sself.announcements = @[result];
+                      }
+                      [sself.tableView reloadData];
+                      
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                  }];
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return _announcements.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    AnnouncementCell *cell = [tableView dequeueReusableCellWithIdentifier:announcementCellReuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    Announcement *announcement = _announcements[indexPath.row];
+    cell.dateLabel.text = announcement.dateCreatedFormatted;
+    cell.titleLabel.text = announcement.title;
+    [cell.detailsLabel setHTML:announcement.text];
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.

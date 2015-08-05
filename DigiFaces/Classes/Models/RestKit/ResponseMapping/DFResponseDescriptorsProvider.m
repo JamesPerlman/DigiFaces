@@ -44,7 +44,6 @@
              DESCRIPTOR(APIPathActivityUpdateTextareaResponse,      kPOST, textareaResponseMapping),
              DESCRIPTOR(APIPathActivityMarkThreadRead,              kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathActivityMarkCommentRead,             kPOST, emptyResponseMapping),
-             
              DESCRIPTOR(APIPathForgotPassword,                      kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathGetAbout,                            kGET,  aboutMapping),
              DESCRIPTOR(APIPathGetAboutMe,                          kGET,  aboutMeMapping),
@@ -59,6 +58,7 @@
              DESCRIPTOR(APIPathIsUserNameAvailable,                 kPOST, isUserNameAvailableResponseMapping),
              DESCRIPTOR(APIPathLogout,                              kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathMarkMessageRead,                     kPOST, emptyResponseMapping),
+             DESCRIPTOR(APIPathMarkNotificationRead,                kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathProjectGetActivities,                kPOST, diaryThemeMapping),
              DESCRIPTOR(APIPathProjectMarkActivityRead,             kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathProjectMarkAnnouncementRead,         kPOST, emptyResponseMapping),

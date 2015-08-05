@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AnnouncementsVCDelegate <NSObject>
+
+- (void)setUnreadAnnouncements:(NSNumber*)count;
+
+@end
+
 @interface AnnouncementsTableViewController : UITableViewController
+
+@property (nonatomic, assign) id<AnnouncementsVCDelegate>delegate;
 
 @end

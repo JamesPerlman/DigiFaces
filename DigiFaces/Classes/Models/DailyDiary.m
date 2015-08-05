@@ -34,6 +34,11 @@
     }
     return n;
 }
+
+- (Diary*)getResponseWithThreadID:(NSNumber *)threadId {
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"threadId = %@", threadId];
+    return [self.userDiaries filteredArrayUsingPredicate:searchPredicate].firstObject;
+}
 /*
  
 -(instancetype)initWithDictionary:(NSDictionary *)dict

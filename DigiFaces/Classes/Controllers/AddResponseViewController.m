@@ -373,11 +373,11 @@
     if (_dailyDiary && [_txtTitle.text isEqualToString:@""]) {
         // Error
         [self resignAllResponders];
-        [self showAlertWithMessage:@"Title is required."];
+        [self showAlertWithMessage:NSLocalizedString(@"Title is required.", nil)];
     }
     else if ([_txtResponse.text isEqualToString:@""]){
         [self resignAllResponders];
-        [self showAlertWithMessage:@"Response is required."];
+        [self showAlertWithMessage:NSLocalizedString(@"Response is required.", nil)];
     }
     else
     {
@@ -417,7 +417,7 @@
             hasUnsavedContent = true;
         }
         if (hasUnsavedContent) {
-            [self showAlertWithMessage:@"Are you sure you want to discard your post?"];
+            [self showAlertWithMessage:NSLocalizedString(@"Are you sure you want to discard your post?", nil)];
             willClose = true;
             return;
         }

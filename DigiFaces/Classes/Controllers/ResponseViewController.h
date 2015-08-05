@@ -26,7 +26,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
-@property (nonatomic ,retain) Notification * currentNotification;
+@property (nonatomic ,retain) Notification * notification;
 @property (nonatomic, assign) ResponseControllerType responseType;
 @property (nonatomic, retain) Diary * diary;
 @property (nonatomic, retain) Response * response;
@@ -35,5 +35,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet HPGrowingTextView *txtResposne;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *responseHeight;
 - (IBAction)exitOnend:(id)sender;
+
+- (void)setThreadId:(NSNumber*)threadId commentId:(NSNumber*)commentId isDiary:(BOOL)isDiary;
 
 @end

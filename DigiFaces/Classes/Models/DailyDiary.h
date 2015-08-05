@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "File.h"
-
+@class Diary;
 @interface DailyDiary : NSObject
 
 @property (nonatomic, strong) NSNumber * diaryId;
@@ -25,6 +25,8 @@
 
 - (void)checkForUnreadComments;
 - (NSInteger)numberOfUnreadResponses;
--(instancetype)initWithDictionary:(NSDictionary*)dict;
+- (instancetype)initWithDictionary:(NSDictionary*)dict;
+
+- (Diary*)getResponseWithThreadID:(NSNumber*)threadId;
 
 @end

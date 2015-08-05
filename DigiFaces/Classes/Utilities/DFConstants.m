@@ -26,6 +26,7 @@ NSString * const APIPathSetUserName = @"api/Account/SetUserName";
 NSString * const APIPathForgotPassword = @"api/Account/ForgotPassword";
 NSString * const APIPathReplyFromModerator = @"api/Account/ReplyFromModerator/:projectId/:parentMessageId";
 NSString * const APIPathMarkMessageRead = @"api/Account/MarkMessageRead/:messageId";
+NSString * const APIPathMarkNotificationRead = @"api/Account/MarkNotificationRead/:notificationId";
 NSString * const APIPathLogout = @"api/Account/Logout";
 
 // activity
@@ -48,7 +49,7 @@ NSString * const APIPathGetAlertCounts = @"api/Project/GetAlertsCount/:projectId
 NSString * const APIPathGetHomeAnnouncement = @"api/Project/GetHomeAnnouncement/:projectId";
 NSString * const APIPathGetDailyDiary = @"api/Project/GetDailyDiary/:diaryId";
 NSString * const APIPathUpdateDailyDiary = @"api/Project/UpdateDailyDiary/:projectId";
-NSString * const APIPathProjectGetActivities = @"api/Project/GetActivities/:projectId";
+NSString * const APIPathProjectGetActivities = @"api/Project/GetActivities/:projectId";//:activityId";
 NSString * const APIPathProjectMarkActivityRead = @"api/Project/MarkActivityRead/:activityId";
 NSString * const APIPathProjectMarkAnnouncementRead = @"api/Project/MarkAnnouncementRead/:announcementId";
 NSString * const APIPathProjectGetAnnouncements = @"api/Project/GetAnnouncements/:projectId";

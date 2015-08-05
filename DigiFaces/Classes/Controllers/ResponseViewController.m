@@ -26,6 +26,7 @@
 #import "CarouselViewController.h"
 #import "UserManagerShared.h"
 #import "NSString+StripHTML.h"
+#import "DiaryTheme.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -51,28 +52,98 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray * arrResponses;
 @property (nonatomic, retain) NSMutableArray * heightArray;
 @property (nonatomic, strong) DailyDiary *dailyDiary;
+@property (nonatomic, strong) NSNumber *threadId;
+@property (nonatomic, strong) NSNumber *commentId;
+
+@property (nonatomic, strong) NSString *alertMessageToShow;
+@property (nonatomic, strong) NSIndexPath *indexPathToScrollTo;
 
 @end
 
 @implementation ResponseViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.notification) {
+        BOOL error = false;
+        
+        if (self.notification.isDailyDiaryNotification.boolValue) {
+            self.dailyDiary =  LS.myUserInfo.currentProject.dailyDiary;
+            if (!self.dailyDiary) {
+                // attempt to fetch diary
+                NSNumber *dailyDiaryId = LS.myUserInfo.currentProject.dailyDiaryList.firstObject;
+                if (!dailyDiaryId) {
+                    error = true;
+                    NSLog(@"ResponseViewController setThreadId:commentId: error - User info not loaded.");
+                } else {
+                    [self fetchDailyDiaryWithDiaryID:dailyDiaryId.integerValue];
+                }
+            } else {
+                [self showNotificationContentFromDiary];
+            }
+        } else {
+            // otherwise it's a diary theme.  load the thread.
+            
+            [self getResponsesWithActivityId:self.notification.activityId.integerValue];
+            
+        }
+        
+        if (error) {
+            [self.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:self.navigationController.view withTag:0];
+        }
+        
+    } else
+        [self prepareAndLoadData];
+    
+
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    //  self.txtResposne.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    //  self.txtResposne.layer.borderWidth = 1.0f;
+    self.txtResposne.layer.cornerRadius = 4.0f;
+    self.txtResposne.clipsToBounds = true;
+    self.txtResposne.placeholder = NSLocalizedString(@"Leave a comment...", nil);
+    self.txtResposne.delegate = self;
+    // [self organizeData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    BOOL allRead = true;
+    for (Comment *comment in self.diary.comments) {
+        if (!comment.isRead.boolValue) {
+            allRead = false;
+            break;
+        }
+    }
+    if (allRead) self.diary.isRead = @YES;
+    
+    if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
+        [self.delegate didSetDailyDiary:self.dailyDiary];
+    }
+}
+- (CustomAlertView*)customAlert {
+    if (!_customAlert) {
+        _customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
+        [_customAlert setSingleButton:YES];
+    }
+    return _customAlert;
+}
+
+- (void)prepareAndLoadData {
     if (self.diary) {
         self.navigationItem.title = self.diary.title;
     }
     
     _heightArray = [[NSMutableArray alloc] init];
     
-    self.customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
-    [self.customAlert setSingleButton:YES];
     
     _arrResponses = [[NSMutableArray alloc] init];
-    if (_responseType == ResponseControllerTypeNotification) {
-        [self getResponsesWithActivityId:_currentNotification.activityId.integerValue];
-    }
-    
-    //[Utility addPadding:5 toTextField:_txtResposne];
+       //[Utility addPadding:5 toTextField:_txtResposne];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -100,13 +171,13 @@ typedef enum {
     [_cellsArray addObject:@(CellTypeHeader)];
     [_heightArray addObject:@44];
     // Comment Cell
-    if (_responseType == ResponseControllerTypeDiaryResponse) {
+    if (_diary) {
         for (int i=0;i<_diary.comments.count;i++) {
             [_cellsArray addObject:@(CellTypeComment)];
             [_heightArray addObject:@110];
         }
     }
-    else if (_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification){
+    else if (_response){
         if (_response.files.count) {
             [_cellsArray addObject:@(CellTypeImages)];
             [_heightArray addObject:@85];
@@ -116,33 +187,7 @@ typedef enum {
             [_heightArray addObject:@110];
         }
     }
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-  //  self.txtResposne.layer.borderColor = [UIColor lightGrayColor].CGColor;
-  //  self.txtResposne.layer.borderWidth = 1.0f;
-    self.txtResposne.layer.cornerRadius = 4.0f;
-    self.txtResposne.clipsToBounds = true;
-    self.txtResposne.placeholder = NSLocalizedString(@"Leave a comment...", nil);
-    self.txtResposne.delegate = self;
-   // [self organizeData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    BOOL allRead = true;
-    for (Comment *comment in self.diary.comments) {
-        if (!comment.isRead.boolValue) {
-            allRead = false;
-            break;
-        }
-    }
-    if (allRead) self.diary.isRead = @YES;
-    
-    if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
-        [self.delegate didSetDailyDiary:self.dailyDiary];
-    }
+    [self.tableView reloadData];
 }
 
 - (void)organizeData {
@@ -158,6 +203,35 @@ typedef enum {
     
     
 }
+
+- (void)showNotificationContentFromDiary {
+    NSNumber *threadId = self.notification.referenceId;
+    NSNumber *commentId = self.notification.referenceId2;
+    BOOL error;
+    if (!(self.diary = [self.dailyDiary getResponseWithThreadID:threadId])) {
+        error = true;
+        NSLog(@"ResponseViewController setThreadId:commentId: error - Couldn't find a diary with thread id %@", threadId);
+    } else {
+        [self prepareAndLoadData];
+        // now scroll to that comment
+        for (NSInteger i = 0, n = self.diary.comments.count; i<n; ++i) {
+            Comment *comment = self.diary.comments[i];
+            if ([comment.commentId isEqualToNumber:commentId]) {
+                NSInteger idx = [self.tableView numberOfRowsInSection:0]-n+i;
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                return;
+            }
+        }
+        // if we made it this far, we couldn't find a comment with that id.
+        error = true;
+        NSLog(@"ResponseViewController setThreadId:commentId: error - Couldn't find a comment with id %@", commentId);
+    }
+    if (error) {
+        [self.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:self.navigationController.view withTag:0];
+    }
+}
+
 - (IBAction)cancelThis:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -187,6 +261,7 @@ typedef enum {
 }
 
 #pragma mark - API Methods
+
 -(void)fetchDailyDiaryWithDiaryID:(NSInteger)diaryID
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -206,7 +281,22 @@ typedef enum {
                           }
                       }
                       sself.dailyDiary = dailyDiary;
-                      [sself.tableView reloadData];
+                      
+                      if (sself.notification) {
+                          [sself prepareAndLoadData];
+                          NSInteger idx = [sself.diary.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
+                              if ([c.commentId isEqualToNumber:sself.notification.referenceId]) {
+                                  *stop = true;
+                                  return true;
+                              }
+                              return false;
+                          }];
+                          NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_cellsArray.count - sself.diary.comments.count + idx inSection:0];
+                          [sself.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                      } else {
+                          
+                          [sself.tableView reloadData];
+                      }
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
                   failure:^(NSError *error) {
@@ -215,6 +305,39 @@ typedef enum {
                   }];
 }
 
+/*
+-(void)fetchActivityWithNotification:(Notification*)notification {
+    
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    defwself
+    [DFClient makeRequest:APIPathProjectGetActivities
+                   method:kPOST
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId,
+                            @"activityId" : notification.referenceId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, DiaryTheme *diaryTheme) {
+                      defsself
+                      BOOL found = false;
+                      for (NSInteger i = 0, n = diaryTheme.responses.count; i < n; ++i) {
+                          Response *response = diaryTheme.responses[i];
+                          if ([response.threadId isEqualToNumber:notification.referenceId2]) {
+                              found = true;
+                              sself.response = response;
+                              [sself prepareAndLoadData];
+                              break;
+                          }
+                      }
+                      
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:sself.view withTag:0];
+                  }];
+    [self.refreshControl endRefreshing];
+}
+*/
 -(void)getResponsesWithActivityId:(NSInteger)activityId
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -224,11 +347,36 @@ typedef enum {
                    method:kPOST
                 urlParams:@{@"activityId" : @(activityId)}
                bodyParams:nil
-                  success:^(NSDictionary *response, NSArray *result) {
+                  success:^(NSDictionary *response, id result) {
                       defsself
-                      sself.response = [[Response alloc] initWithDictionary:result.firstObject];
-                     // [sself organizeData];
-                      [sself.tableView reloadData];
+                      if ([result isKindOfClass:[Response class]]) {
+                          sself.response = result;
+                      } else if ([result isKindOfClass:[NSArray class]]) {
+                          sself.response = result[0];
+                      } else return;
+                      // [sself organizeData];
+                      
+                      if (sself.notification) {
+                          [self prepareAndLoadData];
+                          NSInteger idx = [sself.response.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
+                              if ([c.commentId isEqualToNumber:sself.notification.referenceId2]) {
+                                  *stop = true;
+                                  return true;
+                              }
+                              return false;
+                          }];
+                          
+                          if (idx == NSNotFound) {
+                              [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Unable to load the content you requested.", nil) inView:sself.view withTag:0];
+                              NSLog(@"Could not find a comment with id %@", sself.notification.referenceId2);
+                          } else {
+                              NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_cellsArray.count - sself.response.comments.count + idx inSection:0];
+                              [sself.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                          }
+                      } else {
+                          
+                          [sself.tableView reloadData];
+                      }
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
                   failure:^(NSError *error) {
@@ -272,7 +420,7 @@ typedef enum {
     }
     if (self.diary) {
         self.diary.comments = [self.diary.comments arrayByAddingObject:comment];
-
+        
     }
     //[self organizeData];
     [_cellsArray addObject:@(CellTypeComment)];
@@ -327,7 +475,7 @@ typedef enum {
 -(void)configureUserCell:(UserCell*)cell
 {
     id target;
-    if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
+    if (_response) {
         target = _response;
     }
     else{
@@ -349,7 +497,7 @@ typedef enum {
     }
     else if (type == CellTypeIntro){
         infoCell = [self.tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-        if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
+        if (_response) {
             if (_response.textareaResponses.count>0) {
                 TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
                 [infoCell setText:textResponse.response];
@@ -357,7 +505,7 @@ typedef enum {
                 [infoCell.bodyLabel setText:@""];
             }
         }
-        else if (_responseType == ResponseControllerTypeDiaryResponse){
+        else if (_diary){
             [infoCell setText:_diary.response];
         }
         
@@ -369,10 +517,10 @@ typedef enum {
         ImagesCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"imagesScrollCell"];
         cell.viewController = self;
         NSArray * files;
-        if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
+        if (_response) {
             files = _response.files;
         }
-        else if (_responseType == ResponseControllerTypeDiaryResponse){
+        else if (_diary){
             files = _diary.files;
         }
         [cell setImagesFiles:files];
@@ -383,10 +531,10 @@ typedef enum {
         UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell" forIndexPath:indexPath];
         [cell setBackgroundColor:[UIColor whiteColor]];
         NSInteger counts = 0;
-        if (_responseType == ResponseControllerTypeNotification || _responseType == ResponseControllerTypeDiaryTheme) {
+        if (_response) {
             counts = _response.comments.count;
         }
-        else if (_responseType == ResponseControllerTypeDiaryResponse){
+        else if (_diary){
             counts = _diary.comments.count;
         }
         [cell.textLabel setText:[NSString stringWithFormat:@"%ld Comment%@", (long)counts, (counts==1)?@"" : @"s"]];
@@ -403,11 +551,11 @@ typedef enum {
     
     else if (type == CellTypeComment){
         Comment * comment;
-        if(_responseType == ResponseControllerTypeDiaryResponse){
+        if(_diary){
             NSInteger count= _cellsArray.count - _diary.comments.count;
             comment = [_diary.comments objectAtIndex:indexPath.row - count];
         }
-        else if ((_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification))
+        else if (_response)
         {
             NSInteger count = _cellsArray.count - _response.comments.count;
             NSLog(@"%d", (int)(indexPath.row - count));
@@ -474,10 +622,10 @@ typedef enum {
 -(void)commentCell:(id)cell didSendText:(NSString *)text
 {
     NSInteger threadId;
-    if (_responseType == ResponseControllerTypeDiaryResponse) {
+    if (_diary) {
         threadId = [_diary.threadId integerValue];
     }
-    else if (_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification){
+    else if (_response){
         threadId = _response.activityId.integerValue;
     }
     [self addComment:text withThreadId:threadId];
@@ -490,10 +638,10 @@ typedef enum {
     }
     [_txtResposne resignFirstResponder];
     NSInteger threadId;
-    if (_responseType == ResponseControllerTypeDiaryResponse) {
+    if (_diary) {
         threadId = [_diary.threadId integerValue];
     }
-    else if (_responseType == ResponseControllerTypeDiaryTheme || _responseType == ResponseControllerTypeNotification){
+    else if (_response){
         threadId = _response.threadId.integerValue;
     }
     

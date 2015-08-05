@@ -14,13 +14,17 @@
 #import "UserManagerShared.h"
 #import "Notification.h"
 #import "NotificationCell.h"
-#import "UIImageView+AFNetworking.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "ResponseViewController.h"
+#import "UILabel+setHTML.h"
 
-@interface NotificationsViewController ()
+@interface NotificationsViewController () {
+}
 
-@property (nonatomic, retain) NSArray * arrNotifications;;
+@property (nonatomic, strong) Notification *targetNotification;
+@property (nonatomic, retain) NSMutableArray * arrNotifications;
 
+@property (nonatomic, strong) NSDictionary *notificationMessages;
 @end
 
 @implementation NotificationsViewController
@@ -30,8 +34,12 @@
     _arrNotifications = [[NSMutableArray alloc] init];
     [self getNotifications];
 }
+
 - (IBAction)closeThis:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(setUnreadNotifications:)]) {
+        [self.delegate setUnreadNotifications:@(_arrNotifications.count-[[_arrNotifications valueForKeyPath:@"@sum.isRead"] integerValue])];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,7 +59,7 @@
                bodyParams:nil
                   success:^(NSDictionary *response, NSArray *result) {
                       defsself
-                      sself.arrNotifications = result;
+                      sself.arrNotifications = result.mutableCopy;
                       
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -80,23 +88,51 @@
     NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notificationCell" forIndexPath:indexPath];
 
     Notification * notification = [_arrNotifications objectAtIndex:indexPath.row];
-    [cell.userImage setImageWithURL:[NSURL URLWithString:notification.commenterUserInfo.avatarFile.filePath]];
+    [cell.userImage sd_setImageWithURL:[NSURL URLWithString:notification.commenterUserInfo.avatarFile.filePath]];
     [cell.lblUserName setText:notification.commenterUserInfo.appUserName];
     [cell.lblDate setText:notification.dateCreatedFormatted];
+    [cell.lblInfo setText:notification.usefulMessage];
     // Configure the cell...
     [cell makeImageCircular];
     if (notification.isRead.boolValue) {
         [cell setBackgroundColor:[UIColor whiteColor]];
+    } else {
+        [cell setBackgroundColor:[UIColor lightGrayColor]];
     }
-    
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
+
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //[self performSegueWithIdentifier:@"responseSegue" sender:self];
+    self.targetNotification = _arrNotifications[indexPath.row];
+    if (self.targetNotification.type == NotificationTypeThreadComment) {
+        [self performSegueWithIdentifier:@"responseSegue" sender:self];
+    }
+    [self markNotificationRead:self.targetNotification];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)markNotificationRead:(Notification*)notification {
+    defwself
+    [DFClient makeRequest:APIPathMarkNotificationRead
+                   method:kPOST
+                urlParams:@{@"notificationId" : notification.notificationId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      notification.isRead = @YES;
+                      [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_arrNotifications indexOfObject:notification] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                      /*
+                      [sself.tableView beginUpdates];
+                      [sself.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_arrNotifications indexOfObject:notification] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                      [_arrNotifications removeObject:notification];
+                      [sself.tableView endUpdates];*/
+                  } failure:nil];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,9 +175,10 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"responseSegue"]) {
         ResponseViewController * responseController = [segue destinationViewController];
-        Notification * notification = [_arrNotifications objectAtIndex:[self.tableView indexPathForSelectedRow].row];
-        responseController.currentNotification = notification;
+        [responseController setNotification:self.targetNotification];
     }
 }
+
+
 
 @end

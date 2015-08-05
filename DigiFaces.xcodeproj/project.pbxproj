@@ -128,6 +128,7 @@
 		F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */; };
 		F4A759DA1B71522600B94176 /* Announcement.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D91B71522600B94176 /* Announcement.m */; };
 		F4A759DE1B7153E900B94176 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759DD1B7153E900B94176 /* Message.m */; };
+		F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759E01B7193F600B94176 /* AnnouncementCell.m */; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -428,6 +429,8 @@
 		F4A759D91B71522600B94176 /* Announcement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Announcement.m; sourceTree = "<group>"; };
 		F4A759DC1B7153E900B94176 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		F4A759DD1B7153E900B94176 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		F4A759DF1B7193F600B94176 /* AnnouncementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementCell.h; sourceTree = "<group>"; };
+		F4A759E01B7193F600B94176 /* AnnouncementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnouncementCell.m; sourceTree = "<group>"; };
 		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
 		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
 		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
@@ -601,6 +604,8 @@
 		4ACDB94B1B3E7E66009EFB91 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				F4A759DF1B7193F600B94176 /* AnnouncementCell.h */,
+				F4A759E01B7193F600B94176 /* AnnouncementCell.m */,
 				4AC49FDF1B4AEEBB003CE06E /* CommentCell.h */,
 				4AC49FE01B4AEEBB003CE06E /* CommentCell.m */,
 				4ACDB94C1B3E7E66009EFB91 /* CustomAlertView.h */,
@@ -1708,6 +1713,7 @@
 				4AC7D47C1B510D0B00587045 /* RTCell.m in Sources */,
 				F4A759DE1B7153E900B94176 /* Message.m in Sources */,
 				F4022FDF1B6977090080C157 /* APISetUserNameResponse.m in Sources */,
+				F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */,
 				4ACDB9FF1B3EC155009EFB91 /* NotificationCell.m in Sources */,
 				F4022FCB1B68789D0080C157 /* APIUploadAvatarResponse.m in Sources */,
 				4ACDB9B01B3E7E66009EFB91 /* HomeViewController.m in Sources */,

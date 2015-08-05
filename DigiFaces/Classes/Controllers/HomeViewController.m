@@ -28,7 +28,10 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, MessagesMenuDelegate>
+#import "NotificationsViewController.h"
+#import "AnnouncementsTableViewController.h"
+
+@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, MessagesMenuDelegate, NotificationVCDelegate, AnnouncementsVCDelegate>
 {
     ProfilePicCell * picCell;
 }
@@ -339,6 +342,12 @@
         DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row - 1 - LS.myUserInfo.currentProject.hasDailyDiary.integerValue];
         themeController.diaryTheme = theme;
         themeController.navigationItem.title = theme.activityTitle;
+    } else if ([[segue identifier] isEqualToString:@"toNotifications"]) {
+        NotificationsViewController *nvc = [segue destinationViewController];
+        nvc.delegate = self;
+    } else if ([[segue identifier] isEqualToString:@"toAnnouncements"]) {
+        AnnouncementsTableViewController *atvc = [segue destinationViewController];
+        atvc.delegate = self;
     }
 }
 
@@ -387,7 +396,7 @@
 }
 
 - (void)didTapAnnouncements {
-    
+    [self performSegueWithIdentifier:@"toAnnouncements" sender:nil];
     [self.popover dismissPopoverAnimated:YES];
 }
 
@@ -403,4 +412,16 @@
     
 }
 
+#pragma mark - messages delegate callbacks
+- (void)setUnreadNotifications:(NSNumber *)count {
+    self.messagesVC.alertCounts.notificationsUnreadCount = count;
+    [self refreshAlertCounts];
+}
+
+- (void)refreshAlertCounts {
+    APIAlertCounts *ac = self.messagesVC.alertCounts;
+    ac.totalUnreadCount = @(ac.notificationsUnreadCount.intValue + ac.messagesUnreadCount.intValue + ac.announcementUnreadCount.intValue);
+    self.alertCountLabel.text = [NSString stringWithFormat:@" %@ ", ac.totalUnreadCount];
+    [self.messagesVC.tableView reloadData];
+}
 @end
