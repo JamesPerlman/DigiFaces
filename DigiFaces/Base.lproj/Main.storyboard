@@ -900,17 +900,8 @@
                                                 <constraint firstAttribute="width" constant="40" id="Fg8-R6-XcO"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eldin Pinjic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgy-eo-wTV">
-                                            <rect key="frame" x="193" y="38" width="71" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="gvS-cs-aUv"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="BYd-gW-FQv">
-                                            <rect key="frame" x="172" y="42" width="13" height="13"/>
+                                            <rect key="frame" x="251" y="42" width="13" height="13"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="13" id="CuS-iq-VpY"/>
                                                 <constraint firstAttribute="height" constant="13" id="qMD-Pj-Qiv"/>
@@ -931,11 +922,22 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eldin Pinjic" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgy-eo-wTV">
+                                            <rect key="frame" x="172" y="38" width="71" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="gvS-cs-aUv"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="BYd-gW-FQv" firstAttribute="top" secondItem="bb4-1H-yem" secondAttribute="bottom" constant="4" id="8Ud-WU-TBl"/>
                                         <constraint firstItem="Lgy-eo-wTV" firstAttribute="top" secondItem="bb4-1H-yem" secondAttribute="bottom" id="Bvx-wT-6pD"/>
                                         <constraint firstItem="Lgy-eo-wTV" firstAttribute="trailing" secondItem="bb4-1H-yem" secondAttribute="trailing" id="Ljs-Mf-hL7"/>
+                                        <constraint firstItem="bb4-1H-yem" firstAttribute="trailing" secondItem="BYd-gW-FQv" secondAttribute="trailing" id="Nw1-tS-Cr7"/>
+                                        <constraint firstItem="BYd-gW-FQv" firstAttribute="leading" secondItem="Lgy-eo-wTV" secondAttribute="trailing" constant="8" id="PfD-8C-4nC"/>
                                         <constraint firstItem="bb4-1H-yem" firstAttribute="top" secondItem="tuD-O1-Hfb" secondAttribute="topMargin" constant="9" id="XXz-0g-So1"/>
                                         <constraint firstItem="o4N-j3-wdN" firstAttribute="top" secondItem="BYd-gW-FQv" secondAttribute="bottom" constant="8" id="bj5-Ml-lOM"/>
                                         <constraint firstItem="Lgy-eo-wTV" firstAttribute="leading" secondItem="BYd-gW-FQv" secondAttribute="trailing" constant="8" id="dC4-zy-aun"/>
@@ -946,6 +948,12 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="o4N-j3-wdN" secondAttribute="trailing" id="ug0-4G-odO"/>
                                         <constraint firstItem="6Fu-74-YPV" firstAttribute="top" secondItem="tuD-O1-Hfb" secondAttribute="topMargin" constant="9" id="wwZ-IP-CDK"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="Ljs-Mf-hL7"/>
+                                            <exclude reference="dC4-zy-aun"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="contentLabel" destination="o4N-j3-wdN" id="PF7-di-ZCJ"/>
