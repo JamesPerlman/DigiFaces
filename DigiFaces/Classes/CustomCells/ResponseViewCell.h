@@ -22,6 +22,9 @@
 @property (nonatomic, retain) NSArray * files;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *responseHeightConst;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UIView *unreadIndicator;
+
 - (IBAction)commentClicked:(id)sender;
 -(void)setImageCircular;
 

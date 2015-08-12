@@ -27,6 +27,7 @@
 #import "UserManagerShared.h"
 #import "NSString+StripHTML.h"
 #import "DiaryTheme.h"
+#import "ImageGalleryResponse.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -57,6 +58,7 @@ typedef enum {
 
 @property (nonatomic, strong) NSString *alertMessageToShow;
 @property (nonatomic, strong) NSIndexPath *indexPathToScrollTo;
+
 
 @end
 
@@ -97,7 +99,7 @@ typedef enum {
     } else
         [self prepareAndLoadData];
     
-
+    
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -126,6 +128,7 @@ typedef enum {
         [self.delegate didSetDailyDiary:self.dailyDiary];
     }
 }
+
 - (CustomAlertView*)customAlert {
     if (!_customAlert) {
         _customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
@@ -143,7 +146,7 @@ typedef enum {
     
     
     _arrResponses = [[NSMutableArray alloc] init];
-       //[Utility addPadding:5 toTextField:_txtResposne];
+    //[Utility addPadding:5 toTextField:_txtResposne];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -306,38 +309,38 @@ typedef enum {
 }
 
 /*
--(void)fetchActivityWithNotification:(Notification*)notification {
-    
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    defwself
-    [DFClient makeRequest:APIPathProjectGetActivities
-                   method:kPOST
-                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId,
-                            @"activityId" : notification.referenceId}
-               bodyParams:nil
-                  success:^(NSDictionary *response, DiaryTheme *diaryTheme) {
-                      defsself
-                      BOOL found = false;
-                      for (NSInteger i = 0, n = diaryTheme.responses.count; i < n; ++i) {
-                          Response *response = diaryTheme.responses[i];
-                          if ([response.threadId isEqualToNumber:notification.referenceId2]) {
-                              found = true;
-                              sself.response = response;
-                              [sself prepareAndLoadData];
-                              break;
-                          }
-                      }
-                      
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                  }
-                  failure:^(NSError *error) {
-                      defsself
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:sself.view withTag:0];
-                  }];
-    [self.refreshControl endRefreshing];
-}
-*/
+ -(void)fetchActivityWithNotification:(Notification*)notification {
+ 
+ [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+ defwself
+ [DFClient makeRequest:APIPathProjectGetActivities
+ method:kPOST
+ urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId,
+ @"activityId" : notification.referenceId}
+ bodyParams:nil
+ success:^(NSDictionary *response, DiaryTheme *diaryTheme) {
+ defsself
+ BOOL found = false;
+ for (NSInteger i = 0, n = diaryTheme.responses.count; i < n; ++i) {
+ Response *response = diaryTheme.responses[i];
+ if ([response.threadId isEqualToNumber:notification.referenceId2]) {
+ found = true;
+ sself.response = response;
+ [sself prepareAndLoadData];
+ break;
+ }
+ }
+ 
+ [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+ }
+ failure:^(NSError *error) {
+ defsself
+ [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+ [sself.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:sself.view withTag:0];
+ }];
+ [self.refreshControl endRefreshing];
+ }
+ */
 -(void)getResponsesWithActivityId:(NSInteger)activityId
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -391,7 +394,7 @@ typedef enum {
     
     NSDictionary * params = @{@"CommentId" : @0,
                               @"ThreadId" : @(threadId),
-                              @"Response" : comment,
+                              @"Response" : [comment stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"],
                               @"IsActive" : @YES};
     
     defwself
@@ -501,7 +504,10 @@ typedef enum {
             if (_response.textareaResponses.count>0) {
                 TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
                 [infoCell setText:textResponse.response];
-            } else {
+            } else if (_response.imageGalleryResponses.count>0) {
+                ImageGalleryResponse *igr = _response.imageGalleryResponses.firstObject;
+                [infoCell setText:igr.response];
+        } else {
                 [infoCell.bodyLabel setText:@""];
             }
         }
@@ -605,7 +611,7 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CellType type = [[_cellsArray objectAtIndex:indexPath.row] integerValue];
+    CellType type = (CellType)[[_cellsArray objectAtIndex:indexPath.row] integerValue];
     UITableViewCell *cell = [self getCellForType:type forIndexPath:indexPath];
     if (type != CellTypeUser && type != CellTypeIntro) {
         

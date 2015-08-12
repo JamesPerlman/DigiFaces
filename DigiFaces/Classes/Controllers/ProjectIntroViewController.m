@@ -20,7 +20,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "NSLayoutConstraint+ConvenienceMethods.h"
 #import "APIHomeAnnouncementResponse.h"
-#import "NSString+StripHTML.h"
+#import "Announcement.h"
+#import "UILabel+setHTML.h"
 
 @interface ProjectIntroViewController ()
 {
@@ -28,7 +29,7 @@
 }
 @property (nonatomic, retain) NSMutableArray * dataAray;
 
-@property (nonatomic, strong) APIHomeAnnouncementResponse *announcement;
+@property (nonatomic, strong) APIHomeAnnouncementResponse *homeAnnouncement;
 @end
 
 @implementation ProjectIntroViewController
@@ -41,10 +42,19 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self fetchProjectAnnouncements:LS.myUserInfo.currentProjectId];
+    if (!self.announcement) {
+        [self fetchProjectAnnouncements:LS.myUserInfo.currentProjectId];
+    } else {
+        if (self.announcement.files.count) {
+            [_dataAray addObject:self.announcement.files.firstObject];
+        }
+        [_dataAray addObject:self.announcement.title];
+        [_dataAray addObject:self.announcement.text];
+        [self.tableView reloadData];
+    }
 }
 
--(void)fetchProjectAnnouncements:(NSString*)projectId
+-(void)fetchProjectAnnouncements:(NSNumber*)projectId
 {
     defwself
     [DFClient makeRequest:APIPathGetHomeAnnouncement
@@ -55,12 +65,12 @@
                       defsself
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      sself.announcement = result;
+                      sself.homeAnnouncement = result;
                       
                       [_dataAray removeAllObjects];
                       [_dataAray addObject:result.file];
                       [_dataAray addObject:result.title];
-                      [_dataAray addObject:[result.text stringByConvertingHTMLToPlainText]];
+                      [_dataAray addObject:result.text];
                       
                       [self.tableView reloadData];
                   }
@@ -95,7 +105,7 @@
     else if (indexPath.row == 2){
         /*NSAttributedString *attributedText =
         [[NSAttributedString alloc]
-         initWithString:self.announcement.text
+         initWithString:self.homeAnnouncement.text
          attributes:@{
          NSFontAttributeName: [UIFont systemFontOfSize:16.0f]
          }];
@@ -117,9 +127,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.row == 0) {
-        File *attachment = self.announcement.file;
+    id item = _dataAray[indexPath.row];
+    if ([item isKindOfClass:[File class]]) {
+        File *attachment = item;
         if ([attachment.fileType isEqualToString:@"Image"]) {
             ImageCell * cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
             [cell.image sd_setImageWithURL:attachment.filePathURL placeholderImage:[UIImage imageNamed:@"blank"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -136,15 +146,15 @@
         }
     }
     
-    if (indexPath.row == 1) {
+    if ([item isKindOfClass:[NSString class]]) {
         // Title
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        [cell.textLabel setText:self.announcement.title];
+        [cell.textLabel setHTML:item];
         return cell;
     }
     else{
         introCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-        [introCell setText:self.announcement.text];
+        [introCell setText:item];
         return introCell;
     }
 }
@@ -203,7 +213,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"webViewSegue"]) {
         WebViewController * webController = (WebViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];
-        webController.url = self.announcement.file.filePath;
+        webController.url = self.homeAnnouncement.file.filePath;
     }
 }
 

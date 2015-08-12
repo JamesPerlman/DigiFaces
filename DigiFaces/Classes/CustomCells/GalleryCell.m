@@ -12,6 +12,7 @@
 
 #import <MHVideoPhotoGallery/MHGallery.h>
 
+
 @implementation GalleryCell
 
 -(void)reloadGallery
@@ -19,9 +20,20 @@
     [self removeEverything];
     NSInteger xOffset = 0;
     NSInteger tag = 0;
+    for (UIView *v in self.scrollView.subviews) {
+        [v removeFromSuperview];
+    }
+    
+    self.leftButton.hidden = true;
+    if (_files.count < 2) {
+        self.rightButton.hidden = true;
+    } else {
+        self.rightButton.hidden = false;
+    }
     for (File * file in _files) {
         UIButton * imageView = [self getImageWithFile:file];
         imageView.tag = tag++;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         [imageView addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         CGRect rect = imageView.frame;
@@ -95,6 +107,28 @@
             [vu removeFromSuperview];
         }
     }
+}
+
+- (IBAction)goLeft:(id)sender {
+    CGFloat w = self.scrollView.frame.size.width;
+    CGFloat newx = self.scrollView.contentOffset.x-w;
+    [self.scrollView scrollRectToVisible:CGRectMake(newx, 0, w, self.scrollView.frame.size.height) animated:YES];
+    
+    if (roundf(newx/w) == 0) {
+        self.leftButton.hidden = true;
+    }
+    self.rightButton.hidden = false;
+}
+
+- (IBAction)goRight:(id)sender {
+    CGFloat w = self.scrollView.frame.size.width;
+    CGFloat newx=    self.scrollView.contentOffset.x+w;
+    [self.scrollView scrollRectToVisible:CGRectMake(newx, 0, w, self.scrollView.frame.size.height) animated:YES];
+    
+    if (roundf(newx/w) == self.files.count-1) {
+        self.rightButton.hidden = true;
+    }
+    self.leftButton.hidden = false;
 }
 
 @end

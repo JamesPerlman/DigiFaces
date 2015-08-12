@@ -53,12 +53,20 @@
         
         [imageViewsForGestureRecognizers setObject:iv forKey:tapGR];
         
+        [self.scrollView addSubview:iv];
         if ([file.fileType isEqualToString:@"Image"]) {
             [iv sd_setImageWithURL:file.filePathURL];
         } else if ([file.fileType isEqualToString:@"Video"]) {
             [iv sd_setImageWithURL:[NSURL URLWithString:[file getVideoThumbURL]]];
+            UIImageView *videoIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playIcon"]];
+            [self.scrollView addSubview:videoIndicator];
+            videoIndicator.frame = CGRectMake(0,0,20.0f, 20.0f);
+            videoIndicator.center = iv.center;
+            videoIndicator.layer.shadowColor = [UIColor blackColor].CGColor;
+            videoIndicator.layer.shadowRadius = 1.0f;
+            videoIndicator.layer.shadowOpacity = 1.0f;
+            videoIndicator.layer.shadowOffset = CGSizeZero;
         }
-        [self.contentView addSubview:iv];
         xOffset += self.frame.size.height - 5;
     }
     

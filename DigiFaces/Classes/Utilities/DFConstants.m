@@ -20,6 +20,7 @@ NSString * const APIPathUpdateAboutMe = @"api/Account/UpdateAboutMe";
 NSString * const APIPathUploadUserCustomAvatar = @"api/Account/UploadUserCustomAvatar";
 NSString * const APIPathSendMessageToModerator = @"api/Account/SendMessageToModerator/:projectId/:parentMessageId";
 NSString * const APIPathGetProjects = @"api/Account/GetProjects/:numberOfProjects";
+NSString * const APIPathGetMessages = @"api/Account/GetMessages/:projectId";
 NSString * const APIPathGetNotifications = @"api/Account/GetNotifications/:projectId";
 NSString * const APIPathIsUserNameAvailable = @"api/Account/IsUserNameAvailable";
 NSString * const APIPathSetUserName = @"api/Account/SetUserName";

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Announcement;
 @interface ProjectIntroViewController : UITableViewController
 - (IBAction)goBack:(id)sender;
+
+@property (nonatomic, strong) Announcement *announcement;
 
 @end

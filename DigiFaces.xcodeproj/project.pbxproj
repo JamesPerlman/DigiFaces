@@ -124,11 +124,14 @@
 		F4864FB21B683450000D2615 /* DFResponseDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB11B683450000D2615 /* DFResponseDataMapper.m */; };
 		F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB41B6835E4000D2615 /* APITokenResponse.m */; };
 		F4864FB61B6839E1000D2615 /* DFClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F6E1B680859000D2615 /* DFClient.m */; };
+		F48C33411B7BC6EA00D7C764 /* ConversationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C33401B7BC6EA00D7C764 /* ConversationDetailViewController.m */; };
 		F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */; };
 		F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */; };
 		F4A759DA1B71522600B94176 /* Announcement.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D91B71522600B94176 /* Announcement.m */; };
 		F4A759DE1B7153E900B94176 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759DD1B7153E900B94176 /* Message.m */; };
 		F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759E01B7193F600B94176 /* AnnouncementCell.m */; };
+		F4A75A491B72AB9800B94176 /* MultiDisplayMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A75A481B72AB9800B94176 /* MultiDisplayMenuViewController.m */; };
+		F4A75A4C1B73125200B94176 /* HomeRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A75A4B1B73125200B94176 /* HomeRootViewController.m */; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -420,6 +423,8 @@
 		F4864FB11B683450000D2615 /* DFResponseDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFResponseDataMapper.m; sourceTree = "<group>"; };
 		F4864FB31B6835E4000D2615 /* APITokenResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APITokenResponse.h; sourceTree = "<group>"; };
 		F4864FB41B6835E4000D2615 /* APITokenResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APITokenResponse.m; sourceTree = "<group>"; };
+		F48C333F1B7BC6EA00D7C764 /* ConversationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationDetailViewController.h; path = Controllers/ConversationDetailViewController.h; sourceTree = "<group>"; };
+		F48C33401B7BC6EA00D7C764 /* ConversationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationDetailViewController.m; path = Controllers/ConversationDetailViewController.m; sourceTree = "<group>"; };
 		F49814E21B6B5515003571C6 /* Textarea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Textarea.h; sourceTree = "<group>"; };
 		F4A759D01B7150E300B94176 /* ConversationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsTableViewController.h; sourceTree = "<group>"; };
 		F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsTableViewController.m; sourceTree = "<group>"; };
@@ -431,6 +436,10 @@
 		F4A759DD1B7153E900B94176 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		F4A759DF1B7193F600B94176 /* AnnouncementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementCell.h; sourceTree = "<group>"; };
 		F4A759E01B7193F600B94176 /* AnnouncementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnouncementCell.m; sourceTree = "<group>"; };
+		F4A75A471B72AB9800B94176 /* MultiDisplayMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiDisplayMenuViewController.h; path = HomeRoot/MultiDisplayMenuViewController.h; sourceTree = "<group>"; };
+		F4A75A481B72AB9800B94176 /* MultiDisplayMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiDisplayMenuViewController.m; path = HomeRoot/MultiDisplayMenuViewController.m; sourceTree = "<group>"; };
+		F4A75A4A1B73125200B94176 /* HomeRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeRootViewController.h; path = HomeRoot/HomeRootViewController.h; sourceTree = "<group>"; };
+		F4A75A4B1B73125200B94176 /* HomeRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeRootViewController.m; path = HomeRoot/HomeRootViewController.m; sourceTree = "<group>"; };
 		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
 		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
 		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
@@ -566,7 +575,6 @@
 		4ACDB92C1B3E7E66009EFB91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F4864FA81B6822D4000D2615 /* About */,
 				F4A759D31B7150E700B94176 /* Announcements */,
 				F495B7BB1B646EF000F8295B /* Auth */,
 				F4864FA21B6822A6000D2615 /* AddResponse */,
@@ -579,6 +587,8 @@
 				F4864F7E1B681D83000D2615 /* EmailModerator */,
 				F4864F7F1B681D91000D2615 /* ForgotPassword */,
 				F42669EA1B7125B800A6E6D7 /* Fork */,
+				F4864FA81B6822D4000D2615 /* About */,
+				F4A75A461B72AB0E00B94176 /* HomeRoot */,
 				F4864F801B681D99000D2615 /* Home */,
 				F4864FA71B6822CC000D2615 /* Image */,
 				F4864FA31B6822AD000D2615 /* LoginTable */,
@@ -1416,6 +1426,8 @@
 			children = (
 				F4A759D01B7150E300B94176 /* ConversationsTableViewController.h */,
 				F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */,
+				F48C333F1B7BC6EA00D7C764 /* ConversationDetailViewController.h */,
+				F48C33401B7BC6EA00D7C764 /* ConversationDetailViewController.m */,
 			);
 			name = Conversations;
 			path = ..;
@@ -1446,6 +1458,17 @@
 				F4A759DD1B7153E900B94176 /* Message.m */,
 			);
 			name = Message;
+			sourceTree = "<group>";
+		};
+		F4A75A461B72AB0E00B94176 /* HomeRoot */ = {
+			isa = PBXGroup;
+			children = (
+				F4A75A471B72AB9800B94176 /* MultiDisplayMenuViewController.h */,
+				F4A75A481B72AB9800B94176 /* MultiDisplayMenuViewController.m */,
+				F4A75A4A1B73125200B94176 /* HomeRootViewController.h */,
+				F4A75A4B1B73125200B94176 /* HomeRootViewController.m */,
+			);
+			name = HomeRoot;
 			sourceTree = "<group>";
 		};
 		F4DD49BB1B6548B700F4016B /* PhotoGallerySection */ = {
@@ -1665,6 +1688,7 @@
 				4ACDBA021B3EC7EA009EFB91 /* ResponseViewController.m in Sources */,
 				4ACDB9D91B3E7E66009EFB91 /* MWFeedParser.m in Sources */,
 				4ACB9ED61B58EC2900E9F984 /* DisplayFile.m in Sources */,
+				F4A75A4C1B73125200B94176 /* HomeRootViewController.m in Sources */,
 				F4022FE41B697FC80080C157 /* APIHomeAnnouncementResponse.m in Sources */,
 				4ACDB9F91B3EB6AE009EFB91 /* NotificationsViewController.m in Sources */,
 				4ACDB9C91B3E7E66009EFB91 /* UserManagerShared.m in Sources */,
@@ -1735,6 +1759,7 @@
 				4ACDB9B81B3E7E66009EFB91 /* TechSupportController.m in Sources */,
 				4AC49FE11B4AEEBB003CE06E /* CommentCell.m in Sources */,
 				F4022FBE1B68659F0080C157 /* NSArray+RKHelper.m in Sources */,
+				F48C33411B7BC6EA00D7C764 /* ConversationDetailViewController.m in Sources */,
 				4ABC3D3E1B4048BF0090A619 /* ImagesScrollviewer.m in Sources */,
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
 				F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */,
@@ -1750,6 +1775,7 @@
 				F4022FDB1B6975670080C157 /* APIIsUserNameAvailableResponse.m in Sources */,
 				4A00E8401B4BD07A000F6A6B /* TextViewCell.m in Sources */,
 				4ACDB9C61B3E7E66009EFB91 /* Diary.m in Sources */,
+				F4A75A491B72AB9800B94176 /* MultiDisplayMenuViewController.m in Sources */,
 				4ACB9EDC1B58ECA800E9F984 /* MarkUp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -37,9 +37,6 @@
 
 - (IBAction)closeThis:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-    if ([self.delegate respondsToSelector:@selector(setUnreadNotifications:)]) {
-        [self.delegate setUnreadNotifications:@(_arrNotifications.count-[[_arrNotifications valueForKeyPath:@"@sum.isRead"] integerValue])];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,11 +91,8 @@
     [cell.lblInfo setText:notification.usefulMessage];
     // Configure the cell...
     [cell makeImageCircular];
-    if (notification.isRead.boolValue) {
-        [cell setBackgroundColor:[UIColor whiteColor]];
-    } else {
-        [cell setBackgroundColor:[UIColor lightGrayColor]];
-    }
+    cell.unreadIndicator.hidden = notification.isRead.boolValue;
+    
     cell.separatorInset = UIEdgeInsetsZero;
     cell.layoutMargins = UIEdgeInsetsZero;
     cell.preservesSuperviewLayoutMargins = NO;
@@ -113,6 +107,8 @@
         [self performSegueWithIdentifier:@"responseSegue" sender:self];
     }
     [self markNotificationRead:self.targetNotification];
+    NotificationCell *cell = (NotificationCell*)[tableView cellForRowAtIndexPath:indexPath];
+    cell.unreadIndicator.hidden = true;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -125,6 +121,9 @@
                   success:^(NSDictionary *response, id result) {
                       defsself
                       notification.isRead = @YES;
+                      if ([sself.delegate respondsToSelector:@selector(setUnreadNotifications:)]) {
+                          [sself.delegate setUnreadNotifications:@(_arrNotifications.count-[[_arrNotifications valueForKeyPath:@"@sum.isRead"] integerValue])];
+                      }
                       [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_arrNotifications indexOfObject:notification] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                       /*
                       [sself.tableView beginUpdates];
@@ -132,6 +131,10 @@
                       [_arrNotifications removeObject:notification];
                       [sself.tableView endUpdates];*/
                   } failure:nil];
+    
+    
+    
+    
 }
 /*
 // Override to support conditional editing of the table view.

@@ -22,6 +22,7 @@ extern NSString * const APIPathGetAboutMe;
 extern NSString * const APIPathUpdateAboutMe;
 extern NSString * const APIPathUploadUserCustomAvatar;
 extern NSString * const APIPathSendMessageToModerator;
+extern NSString * const APIPathGetMessages;
 extern NSString * const APIPathGetNotifications;
 extern NSString * const APIPathIsUserNameAvailable;
 extern NSString * const APIPathSetUserName;

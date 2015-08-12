@@ -18,6 +18,8 @@
 @property (nonatomic, weak) UIViewController *viewController;
 @property (nonatomic, assign) IBOutlet id<GalleryCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (nonatomic, strong) NSArray * files;
 
 -(void)reloadGallery;

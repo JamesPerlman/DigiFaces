@@ -223,7 +223,7 @@
                               @"GalleryIds" : selectedGalleryIds,
                               @"UserId" : LS.myUserInfo.id,
                               @"IsActive" : @YES,
-                              @"Response" : _txtResponse.text};
+                              @"Response" : [_txtResponse.text stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"]};
     
     
     defwself
@@ -261,9 +261,8 @@
                       success:^(NSDictionary *response, TextareaResponse *result) {
                           defsself
                           [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
-                          [sself.mediaUploadManager uploadMediaFiles];
-                          
                           sself.createdResponse.textareaResponses = @[result];
+                          [sself.mediaUploadManager uploadMediaFiles];
                       }
                       failure:^(NSError *error) {
                           defsself
@@ -554,6 +553,10 @@
 }
 
 
+- (void)mediaUploadManagerDidFinishAllUploads:(DFMediaUploadManager *)mediaUploadManager {
+    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+    [self forceClose];
+}
 
 
 - (BOOL)mediaUploadManager:(DFMediaUploadManager*)mediaUploadManager shouldHandleTapForMediaUploadView:(DFMediaUploadView*)mediaUploadView {

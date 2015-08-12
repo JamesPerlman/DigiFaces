@@ -107,8 +107,8 @@
 - (RKObjectMapping*)alertCountsMapping {
     RKObjectMapping *mapping = MAPCLASS(APIAlertCounts);
     [mapping addAttributeMappingsFromDictionary:@[@"TotalUnreadCount",
-                                                 @"AnnouncementUnreadCount",
-                                                 @"MessagesUnreadCount",
+                                                  @"AnnouncementUnreadCount",
+                                                  @"MessagesUnreadCount",
                                                   @"NotificationsUnreadCount"].camelCaseDict];
     return mapping;
 }
@@ -301,8 +301,26 @@
     return mapping;
 }
 
+- (RKObjectMapping*)messageMappingRecursive {
+    RKObjectMapping *mapping = [self messageMapping];
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ChildMessages" toKeyPath:@"childMessages" withMapping:[self messageMapping]]];
+    return mapping;
+}
+
 - (RKObjectMapping*)messageMapping {
     RKObjectMapping *mapping = MAPCLASS(Message);
+    [mapping addAttributeMappingsFromDictionary:@[@"MessageId",
+                                                  @"ProjectId",
+                                                  @"FromUser",
+                                                  @"ToUser",
+                                                  @"Subject",
+                                                  @"Response",
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted",
+                                                  @"IsRead"].camelCaseDict];
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"FromUserInfo" toKeyPath:@"fromUserInfo" withMapping:[self userInfoMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ToUserInfo" toKeyPath:@"toUserInfo" withMapping:[self userInfoMapping]]];
     
     return mapping;
 }

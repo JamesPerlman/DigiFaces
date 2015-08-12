@@ -13,7 +13,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
+    self.unreadIndicator.layer.cornerRadius = self.unreadIndicator.frame.size.height/2.0f;
+    self.unreadIndicator.clipsToBounds = true;
 }
 
 -(void)makeImageCircular

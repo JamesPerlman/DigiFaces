@@ -7,8 +7,22 @@
 //
 
 #import "ConversationsTableViewController.h"
+#import "MBProgressHUD.h"
+#import "CustomAlertView.h"
+#import "NotificationCell.h"
+#import "Message.h"
+#import "UserInfo.h"
+#import "ConversationDetailViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
-@interface ConversationsTableViewController ()
+static NSString *messageCellID = @"conversationCell";
+
+@interface ConversationsTableViewController ()<PopUpDelegate> {
+    CustomAlertView *customAlert;
+}
+
+@property (nonatomic, strong) NSArray *conversations;
+@property (nonatomic, strong) Message *selectedMessage;
 
 @end
 
@@ -16,12 +30,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    customAlert = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
+    customAlert.delegate = self;
+    [self loadConversations];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,70 +42,89 @@
 
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100.0f;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.conversations.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    NotificationCell *cell = (NotificationCell*)[tableView dequeueReusableCellWithIdentifier:messageCellID forIndexPath:indexPath];
+    
+    Message *message = [self messageForIndex:indexPath.row];
     
     // Configure the cell...
     
+    [cell.userImage sd_setImageWithURL:message.fromUserInfo.avatarFile.filePathURL];
+    cell.lblDate.text = message.dateCreatedFormatted;
+    cell.lblUserName.text = message.fromUserInfo.appUserName;
+    cell.contentLabel.text = message.subject;
+    
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    self.selectedMessage = self.conversations[indexPath.row];
+    
+    [self performSegueWithIdentifier:@"toConversation" sender:nil];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (Message*)messageForIndex:(NSInteger)index {
+    return self.conversations[index];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)configureCellText:(NotificationCell*)cell withMessage:(Message*)message {
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"toConversation"]) {
+        ConversationDetailViewController *cdvc = [segue destinationViewController];
+        cdvc.message = self.selectedMessage;
+    }
 }
-*/
+
+#pragma mark - Server Interaction
+
+- (void)loadConversations {
+    defwself
+    [DFClient makeRequest:APIPathGetMessages
+                   method:RKRequestMethodGET
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, id result) {
+                      defsself
+                      if ([result isKindOfClass:[NSArray class]]) {
+                          sself.conversations = result;
+                      } else {
+                          sself.conversations = @[result];
+                      }
+                      [sself.tableView reloadData];
+                  }
+                  failure:^(NSError *error) {
+                      defsself
+                      [customAlert showAlertWithMessage:NSLocalizedString(@"Could not load conversations.  Try again?", nil) inView:sself.view withTag:0];
+                  }];
+}
+
+#pragma mark - PopUpDelegate
+
+- (void)okayButtonTappedWithTag:(NSInteger)tag {
+    [self loadConversations];
+}
 
 @end

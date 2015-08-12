@@ -12,7 +12,6 @@
 
 @interface HomeViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,strong)IBOutlet UILabel * alertCountLabel;
 //@property (nonatomic,strong)IBOutlet UIImageView * userPicture;
 @property (nonatomic,strong)NSArray * imageNames;
 @property(nonatomic,retain)CustomAlertView * customAlert;

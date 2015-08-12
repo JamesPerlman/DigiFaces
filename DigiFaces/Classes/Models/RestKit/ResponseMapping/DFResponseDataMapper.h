@@ -29,6 +29,8 @@
 - (RKObjectMapping*)isUserNameAvailableResponseMapping;
 - (RKObjectMapping*)commentMapping;
 - (RKObjectMapping*)markUpMapping;
+- (RKObjectMapping*)messageMapping;
+- (RKObjectMapping*)messageMappingRecursive;
 - (RKObjectMapping*)moduleMapping;
 - (RKObjectMapping*)notificationMapping;
 - (RKObjectMapping*)projectMapping;

@@ -19,6 +19,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.unreadIndicator.layer.cornerRadius = self.unreadIndicator.frame.size.height/2.0f;
+    self.unreadIndicator.clipsToBounds = true;
+    
 }
 
 -(void)setFiles:(NSArray *)files
@@ -40,6 +43,7 @@
     NSInteger xOffset= 0;
     for (File * file in _files) {
         UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 0, _scrollView.frame.size.height, _scrollView.frame.size.height)];
+        iv.clipsToBounds = true;
         [_scrollView addSubview:iv];
         xOffset += _scrollView.frame.size.height;
     }

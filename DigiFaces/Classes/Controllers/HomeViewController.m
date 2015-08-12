@@ -21,29 +21,19 @@
 #import "DiaryTheme.h"
 #import "DiaryThemeViewController.h"
 #import "HomeTableViewCell.h"
-#import <WYPopoverController/WYPopoverController.h>
 #import "APIHomeAnnouncementResponse.h"
 #import "APIAlertCounts.h"
-#import "MessagesMenuTableViewController.h"
+#import "HomeRootViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
-#import "NotificationsViewController.h"
-#import "AnnouncementsTableViewController.h"
 
-@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, MessagesMenuDelegate, NotificationVCDelegate, AnnouncementsVCDelegate>
+@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate>
 {
     ProfilePicCell * picCell;
+    __block BOOL loaded;
 }
 @property (nonatomic ,retain) NSArray * dataArray;
-
-@property (nonatomic, strong) MessagesMenuTableViewController *messagesVC;
-
-@property (nonatomic, weak) IBOutlet UIButton *messagesButton;
-
-
-@property (nonatomic, strong) WYPopoverController *popover;
-
 @end
 
 @implementation HomeViewController
@@ -51,6 +41,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar
@@ -74,18 +67,13 @@
                   forControlEvents:UIControlEventValueChanged];
     
     
-    self.messagesVC = [[MessagesMenuTableViewController alloc] init];
-    self.messagesVC.delegate = self;
-    self.alertCountLabel.layer.cornerRadius = self.alertCountLabel.frame.size.height/2.0f;
-    self.alertCountLabel.clipsToBounds = true;
-    self.alertCountLabel.hidden = true;
 }
 
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    [self.tableView reloadData];
+    [super viewDidAppear:animated];
+    //[self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -170,6 +158,10 @@
                   success:^(NSDictionary *response, UserInfo *result) {
                       LS.myUserInfo = result;
                       defsself
+                      loaded = true;
+                      
+                      self.tableView.delegate = self;
+                      self.tableView.dataSource = self;
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       
                       [sself setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:nil];
@@ -250,6 +242,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
+    if (!loaded) return 0;
+    
     return _dataArray.count + 1 + LS.myUserInfo.currentProject.hasDailyDiary.integerValue;
 }
 
@@ -263,7 +257,10 @@
     }
     else
     {
+        HomeTableViewCell *cell = (HomeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+        cell.unreadItemIndicator.hidden = false;
         [self performSegueWithIdentifier:@"diaryTheme" sender:self];
+        
     }
 }
 
@@ -342,12 +339,6 @@
         DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row - 1 - LS.myUserInfo.currentProject.hasDailyDiary.integerValue];
         themeController.diaryTheme = theme;
         themeController.navigationItem.title = theme.activityTitle;
-    } else if ([[segue identifier] isEqualToString:@"toNotifications"]) {
-        NotificationsViewController *nvc = [segue destinationViewController];
-        nvc.delegate = self;
-    } else if ([[segue identifier] isEqualToString:@"toAnnouncements"]) {
-        AnnouncementsTableViewController *atvc = [segue destinationViewController];
-        atvc.delegate = self;
     }
 }
 
@@ -373,55 +364,9 @@
                 urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
                bodyParams:nil success:^(NSDictionary *response, APIAlertCounts *result) {
                    defsself
-                   sself.alertCountLabel.hidden = !(result.totalUnreadCount.boolValue);
-                   sself.alertCountLabel.text = [NSString stringWithFormat:@" %@ ", result.totalUnreadCount];
-                   [sself.messagesVC setAlertCounts:result];
+                   [sself.homeRootViewController setAlertCounts:result];
                }
                   failure:nil];
 }
 
-- (WYPopoverController*)popover {
-    if (!_popover) {
-        _popover = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
-        _popover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 120.0f);
-
-    }
-    return _popover;
-}
-
-- (IBAction)didTapAlerts:(id)sender {
-    if (self.popover)
-     [self.popover presentPopoverFromRect:[self.view convertRect:self.messagesButton.bounds fromView:self.messagesButton] inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
-    
-}
-
-- (void)didTapAnnouncements {
-    [self performSegueWithIdentifier:@"toAnnouncements" sender:nil];
-    [self.popover dismissPopoverAnimated:YES];
-}
-
-- (void)didTapConversations {
-    
-    [self.popover dismissPopoverAnimated:YES];
-}
-
-- (void)didTapNotifications {
-    
-    [self performSegueWithIdentifier:@"toNotifications" sender:nil];
-    [self.popover dismissPopoverAnimated:YES];
-    
-}
-
-#pragma mark - messages delegate callbacks
-- (void)setUnreadNotifications:(NSNumber *)count {
-    self.messagesVC.alertCounts.notificationsUnreadCount = count;
-    [self refreshAlertCounts];
-}
-
-- (void)refreshAlertCounts {
-    APIAlertCounts *ac = self.messagesVC.alertCounts;
-    ac.totalUnreadCount = @(ac.notificationsUnreadCount.intValue + ac.messagesUnreadCount.intValue + ac.announcementUnreadCount.intValue);
-    self.alertCountLabel.text = [NSString stringWithFormat:@" %@ ", ac.totalUnreadCount];
-    [self.messagesVC.tableView reloadData];
-}
 @end

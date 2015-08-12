@@ -12,13 +12,14 @@
 #import "Announcement.h"
 #import "AnnouncementCell.h"
 #import "UILabel+setHTML.h"
+#import "ProjectIntroViewController.h"
 
 @interface AnnouncementsTableViewController () {
     CustomAlertView *customAlert;
 }
 
 @property (nonatomic, strong) NSArray *announcements;
-
+@property (nonatomic, strong) Announcement *announcement;
 @end
 
 
@@ -36,6 +37,7 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self getAnnouncements];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,7 +51,8 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
     defwself
     [DFClient makeRequest:APIPathProjectGetAnnouncements
                    method:kGET
-                   params:@{@"projectId" : LS.myUserInfo.currentProjectId}
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
+               bodyParams:nil
                   success:^(NSDictionary *response, id result) {
                       defsself
                       
@@ -94,48 +97,24 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.announcement = _announcements[indexPath.row];
+    [self performSegueWithIdentifier:@"toAnnouncement" sender:nil];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if ([[segue identifier] isEqualToString:@"toAnnouncement"]) {
+        ProjectIntroViewController *pivc = (ProjectIntroViewController*)[segue destinationViewController];
+        pivc.announcement = self.announcement;
+    }
+    
 }
-*/
 
 @end

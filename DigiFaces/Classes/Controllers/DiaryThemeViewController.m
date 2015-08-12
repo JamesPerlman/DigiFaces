@@ -62,6 +62,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
     if (_currentResponseIndex) {
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_currentResponseIndex.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -175,7 +176,7 @@
                       defsself
                       NSInteger responseCount;
                       if ([result isKindOfClass:[NSArray class]]) {
-                         responseCount = [result count];
+                          responseCount = [result count];
                           sself.diaryTheme.responses = result;
                       } else if ([result isKindOfClass:[Response class]]) {
                           responseCount = 1;
@@ -192,12 +193,23 @@
                       [sself addDiaryThemeResponsesToDataArray];
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself markThisActivityRead];
                       
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }];
+}
+
+- (void)markThisActivityRead {
+    [DFClient makeRequest:APIPathProjectMarkActivityRead
+                   method:kPOST
+                urlParams:@{@"activityId" : _diaryTheme.activityId}
+               bodyParams:nil
+                  success:^(NSDictionary *response, id result) {
+                      _diaryTheme.isRead = @YES;
+                  } failure:nil];
 }
 
 - (IBAction)closeThis:(id)sender {
@@ -239,7 +251,7 @@
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
                 cell = vidCell;
                 if (module.displayFile.file) {
-                    [vidCell.imageView setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
+                    [vidCell.imageView sd_setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
                     vidCell.videoIndicatorView.hidden = false;
                 } else {
                     vidCell.videoIndicatorView.hidden = true;
@@ -269,11 +281,12 @@
         }
         else if ([module themeType] == ThemeTypeMarkup){
             
-            cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+            RTCell *textCell = (RTCell*)[tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
             
-            [cell.textLabel setText:@"You must use your computer to complete this theme"];
-            [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
-            [cell.textLabel setNumberOfLines:0];
+            
+            [textCell.bodyLabel setText:@"You must use your computer to complete this theme"];
+            [textCell.bodyLabel setTextAlignment:NSTextAlignmentCenter];
+            cell = textCell;
         }
     }
     else if ([[_cellsArray objectAtIndex:indexPath.row] isKindOfClass:[NSString class]]){
@@ -292,7 +305,9 @@
         [responseCell.lblName setText:response.userInfo.appUserName];
         [responseCell.lblTime setText:response.dateCreatedFormatted];
         [responseCell setImageCircular];
-        [responseCell.btnComments setTitle:[NSString stringWithFormat:@"%d Comment%@", response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
+        [responseCell.btnComments setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d Comment%@", nil), (int)response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
+        
+        responseCell.unreadIndicator.hidden = !response.isRead.boolValue;
         
         if (response.imageGalleryResponses.count>0) {
             ImageGalleryResponse * imageGalleryResponse = response.imageGalleryResponses.firstObject;
@@ -317,13 +332,13 @@
         [responseCell layoutIfNeeded];
         
         /*
-        NSInteger height = 105 + MIN(size.height + 5, 50);
-        
-        if (response.files.count>0) {
-            height += 55;
-        }
-        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
-        */
+         NSInteger height = 105 + MIN(size.height + 5, 50);
+         
+         if (response.files.count>0) {
+         height += 55;
+         }
+         [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
+         */
         
         cell = responseCell;
     }
@@ -355,7 +370,24 @@
     }
     else if ([object isKindOfClass:[Response class]]){
         [self performSegueWithIdentifier:@"responseSegue" sender:self];
+        ResponseViewCell *cell = (ResponseViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+        Response *response = [_cellsArray objectAtIndex:indexPath.row];
+        cell.unreadIndicator.hidden = true;
     }
+}
+
+
+- (void)markResponseRead:(Response*)response completion:(void(^)(void))done {
+    [DFClient makeRequest:APIPathActivityMarkThreadRead
+                   method:kPOST
+                urlParams:@{@"threadId" : response.threadId}
+               bodyParams:nil
+                  success:^(NSDictionary *d, id result) {
+                      response.isRead = @YES;
+                      if(done) {
+                          done();
+                      }
+                  } failure:nil];
 }
 
 -(CGFloat)heightForComment:(NSString*)comment
