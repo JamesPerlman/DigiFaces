@@ -24,12 +24,7 @@
         [v removeFromSuperview];
     }
     
-    self.leftButton.hidden = true;
-    if (_files.count < 2) {
-        self.rightButton.hidden = true;
-    } else {
-        self.rightButton.hidden = false;
-    }
+    [self showArrowButtonsAsNeeded];
     for (File * file in _files) {
         UIButton * imageView = [self getImageWithFile:file];
         imageView.tag = tag++;
@@ -79,6 +74,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
+            [sself showArrowButtonsAsNeeded];
         });
         
     };
@@ -109,6 +105,25 @@
     }
 }
 
+
+- (void)showArrowButtonsAsNeeded {
+    CGFloat w = self.scrollView.frame.size.width;
+    CGFloat x = self.scrollView.contentOffset.x;
+    if (roundf(x/w) == self.files.count-1) {
+        self.rightButton.hidden = true;
+    } else {
+       self.rightButton.hidden = false;
+    }
+    
+    if (roundf(x/w) == 0) {
+        self.leftButton.hidden = true;
+    } else {
+        self.leftButton.hidden = false;
+    }
+
+}
+
+#pragma mark - IBActions
 - (IBAction)goLeft:(id)sender {
     CGFloat w = self.scrollView.frame.size.width;
     CGFloat newx = self.scrollView.contentOffset.x-w;
@@ -129,6 +144,11 @@
         self.rightButton.hidden = true;
     }
     self.leftButton.hidden = false;
+}
+
+#pragma mark - Scroll View Delegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self showArrowButtonsAsNeeded];
 }
 
 @end

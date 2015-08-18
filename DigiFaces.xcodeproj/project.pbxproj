@@ -309,23 +309,6 @@
 		4ACDB9951B3E7E66009EFB91 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		4ACDB9961B3E7E66009EFB91 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		4ACDB9971B3E7E66009EFB91 /* DFConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFConstants.h; sourceTree = "<group>"; };
-		4ACDB9991B3E7E66009EFB91 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
-		4ACDB99A1B3E7E66009EFB91 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
-		4ACDB99B1B3E7E66009EFB91 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB99C1B3E7E66009EFB91 /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
-		4ACDB99D1B3E7E66009EFB91 /* UIAlertView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB99E1B3E7E66009EFB91 /* UIAlertView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+AFNetworking.m"; sourceTree = "<group>"; };
-		4ACDB99F1B3E7E66009EFB91 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB9A01B3E7E66009EFB91 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AFNetworking.m"; sourceTree = "<group>"; };
-		4ACDB9A11B3E7E66009EFB91 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB9A21B3E7E66009EFB91 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		4ACDB9A31B3E7E66009EFB91 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB9A41B3E7E66009EFB91 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB9A51B3E7E66009EFB91 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
-		4ACDB9A61B3E7E66009EFB91 /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB9A71B3E7E66009EFB91 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
-		4ACDB9A81B3E7E66009EFB91 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
-		4ACDB9A91B3E7E66009EFB91 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		4ACDB9AA1B3E7E66009EFB91 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		4ACDB9AB1B3E7E66009EFB91 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		4ACDB9EB1B3E8366009EFB91 /* DiaryInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryInfoViewController.h; sourceTree = "<group>"; };
@@ -688,7 +671,6 @@
 				4ACDB97F1B3E7E66009EFB91 /* MBProgressHUD.h */,
 				4ACDB9801B3E7E66009EFB91 /* MBProgressHUD.m */,
 				4ACDB9811B3E7E66009EFB91 /* MWFeedParser */,
-				4ACDB9981B3E7E66009EFB91 /* UIKit+AFNetworking */,
 				4ACDB9AA1B3E7E66009EFB91 /* Utility.h */,
 				4ACDB9AB1B3E7E66009EFB91 /* Utility.m */,
 				4ACDB9971B3E7E66009EFB91 /* DFConstants.h */,
@@ -723,30 +705,6 @@
 				4ACDB9961B3E7E66009EFB91 /* RootViewController.m */,
 			);
 			path = MWFeedParser;
-			sourceTree = "<group>";
-		};
-		4ACDB9981B3E7E66009EFB91 /* UIKit+AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				4ACDB9991B3E7E66009EFB91 /* AFNetworkActivityIndicatorManager.h */,
-				4ACDB99A1B3E7E66009EFB91 /* AFNetworkActivityIndicatorManager.m */,
-				4ACDB99B1B3E7E66009EFB91 /* UIActivityIndicatorView+AFNetworking.h */,
-				4ACDB99C1B3E7E66009EFB91 /* UIActivityIndicatorView+AFNetworking.m */,
-				4ACDB99D1B3E7E66009EFB91 /* UIAlertView+AFNetworking.h */,
-				4ACDB99E1B3E7E66009EFB91 /* UIAlertView+AFNetworking.m */,
-				4ACDB99F1B3E7E66009EFB91 /* UIButton+AFNetworking.h */,
-				4ACDB9A01B3E7E66009EFB91 /* UIButton+AFNetworking.m */,
-				4ACDB9A11B3E7E66009EFB91 /* UIImageView+AFNetworking.h */,
-				4ACDB9A21B3E7E66009EFB91 /* UIImageView+AFNetworking.m */,
-				4ACDB9A31B3E7E66009EFB91 /* UIKit+AFNetworking.h */,
-				4ACDB9A41B3E7E66009EFB91 /* UIProgressView+AFNetworking.h */,
-				4ACDB9A51B3E7E66009EFB91 /* UIProgressView+AFNetworking.m */,
-				4ACDB9A61B3E7E66009EFB91 /* UIRefreshControl+AFNetworking.h */,
-				4ACDB9A71B3E7E66009EFB91 /* UIRefreshControl+AFNetworking.m */,
-				4ACDB9A81B3E7E66009EFB91 /* UIWebView+AFNetworking.h */,
-				4ACDB9A91B3E7E66009EFB91 /* UIWebView+AFNetworking.m */,
-			);
-			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
 		7635E5FD8D52F1B9E96DE8C9 /* Frameworks */ = {

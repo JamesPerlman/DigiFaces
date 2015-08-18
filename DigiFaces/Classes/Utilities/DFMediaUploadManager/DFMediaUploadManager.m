@@ -18,7 +18,9 @@
 #import <AWSCore/AWSCore.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface DFMediaUploadManager ()<UIImagePickerControllerDelegate,  UINavigationControllerDelegate, UIActionSheetDelegate, DFMediaUploadViewDelegate> {
+#import <QBImagePickerController/QBImagePickerController.h>
+
+@interface DFMediaUploadManager ()<QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, DFMediaUploadViewDelegate> {
     void (^_uploadCompletionBlock)(BOOL success);
     BOOL _uploading;
 }
@@ -40,16 +42,22 @@
         AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:kS3DefaultServiceRegionType
                                                                              credentialsProvider:credentialsProvider];
         AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
+        
+        self.maximumNumberOfSelection = 1;
     }
     return self;
 }
 
+- (void)presentMediaSelectionDialog {
+    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Image" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Photo Library", nil];
+    [actionSheet showInView:((UIViewController*)self.viewController).view];
+}
+
 #pragma mark - DFMediaUploadViewDelegate
 - (void)didTapMediaUploadView:(DFMediaUploadView *)view {
+    
     if ([self.delegate respondsToSelector:@selector(mediaUploadManager:shouldHandleTapForMediaUploadView:)]) {
-        
         if (![self.delegate mediaUploadManager:self shouldHandleTapForMediaUploadView:view]) {
-            
             return;
         }
     }
@@ -58,32 +66,61 @@
     if (view.error) {
         [self uploadMediaFileForView:view];
         view.error = false;
-    } else {
-        UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Image" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Photo Library", nil];
-        [actionSheet showInView:((UIViewController*)self.viewController).view];
+    } else if (!view.hasMedia) {
+        [self presentMediaSelectionDialog];
     }
 }
 #pragma mark - UIActionSheetDelegate
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    UIImagePickerControllerSourceType type;
+    if (!self.currentView) {
+        for (DFMediaUploadView *view in self.mediaUploadViews) {
+            if (!view.hidden) {
+                self.currentView = view;
+                break;
+            }
+        }
+    }
     if (buttonIndex == 0 && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // Camera
-        type = UIImagePickerControllerSourceTypeCamera;
+        [self initializeCameraImagePicker];
     }
     else if (buttonIndex == 1){
         // Library
-        type = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self initializeQBImagePicker];
     }
     else{
         return;
     }
-    [self initializeImagePickerWithSourceType:type];
+    //    [self initializeImagePickerWithSourceType:type];
 }
--(void)initializeImagePickerWithSourceType:(UIImagePickerControllerSourceType)type
+
+#pragma mark - ImagePicker initialization
+
+-(void)initializeQBImagePicker
+{
+    _qbImagePickerController = nil;
+    NSArray *mediaTypes = @[];
+    if (self.currentView.allowsVideo) {
+        mediaTypes = @[@(PHAssetCollectionSubtypeSmartAlbumVideos)];
+    }
+    
+    if (self.currentView.allowsPhoto) {
+        mediaTypes = [mediaTypes arrayByAddingObject:@(PHAssetCollectionSubtypeSmartAlbumUserLibrary)];
+    }
+    
+    if (mediaTypes.count) {
+        self.qbImagePickerController.assetCollectionSubtypes = mediaTypes;
+        [self.viewController presentViewController:self.qbImagePickerController animated:YES completion:nil];
+    }
+    
+    self.qbImagePickerController.maximumNumberOfSelection = self.maximumNumberOfSelection;
+    
+}
+-(void)initializeCameraImagePicker
 {
     
-    self.imagePickerController.sourceType = type;
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.imagePickerController.allowsEditing = YES;
     NSArray *mediaTypes = @[];
     if (self.currentView.allowsVideo) {
@@ -110,72 +147,71 @@
     return _imagePickerController;
 }
 
+
+- (void)updateMediaView:(DFMediaUploadView*)mediaView withImage:(UIImage*)image data:(NSData*)data type:(DFMediaUploadType)mediaType {
+    
+    // delete old file
+    if (mediaView.hasMedia && mediaView.mediaFilePath) {
+        NSFileManager *mgr = [NSFileManager defaultManager];
+        if ([mgr fileExistsAtPath:mediaView.mediaFilePath]) {
+            [mgr removeItemAtPath:mediaView.mediaFilePath error:nil];
+        }
+    }
+    
+    
+    NSString * filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[Utility getUniqueId]];
+    
+    NSData *mediaData = data;
+    
+    if (mediaType == DFMediaUploadTypeImage) {
+        mediaData = UIImageJPEGRepresentation(image, 0.9f);
+    }
+    
+    
+    if ([mediaData writeToFile:filePath atomically:YES]) {
+        mediaView.image = image;
+        mediaView.hasMedia = true;
+        mediaView.mediaFilePath = filePath;
+        mediaView.uploadType = mediaType;
+    } else {
+        // handle error
+        mediaView.hasMedia = false;
+        mediaView.image = nil;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(mediaUploadManager:didSelectMediaForView:)]) {
+        [self.delegate mediaUploadManager:self didSelectMediaForView:mediaView];
+    }
+    
+}
+
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
     UIImage *image = info[UIImagePickerControllerEditedImage];
     
-    NSData *mediaData;
-    
-    NSString * filePath = NSTemporaryDirectory();
-    
-    DFMediaUploadType uploadType;
-    
-    // delete old file
-    if (self.currentView.hasMedia) {
-        [[NSFileManager defaultManager] removeItemAtPath:self.currentView.mediaFilePath error:nil];
-    }
     
     if ([mediaType isEqualToString:(NSString*)kUTTypeImage]){
-        uploadType = DFMediaUploadTypeImage;
         
-        mediaData = UIImageJPEGRepresentation(image, 0.9f);
-        filePath = [filePath stringByAppendingPathComponent:[Utility getUniqueId]];
-        filePath = [filePath stringByAppendingPathExtension:@"jpg"];
-        NSLog(@"found a photo.  saving to: %@", filePath);
+        [self updateMediaView:self.currentView withImage:image data:nil type:DFMediaUploadTypeImage];
     }
     
     else if ([mediaType isEqualToString:(NSString*)kUTTypeMovie]){
-        uploadType = DFMediaUploadTypeVideo;
         
         NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
         
-        NSLog(@"found a video.  saving to: %@", videoURL);
-        
-        mediaData = [NSData dataWithContentsOfURL:videoURL];
-        
-        filePath = [filePath stringByAppendingPathComponent:[Utility getUniqueId]];
-        filePath = [filePath stringByAppendingPathExtension:videoURL.pathExtension];
+        NSData *mediaData = [NSData dataWithContentsOfURL:videoURL];
         
         // get video preview
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
-        AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-        gen.appliesPreferredTrackTransform = YES;
-        CMTime time = CMTimeMakeWithSeconds(0.0, 600);
-        NSError *error = nil;
-        CMTime actualTime;
+        image = [self imageForAVURLAsset:asset];
         
-        CGImageRef cgImage = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-        image = [[UIImage alloc] initWithCGImage:cgImage];
-        CGImageRelease(cgImage);
+        [self updateMediaView:self.currentView withImage:image data:mediaData type:DFMediaUploadTypeVideo];
         
     } else return;
     
-    
-    if ([mediaData writeToFile:filePath atomically:YES]) {
-        self.currentView.image = image;
-        self.currentView.hasMedia = true;
-        self.currentView.mediaFilePath = filePath;
-        self.currentView.uploadType = uploadType;
-    } else {
-        // handle error
-        self.currentView.hasMedia = false;
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(mediaUploadManager:didSelectMediaForView:)]) {
-        [self.delegate mediaUploadManager:self didSelectMediaForView:self.currentView];
-    }
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     
@@ -186,6 +222,88 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     self.currentView = nil;
 }
+
+#pragma mark - QBImagePickerController
+
+
+- (QBImagePickerController*)qbImagePickerController {
+    if (!_qbImagePickerController) {
+        _qbImagePickerController = [[QBImagePickerController alloc] init];
+        _qbImagePickerController.delegate = self;
+        _qbImagePickerController.allowsMultipleSelection = true;
+        _qbImagePickerController.showsNumberOfSelectedAssets = true;
+        _qbImagePickerController.mediaType = QBImagePickerMediaTypeAny;
+    }
+    
+    return _qbImagePickerController;
+}
+
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+    
+    PHImageManager *imageManager = [PHImageManager defaultManager];
+    for (PHAsset *asset in assets) {
+        
+        // get next available media view
+        DFMediaUploadView *targetView = nil;
+        for (DFMediaUploadView *mediaUploadView in self.mediaUploadViews) {
+            if (!mediaUploadView.hasMedia && !mediaUploadView.hidden) {
+                targetView = mediaUploadView;
+                break;
+            }
+        }
+        
+        if (targetView) {
+            CGSize assetSize = CGSizeMake((CGFloat)asset.pixelWidth, (CGFloat)asset.pixelHeight);
+            
+            // if it's a photo...
+            if (asset.mediaType == PHAssetMediaTypeImage) {
+                targetView.hasMedia = true;
+                // request UIImage for PHAsset
+                
+                PHImageRequestOptions *options = [[PHImageRequestOptions alloc]init];
+                options.synchronous  = YES;
+                defwself
+                [imageManager requestImageForAsset:asset
+                                        targetSize:assetSize
+                                       contentMode:PHImageContentModeDefault
+                                           options:options
+                                     resultHandler:^(UIImage *result, NSDictionary *info) {
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             defsself
+                                             if (sself) {
+                                                 [sself updateMediaView:targetView withImage:result data:nil type:DFMediaUploadTypeImage];
+                                             }
+                                         });
+                                     }];
+                
+            }
+            // if it's a video...
+            else if (asset.mediaType == PHAssetMediaTypeVideo) {
+                targetView.hasMedia = true;
+                // request AVAsset for PHAsset
+                
+                PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc]init];
+                defwself
+                [imageManager requestAVAssetForVideo:asset
+                                             options:options
+                                       resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+                                           AVURLAsset *urlAsset = (AVURLAsset*)asset;
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               defsself
+                                               UIImage *image = [sself imageForAVURLAsset:urlAsset];
+                                               NSData *mediaData = [NSData dataWithContentsOfURL:urlAsset.URL];
+                                               [sself updateMediaView:targetView withImage:image data:mediaData type:DFMediaUploadTypeVideo];
+                                           });
+                                       }];
+            }
+        }
+    }
+    [imagePickerController dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
+    [imagePickerController dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Media Uploading
 
 - (void)uploadMediaFiles {
@@ -206,6 +324,7 @@
     for (DFMediaUploadView *nextView in self.mediaUploadViews) {
         if ([self uploadMediaFileForView:nextView]) return;
     }
+    
     // if the code has gotten this far, it means all uploads are done.
     
     if ([self.delegate respondsToSelector:@selector(mediaUploadManagerDidFinishAllUploads:)]) {
@@ -229,6 +348,7 @@
     }
     return false;
 }
+
 - (BOOL)isUploadingDone {
     int i = 0;
     int n = 0;
@@ -436,7 +556,41 @@
     mediaUploadView.uploaded = true;
     mediaUploadView.uploading = false;
     
+    // delete the file for this view
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *filePath = mediaUploadView.mediaFilePath;
+    if ([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:nil];
+    }
+    
     [self uploadNextMediaFile];
 }
 
+
+#pragma mark - Helper Methods
+
+- (UIImage*)imageForAVURLAsset:(AVURLAsset*)asset {
+    AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    gen.appliesPreferredTrackTransform = YES;
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    NSError *error = nil;
+    CMTime actualTime;
+    
+    CGImageRef cgImage = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    UIImage *image = [[UIImage alloc] initWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    
+    return image;
+}
+
+- (NSInteger)numberOfUnusedMediaViews {
+    NSInteger n = 0;
+    for (DFMediaUploadView *view in self.mediaUploadViews) {
+        if (!view.hasMedia && !view.hidden) {
+            ++n;
+        }
+    }
+    
+    return n;
+}
 @end

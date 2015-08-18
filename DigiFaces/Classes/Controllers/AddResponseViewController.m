@@ -71,17 +71,20 @@
     _alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
     _alertView.delegate = self;
     
+    Module * imageGalleryModule = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
+    if (!imageGalleryModule) {
+        self.mediaUploadManager.maximumNumberOfSelection = 4;
+    }
     if (_diaryTheme) {
         _constDateHeight.constant = 0;
         _constTitleHeight.constant = 0;
         
-        if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery])   {
+        if (imageGalleryModule)   {
             profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfilePictureCollectionViewController"];
             
             profileController.type = ProfilePictureTypeGallery;
             profileController.delegate = self;
-            Module * module = [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery];
-            profileController.files = [module.imageGallery files];
+            profileController.files = [imageGalleryModule.imageGallery files];
             profileController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addSubview:profileController.collectionView];
             [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
@@ -390,17 +393,6 @@
     
 }
 
--(void)cacellButtonTappedWithTag:(NSInteger)tag {
-    if (willClose) {
-        willClose = false;
-    }
-}
-
--(void)okayButtonTappedWithTag:(NSInteger)tag {
-    if (willClose) {
-        [self forceClose];
-    }
-}
 
 - (IBAction)closeThis:(id)sender {
     [self resignAllResponders];
@@ -450,6 +442,9 @@
         [_txtTitle resignFirstResponder];
         
         [self setTextActive:false];
+        if ([self.mediaUploadManager numberOfUnusedMediaViews] > 0) {
+            [self.mediaUploadManager presentMediaSelectionDialog];
+        }
     } else {
         [lastFocusedField becomeFirstResponder];
     }
@@ -490,7 +485,21 @@
 
 
 
+#pragma mark - PopUpDelegate
 
+-(void)cacellButtonTappedWithTag:(NSInteger)tag {
+    if (willClose) {
+        willClose = false;
+    } else {
+        [lastFocusedField becomeFirstResponder];
+    }
+}
+
+-(void)okayButtonTappedWithTag:(NSInteger)tag {
+    if (willClose) {
+        [self forceClose];
+    }
+}
 
 #pragma mark- UITextViewDelegate
 -(void)textViewDidChange:(UITextView *)textView

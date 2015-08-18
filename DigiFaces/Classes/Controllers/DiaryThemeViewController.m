@@ -277,6 +277,7 @@
             galleryCell.viewController = self;
             galleryCell.files = module.imageGallery.files;
             [galleryCell reloadGallery];
+            galleryCell.scrollView.delegate = galleryCell;
             cell = galleryCell;
         }
         else if ([module themeType] == ThemeTypeMarkup){

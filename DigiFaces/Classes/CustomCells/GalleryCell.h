@@ -14,7 +14,7 @@
 
 @end
 
-@interface GalleryCell : UITableViewCell
+@interface GalleryCell : UITableViewCell<UIScrollViewDelegate>
 @property (nonatomic, weak) UIViewController *viewController;
 @property (nonatomic, assign) IBOutlet id<GalleryCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
