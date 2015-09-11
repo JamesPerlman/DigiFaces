@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="About" representedClassName="About" syncable="YES">
+        <attribute name="aboutId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="aboutText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="aboutTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="languageCode" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="AboutMe" representedClassName="AboutMe" syncable="YES">
+        <attribute name="aboutMeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="aboutMeText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Announcement" representedClassName="Announcement" syncable="YES">
+        <attribute name="announcementId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+    </entity>
+    <entity name="Company" representedClassName="Company" syncable="YES">
+        <attribute name="baseColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="companyId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logoURL" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DailyDiary" representedClassName="DailyDiary" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="diaryId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="diaryIntroduction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="diaryQuestion" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="file" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+        <relationship name="userDiaries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Diary" syncable="YES"/>
+    </entity>
+    <entity name="DailyDiaryResponse" representedClassName="DailyDiaryResponse" syncable="YES">
+        <attribute name="dailyDiaryId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dailyDiaryResponseId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="diaryDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Diary" representedClassName="Diary" syncable="YES">
+        <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="responseId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+    </entity>
+    <entity name="DiaryTheme" representedClassName="DiaryTheme" syncable="YES">
+        <attribute name="activityDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="activityTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="parentActivityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="unreadResponses" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Module" syncable="YES"/>
+        <relationship name="responses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Response" syncable="YES"/>
+    </entity>
+    <entity name="DisplayFile" representedClassName="DisplayFile" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="displayFileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="fileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="file" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+    </entity>
+    <entity name="DisplayText" representedClassName="DisplayText" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="displayTextId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="File" representedClassName="File" syncable="YES">
+        <attribute name="amazonKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cameraTagKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isAmazonFile" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isCameraTagFile" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isViddlerFile" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="position" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="positionId" optional="YES" attributeType="Integer 64" syncable="YES"/>
+        <attribute name="publicFileUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="viddlerKey" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ImageGallery" representedClassName="ImageGallery" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="galleryIds" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageGalleryId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+    </entity>
+    <entity name="ImageGalleryResponse" representedClassName="ImageGalleryResponse" syncable="YES">
+        <attribute name="galleryIds" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageGalleryId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="imageGalleryResponseId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+    </entity>
+    <entity name="MarkUp" representedClassName="MarkUp" syncable="YES">
+        <attribute name="markupId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="markupUrl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="Message" syncable="YES">
+        <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fromUser" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toUser" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="childMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" syncable="YES"/>
+        <relationship name="fromUserInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+        <relationship name="toUserInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+    </entity>
+    <entity name="Module" representedClassName="Module" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityModuleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="activityTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="moduleId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="displayFile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DisplayFile" syncable="YES"/>
+        <relationship name="displayText" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DisplayText" syncable="YES"/>
+        <relationship name="imageGallery" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ImageGallery" syncable="YES"/>
+        <relationship name="markUp" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MarkUp" syncable="YES"/>
+        <relationship name="textarea" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Textarea" syncable="YES"/>
+    </entity>
+    <entity name="Notification" representedClassName="Notification" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDailyDiaryNotification" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="notificationId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="notificationType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="referenceId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="referenceId2" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="commenterUserInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+    </entity>
+    <entity name="Project" representedClassName="Project" syncable="YES">
+        <attribute name="allowProfilePicUpload" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="companyId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="enableAvatarLibrary" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasDailyDiary" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isTrial" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="languageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="projectEndDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="projectInternalName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectStartDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regionId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="company" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Company" syncable="YES"/>
+        <relationship name="dailyDiary" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DailyDiary" syncable="YES"/>
+    </entity>
+    <entity name="Response" representedClassName="Response" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasImageGalleryResponse" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasTextareaResponse" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isDraft" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" syncable="YES"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+        <relationship name="imageGalleryResponses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ImageGalleryResponse" syncable="YES"/>
+        <relationship name="textareaResponses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TextareaResponse" syncable="YES"/>
+        <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+    </entity>
+    <entity name="Textarea" representedClassName="Textarea" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="maxCharacters" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="placeHolder" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="textareaId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TextareaResponse" representedClassName="TextareaResponse" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="textareaId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Thread" representedClassName="Thread" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isDraft" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="UserInfo" representedClassName="UserInfo" syncable="YES">
+        <attribute name="aboutMeText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="appUserName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avatarFileId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="currentProjectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="defaultLanguageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasRegistered" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isModerator" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isUserNameSet" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginProvider" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="avatarFile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+        <relationship name="currentProject" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Project" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DailyDiary" positionX="63" positionY="99" width="128" height="135"/>
+        <element name="DailyDiaryResponse" positionX="54" positionY="90" width="128" height="150"/>
+        <element name="Diary" positionX="45" positionY="81" width="128" height="180"/>
+        <element name="DiaryTheme" positionX="36" positionY="72" width="128" height="195"/>
+        <element name="DisplayFile" positionX="9" positionY="45" width="128" height="105"/>
+        <element name="DisplayText" positionX="27" positionY="63" width="128" height="90"/>
+        <element name="File" positionX="18" positionY="54" width="128" height="30"/>
+        <element name="ImageGallery" positionX="54" positionY="99" width="128" height="120"/>
+        <element name="ImageGalleryResponse" positionX="45" positionY="90" width="128" height="165"/>
+        <element name="MarkUp" positionX="36" positionY="81" width="128" height="30"/>
+        <element name="Message" positionX="27" positionY="72" width="128" height="225"/>
+        <element name="Module" positionX="18" positionY="63" width="128" height="210"/>
+        <element name="Notification" positionX="9" positionY="54" width="128" height="240"/>
+        <element name="Project" positionX="0" positionY="45" width="128" height="270"/>
+        <element name="Response" positionX="-18" positionY="27" width="128" height="255"/>
+        <element name="Textarea" positionX="45" positionY="90" width="128" height="30"/>
+        <element name="TextareaResponse" positionX="27" positionY="72" width="128" height="30"/>
+        <element name="Thread" positionX="-45" positionY="0" width="128" height="30"/>
+        <element name="UserInfo" positionX="9" positionY="45" width="128" height="315"/>
+        <element name="Company" positionX="9" positionY="117" width="128" height="105"/>
+        <element name="Comment" positionX="18" positionY="126" width="128" height="180"/>
+        <element name="Announcement" positionX="27" positionY="153" width="128" height="150"/>
+        <element name="About" positionX="36" positionY="162" width="128" height="105"/>
+        <element name="AboutMe" positionX="45" positionY="171" width="128" height="105"/>
+    </elements>
+</model>

@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ImageGalleryResponse : NSObject
+@interface ImageGalleryResponse : NSManagedObject
 
 @property (nonatomic, strong) NSNumber * imageGalleryResponseId;
 @property (nonatomic, strong) NSNumber * imageGalleryId;
 @property (nonatomic, strong) NSNumber * threadId;
 @property (nonatomic, retain) NSString * galleryIds;
 @property (nonatomic, retain) NSString * response;
-@property (nonatomic, strong) NSNumber * userId;
+@property (nonatomic, retain) NSString * userId;
 @property (nonatomic, strong) NSNumber * isActive;
 
 

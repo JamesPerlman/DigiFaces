@@ -18,6 +18,5 @@
 
 @property (nonatomic, retain) NSArray * files;
 
--(instancetype) initWithDictionary:(NSDictionary*)dict;
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "UserInfo.h"
 
-@interface Response : NSObject
+@interface Response : NSManagedObject
 
 @property (nonatomic, strong) NSNumber * activityId;
 @property (nonatomic, strong) NSNumber * threadId;

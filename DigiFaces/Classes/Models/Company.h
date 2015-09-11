@@ -10,7 +10,7 @@
 
 @interface Company : NSObject
 
-@property (nonatomic, assign) NSInteger companyID;
+@property (nonatomic, strong) NSNumber * companyId;
 @property (nonatomic, retain) NSString * companyName;
 @property (nonatomic, retain) NSString * logoURL;
 @property (nonatomic, retain) NSString * baseColor;

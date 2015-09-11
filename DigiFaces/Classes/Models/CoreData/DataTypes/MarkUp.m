@@ -1,12 +1,13 @@
 //
 //  MarkUp.m
-//  DigiFaces
+//  
 //
-//  Created by confiz on 17/07/2015.
-//  Copyright (c) 2015 Usasha studio. All rights reserved.
+//  Created by James on 9/11/15.
+//
 //
 
 #import "MarkUp.h"
+
 
 @implementation MarkUp
 

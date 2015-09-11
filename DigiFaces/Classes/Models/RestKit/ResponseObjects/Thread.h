@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Thread : NSObject
+@interface Thread : NSManagedObject
 
 @property (nonatomic, strong) NSNumber *threadId;
 @property (nonatomic, strong) NSNumber *activityId;

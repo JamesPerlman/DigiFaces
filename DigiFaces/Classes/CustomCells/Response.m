@@ -7,8 +7,6 @@
 //
 
 #import "Response.h"
-#import "Comment.h"
-#import "TextAreaResponse.h"
 
 @implementation Response
 /*

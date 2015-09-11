@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        self.companyID = [[dict valueForKey:@"CompanyId"] integerValue];
+        self.companyId = [dict valueForKey:@"CompanyId"];
         self.companyName = [dict valueForKey:@"CompanyName"];
         self.logoURL = [dict valueForKey:@"LogoUrl"];
         self.baseColor = [dict valueForKey:@"BaseColor"];
