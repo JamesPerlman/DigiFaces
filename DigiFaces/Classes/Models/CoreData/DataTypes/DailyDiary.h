@@ -29,3 +29,15 @@
 - (void)removeUserDiaries:(NSSet *)values;
 
 @end
+
+@interface DailyDiary (DynamicMethods)
+
+@property (nonatomic, retain) NSMutableDictionary * diariesDict;
+@property (nonatomic, retain) NSMutableArray * diariesDate;
+
+- (void)checkForUnreadComments;
+- (NSInteger)numberOfUnreadResponses;
+- (instancetype)initWithDictionary:(NSDictionary*)dict;
+- (Diary*)getResponseWithThreadID:(NSNumber*)threadId;
+
+@end

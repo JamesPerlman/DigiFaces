@@ -9,35 +9,47 @@
 #import <Foundation/Foundation.h>
 
 @interface DFResponseDataMapper : NSObject
+
 + (instancetype)sharedInstance;
-- (RKObjectMapping*)aboutMapping;
-- (RKObjectMapping*)aboutMeMapping;
-- (RKObjectMapping*)activityResponseMapping;
+
+@end
+
+@interface DFResponseDataMapper (EntityMapping)
+
+- (RKEntityMapping*)aboutMapping;
+- (RKEntityMapping*)aboutMeMapping;
+- (RKEntityMapping*)activityResponseMapping;
+- (RKEntityMapping*)announcementMapping;
+- (RKEntityMapping*)dailyDiaryMapping;
+- (RKEntityMapping*)dailyDiaryResponseMapping;
+- (RKEntityMapping*)diaryMapping;
+- (RKEntityMapping*)diaryThemeMapping;
+- (RKEntityMapping*)displayTextMapping;
+- (RKEntityMapping*)displayFileMapping;
+- (RKEntityMapping*)fileMapping;
+- (RKEntityMapping*)imageGalleryResponseMapping;
+- (RKEntityMapping*)imageGalleryMapping;
+- (RKEntityMapping*)commentMapping;
+- (RKEntityMapping*)markUpMapping;
+- (RKEntityMapping*)messageMapping;
+- (RKEntityMapping*)messageMappingRecursive;
+- (RKEntityMapping*)moduleMapping;
+- (RKEntityMapping*)notificationMapping;
+- (RKEntityMapping*)projectMapping;
+- (RKEntityMapping*)textareaMapping;
+- (RKEntityMapping*)textareaResponseMapping;
+- (RKEntityMapping*)threadMapping;
+- (RKEntityMapping*)userInfoMapping;
+
+@end
+
+@interface DFResponseDataMapper (ObjectMapping)
+
 - (RKObjectMapping*)alertCountsMapping;
-- (RKObjectMapping*)announcementMapping;
-- (RKObjectMapping*)dailyDiaryMapping;
-- (RKObjectMapping*)dailyDiaryResponseMapping;
-- (RKObjectMapping*)diaryMapping;
-- (RKObjectMapping*)diaryThemeMapping;
-- (RKObjectMapping*)displayTextMapping;
-- (RKObjectMapping*)displayFileMapping;
 - (RKObjectMapping*)emptyResponseMapping;
-- (RKObjectMapping*)fileMapping;
 - (RKObjectMapping*)homeAnnouncementMapping;
-- (RKObjectMapping*)imageGalleryResponseMapping;
-- (RKObjectMapping*)imageGalleryMapping;
 - (RKObjectMapping*)isUserNameAvailableResponseMapping;
-- (RKObjectMapping*)commentMapping;
-- (RKObjectMapping*)markUpMapping;
-- (RKObjectMapping*)messageMapping;
-- (RKObjectMapping*)messageMappingRecursive;
-- (RKObjectMapping*)moduleMapping;
-- (RKObjectMapping*)notificationMapping;
-- (RKObjectMapping*)projectMapping;
 - (RKObjectMapping*)setUserNameResponseMapping;
-- (RKObjectMapping*)textareaMapping;
-- (RKObjectMapping*)textareaResponseMapping;
-- (RKObjectMapping*)threadMapping;
 - (RKObjectMapping*)tokenMapping;
-- (RKObjectMapping*)userInfoMapping;
+
 @end

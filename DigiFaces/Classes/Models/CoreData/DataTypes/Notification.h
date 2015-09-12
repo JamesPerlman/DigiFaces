@@ -28,3 +28,16 @@
 @property (nonatomic, retain) UserInfo *commenterUserInfo;
 
 @end
+
+typedef enum : NSUInteger {
+    NotificationTypeThreadComment,
+    NotificationTypeModeratorMessage,
+    NotificationTypeUnknown
+} NotificationType;
+
+@interface Notification (DynamicMethods)
+
+- (NSString *)usefulMessage;
+- (NotificationType)type;
+
+@end

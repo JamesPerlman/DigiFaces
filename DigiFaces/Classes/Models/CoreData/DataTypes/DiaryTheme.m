@@ -25,3 +25,22 @@
 @dynamic modules;
 
 @end
+
+@implementation DiaryTheme (DynamicMethods)
+
+- (Module*)getModuleWithThemeType:(ThemeType)type
+{
+    for (Module * m in self.modules) {
+        if ([m themeType] == type){
+            return m;
+        }
+    }
+    return nil;
+}
+
+- (NSArray*)sortedResponsesArray {
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"threadId" ascending:NO];
+    return [self.responses sortedArrayUsingDescriptors:@[sortDescriptor]];
+}
+
+@end

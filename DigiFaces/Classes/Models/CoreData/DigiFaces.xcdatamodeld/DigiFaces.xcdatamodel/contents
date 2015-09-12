@@ -64,6 +64,8 @@
         <attribute name="threadId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" syncable="YES"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
         <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
     </entity>
     <entity name="DiaryTheme" representedClassName="DiaryTheme" syncable="YES">
@@ -121,6 +123,9 @@
         <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+    </entity>
+    <entity name="Integer" representedClassName="Integer" syncable="YES">
+        <attribute name="value" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="MarkUp" representedClassName="MarkUp" syncable="YES">
         <attribute name="markupId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -184,6 +189,7 @@
         <attribute name="regionId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="company" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Company" syncable="YES"/>
         <relationship name="dailyDiary" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DailyDiary" syncable="YES"/>
+        <relationship name="dailyDiaryList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Integer" syncable="YES"/>
     </entity>
     <entity name="Response" representedClassName="Response" syncable="YES">
         <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -242,29 +248,30 @@
         <relationship name="currentProject" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DailyDiary" positionX="63" positionY="99" width="128" height="135"/>
-        <element name="DailyDiaryResponse" positionX="54" positionY="90" width="128" height="150"/>
-        <element name="Diary" positionX="45" positionY="81" width="128" height="180"/>
-        <element name="DiaryTheme" positionX="36" positionY="72" width="128" height="195"/>
-        <element name="DisplayFile" positionX="9" positionY="45" width="128" height="105"/>
-        <element name="DisplayText" positionX="27" positionY="63" width="128" height="90"/>
-        <element name="File" positionX="18" positionY="54" width="128" height="30"/>
-        <element name="ImageGallery" positionX="54" positionY="99" width="128" height="120"/>
-        <element name="ImageGalleryResponse" positionX="45" positionY="90" width="128" height="165"/>
-        <element name="MarkUp" positionX="36" positionY="81" width="128" height="30"/>
-        <element name="Message" positionX="27" positionY="72" width="128" height="225"/>
-        <element name="Module" positionX="18" positionY="63" width="128" height="210"/>
-        <element name="Notification" positionX="9" positionY="54" width="128" height="240"/>
-        <element name="Project" positionX="0" positionY="45" width="128" height="270"/>
-        <element name="Response" positionX="-18" positionY="27" width="128" height="255"/>
-        <element name="Textarea" positionX="45" positionY="90" width="128" height="30"/>
-        <element name="TextareaResponse" positionX="27" positionY="72" width="128" height="30"/>
-        <element name="Thread" positionX="-45" positionY="0" width="128" height="30"/>
-        <element name="UserInfo" positionX="9" positionY="45" width="128" height="315"/>
-        <element name="Company" positionX="9" positionY="117" width="128" height="105"/>
-        <element name="Comment" positionX="18" positionY="126" width="128" height="180"/>
-        <element name="Announcement" positionX="27" positionY="153" width="128" height="150"/>
-        <element name="About" positionX="36" positionY="162" width="128" height="105"/>
-        <element name="AboutMe" positionX="45" positionY="171" width="128" height="105"/>
+        <element name="About" positionX="675" positionY="228" width="128" height="105"/>
+        <element name="AboutMe" positionX="675" positionY="-117" width="128" height="105"/>
+        <element name="Announcement" positionX="531" positionY="-123" width="128" height="150"/>
+        <element name="Comment" positionX="648" positionY="765" width="128" height="180"/>
+        <element name="Company" positionX="-371" positionY="45" width="128" height="105"/>
+        <element name="DailyDiary" positionX="43" positionY="441" width="128" height="135"/>
+        <element name="DailyDiaryResponse" positionX="673" positionY="72" width="128" height="150"/>
+        <element name="Diary" positionX="72" positionY="117" width="128" height="210"/>
+        <element name="DiaryTheme" positionX="-153" positionY="156" width="128" height="195"/>
+        <element name="DisplayFile" positionX="-92" positionY="624" width="128" height="105"/>
+        <element name="DisplayText" positionX="-56" positionY="756" width="128" height="90"/>
+        <element name="File" positionX="369" positionY="378" width="128" height="30"/>
+        <element name="ImageGallery" positionX="-72" positionY="852" width="128" height="120"/>
+        <element name="ImageGalleryResponse" positionX="547" positionY="567" width="128" height="165"/>
+        <element name="Integer" positionX="-335" positionY="417" width="128" height="60"/>
+        <element name="MarkUp" positionX="-488" positionY="924" width="128" height="30"/>
+        <element name="Message" positionX="684" positionY="342" width="128" height="225"/>
+        <element name="Module" positionX="-425" positionY="603" width="128" height="210"/>
+        <element name="Notification" positionX="385" positionY="-108" width="128" height="240"/>
+        <element name="Project" positionX="-83" positionY="378" width="128" height="30"/>
+        <element name="Response" positionX="205" positionY="762" width="128" height="255"/>
+        <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>
+        <element name="TextareaResponse" positionX="-110" positionY="969" width="128" height="30"/>
+        <element name="Thread" positionX="673" positionY="15" width="128" height="30"/>
+        <element name="UserInfo" positionX="214" positionY="378" width="128" height="315"/>
     </elements>
 </model>

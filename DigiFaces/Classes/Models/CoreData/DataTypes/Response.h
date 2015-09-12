@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) NSSet *textareaResponses;
 @property (nonatomic, retain) NSSet *imageGalleryResponses;
+//@property (nonatomic, retain) NSSet * tags;
 @end
 
 @interface Response (CoreDataGeneratedAccessors)

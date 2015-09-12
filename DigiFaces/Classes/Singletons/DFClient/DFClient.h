@@ -15,6 +15,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import <RestKit/RestKit.h>
 
 @class APITokenResponse;

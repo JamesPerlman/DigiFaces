@@ -29,3 +29,30 @@
 @dynamic imageGallery;
 
 @end
+
+@implementation Module (DynamicMethods)
+
+-(ThemeType)themeType
+{
+    if ([self.activityType isEqualToString:@"ImageGallery"]) {
+        return ThemeTypeImageGallery;
+    }
+    else if ([self.activityType isEqualToString:@"DisplayImage"]){
+        return ThemeTypeDisplayImage;
+    }
+    else if ([self.activityType isEqualToString:@"DisplayText"]){
+        return ThemeTypeDisplayText;
+    }
+    else if ([self.activityType isEqualToString:@"Markup"]){
+        return ThemeTypeMarkup;
+    }
+    else if ([self.activityType isEqualToString:@"Textarea"]){
+        return ThemeTypeTextArea;
+    }
+    else if ([self.activityType isEqualToString:@"VideoResponse"]) {
+        return ThemeTypeVideoResponse;
+    }
+    return ThemeTypeNone;
+}
+
+@end

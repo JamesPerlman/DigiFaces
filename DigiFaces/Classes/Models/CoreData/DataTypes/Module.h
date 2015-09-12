@@ -26,3 +26,9 @@
 @property (nonatomic, retain) ImageGallery *imageGallery;
 
 @end
+
+@interface Module (DynamicMethods)
+
+-(ThemeType)themeType;
+
+@end

@@ -2,13 +2,14 @@
 //  Project.m
 //  
 //
-//  Created by James on 9/11/15.
+//  Created by James on 9/12/15.
 //
 //
 
 #import "Project.h"
 #import "Company.h"
 #import "DailyDiary.h"
+#import "Integer.h"
 
 
 @implementation Project
@@ -28,5 +29,6 @@
 @dynamic regionId;
 @dynamic dailyDiary;
 @dynamic company;
+@dynamic dailyDiaryList;
 
 @end

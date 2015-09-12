@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class UserInfo;
+@class Comment, File, UserInfo;
 
 @interface Diary : NSManagedObject
 
@@ -22,5 +22,27 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) UserInfo *userInfo;
+@property (nonatomic, retain) NSSet *files;
+@property (nonatomic, retain) NSSet *comments;
+@end
+
+@interface Diary (CoreDataGeneratedAccessors)
+
+- (void)addFilesObject:(File *)value;
+- (void)removeFilesObject:(File *)value;
+- (void)addFiles:(NSSet *)values;
+- (void)removeFiles:(NSSet *)values;
+
+- (void)addCommentsObject:(Comment *)value;
+- (void)removeCommentsObject:(Comment *)value;
+- (void)addComments:(NSSet *)values;
+- (void)removeComments:(NSSet *)values;
+
+@end
+
+@interface Diary (DynamicMethods)
+
+-(NSInteger)picturesCount;
+-(NSInteger)videosCount;
 
 @end

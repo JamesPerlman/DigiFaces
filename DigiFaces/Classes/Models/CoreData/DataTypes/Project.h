@@ -2,14 +2,14 @@
 //  Project.h
 //  
 //
-//  Created by James on 9/11/15.
+//  Created by James on 9/12/15.
 //
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Company, DailyDiary;
+@class Company, DailyDiary, Integer;
 
 @interface Project : NSManagedObject
 
@@ -28,5 +28,14 @@
 @property (nonatomic, retain) NSNumber * regionId;
 @property (nonatomic, retain) DailyDiary *dailyDiary;
 @property (nonatomic, retain) Company *company;
+@property (nonatomic, retain) NSSet *dailyDiaryList;
+@end
+
+@interface Project (CoreDataGeneratedAccessors)
+
+- (void)addDailyDiaryListObject:(Integer *)value;
+- (void)removeDailyDiaryListObject:(Integer *)value;
+- (void)addDailyDiaryList:(NSSet *)values;
+- (void)removeDailyDiaryList:(NSSet *)values;
 
 @end

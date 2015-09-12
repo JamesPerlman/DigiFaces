@@ -27,4 +27,17 @@
 @property (nonatomic, retain) NSString * publicFileUrl;
 @property (nonatomic, retain) NSString * viddlerKey;
 
+@property (nonatomic, retain) NSDictionary * fileDictionary;
+
+
+@end
+
+@interface File (DynamicMethods)
+
+-(NSString*)getVideoThumbURL;
+-(NSDictionary*)dictionary;
+
+- (NSString*)filePath;
+- (NSURL*)filePathURL;
+
 @end

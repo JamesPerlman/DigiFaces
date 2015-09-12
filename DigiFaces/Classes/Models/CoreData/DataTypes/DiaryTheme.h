@@ -38,3 +38,10 @@
 - (void)removeModules:(NSSet *)values;
 
 @end
+
+@interface DiaryTheme (DynamicMethods)
+
+- (Module*)getModuleWithThemeType:(ThemeType)type;
+- (NSArray*)sortedResponsesArray;
+
+@end
