@@ -34,6 +34,8 @@
 
 @interface File (DynamicMethods)
 
++ (instancetype)fileWithDictionary:(NSDictionary *)dictionary insertedIntoManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+
 -(NSString*)getVideoThumbURL;
 -(NSDictionary*)dictionary;
 

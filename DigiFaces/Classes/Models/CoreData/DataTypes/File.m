@@ -1,6 +1,6 @@
 //
 //  File.m
-//  
+//
 //
 //  Created by James on 9/11/15.
 //
@@ -31,6 +31,28 @@
 @end
 
 @implementation File (DynamicMethods)
+
++ (instancetype)fileWithDictionary:(NSDictionary *)dictionary insertedIntoManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    File *file = [NSEntityDescription insertNewObjectForEntityForName:@"File" inManagedObjectContext:managedObjectContext];
+    if (file) {
+        
+        file.fileDictionary = dictionary;
+        
+        file.fileType = dictionary[@"FileType"];
+        file.fileId = dictionary[@"FileId"];
+        file.fileName = dictionary[@"FileName"];
+        file.isCameraTagFile = dictionary[@"IsCameraTagFile"];
+        file.isAmazonFile = dictionary[@"IsAmazonFile"];
+        file.isViddlerFile = dictionary[@"IsViddlerFile"];
+        file.viddlerKey = dictionary[@"ViddlerKey"];
+        file.amazonKey = dictionary[@"AmazonKey"];
+        file.cameraTagKey = dictionary[@"CameraTagKey"];
+        
+        
+    }
+    
+    return file;
+}
 
 - (NSDictionary*)dictionary {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];

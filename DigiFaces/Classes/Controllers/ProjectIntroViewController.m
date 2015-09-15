@@ -46,7 +46,7 @@
         [self fetchProjectAnnouncements:LS.myUserInfo.currentProjectId];
     } else {
         if (self.announcement.files.count) {
-            [_dataAray addObject:self.announcement.files.firstObject];
+            [_dataAray addObject:self.announcement.files.anyObject];
         }
         [_dataAray addObject:self.announcement.title];
         [_dataAray addObject:self.announcement.text];
@@ -68,9 +68,15 @@
                       sself.homeAnnouncement = result;
                       
                       [_dataAray removeAllObjects];
-                      [_dataAray addObject:result.file];
-                      [_dataAray addObject:result.title];
-                      [_dataAray addObject:result.text];
+                      if (result.file) {
+                          [_dataAray addObject:result.file];
+                      }
+                      if (result.title) {
+                          [_dataAray addObject:result.title];
+                      }
+                      if (result.text) {
+                          [_dataAray addObject:result.text];
+                      }
                       
                       [self.tableView reloadData];
                   }

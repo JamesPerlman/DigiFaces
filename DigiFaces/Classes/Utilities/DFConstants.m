@@ -59,3 +59,4 @@ NSString * const APIPathProjectGetAnnouncements = @"api/Project/GetAnnouncements
 NSString * const LSAuthTokenKey = @"com.digifaces.api.auth_token";
 NSString * const LSPasswordKey = @"com.digifaces.api.password";
 NSString * const LSUsernameKey = @"com.digifaces.api.username";
+NSString * const LSMyUserIdKey = @"com.digifaces.var.myUserId";

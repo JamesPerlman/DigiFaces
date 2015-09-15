@@ -7,12 +7,14 @@
 //
 
 #import "ConversationsTableViewController.h"
+#import "ConversationDetailViewController.h"
 #import "MBProgressHUD.h"
 #import "CustomAlertView.h"
 #import "NotificationCell.h"
 #import "Message.h"
 #import "UserInfo.h"
-#import "ConversationDetailViewController.h"
+#import "File.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString *messageCellID = @"conversationCell";

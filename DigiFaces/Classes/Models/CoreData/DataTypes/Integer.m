@@ -13,4 +13,8 @@
 
 @dynamic value;
 
+- (NSInteger)integerValue {
+    return [self.value integerValue];
+}
+
 @end

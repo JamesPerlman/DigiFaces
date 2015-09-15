@@ -14,4 +14,6 @@
 
 @property (nonatomic, retain) NSNumber * value;
 
+- (NSInteger)integerValue;
+
 @end

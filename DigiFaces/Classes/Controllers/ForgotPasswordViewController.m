@@ -34,9 +34,10 @@
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
 }
+/*
 -(BOOL)prefersStatusBarHidden{
     return YES;
-}
+}*/
 
 
 - (void)didReceiveMemoryWarning {

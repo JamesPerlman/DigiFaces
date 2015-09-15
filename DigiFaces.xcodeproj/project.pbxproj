@@ -56,7 +56,6 @@
 		4ACDB9C01B3E7E66009EFB91 /* LoginSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9541B3E7E66009EFB91 /* LoginSegue.m */; };
 		4ACDB9C11B3E7E66009EFB91 /* LogoutSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9561B3E7E66009EFB91 /* LogoutSegue.m */; };
 		4ACDB9C21B3E7E66009EFB91 /* ProfilePicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9581B3E7E66009EFB91 /* ProfilePicCell.m */; };
-		4ACDB9C91B3E7E66009EFB91 /* UserManagerShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9661B3E7E66009EFB91 /* UserManagerShared.m */; };
 		4ACDB9D41B3E7E66009EFB91 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9801B3E7E66009EFB91 /* MBProgressHUD.m */; };
 		4ACDB9D51B3E7E66009EFB91 /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9831B3E7E66009EFB91 /* DetailTableViewController.m */; };
 		4ACDB9D61B3E7E66009EFB91 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9851B3E7E66009EFB91 /* GTMNSString+HTML.m */; };
@@ -96,6 +95,7 @@
 		F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
+		F4421F7E1BA5F29D000EC46E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4421F7D1BA5F29D000EC46E /* Info.plist */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
 		F4864FAC1B682519000D2615 /* DFResponseDescriptorsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */; };
@@ -265,8 +265,6 @@
 		4ACDB9561B3E7E66009EFB91 /* LogoutSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutSegue.m; sourceTree = "<group>"; };
 		4ACDB9571B3E7E66009EFB91 /* ProfilePicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePicCell.h; sourceTree = "<group>"; };
 		4ACDB9581B3E7E66009EFB91 /* ProfilePicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePicCell.m; sourceTree = "<group>"; };
-		4ACDB9651B3E7E66009EFB91 /* UserManagerShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserManagerShared.h; path = ../Models/UserManagerShared.h; sourceTree = "<group>"; };
-		4ACDB9661B3E7E66009EFB91 /* UserManagerShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserManagerShared.m; path = ../Models/UserManagerShared.m; sourceTree = "<group>"; };
 		4ACDB97F1B3E7E66009EFB91 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		4ACDB9801B3E7E66009EFB91 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4ACDB9821B3E7E66009EFB91 /* DetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTableViewController.h; sourceTree = "<group>"; };
@@ -290,7 +288,7 @@
 		4ACDB9941B3E7E66009EFB91 /* NSString+XMLEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLEntities.m"; sourceTree = "<group>"; };
 		4ACDB9951B3E7E66009EFB91 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		4ACDB9961B3E7E66009EFB91 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		4ACDB9971B3E7E66009EFB91 /* DFConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFConstants.h; sourceTree = "<group>"; };
+		4ACDB9971B3E7E66009EFB91 /* DFConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFConstants.h; path = ../Utilities/DFConstants.h; sourceTree = "<group>"; };
 		4ACDB9AA1B3E7E66009EFB91 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		4ACDB9AB1B3E7E66009EFB91 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		4ACDB9EB1B3E8366009EFB91 /* DiaryInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryInfoViewController.h; sourceTree = "<group>"; };
@@ -351,6 +349,7 @@
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
+		F4421F7D1BA5F29D000EC46E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4864F681B670E06000D2615 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
@@ -362,7 +361,7 @@
 		F4864FAA1B682519000D2615 /* DFResponseDescriptorsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFResponseDescriptorsProvider.h; sourceTree = "<group>"; };
 		F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFResponseDescriptorsProvider.m; sourceTree = "<group>"; };
 		F4864FAD1B682573000D2615 /* DigiFaces.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigiFaces.pch; sourceTree = "<group>"; };
-		F4864FAE1B682607000D2615 /* DFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFConstants.m; sourceTree = "<group>"; };
+		F4864FAE1B682607000D2615 /* DFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFConstants.m; path = ../Utilities/DFConstants.m; sourceTree = "<group>"; };
 		F4864FB01B683450000D2615 /* DFResponseDataMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFResponseDataMapper.h; sourceTree = "<group>"; };
 		F4864FB11B683450000D2615 /* DFResponseDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFResponseDataMapper.m; sourceTree = "<group>"; };
 		F4864FB31B6835E4000D2615 /* APITokenResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APITokenResponse.h; sourceTree = "<group>"; };
@@ -515,6 +514,7 @@
 		19F0BD0D1B1DBC6400E4B048 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F4421F7D1BA5F29D000EC46E /* Info.plist */,
 				F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */,
 				19328DD71B2FFDE5008BFAA6 /* Localizable.strings */,
 				19F0BD0F1B1DBC6400E4B048 /* main.m */,
@@ -658,6 +658,8 @@
 		4ACDB95C1B3E7E66009EFB91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4ACDB9971B3E7E66009EFB91 /* DFConstants.h */,
+				F4864FAE1B682607000D2615 /* DFConstants.m */,
 				F41565001B9F78950061C791 /* CoreData */,
 				F4864F751B680A89000D2615 /* RestKit */,
 			);
@@ -682,8 +684,6 @@
 				4ACDB9811B3E7E66009EFB91 /* MWFeedParser */,
 				4ACDB9AA1B3E7E66009EFB91 /* Utility.h */,
 				4ACDB9AB1B3E7E66009EFB91 /* Utility.m */,
-				4ACDB9971B3E7E66009EFB91 /* DFConstants.h */,
-				F4864FAE1B682607000D2615 /* DFConstants.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -782,8 +782,8 @@
 		F41565001B9F78950061C791 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				F4B8B3091BA35AB1007E4104 /* DataTypes */,
 				F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */,
+				F4B8B3091BA35AB1007E4104 /* DataTypes */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -832,7 +832,6 @@
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				F4864F8C1B6820EA000D2615 /* UserManager */,
 				F4864F711B6809C0000D2615 /* LocalStorage */,
 				F4864F6C1B680832000D2615 /* DFClient */,
 			);
@@ -968,15 +967,6 @@
 				4ACDB93E1B3E7E66009EFB91 /* ProjectIntroViewController.m */,
 			);
 			name = ProjectIntro;
-			sourceTree = "<group>";
-		};
-		F4864F8C1B6820EA000D2615 /* UserManager */ = {
-			isa = PBXGroup;
-			children = (
-				4ACDB9651B3E7E66009EFB91 /* UserManagerShared.h */,
-				4ACDB9661B3E7E66009EFB91 /* UserManagerShared.m */,
-			);
-			name = UserManager;
 			sourceTree = "<group>";
 		};
 		F4864F971B682259000D2615 /* Project */ = {
@@ -1562,6 +1552,7 @@
 			files = (
 				F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */,
 				19F0BE331B28BBE500E4B048 /* LaunchScreen.xib in Resources */,
+				F4421F7E1BA5F29D000EC46E /* Info.plist in Resources */,
 				F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */,
 				F4DD49D11B65AFFF00F4016B /* FontAwesome.ttf in Resources */,
 				19F0BD191B1DBC6400E4B048 /* Main.storyboard in Resources */,
@@ -1661,7 +1652,6 @@
 				F4A75A4C1B73125200B94176 /* HomeRootViewController.m in Sources */,
 				F4022FE41B697FC80080C157 /* APIHomeAnnouncementResponse.m in Sources */,
 				4ACDB9F91B3EB6AE009EFB91 /* NotificationsViewController.m in Sources */,
-				4ACDB9C91B3E7E66009EFB91 /* UserManagerShared.m in Sources */,
 				F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */,
 				F4B8B3511BA35B1D007E4104 /* DisplayText.m in Sources */,
 				4AC8446F1B57FA75006CDB45 /* ImageViewController.m in Sources */,
@@ -1858,6 +1848,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -1898,6 +1889,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
 				SDKROOT = iphoneos;
@@ -1922,6 +1914,7 @@
 				INFOPLIST_FILE = DigiFaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1949,6 +1942,7 @@
 				INFOPLIST_FILE = DigiFaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",

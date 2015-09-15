@@ -24,7 +24,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [Fabric with:@[CrashlyticsKit]];
+    
+    [self resetDatabase];
+    
     [self setupRestKit];
     // Override point for customization after application launch.
 
@@ -33,7 +35,8 @@
     internetReachable = [Reachability reachabilityForInternetConnection];
     [internetReachable startNotifier];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    //[[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:38/255.0f green:218/255.0f blue:1 alpha:1]}];
@@ -51,6 +54,8 @@
     [self.window setRootViewController:navController];
     [self.window makeKeyAndVisible];
 
+    [Fabric with:@[CrashlyticsKit]];
+    
     return YES;
 }
 
@@ -135,12 +140,11 @@
     // Create the coordinator and store
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"DigiFaces.sqlite"];
     
     NSError *error = nil;
     
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[self persistentStoreURL] options:nil error:&error]) {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
@@ -170,6 +174,16 @@
     _managedObjectContext = [[NSManagedObjectContext alloc] init];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     return _managedObjectContext;
+}
+
+- (void)resetDatabase {
+NSURL *storeURL = [self persistentStoreURL];
+NSError *error = nil;
+[[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
+}
+
+- (NSURL *)persistentStoreURL {
+    return [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"DigiFaces.sqlite"];
 }
 
 #pragma mark - Core Data Saving support
@@ -229,8 +243,7 @@
     //    dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     //    [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     //
-    [objectManager addResponseDescriptorsFromArray:[[DFResponseDescriptorsProvider sharedInstance] responseDescriptors]];
-    
+  
     /**
      Complete Core Data stack initialization
      */
@@ -243,6 +256,7 @@
     [managedObjectStore createPersistentStoreCoordinator];
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"DigiFaces.sqlite"];
     NSError *error;
+    
     [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
     //NSAssert(persistentStore, @"Failed to add persistent store with error: %@", error);
     
@@ -252,6 +266,9 @@
     
     // Configure a managed object cache to ensure we do not create duplicate objects
     managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+    
+    // init response descriptors
+    [objectManager addResponseDescriptorsFromArray:[[DFResponseDescriptorsProvider sharedInstance] responseDescriptors]];
     
   
 }

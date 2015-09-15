@@ -24,10 +24,12 @@
 #import "RTCell.h"
 #import "DailyDiary.h"
 #import "CarouselViewController.h"
-#import "UserManagerShared.h"
 #import "NSString+StripHTML.h"
 #import "DiaryTheme.h"
 #import "ImageGalleryResponse.h"
+#import "Integer.h"
+#import "Project.h"
+#import "File.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -59,6 +61,8 @@ typedef enum {
 @property (nonatomic, strong) NSString *alertMessageToShow;
 @property (nonatomic, strong) NSIndexPath *indexPathToScrollTo;
 
+@property (nonatomic, strong) NSArray *comments;
+
 
 @end
 
@@ -75,12 +79,12 @@ typedef enum {
             self.dailyDiary =  LS.myUserInfo.currentProject.dailyDiary;
             if (!self.dailyDiary) {
                 // attempt to fetch diary
-                NSNumber *dailyDiaryId = LS.myUserInfo.currentProject.dailyDiaryList.firstObject;
-                if (!dailyDiaryId) {
+                Integer *diaryId = LS.myUserInfo.currentProject.dailyDiaryList.anyObject;
+                if (!diaryId) {
                     error = true;
                     NSLog(@"ResponseViewController setThreadId:commentId: error - User info not loaded.");
                 } else {
-                    [self fetchDailyDiaryWithDiaryID:dailyDiaryId.integerValue];
+                    [self fetchDailyDiaryWithDiaryID:diaryId.integerValue];
                 }
             } else {
                 [self showNotificationContentFromDiary];
@@ -138,6 +142,9 @@ typedef enum {
 }
 
 - (void)prepareAndLoadData {
+    
+    [self pullComments];
+    
     if (self.diary) {
         self.navigationItem.title = self.diary.title;
     }
@@ -193,15 +200,15 @@ typedef enum {
     [self.tableView reloadData];
 }
 
-- (void)organizeData {
+- (void)pullComments {
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"commentId" ascending:NO];
     
     if (self.response) {
-        self.response.comments = [self.response.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+        self.comments = [self.response.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
     }
     if (self.diary) {
-        self.diary.comments = [self.diary.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+        self.comments = [self.diary.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
     }
     
     
@@ -211,14 +218,16 @@ typedef enum {
     NSNumber *threadId = self.notification.referenceId;
     NSNumber *commentId = self.notification.referenceId2;
     BOOL error;
-    if (!(self.diary = [self.dailyDiary getResponseWithThreadID:threadId])) {
+    
+    self.diary = [self.dailyDiary getResponseWithThreadID:threadId];
+    if (!self.diary) {
         error = true;
         NSLog(@"ResponseViewController setThreadId:commentId: error - Couldn't find a diary with thread id %@", threadId);
     } else {
         [self prepareAndLoadData];
         // now scroll to that comment
         for (NSInteger i = 0, n = self.diary.comments.count; i<n; ++i) {
-            Comment *comment = self.diary.comments[i];
+            Comment *comment = self.comments[i];
             if ([comment.commentId isEqualToNumber:commentId]) {
                 NSInteger idx = [self.tableView numberOfRowsInSection:0]-n+i;
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
@@ -249,7 +258,7 @@ typedef enum {
 
 -(void)updateDiaryInfo
 {
-    NSInteger diaryID = [LS.myUserInfo.currentProject.dailyDiaryList.firstObject integerValue];
+    NSInteger diaryID = [LS.myUserInfo.currentProject.dailyDiaryList.anyObject integerValue];
     [self fetchDailyDiaryWithDiaryID:diaryID];
 }
 
@@ -287,7 +296,7 @@ typedef enum {
                       
                       if (sself.notification) {
                           [sself prepareAndLoadData];
-                          NSInteger idx = [sself.diary.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
+                          NSInteger idx = [sself.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
                               if ([c.commentId isEqualToNumber:sself.notification.referenceId]) {
                                   *stop = true;
                                   return true;
@@ -360,8 +369,8 @@ typedef enum {
                       // [sself organizeData];
                       
                       if (sself.notification) {
-                          [self prepareAndLoadData];
-                          NSInteger idx = [sself.response.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
+                          [sself prepareAndLoadData];
+                          NSInteger idx = [sself.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
                               if ([c.commentId isEqualToNumber:sself.notification.referenceId2]) {
                                   *stop = true;
                                   return true;
@@ -419,16 +428,17 @@ typedef enum {
 - (void)addCommentToDataModel:(Comment*)comment {
     comment.userInfo = LS.myUserInfo;
     if (self.response) {
-        self.response.comments = [self.response.comments arrayByAddingObject:comment];
+        [self.response addCommentsObject:comment];
     }
     if (self.diary) {
-        self.diary.comments = [self.diary.comments arrayByAddingObject:comment];
-        
+        [self.diary addCommentsObject:comment];
     }
+    [self.managedObjectContext save:nil];
+    [self prepareAndLoadData];
     //[self organizeData];
-    [_cellsArray addObject:@(CellTypeComment)];
+    /*[_cellsArray addObject:@(CellTypeComment)];
     [_heightArray addObject:@110];
-    [self.tableView reloadData];
+    [self.tableView reloadData];*/
 }
 
 -(void)keyboardWillShow:(NSNotification*)notification
@@ -502,10 +512,10 @@ typedef enum {
         infoCell = [self.tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
         if (_response) {
             if (_response.textareaResponses.count>0) {
-                TextareaResponse * textResponse = [_response.textareaResponses objectAtIndex:0];
+                TextareaResponse * textResponse = [_response.textareaResponses anyObject];
                 [infoCell setText:textResponse.response];
             } else if (_response.imageGalleryResponses.count>0) {
-                ImageGalleryResponse *igr = _response.imageGalleryResponses.firstObject;
+                ImageGalleryResponse *igr = [_response.imageGalleryResponses anyObject];
                 [infoCell setText:igr.response];
         } else {
                 [infoCell.bodyLabel setText:@""];
@@ -524,10 +534,10 @@ typedef enum {
         cell.viewController = self;
         NSArray * files;
         if (_response) {
-            files = _response.files;
+            files = [_response.files allObjects];
         }
         else if (_diary){
-            files = _diary.files;
+            files = [_diary.files allObjects];
         }
         [cell setImagesFiles:files];
         
@@ -556,17 +566,15 @@ typedef enum {
     }
     
     else if (type == CellTypeComment){
-        Comment * comment;
+        NSInteger count = 0;
         if(_diary){
-            NSInteger count= _cellsArray.count - _diary.comments.count;
-            comment = [_diary.comments objectAtIndex:indexPath.row - count];
+            count = _cellsArray.count - _diary.comments.count;
         }
         else if (_response)
         {
-            NSInteger count = _cellsArray.count - _response.comments.count;
-            NSLog(@"%d", (int)(indexPath.row - count));
-            comment = [_response.comments objectAtIndex:indexPath.row - count];
+            count = _cellsArray.count - _response.comments.count;
         }
+        Comment * comment = [self.comments objectAtIndex:indexPath.row - count];
         
         if (comment && !comment.isRead.boolValue) {
             // mark comment read
@@ -676,8 +684,14 @@ typedef enum {
     if ([segue.identifier isEqualToString:@"carosulSegue"]){
         CarouselViewController * carouselController = [segue destinationViewController];
         carouselController.selectedIndex = selectedIndex;
-        carouselController.files = _diary.files;
+        carouselController.files = [_diary.files allObjects];
     }
+}
+
+#pragma mark - CoreData
+
+- (NSManagedObjectContext*)managedObjectContext {
+    return [RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext;
 }
 
 @end

@@ -13,7 +13,6 @@
 #import "Utility.h"
 #import "DiaryInfoViewController.h"
 #import "CalendarViewController.h"
-#import "UserManagerShared.h"
 #import "MBProgressHUD.h"
 
 #import "AFNetworking.h"
@@ -30,7 +29,10 @@
 #import "DiaryTheme.h"
 #import "DailyDiaryResponse.h"
 #import "TextareaResponse.h"
+#import "Textarea.h"
 #import "Response.h"
+#import "Module.h"
+#import "Project.h"
 
 @interface AddResponseViewController () < CalendarViewControlerDelegate, UITextViewDelegate, ProfilePictureViewControllerDelegate, DFMediaUploadManagerDelegate, PopUpDelegate>
 {
@@ -172,7 +174,7 @@
                           sself.thread = result;
                           
                           if (_dailyDiary) {
-                              sself.createdDiary = [[Diary alloc] init];
+                              sself.createdDiary = [NSEntityDescription insertNewObjectForEntityForName:@"DailyDiary" inManagedObjectContext:[sself managedObjectContext]];
                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                               formatter.dateFormat = @"yyyy-MM-dd'T'hh:mm:ss";
                               sself.createdDiary.dateCreatedFormatted = @"Today";//[formatter stringFromDate:[NSDate date]];
@@ -180,20 +182,20 @@
                               sself.createdDiary.isRead = @YES;
                               sself.createdDiary.threadId = result.threadId;
                               sself.createdDiary.userInfo = LS.myUserInfo;
-                              sself.createdDiary.comments = @[];
-                              sself.createdDiary.files = @[];
-                              sself.dailyDiary.userDiaries = [@[sself.createdDiary] arrayByAddingObjectsFromArray:sself.dailyDiary.userDiaries];
+                              sself.createdDiary.comments = [NSSet set];
+                              sself.createdDiary.files = [NSSet set];
+                              sself.dailyDiary.userDiaries = [[NSSet setWithObject:sself.createdDiary] setByAddingObjectsFromSet:sself.dailyDiary.userDiaries];
                               
                               [sself addEntryWithActivityId:activityId];
                           }
                           else if(_diaryTheme){
-                              sself.createdResponse = [[Response alloc] init];
+                              sself.createdResponse = [NSEntityDescription insertNewObjectForEntityForName:@"Response" inManagedObjectContext:[sself managedObjectContext]];
                               sself.createdResponse.threadId = result.threadId;
                               sself.createdResponse.dateCreatedFormatted = @"Just now";
-                              sself.createdResponse.files = @[];
-                              sself.createdResponse.comments = @[];
+                              sself.createdResponse.files = [NSSet set];
+                              sself.createdResponse.comments = [NSSet set];
                               sself.createdResponse.userInfo = LS.myUserInfo;
-                              sself.diaryTheme.responses = [@[sself.createdResponse] arrayByAddingObjectsFromArray:sself.diaryTheme.responses];
+                              sself.diaryTheme.responses = [[NSSet setWithObject:sself.createdResponse] setByAddingObjectsFromSet:sself.diaryTheme.responses];
                               if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
                                   [sself addImageGalleryResponse];
                               }
@@ -235,8 +237,8 @@
                        params:params
                       success:^(NSDictionary *response, ImageGalleryResponse *result) {
                           defsself
-                          sself.createdResponse.imageGalleryResponses = @[result];
-                          sself.createdResponse.files = @[profileController.selectedImageFile];
+                          sself.createdResponse.imageGalleryResponses = [NSSet setWithObject:result];
+                          sself.createdResponse.files = [NSSet setWithObject:profileController.selectedImageFile];
                           [sself forceClose];
                       }
                       failure:^(NSError *error) {
@@ -264,7 +266,7 @@
                       success:^(NSDictionary *response, TextareaResponse *result) {
                           defsself
                           [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
-                          sself.createdResponse.textareaResponses = @[result];
+                          sself.createdResponse.textareaResponses = [NSSet setWithObject:result];
                           [sself.mediaUploadManager uploadMediaFiles];
                       }
                       failure:^(NSError *error) {
@@ -276,9 +278,6 @@
 -(void)addEntryWithActivityId:(NSInteger)activityId
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
-    NSString * url = [NSString stringWithFormat:@"%@%@", kBaseURL, kUpdateDailyDiary];
-    url = [url stringByReplacingOccurrencesOfString:@"{projectId}" withString:[NSString stringWithFormat:@"%d", (int)[[UserManagerShared sharedManager] currentProjectID]]];
     
     NSDictionary * params = @{@"ActivityId" : @(activityId),
                               @"DailyDiaryResponseId" : @0,
@@ -292,7 +291,7 @@
     defwself
     [DFClient makeJSONRequest:APIPathUpdateDailyDiary
                        method:kPOST
-                    urlParams:@{@"projectId" : @([[UserManagerShared sharedManager] currentProjectID])}
+                    urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
                    bodyParams:params
                       success:^(NSDictionary *response, DailyDiaryResponse *result) {
                           NSLog(@"Uploading images (if any)");
@@ -355,11 +354,12 @@
 
 - (void)addFileToWhateverObjectIsCreated:(File*)file {
     if (self.createdDiary) {
-        self.createdDiary.files = [self.createdDiary.files arrayByAddingObject:file];
+        [self.createdDiary addFilesObject:file];
     }
     if (self.createdResponse) {
-        self.createdResponse.files = [self.createdResponse.files arrayByAddingObject:file];
+        [self.createdResponse addFilesObject:file];
     }
+    [self.managedObjectContext save:nil];
     if ([self.mediaUploadManager isUploadingDone]) {
        _uploaded = true;
         [self forceClose];
@@ -458,7 +458,7 @@
     calendarView = [self.storyboard instantiateViewControllerWithIdentifier:@"calendarController"];
     calendarView.delegate = self;
     calendarView.endDate = [NSDate date];
-    calendarView.startDate = [Utility dateFromString:[[UserManagerShared sharedManager] currentProject].projectStartDate];
+    calendarView.startDate = [Utility dateFromString:LS.myUserInfo.currentProject.projectStartDate];
     [self.navigationController.view addSubview:calendarView.view];
     
 }
@@ -573,5 +573,10 @@
     return true;
 }
 
+#pragma mark - CoreData
+
+- (NSManagedObjectContext*)managedObjectContext {
+    return [RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext;
+}
 
 @end

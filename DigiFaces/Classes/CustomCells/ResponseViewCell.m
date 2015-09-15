@@ -121,6 +121,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 //            UIImageView *imageView = [(DFCollectionViewImageCell*)[sself.collectionView cellForItemAtIndexPath:newIndex] imageView];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
+            [interactiveTransition.moviePlayer stop];
         });
         
     };

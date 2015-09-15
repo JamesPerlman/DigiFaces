@@ -17,6 +17,10 @@
 #import "GalleryCell.h"
 #import "CarouselViewController.h"
 #import "NSString+StripHTML.h"
+#import "File.h"
+#import "DisplayFile.h"
+#import "DisplayText.h"
+#import "ImageGallery.h"
 
 typedef enum {
     CellsTypeImage,

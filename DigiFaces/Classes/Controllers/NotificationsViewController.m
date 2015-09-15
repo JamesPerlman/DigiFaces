@@ -11,12 +11,13 @@
 #import "AFNetworking.h"
 #import "Utility.h"
 
-#import "UserManagerShared.h"
 #import "Notification.h"
 #import "NotificationCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ResponseViewController.h"
 #import "UILabel+setHTML.h"
+
+#import "File.h"
 
 @interface NotificationsViewController () {
 }

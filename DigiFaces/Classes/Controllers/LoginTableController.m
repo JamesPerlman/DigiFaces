@@ -40,10 +40,10 @@
     
 }
 
-
+/*
 -(BOOL)prefersStatusBarHidden{
     return YES;
-}
+}*/
 
 - (BOOL)validateEmailWithString:(NSString*)email
 {

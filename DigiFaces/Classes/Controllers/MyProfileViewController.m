@@ -10,7 +10,6 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
-#import "UserManagerShared.h"
 #import "Utility.h"
 #import "AboutMe.h"
 #import "File.h"
@@ -61,7 +60,7 @@
 
 -(IBAction)cancelThis:(id)sender{
     
-    NSString * aboutMe = [[UserManagerShared sharedManager] aboutMeText];
+    NSString * aboutMe = LS.myUserInfo.aboutMeText;
     
     if (![_aboutMeTextView.text isEqualToString:@""] && ![_aboutMeTextView.text isEqualToString:aboutMe]) {
         [_aboutMeTextView resignFirstResponder];

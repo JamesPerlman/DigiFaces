@@ -11,6 +11,7 @@
 
 #import "LocalStorage.h"
 #import <FXKeychain/FXKeychain.h>
+#import "UserInfo.h"
 
 @implementation LocalStorage
 
@@ -37,6 +38,33 @@
     } else {
         [DEFAULTS setObject:authToken forKey:LSAuthTokenKey];
         [DEFAULTS synchronize];
+    }
+}
+
+- (UserInfo*)myUserInfo {
+    if (_myUserInfo) {
+        return _myUserInfo;
+    } else {
+        // try looking in CoreData db
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserInfo" inManagedObjectContext:self.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        // Specify criteria for filtering which objects to fetch
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", LS[LSMyUserIdKey]];
+        [fetchRequest setPredicate:predicate];
+        // Specify how the fetched objects should be sorted
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id"
+                                                                       ascending:YES];
+        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+        
+        NSError *error = nil;
+        NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        if (fetchedObjects == nil) {
+            return nil;
+        } else {
+            _myUserInfo = fetchedObjects.firstObject;
+            return _myUserInfo;
+        }
     }
 }
 
@@ -75,6 +103,12 @@
         [KEYCHAIN removeObjectForKey:LSUsernameKey];
     else
         [KEYCHAIN setObject:loginUsername forKey:LSUsernameKey];
+}
+
+#pragma mark - CoreData
+
+- (NSManagedObjectContext*)managedObjectContext {
+    return [RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext;
 }
 
 @end

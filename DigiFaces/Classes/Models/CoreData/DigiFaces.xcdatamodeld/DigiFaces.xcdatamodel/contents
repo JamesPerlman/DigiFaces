@@ -61,7 +61,7 @@
         <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="responseId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="threadId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" syncable="YES"/>
@@ -215,10 +215,10 @@
         <attribute name="textareaId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="TextareaResponse" representedClassName="TextareaResponse" syncable="YES">
-        <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="textareaId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="textareaResponseId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Thread" representedClassName="Thread" syncable="YES">
@@ -270,7 +270,7 @@
         <element name="Project" positionX="-83" positionY="378" width="128" height="30"/>
         <element name="Response" positionX="205" positionY="762" width="128" height="255"/>
         <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>
-        <element name="TextareaResponse" positionX="-110" positionY="969" width="128" height="30"/>
+        <element name="TextareaResponse" positionX="-110" positionY="969" width="128" height="120"/>
         <element name="Thread" positionX="673" positionY="15" width="128" height="30"/>
         <element name="UserInfo" positionX="214" positionY="378" width="128" height="315"/>
     </elements>

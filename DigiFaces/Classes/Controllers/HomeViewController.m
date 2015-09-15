@@ -5,35 +5,40 @@
 //  Created by Apple on 09/06/2015.
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
+#import <SDWebImage/UIImageView+WebCache.h>
+
+#import "AppDelegate.h"
 
 #import "HomeViewController.h"
+#import "HomeRootViewController.h"
+#import "ProfilePictureCollectionViewController.h"
+#import "DiaryThemeViewController.h"
+
+
+#import "Utility.h"
+#import "Reachability.h"
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
-#import "UserManagerShared.h"
-#import "File.h"
-#import "ProfilePicCell.h"
 
-#import "Utility.h"
-#import "ProfilePictureCollectionViewController.h"
-#import "Reachability.h"
-#import "AppDelegate.h"
-#import "DiaryTheme.h"
-#import "DiaryThemeViewController.h"
+#import "ProfilePicCell.h"
 #import "HomeTableViewCell.h"
+
 #import "APIHomeAnnouncementResponse.h"
 #import "APIAlertCounts.h"
-#import "HomeRootViewController.h"
+#import "DiaryTheme.h"
+#import "File.h"
+#import "Project.h"
 
-#import <SDWebImage/UIImageView+WebCache.h>
 
 
-@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate>
+@interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, NSFetchedResultsControllerDelegate>
 {
     ProfilePicCell * picCell;
-    __block BOOL loaded;
 }
-@property (nonatomic ,retain) NSArray * dataArray;
+@property (nonatomic) BOOL hasContent;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @end
 
 @implementation HomeViewController
@@ -42,8 +47,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.delegate = nil;
-    self.tableView.dataSource = nil;
+    self.fetchedResultsController.delegate = self;
+    [self.fetchedResultsController performFetch:nil];
+    
+    self.selectedIndexPath = nil;
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar
@@ -73,20 +80,16 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //[self.tableView reloadData];
+    if (self.selectedIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)cacellButtonTapped{
-    
-}
-
--(void)okayButtonTapped{
-    
-}
+#pragma mark - Server Interaction
 
 -(void)fetchDailyDiary:(NSNumber*)diaryId {
     defwself
@@ -125,7 +128,9 @@
 
 -(void)fetchActivites{
     
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    if (![self diaryThemeCount]) {
+        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    }
     defwself
     [DFClient makeRequest:APIPathProjectGetActivities
                    method:kPOST
@@ -133,40 +138,44 @@
                bodyParams:nil
                   success:^(NSDictionary *response, NSArray *diaryThemes) {
                       defsself
-                      sself.dataArray = diaryThemes;
-                      [sself.tableView reloadData];
+                      //sself.dataArray = diaryThemes;
+                      //[sself.tableView reloadData];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself fetchDailyDiary:LS.myUserInfo.currentProject.dailyDiaryList.firstObject];
+                      [sself fetchDailyDiary:LS.myUserInfo.currentProject.dailyDiaryList.anyObject];
+                      [self.refreshControl endRefreshing];
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Something went wrong when loading your activities.  Pull down to refresh the data.", nil) inView:sself.view withTag:0];
+                      [self.refreshControl endRefreshing];
                   }];
-    [self.refreshControl endRefreshing];
 }
 
--(void)fetchUserInfo{
+-(void)fetchUserInfo {
     
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
+    if (!LS.myUserInfo) {
+        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    }
     defwself
     [DFClient makeRequest:APIPathGetUserInfo
                    method:kGET
                    params:nil
                   success:^(NSDictionary *response, UserInfo *result) {
                       LS.myUserInfo = result;
+                      LS[LSMyUserIdKey] = result.id;
+                      
                       defsself
-                      loaded = true;
-                      
-                      self.tableView.delegate = self;
-                      self.tableView.dataSource = self;
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      
-                      [sself setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:nil];
-                      
-                      [sself fetchActivites];
+                      if (sself) {
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                          
+                          [sself setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:nil];
+                          
+                          [sself.tableView reloadData];
+                          
+                          [sself fetchActivites];
+                      }
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -191,6 +200,8 @@
                   }];
 }
 
+#pragma mark - UI Methods
+
 -(void)setProfilePicture:(NSString*)imageUrl withImage:(UIImage*)image
 {
     
@@ -203,7 +214,7 @@
 
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
 {
-    File *profilePictureFile = [[File alloc] initWithDictionary:profilePicture];
+    File *profilePictureFile = [File fileWithDictionary:profilePicture insertedIntoManagedObjectContext:self.managedObjectContext];
     
     [self setProfilePicture:profilePictureFile.filePath withImage:image];
     
@@ -225,9 +236,19 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
+-(void)cacellButtonTapped{
+    
+}
+
+-(void)okayButtonTapped{
+    
+}
+
+#pragma mark - Table View Convenience Methods
+
 -(void)configurePicCell
 {
-    NSString * userNameSaved = [[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]?[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]:@"";
+    NSString * userNameSaved = LS.myUserInfo.userName;//[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]?[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]:@"";
     
     picCell.delegate = self;
     picCell.lblUserName.text =  userNameSaved;
@@ -238,30 +259,80 @@
     [picCell.profileImage sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
 }
 
-#pragma mark - UITableViewDeleagate
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     
-    if (!loaded) return 0;
+    cell.separatorInset = UIEdgeInsetsZero;
+    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.preservesSuperviewLayoutMargins = NO;
     
-    return _dataArray.count + 1 + LS.myUserInfo.currentProject.hasDailyDiary.integerValue;
+    HomeTableViewCell *homeCell = (HomeTableViewCell*)cell;
+    if (indexPath.row == 0) {
+        
+        // show home item
+        homeCell.titleLabel.text = @"Home";
+        homeCell.unreadCount = 0;
+        homeCell.unreadItemIndicator.hidden = true;
+        
+        //cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
+    } else {
+        
+        NSUInteger indexAdjustment = 1;
+        if (LS.myUserInfo.currentProject.hasDailyDiary.boolValue) {
+            ++indexAdjustment;
+            if (indexPath.row == 1) {
+                homeCell.titleLabel.text = @"Diary";
+                homeCell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
+                
+                return;
+            }
+        }
+        
+        DiaryTheme * theme = [self diaryThemeForIndex:indexPath.row-indexAdjustment];
+        
+        [homeCell.titleLabel setText:theme.activityTitle];
+        homeCell.unreadCount = theme.unreadResponses.integerValue;
+        homeCell.unreadItemIndicator.hidden = theme.isRead.boolValue;
+        //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
+        
+    }
+    
+    
 }
+
+
+#pragma mark - UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.row == 0){
         // Project Introduction
         [self performSegueWithIdentifier:@"projectIntroSegue" sender:self];
-    }
-    else if (indexPath.row == 1 && LS.myUserInfo.currentProject.hasDailyDiary.boolValue){
-        [self performSegueWithIdentifier:@"dailyDiarySegue" sender:self];
-    }
-    else
-    {
-        HomeTableViewCell *cell = (HomeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-        cell.unreadItemIndicator.hidden = false;
-        [self performSegueWithIdentifier:@"diaryTheme" sender:self];
+        self.selectedIndexPath = nil;
+    } else {
+        self.selectedIndexPath = indexPath;
         
+        if (indexPath.row == 1 && LS.myUserInfo.currentProject.hasDailyDiary.boolValue){
+            [self performSegueWithIdentifier:@"dailyDiarySegue" sender:self];
+        }
+        else
+        {
+            HomeTableViewCell *cell = (HomeTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+            cell.unreadItemIndicator.hidden = false;
+            [self performSegueWithIdentifier:@"diaryTheme" sender:self];
+            
+        }
     }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (!LS.myUserInfo) return 0;
+    return [self diaryThemeCount] + 1 + LS.myUserInfo.currentProject.hasDailyDiary.integerValue;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -284,42 +355,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    cell.separatorInset = UIEdgeInsetsZero;
-    cell.layoutMargins = UIEdgeInsetsZero;
-    cell.preservesSuperviewLayoutMargins = NO;
     
-    if (indexPath.row == 0) {
-        
-        // show home item
-        cell.titleLabel.text = @"Home";
-        cell.unreadCount = 0;
-        cell.unreadItemIndicator.hidden = true;
-        
-        //cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
-    } else {
-        
-        NSUInteger indexAdjustment = 1;
-        if (LS.myUserInfo.currentProject.hasDailyDiary.boolValue) {
-            ++indexAdjustment;
-            if (indexPath.row == 1) {
-                cell.titleLabel.text = @"Diary";
-                cell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
-                
-                return cell;
-            }
-        }
-        
-        
-        DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row-indexAdjustment];
-        
-        [cell.titleLabel setText:theme.activityTitle];
-        
-        cell.unreadCount = theme.unreadResponses.integerValue;
-        cell.unreadItemIndicator.hidden = theme.isRead.boolValue;
-        //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
-    }
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    
     return cell;
 }
+
 
 
 #pragma mark - Navigation
@@ -336,7 +378,7 @@
     else if ([segue.identifier isEqualToString:@"diaryTheme"]){
         DiaryThemeViewController * themeController = [segue destinationViewController];
         NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
-        DiaryTheme * theme = [_dataArray objectAtIndex:indexPath.row - 1 - LS.myUserInfo.currentProject.hasDailyDiary.integerValue];
+        DiaryTheme * theme = [self diaryThemeForIndex:indexPath.row - 1 - LS.myUserInfo.currentProject.hasDailyDiary.integerValue];
         themeController.diaryTheme = theme;
         themeController.navigationItem.title = theme.activityTitle;
     }
@@ -369,4 +411,83 @@
                   failure:nil];
 }
 
+
+
+#pragma mark - Data Source Convenience Methods
+
+- (DiaryTheme*)diaryThemeForIndex:(NSUInteger)index {
+    return self.fetchedResultsController.fetchedObjects[index];
+}
+
+- (NSUInteger)diaryThemeCount {
+    return self.fetchedResultsController.fetchedObjects.count;
+}
+
+
+#pragma mark - Fetched Results Controller
+
+- (NSFetchedResultsController*)fetchedResultsController {
+    if (!_fetchedResultsController) {
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"", ];
+        
+        fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
+        
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"activityId" ascending:YES]];
+        
+        fetchRequest.fetchBatchSize = 20;
+        
+        
+        
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    }
+    return _fetchedResultsController;
+}
+
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
+}
+
+#pragma mark - CoreData
+
+- (NSManagedObjectContext*)managedObjectContext {
+    return [RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext;
+}
 @end

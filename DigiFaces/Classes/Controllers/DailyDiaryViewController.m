@@ -6,27 +6,31 @@
 //  Copyright (c) 2015 Usasha studio. All rights reserved.
 //
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #import "DailyDiaryViewController.h"
+#import "AddResponseViewController.h"
+#import "DiaryThemeViewController.h"
+#import "DiaryInfoViewController.h"
+#import "ResponseViewController.h"
+#import "WebViewController.h"
+
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
-
 #import "Utility.h"
-#import "UserManagerShared.h"
-#import "DailyDiary.h"
-#import "DiaryInfoViewController.h"
-#import "Diary.h"
+#import "NSArray+orderedDistinctUnionOfObjects.h"
+
+#import "RTCell.h"
 #import "ImageCell.h"
 #import "VideoCell.h"
-#import "UIImageView+AFNetworking.h"
-#import "WebViewController.h"
 #import "DefaultCell.h"
-#import "DiaryThemeViewController.h"
-#import "AddResponseViewController.h"
-#import "ResponseViewController.h"
-#import "RTCell.h"
 #import "DiaryEntryTableViewCell.h"
-#import "NSArray+orderedDistinctUnionOfObjects.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+
+#import "DailyDiary.h"
+#import "Diary.h"
+#import "Project.h"
+#import "Integer.h"
+#import "File.h"
 
 #import "DiaryResponseDelegate.h"
 static NSString *infoCellReuseIdentifier = @"textCell";
@@ -52,7 +56,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     
     [self addEditButton];
     
-    NSNumber *diaryID = LS.myUserInfo.currentProject.dailyDiaryList[0];
+    NSNumber *diaryID = [(Integer*)[LS.myUserInfo.currentProject.dailyDiaryList anyObject] value];
     [self fetchDailyDiaryWithDiaryID:diaryID];
 }
 
@@ -95,13 +99,19 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     NSSortDescriptor *idSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"threadId" ascending:NO];
     NSArray *sortedDiaries = [self.dailyDiary.userDiaries sortedArrayUsingDescriptors:@[idSortDescriptor]];
     
-    NSArray *dates = [sortedDiaries valueForKeyPath:@"@orderedDistinctUnionOfStrings.dateCreated"];
     
-    NSMutableArray *mutableDates = [NSMutableArray array];
-    for (NSString *date in dates) {
-        [mutableDates addObject:[date substringToIndex:[date rangeOfString:@"T"].location]];
+    NSMutableArray *mutableDates = [NSMutableArray arrayWithArray:[sortedDiaries valueForKeyPath:@"dateCreated"]];
+    NSLog(@"%@", mutableDates);
+    for (NSInteger i = 0, n = mutableDates.count; i < n; ++i) {
+        mutableDates[i] = [mutableDates[i] substringToIndex:10];
     }
-    self.diaryDates = [NSArray arrayWithArray:mutableDates];
+    NSLog(@"%@", mutableDates);
+    
+    self.diaryDates = [mutableDates valueForKeyPath:@"@orderedDistinctUnionOfStrings.self"];
+    
+    NSLog(@"%@", self.diaryDates);
+    
+    // now index the dates
     
     NSMutableArray *remainingDiaries = sortedDiaries.mutableCopy;
     

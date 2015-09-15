@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) Message *message;
 
+@property (nonatomic, strong) NSArray *messages;
+
 @end

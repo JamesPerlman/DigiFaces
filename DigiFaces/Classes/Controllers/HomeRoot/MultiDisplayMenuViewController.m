@@ -50,7 +50,7 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
         firstTime = NO;
     } else {
         CGRect frame = self.view.frame;
-        frame.origin = CGPointMake(frame.origin.x, frame.origin.y-self.navigationController.navigationBar.frame.size.height);
+        frame.origin = CGPointMake(frame.origin.x, frame.origin.y-self.navigationController.navigationBar.frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height);
         viewController.view.frame = frame;
     }
     [self.view addSubview:viewController.view];

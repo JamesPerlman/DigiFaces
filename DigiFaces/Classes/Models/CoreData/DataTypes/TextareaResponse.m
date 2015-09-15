@@ -11,10 +11,10 @@
 
 @implementation TextareaResponse
 
-@dynamic activityId;
 @dynamic isActive;
 @dynamic response;
 @dynamic textareaId;
+@dynamic textareaResponseId;
 @dynamic threadId;
 
 @end

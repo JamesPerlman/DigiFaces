@@ -61,6 +61,7 @@ extern NSString * const APIPathSendHelpMessage;
 extern NSString * const LSAuthTokenKey;
 extern NSString * const LSPasswordKey;
 extern NSString * const LSUsernameKey;
+extern NSString * const LSMyUserIdKey;
 
 
 

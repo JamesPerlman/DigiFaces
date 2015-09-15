@@ -7,9 +7,14 @@
 //
 
 #import "ConversationDetailViewController.h"
-#import "Message.h"
+
 #import "NotificationCell.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
+
+#import "Message.h"
+#import "UserInfo.h"
+#import "File.h"
 
 static NSString *rightCellID = @"rightSideComment";
 static NSString *leftCellID = @"leftSideComment";
@@ -41,8 +46,8 @@ static NSString *leftCellID = @"leftSideComment";
     NotificationCell *rightCell = [self.tableView dequeueReusableCellWithIdentifier:rightCellID];
     
     
-    for (NSInteger i = 0, n = self.message.childMessages.count+1; i<n; ++i) {
-        Message *message = [self messageForIndex:i];
+    for (NSInteger i = 0, n = self.messages.count; i<n; ++i) {
+        Message *message = self.messages[i];
         NotificationCell *cell = nil;
         if ([message.fromUser isEqualToString:LS.myUserInfo.userId]) {
             cell = rightCell;
@@ -76,7 +81,7 @@ static NSString *leftCellID = @"leftSideComment";
     
     NSString *identifier;
     
-    Message *message = [self messageForIndex:indexPath.row];
+    Message *message = self.messages[indexPath.row];
     
     if ([message.fromUser isEqualToString:LS.myUserInfo.id]) {
         identifier = rightCellID;
@@ -99,13 +104,6 @@ static NSString *leftCellID = @"leftSideComment";
     cell.contentLabel.text = message.response;
 }
 
-- (Message*)messageForIndex:(NSInteger)index {
-    if (index == 0) {
-        return self.message;
-    } else {
-        return self.message.childMessages[index-1];
-    }
-}
 
 /*
  #pragma mark - Navigation
@@ -119,6 +117,15 @@ static NSString *leftCellID = @"leftSideComment";
 
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Property Accessors
+
+- (void)setMessage:(Message *)message {
+    _message = message;
+    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"messageId" ascending:YES];
+    NSArray *orderedMessages = [message.childMessages sortedArrayUsingDescriptors:@[sortDesc]];
+    self.messages = [@[message] arrayByAddingObjectsFromArray:orderedMessages];
 }
 
 @end

@@ -10,7 +10,6 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
-#import "UserManagerShared.h"
 #import "File.h"
 
 
@@ -104,9 +103,11 @@
                 //UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(x, y, imageWidth, imageHeight)];
                 
                 //set image to each imageview
-                __weak typeof(self) weakSelf =self;
+                //__weak typeof(self) weakSelf =self;
                 //       __weak typeof (imageView) weekImageView = imageView;
-                NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.avatars objectAtIndex:counter]]];
+                
+                
+                /*NSURLRequest * requestN = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.avatars objectAtIndex:counter]]];
                 [imageView.imageView setImageWithURLRequest:requestN placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                     [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
                     [[UserManagerShared sharedManager] setProfilePic:[weakSelf resizeImage:image imageSize:CGSizeMake(100, 120)]];
@@ -114,7 +115,7 @@
                     
                 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                     
-                }];
+                }];*/
                 
                 imageView.userInteractionEnabled=YES;
                 imageView.multipleTouchEnabled=YES;

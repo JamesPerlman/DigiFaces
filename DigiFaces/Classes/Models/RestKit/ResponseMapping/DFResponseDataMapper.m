@@ -65,6 +65,9 @@
 
 - (RKEntityMapping*)aboutMapping {
     RKEntityMapping *mapping = MAPENTITY(@"About");
+    
+    [mapping setIdentificationAttributes:@[@"aboutId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"AboutId",
                                                   @"AboutTitle",
                                                   @"AboutText",
@@ -74,6 +77,9 @@
 
 - (RKEntityMapping*)aboutMeMapping {
     RKEntityMapping *mapping = MAPENTITY(@"AboutMe");
+    
+    [mapping setIdentificationAttributes:@[@"aboutMeId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"AboutMeId",
                                                   @"ProjectId",
                                                   @"UserId",
@@ -84,6 +90,7 @@
 - (RKEntityMapping*)activityResponseMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Response");
     
+    [mapping setIdentificationAttributes:@[@"threadId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
                                                   @"ThreadId",
@@ -94,7 +101,6 @@
                                                   @"IsActive",
                                                   @"IsDraft",
                                                   @"IsRead"].camelCaseDict];
-    
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
     
@@ -112,6 +118,9 @@
 
 - (RKEntityMapping*)announcementMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Announcement");
+    
+    [mapping setIdentificationAttributes:@[@"announcementId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"AnnouncementId",
                                                   @"Title",
                                                   @"Text",
@@ -125,6 +134,8 @@
 
 - (RKEntityMapping*)commentMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Comment");
+    
+    [mapping setIdentificationAttributes:@[@"commentId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
                                                   @"DateCreated",
@@ -143,6 +154,8 @@
 - (RKEntityMapping*)dailyDiaryMapping {
     RKEntityMapping *mapping = MAPENTITY(@"DailyDiary");
     
+    [mapping setIdentificationAttributes:@[@"diaryId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"DiaryId",
                                                   @"ActivityId",
                                                   @"DiaryQuestion",
@@ -158,6 +171,9 @@
 
 - (RKEntityMapping*)dailyDiaryResponseMapping {
     RKEntityMapping *mapping = MAPENTITY(@"DailyDiaryResponse");
+    
+    [mapping setIdentificationAttributes:@[@"dailyDiaryResponseId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"DailyDiaryResponseId",
                                                   @"DailyDiaryId",
                                                   @"ThreadId",
@@ -170,8 +186,11 @@
     
 }
 
+// UserResponseDTO
 - (RKEntityMapping*)diaryMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Diary");
+    
+    [mapping setIdentificationAttributes:@[@"responseId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"DateCreated",
                                                   @"DateCreatedFormatted",
@@ -192,6 +211,9 @@
 
 - (RKEntityMapping*)diaryThemeMapping {
     RKEntityMapping *mapping = MAPENTITY(@"DiaryTheme");
+    
+    [mapping setIdentificationAttributes:@[@"activityId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
                                                   @"ActivityTypeId",
                                                   @"ParentActivityId",
@@ -209,6 +231,8 @@
 - (RKEntityMapping*)displayFileMapping {
     RKEntityMapping *mapping = MAPENTITY(@"DisplayFile");
     
+    [mapping setIdentificationAttributes:@[@"displayFileId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"DisplayFileId",
                                                   @"ActivityId",
                                                   @"FileId"].camelCaseDict];
@@ -221,6 +245,8 @@
 - (RKEntityMapping*)displayTextMapping {
     RKEntityMapping *mapping = MAPENTITY(@"DisplayText");
     
+    [mapping setIdentificationAttributes:@[@"displayTextId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"DisplayTextId",
                                                   @"ActivityId",
                                                   @"Text"].camelCaseDict];
@@ -230,6 +256,9 @@
 
 - (RKEntityMapping*)fileMapping {
     RKEntityMapping *mapping = MAPENTITY(@"File");
+    
+    [mapping setIdentificationAttributes:@[@"fileId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"FileId",
                                                   @"FileName",
                                                   @"FileTypeId",
@@ -249,6 +278,9 @@
 
 - (RKEntityMapping*)imageGalleryResponseMapping {
     RKEntityMapping *mapping = MAPENTITY(@"ImageGalleryResponse");
+    
+    [mapping setIdentificationAttributes:@[@"imageGalleryResponseId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"ImageGalleryResponseId",
                                                   @"ImageGalleryId",
                                                   @"ThreadId",
@@ -262,6 +294,8 @@
 - (RKEntityMapping*)imageGalleryMapping {
     RKEntityMapping *mapping = MAPENTITY(@"ImageGallery");
     
+    [mapping setIdentificationAttributes:@[@"imageGalleryId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"ImageGalleryId", @"ActivityId"].camelCaseDict];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Files" toKeyPath:@"files" withMapping:[self fileMapping]]];
@@ -272,6 +306,8 @@
 - (RKEntityMapping*)integerListMapping {
     RKEntityMapping *integerMapping = MAPENTITY(@"Integer");
     
+    [integerMapping setIdentificationAttributes:@[@"value"]];
+    
     [integerMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"value"]];
     
     return integerMapping;
@@ -279,6 +315,8 @@
 
 - (RKEntityMapping*)markUpMapping {
     RKEntityMapping *mapping = MAPENTITY(@"MarkUp");
+    
+    [mapping setIdentificationAttributes:@[@"markupId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"MarkupId",
                                                   @"MarkupUrl"].camelCaseDict];
@@ -294,6 +332,9 @@
 
 - (RKEntityMapping*)messageMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Message");
+    
+    [mapping setIdentificationAttributes:@[@"messageId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"MessageId",
                                                   @"ProjectId",
                                                   @"FromUser",
@@ -312,6 +353,8 @@
 
 - (RKEntityMapping*)moduleMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Module");
+    
+    [mapping setIdentificationAttributes:@[@"activityModuleId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"ActivityModuleId",
                                                   @"ActivityId",
@@ -337,6 +380,8 @@
 - (RKEntityMapping*)notificationMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Notification");
     
+    [mapping setIdentificationAttributes:@[@"notificationId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
                                                   @"DateCreated",
                                                   @"DateCreatedFormatted",
@@ -357,6 +402,8 @@
 
 - (RKEntityMapping*)projectMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Project");
+    
+    [mapping setIdentificationAttributes:@[@"projectId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"ProjectId",
                                                   @"CompanyId",
@@ -380,6 +427,8 @@
 - (RKEntityMapping*)textareaMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Textarea");
     
+    [mapping setIdentificationAttributes:@[@"textareaId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"TextareaId",
                                                   @"ActivityId",
                                                   @"QuestionText",
@@ -391,6 +440,9 @@
 
 - (RKEntityMapping*)textareaResponseMapping {
     RKEntityMapping *mapping = MAPENTITY(@"TextareaResponse");
+    
+    [mapping setIdentificationAttributes:@[@"textareaResponseId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"Response",
                                                   @"IsActive",
                                                   @"TextareaId",
@@ -402,6 +454,9 @@
 
 - (RKEntityMapping*)threadMapping {
     RKEntityMapping *mapping = MAPENTITY(@"Thread");
+    
+    [mapping setIdentificationAttributes:@[@"threadId"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"ThreadId",
                                                   @"ActivityId",
                                                   @"IsDraft",
@@ -411,6 +466,9 @@
 
 - (RKEntityMapping*)userInfoMapping {
     RKEntityMapping *mapping = MAPENTITY(@"UserInfo");
+    
+    [mapping setIdentificationAttributes:@[@"id"]];
+    
     [mapping addAttributeMappingsFromDictionary:@[@"Id",
                                                   @"Email",
                                                   @"FirstName",
