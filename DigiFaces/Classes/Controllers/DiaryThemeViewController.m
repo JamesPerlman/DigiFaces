@@ -89,6 +89,37 @@
     [self reloadDataSource:false];
 }
 
+- (void)insertNewRowForResponseAtIndexPath:(NSIndexPath*)indexPath {
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    NSInteger adjustedIndex = indexPath.row+_cellsArray.count;
+    
+    
+    ResponseViewCell *responseCell = [self.tableView dequeueReusableCellWithIdentifier:@"responseCell"];
+    CGFloat height;
+    CGFloat commentIndicatorHeight = responseCell.btnComments.frame.size.height;
+    
+    Response *response = self.fetchedResultsController.fetchedObjects[indexPath.row];
+    [self configureResponseCell:responseCell withResponse:response];
+    height = 16 + responseCell.userImage.frame.size.height;
+    
+    CGFloat labelHeight = [responseCell.lblResponse sizeThatFits:CGSizeMake(responseCell.lblResponse.frame.size.width, CGFLOAT_MAX)].height;
+    height += 8 + ((labelHeight>90.0f) ? 90.0f : labelHeight)  + 8;
+    
+    if (response.files.count) {
+        height += responseCell.collectionView.frame.size.height; // V: -(8)-collectionView
+    }
+    height += 8+commentIndicatorHeight+16; // -(8)-commentIndicator
+    
+
+    
+    if (adjustedIndex < _heightArray.count) {
+        _heightArray[indexPath.row] = @(height);
+    } else {
+        [_heightArray addObject:@(height)];
+    }
+
+}
 
 - (void)addDiaryThemeResponsesToDataArray {
     [_heightArray removeObjectsInRange:NSMakeRange(_cellsArray.count-1, _heightArray.count-_cellsArray.count)];
@@ -107,15 +138,15 @@
         
         [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responses.count, (responses.count==1)?@"":@"s"]];
         */
-        [self.tableView reloadData];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        //[self.tableView reloadData];
+        //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             CGFloat commentIndicatorHeight = responseCell.btnComments.frame.size.height;
             NSInteger row = _cellsArray.count-1;
             NSIndexPath *indexPath;
             for (Response * response in responses) {
-                dispatch_sync(dispatch_get_main_queue(), ^{
+                //dispatch_sync(dispatch_get_main_queue(), ^{
                     [self configureResponseCell:responseCell withResponse:response];
-                });
+                //});
                 CGFloat height = 16 + responseCell.userImage.frame.size.height;
                 
                 CGFloat labelHeight = [responseCell.lblResponse sizeThatFits:CGSizeMake(responseCell.lblResponse.frame.size.width, CGFLOAT_MAX)].height;
@@ -129,15 +160,15 @@
                 //[_cellsArray addObject:response];
                 
                 indexPath = [NSIndexPath indexPathForRow:row++ inSection:0];
-                dispatch_sync(dispatch_get_main_queue(), ^{
+                //dispatch_sync(dispatch_get_main_queue(), ^{
                     [_heightArray addObject:@(height)];
                     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                });
+                //});
             }
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            //dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
-            });
-        });
+            //});
+        //});
         
     }
     
@@ -238,11 +269,13 @@
                       [sself addDiaryThemeResponsesToDataArray];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself markThisActivityRead];
+                      [sself.refreshControl endRefreshing];
                       
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself.refreshControl endRefreshing];
                   }];
 }
 
@@ -316,13 +349,13 @@
         cell.files = [response.files allObjects];
     } else {
         cell.collectionViewHeightConstraint.constant = 0;
-        cell.files = @[];
+        cell.files = nil;
     }
     [cell layoutIfNeeded];
 }
 
 - (Response*)responseForIndexPath:(NSIndexPath*)indexPath {
-    NSUInteger adjustedIndex = indexPath.row - _cellsArray.count;
+    NSUInteger adjustedIndex = indexPath.row - _cellsArray.count-1;
     return self.fetchedResultsController.fetchedObjects[adjustedIndex];
 }
 
@@ -334,8 +367,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return _cellsArray.count + self.fetchedResultsController.fetchedObjects.count;
+    if (self.fetchedResultsController.fetchedObjects) {
+        return _cellsArray.count + 1 + self.fetchedResultsController.fetchedObjects.count;
+    } else {
+        return _cellsArray.count;
+    }
 }
 
 
@@ -425,10 +461,16 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row >= _heightArray.count) {
+    if (indexPath.row == _cellsArray.count) {
+        return 40.0f;
+    } else if (indexPath.row >= _heightArray.count) {
         return 100.0f;
     } else {
-        return [_heightArray[indexPath.row] floatValue];
+        NSInteger adjustedIndex = indexPath.row;
+        if (adjustedIndex > _cellsArray.count) {
+            --adjustedIndex;
+        }
+        return [_heightArray[adjustedIndex] floatValue];
     }
 }
 
@@ -565,7 +607,7 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self insertNewRowForResponseAtIndexPath:newIndexPath];
             break;
             
         case NSFetchedResultsChangeDelete:
@@ -578,10 +620,8 @@
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:adjustedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:adjustedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

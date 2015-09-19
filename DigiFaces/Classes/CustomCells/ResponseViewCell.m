@@ -29,8 +29,10 @@
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _files = files;
-        
-    [self.collectionView reloadData];
+    
+    if (files != nil) {
+        [self.collectionView reloadData];
+    }
 }
 
 -(void)setImageCircular
