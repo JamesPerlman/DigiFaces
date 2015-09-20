@@ -43,7 +43,7 @@
         [self performSegueWithIdentifier:@"toLogin" sender:nil];
     }
 }
-- (void)cacellButtonTappedWithTag:(NSInteger)tag {
+- (void)cancelButtonTappedWithTag:(NSInteger)tag {
     [self performSegueWithIdentifier:@"toLogin" sender:nil];
 }
 

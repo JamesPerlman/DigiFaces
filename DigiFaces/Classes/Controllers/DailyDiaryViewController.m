@@ -16,6 +16,7 @@
 #import "WebViewController.h"
 
 #import "MBProgressHUD.h"
+#import "CustomAlertView.h"
 #import "AFNetworking.h"
 #import "Utility.h"
 #import "NSArray+orderedDistinctUnionOfObjects.h"
@@ -34,15 +35,19 @@
 
 #import "DiaryResponseDelegate.h"
 static NSString *infoCellReuseIdentifier = @"textCell";
-@interface DailyDiaryViewController ()<ExpandableTextCellDelegate, DiaryResponseDelegate>
+@interface DailyDiaryViewController ()<ExpandableTextCellDelegate, DiaryResponseDelegate, PopUpDelegate>
 {
     UIButton * btnEdit;
     RTCell * infoCell;
     NSIndexPath *_selectedDiaryEntryIndexPath;
+    CustomAlertView *_alertView;
+    NSNumber *_diaryID;
+    
 }
 @property (nonatomic, retain) DailyDiary * dailyDiary;
 @property (nonatomic, retain) NSArray *diariesByDateIndex;
 @property (nonatomic, retain) NSArray *diaryDates;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -56,8 +61,19 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     
     [self addEditButton];
     
-    NSNumber *diaryID = [(Integer*)[LS.myUserInfo.currentProject.dailyDiaryList anyObject] value];
-    [self fetchDailyDiaryWithDiaryID:diaryID];
+    _diaryID = [(Integer*)[LS.myUserInfo.currentProject.dailyDiaryList anyObject] value];
+    
+    _alertView = [[CustomAlertView alloc] init];
+    _alertView.delegate = self;
+    
+    [self fetchDailyDiaryFromCoreData];
+    [self fetchDailyDiaryFromServer];
+    
+    // Initialize the refresh control.
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(fetchDailyDiaryFromServer)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -128,37 +144,37 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 }
 
 #pragma mark - API Methods
--(void)fetchDailyDiaryWithDiaryID:(NSNumber*)diaryID
+-(void)fetchDailyDiaryFromServer
 {
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    if (!self.fetchedResultsController.fetchedObjects.count) {
+        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    }
     defwself
     [DFClient makeRequest:APIPathGetDailyDiary
                    method:kPOST
-                urlParams:@{@"diaryId" : diaryID}
+                urlParams:@{@"diaryId" : _diaryID}
                bodyParams:nil
                   success:^(NSDictionary *response, DailyDiary *result) {
-                      LS.myUserInfo.currentProject.dailyDiary = result;
                       defsself
-                      sself.dailyDiary = result;
-#warning This is a patch.  Revise if necessary. Go to -checkForUnreadComments for more info
-                      [result checkForUnreadComments];
-                      [sself setupDateSortedDataArrays];
-                      
-                      [sself.tableView reloadData];
-                      [sself.view bringSubviewToFront:btnEdit];
-                      infoCell = [sself.tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier];
-                      if (result.userDiaries.count) {
-                          [infoCell minimize];
-                      } else {
-                          [infoCell maximize];
-                      }
+                      [sself reloadDataWithDailyDiary:result];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      [sself.refreshControl endRefreshing];
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      
+                      [_alertView showAlertWithMessage:NSLocalizedString(@"error ok/swipe", nil) inView:sself.view withTag:0];
+                      [sself.refreshControl endRefreshing];
+                      
                   }];
 }
+
+#pragma mark - CustomAlertView delegate
+- (void)okayButtonTappedWithTag:(NSInteger)tag {
+    [self fetchDailyDiaryFromServer];
+}
+
 
 #pragma mark - Table view data source
 
@@ -248,26 +264,14 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         }
         else if (indexPath.row == 2){
             DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell" forIndexPath:indexPath];
-            [headerCell.label setText:[NSString stringWithFormat:@"%lu Entries", (unsigned long)[_dailyDiary.userDiaries count]]];
+            [headerCell.label setText:[NSString stringWithFormat:NSLocalizedString(@"%lu Entries", nil), (unsigned long)[_dailyDiary.userDiaries count]]];
             cell = headerCell;
         }
     }
     else{
         DiaryEntryTableViewCell *dcell = [tableView dequeueReusableCellWithIdentifier:@"diaryCell" forIndexPath:indexPath];
-        Diary * diary = self.diariesByDateIndex[indexPath.section-1][indexPath.row];
-        
-        if (diary)
-            [dcell.titleLabel setText:[diary title]];
-        dcell.commentCount = diary.comments.count;
-        dcell.pictureCount = diary.picturesCount;
-        dcell.videoCount = diary.videosCount;
-        if (diary.isRead.boolValue) {
-            dcell.accessoryView = nil;
-        } else {
-            dcell.accessoryView = dcell.unreadIndicator;
-        }
+        [self configureDiaryCell:dcell atIndexPath:indexPath];
         cell = dcell;
-        // [cell.detailTextLabel setText:[NSString stringWithFormat:@"By %@",diary userInfo.appUserName];
     }
     
     cell.separatorInset = UIEdgeInsetsZero;
@@ -322,6 +326,65 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     
 }
 
+#pragma mark - TableView Convenience Methods
+
+- (void)configureDiaryCell:(DiaryEntryTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
+    Diary * diary = [self diaryForIndexPath:indexPath];
+    if (diary)
+        [cell.titleLabel setText:[diary title]];
+    cell.commentCount = diary.comments.count;
+    cell.pictureCount = diary.picturesCount;
+    cell.videoCount = diary.videosCount;
+    if (diary.isRead.boolValue) {
+        cell.accessoryView = nil;
+    } else {
+        cell.accessoryView = cell.unreadIndicator;
+    }
+    
+}
+
+- (Diary*)diaryForIndexPath:(NSIndexPath*)indexPath {
+    return self.diariesByDateIndex[indexPath.section-1][indexPath.row-3];
+}
+
+#pragma mark - Model Management
+
+- (void)fetchDailyDiaryFromCoreData {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DailyDiary" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"diaryId = %@", _diaryID];
+    [fetchRequest setPredicate:predicate];
+    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"diaryId"  ascending:YES];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects != nil) {
+        self.dailyDiary = fetchedObjects.firstObject;
+        [self.fetchedResultsController performFetch:nil];
+    }
+}
+
+- (void)reloadDataWithDailyDiary:(DailyDiary*)dailyDiary {
+    LS.myUserInfo.currentProject.dailyDiary = dailyDiary;
+    self.dailyDiary = dailyDiary;
+#warning This is a patch.  Revise if necessary. Go to -checkForUnreadComments for more info
+    [dailyDiary checkForUnreadComments];
+    [self setupDateSortedDataArrays];
+    
+    [self.tableView reloadData];
+    [self.view bringSubviewToFront:btnEdit];
+    infoCell = [self.tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier];
+    if (dailyDiary.userDiaries.count) {
+        [infoCell minimize];
+    } else {
+        [infoCell maximize];
+    }
+
+}
 
 #pragma mark - Navigation
 
@@ -348,7 +411,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     }
     else if ([segue.identifier isEqualToString:@"diaryEntryDetailSegue"]){
         NSIndexPath * indexPath = [self.tableView indexPathForSelectedRow];
-        Diary * diary = self.diariesByDateIndex[indexPath.section-1][indexPath.row];
+        Diary * diary = [self diaryForIndexPath:indexPath];
         ResponseViewController * responseController = [segue destinationViewController];
         responseController.diary = diary;
         responseController.responseType = ResponseControllerTypeDiaryResponse;
@@ -371,6 +434,73 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     btnEdit.frame = frame;
     
     [self.view bringSubviewToFront:btnEdit];
+}
+
+#pragma mark - NSFetchedResultsController methods
+
+- (NSFetchedResultsController*)fetchedResultsController {
+    if (!_fetchedResultsController) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"activityId = %@", self.dailyDiary.activityId];
+        
+        fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
+        
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"activityId" ascending:YES]];
+        
+        fetchRequest.fetchBatchSize = 20;
+        
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    }
+    
+    return _fetchedResultsController;
+}
+
+
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row+3 inSection:indexPath.section];
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureDiaryCell:[tableView cellForRowAtIndexPath:adjustedIndexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
+}
+
+
+
+- (NSManagedObjectContext*)managedObjectContext  {
+    return [RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext;
 }
 
 @end

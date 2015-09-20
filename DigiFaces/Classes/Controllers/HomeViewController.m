@@ -148,7 +148,7 @@
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Something went wrong when loading your activities.  Pull down to refresh the data.", nil) inView:sself.view withTag:0];
+                      [sself.customAlert showAlertWithMessage:NSLocalizedString(@"error ok/swipe", nil) inView:sself.view withTag:0];
                       [self.refreshControl endRefreshing];
                   }];
 }

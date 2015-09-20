@@ -19,6 +19,7 @@
 #import "AFNetworking.h"
 #import "Utility.h"
 #import "NSString+StripHTML.h"
+#import "CustomAlertView.h"
 
 #import "ImageCell.h"
 #import "DefaultCell.h"
@@ -38,11 +39,12 @@
 #import "ImageGallery.h"
 #import "ImageGalleryResponse.h"
 
-@interface DiaryThemeViewController () <GalleryCellDelegate, NSFetchedResultsControllerDelegate>
+@interface DiaryThemeViewController () <GalleryCellDelegate, NSFetchedResultsControllerDelegate, PopUpDelegate>
 {
     UIButton * btnEdit;
     NSInteger galleryItemIndex;
     NSNumber *_currentResponseIndex;
+    CustomAlertView *_alertView;
 }
 @property (nonatomic, retain) NSMutableArray * cellsArray;
 @property (nonatomic, retain) NSMutableArray * heightArray;
@@ -57,6 +59,8 @@
     _cellsArray = [[NSMutableArray alloc] init];
     _heightArray = [[NSMutableArray alloc] init];
     
+    _alertView = [[CustomAlertView alloc] init];
+    _alertView.delegate = self;
     
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];
@@ -85,6 +89,9 @@
     }
     
 }
+
+#pragma mark - Data Model Management
+
 - (void)didAddDiaryThemeResponse:(Response *)response {
     [self reloadDataSource:false];
 }
@@ -250,6 +257,8 @@
     [self.view addSubview:btnEdit];
 }
 
+#pragma mark - CustomAlertView delegate
+
 #pragma mark - Server Interaction
 
 -(void)fetchResponses
@@ -276,6 +285,7 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself.refreshControl endRefreshing];
+                      [_alertView showAlertWithMessage:NSLocalizedString(@"error ok/swipe", nil) inView:sself.view withTag:0];
                   }];
 }
 

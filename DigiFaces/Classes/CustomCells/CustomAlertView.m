@@ -48,8 +48,8 @@
 }
 -(IBAction)cancel:(id)sender{
     [self.view removeFromSuperview];
-    if ([_delegate respondsToSelector:@selector(cacellButtonTappedWithTag:)]) {
-        [_delegate cacellButtonTappedWithTag:_tag];
+    if ([_delegate respondsToSelector:@selector(cancelButtonTappedWithTag:)]) {
+        [_delegate cancelButtonTappedWithTag:_tag];
     }
 }
 

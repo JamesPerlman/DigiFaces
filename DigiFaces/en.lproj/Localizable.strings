@@ -21,3 +21,5 @@
 "Email cell" = "EMAIL THE MODERATOR";
 "GET cell" = "GET HELP";
 "VERSION cell" = "VERSION 1.0";
+
+"error ok/swipe" = "Something went wrong.  Press OK or swipe down to try again.";

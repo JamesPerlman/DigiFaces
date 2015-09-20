@@ -87,7 +87,7 @@
 }
 
 #pragma mark - Popup dlegate
--(void)cacellButtonTappedWithTag:(NSInteger)tag
+-(void)cancelButtonTappedWithTag:(NSInteger)tag
 {
     
 }

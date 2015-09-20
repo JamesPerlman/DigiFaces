@@ -206,7 +206,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
--(void)cacellButtonTappedWithTag:(NSInteger)tag
+-(void)cancelButtonTappedWithTag:(NSInteger)tag
 {
     
 }

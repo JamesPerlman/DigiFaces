@@ -174,7 +174,7 @@
                           sself.thread = result;
                           
                           if (_dailyDiary) {
-                              sself.createdDiary = [NSEntityDescription insertNewObjectForEntityForName:@"DailyDiary" inManagedObjectContext:[sself managedObjectContext]];
+                              sself.createdDiary = [NSEntityDescription insertNewObjectForEntityForName:@"Diary" inManagedObjectContext:[sself managedObjectContext]];
                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                               formatter.dateFormat = @"yyyy-MM-dd'T'hh:mm:ss";
                               sself.createdDiary.dateCreatedFormatted = @"Today";//[formatter stringFromDate:[NSDate date]];
@@ -487,7 +487,7 @@
 
 #pragma mark - PopUpDelegate
 
--(void)cacellButtonTappedWithTag:(NSInteger)tag {
+-(void)cancelButtonTappedWithTag:(NSInteger)tag {
     if (willClose) {
         willClose = false;
     } else {

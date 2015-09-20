@@ -107,6 +107,7 @@
     
     
     MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarHidden];
+    gallery.preferredStatusBarStyleMH = UIStatusBarStyleLightContent;
     gallery.galleryItems = [NSArray arrayWithArray:galleryDataMutable];
     gallery.presentationIndex = indexPath.item;
     
@@ -124,6 +125,7 @@
 //            UIImageView *imageView = [(DFCollectionViewImageCell*)[sself.collectionView cellForItemAtIndexPath:newIndex] imageView];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
             [interactiveTransition.moviePlayer stop];
+            
         });
         
     };

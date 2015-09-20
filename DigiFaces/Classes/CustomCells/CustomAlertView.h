@@ -13,7 +13,7 @@
 @protocol PopUpDelegate <NSObject>
 
 @optional
--(void)cacellButtonTappedWithTag:(NSInteger)tag;
+-(void)cancelButtonTappedWithTag:(NSInteger)tag;
 -(void)okayButtonTappedWithTag:(NSInteger)tag;
 
 @end

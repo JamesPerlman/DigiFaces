@@ -86,7 +86,7 @@
 
 
 #pragma mark - Popup dlegate
--(void)cacellButtonTappedWithTag:(NSInteger)tag
+-(void)cancelButtonTappedWithTag:(NSInteger)tag
 {
     if (tag == kSuccessTag) {
         [self dismissViewControllerAnimated:YES completion:nil];
