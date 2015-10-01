@@ -23,3 +23,12 @@
 "VERSION cell" = "VERSION 1.0";
 
 "error ok/swipe" = "Something went wrong.  Press OK or swipe down to try again.";
+"markup warning" = "You must use your computer to complete this theme";
+
+"1 Response" = "1 Response";
+"%lu Responses" = "%lu Responses";
+"%lu of %lu" = "%lu of %lu";
+
+"Please enter a valid email address" = "Please enter a valid email address";
+"Fields can't be empty" = "Fields can't be empty";
+"Login failed.  Invalid username or password." = "Login failed.  Invalid username or password.";

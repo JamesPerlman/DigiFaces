@@ -206,7 +206,7 @@ typedef enum {
             Module * module = [self getModuleForThemeType:ThemeTypeImageGallery];
             GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
             
-            galleryCell.files = module.imageGallery.files;
+            galleryCell.files = [module.imageGallery.files allObjects];
             [galleryCell reloadGallery];
             cell = galleryCell;
             
@@ -255,7 +255,7 @@ typedef enum {
     else if ([segue.identifier isEqualToString:@"gallerySegue"]){
         Module * module = [self getModuleForThemeType:ThemeTypeImageGallery];
         CarouselViewController * carouselController = [segue destinationViewController];
-        carouselController.files = module.imageGallery.files;
+        carouselController.files = [module.imageGallery.files allObjects];
         carouselController.selectedIndex = galleryItemIndex;
     }
 }

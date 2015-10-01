@@ -48,25 +48,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self];
 }
 
--(void)keyboardWillAppear:(NSNotification*)notification
-{
-    NSDictionary *info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    CGRect rect = previousFrame;
-    rect.origin.y -= kbSize.height;
-    [self.view setFrame:rect];
-}
-
--(void)keyboardWillHide:(NSNotification*)notification
-{
-    NSDictionary *info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-   
-    CGRect rect = previousFrame;
-    rect.origin.y += kbSize.height;
-    [self.view setFrame:rect];
-}
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -87,7 +68,28 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
--(void)cacellButtonTapped{
+
+-(void)keyboardWillAppear:(NSNotification*)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    CGRect rect = previousFrame;
+    rect.origin.y -= kbSize.height;
+    [self.view setFrame:rect];
+}
+
+-(void)keyboardWillHide:(NSNotification*)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    CGRect rect = previousFrame;
+    rect.origin.y += kbSize.height;
+    [self.view setFrame:rect];
+}
+
+-(void)cancelButtonTapped{
     
 }
 
@@ -116,19 +118,19 @@
     
     if ([_email.text isEqualToString:@""] || [_password.text isEqualToString:@""] ) {
         
-        _errorMessage.text = @"Fields can't be empty";
+        _errorMessage.text = NSLocalizedString(@"Fields can't be empty", nil);
         
         self.customAlert.fromW = @"login";
         
-        [self.customAlert showAlertWithMessage:@"Fields can't be empty" inView:self.view withTag:0];
+        [self.customAlert showAlertWithMessage:NSLocalizedString(@"Fields can't be empty", nil) inView:self.view withTag:0];
         
         
         return;
     }
     else if(![self validateEmailWithString:_email.text]){
-        _errorMessage.text = @"Enter a valid email address";
+        _errorMessage.text = NSLocalizedString(@"Please enter a valid email address", nil);
         self.customAlert.fromW = @"login";
-        [self.customAlert showAlertWithMessage:@"Enter a valid email address" inView:self.view withTag:0];
+        [self.customAlert showAlertWithMessage:NSLocalizedString(@"Please enter a valid email address", nil) inView:self.view withTag:0];
         
         return;
 
@@ -155,8 +157,8 @@
                             [MBProgressHUD hideHUDForView:sself.view animated:YES];
                             
                             sself.customAlert.fromW = @"login";
-                            [sself.customAlert showAlertWithMessage:@"Login failed.  Invalid username or password." inView:sself.view withTag:0];
-                            _errorMessage.text = @"Login failed, please enter correct credentials";
+                            [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Login failed.  Invalid username or password.", nil) inView:sself.view withTag:0];
+                            _errorMessage.text = NSLocalizedString(@"Login failed.  Invalid username or password.", nil);
                         }];
 }
 

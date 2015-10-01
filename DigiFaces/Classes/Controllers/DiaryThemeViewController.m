@@ -48,6 +48,7 @@
 }
 @property (nonatomic, retain) NSMutableArray * cellsArray;
 @property (nonatomic, retain) NSMutableArray * heightArray;
+@property (nonatomic, retain) NSMutableArray * responseCellHeights;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @end
@@ -57,6 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _cellsArray = [[NSMutableArray alloc] init];
+    _responseCellHeights = [[NSMutableArray alloc] init];
     _heightArray = [[NSMutableArray alloc] init];
     
     _alertView = [[CustomAlertView alloc] init];
@@ -83,7 +85,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
     if (_currentResponseIndex) {
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_currentResponseIndex.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -93,13 +95,15 @@
 #pragma mark - Data Model Management
 
 - (void)didAddDiaryThemeResponse:(Response *)response {
-    [self reloadDataSource:false];
+    NSLog(@"%lu", self.fetchedResultsController.fetchedObjects.count);
+    //[self reloadDataSource:false];
 }
 
 - (void)insertNewRowForResponseAtIndexPath:(NSIndexPath*)indexPath {
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
-    NSInteger adjustedIndex = indexPath.row+_cellsArray.count;
+    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:1];
+    
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:adjustedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
     
     ResponseViewCell *responseCell = [self.tableView dequeueReusableCellWithIdentifier:@"responseCell"];
@@ -118,18 +122,18 @@
     }
     height += 8+commentIndicatorHeight+16; // -(8)-commentIndicator
     
-
     
-    if (adjustedIndex < _heightArray.count) {
-        _heightArray[indexPath.row] = @(height);
+    
+    if (indexPath.row < _responseCellHeights.count) {
+        _responseCellHeights[indexPath.row] = @(height);
     } else {
-        [_heightArray addObject:@(height)];
+        [_responseCellHeights addObject:@(height)];
     }
-
+    
 }
 
 - (void)addDiaryThemeResponsesToDataArray {
-    [_heightArray removeObjectsInRange:NSMakeRange(_cellsArray.count-1, _heightArray.count-_cellsArray.count)];
+    [_responseCellHeights removeAllObjects];
     
     
     NSArray *responses = self.fetchedResultsController.fetchedObjects.copy;
@@ -137,44 +141,44 @@
         
         ResponseViewCell *responseCell = [self.tableView dequeueReusableCellWithIdentifier:@"responseCell"];
         
-       /* if ([[_cellsArray lastObject] isKindOfClass:[NSString class]]) {
-            [_cellsArray removeLastObject];
-        } else {
-            [_heightArray addObject:@40];
-        }
-        
-        [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responses.count, (responses.count==1)?@"":@"s"]];
-        */
+        /* if ([[_cellsArray lastObject] isKindOfClass:[NSString class]]) {
+         [_cellsArray removeLastObject];
+         } else {
+         [_heightArray addObject:@40];
+         }
+         
+         [_cellsArray addObject:[NSString stringWithFormat:@"%d Response%@", (int)responses.count, (responses.count==1)?@"":@"s"]];
+         */
         //[self.tableView reloadData];
         //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            CGFloat commentIndicatorHeight = responseCell.btnComments.frame.size.height;
-            NSInteger row = _cellsArray.count-1;
-            NSIndexPath *indexPath;
-            for (Response * response in responses) {
-                //dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self configureResponseCell:responseCell withResponse:response];
-                //});
-                CGFloat height = 16 + responseCell.userImage.frame.size.height;
-                
-                CGFloat labelHeight = [responseCell.lblResponse sizeThatFits:CGSizeMake(responseCell.lblResponse.frame.size.width, CGFLOAT_MAX)].height;
-                height += 8 + ((labelHeight>90.0f) ? 90.0f : labelHeight)  + 8;
-                
-                if (response.files.count) {
-                    height += responseCell.collectionView.frame.size.height; // V: -(8)-collectionView
-                }
-                height += 8+commentIndicatorHeight+16; // -(8)-commentIndicator
-                
-                //[_cellsArray addObject:response];
-                
-                indexPath = [NSIndexPath indexPathForRow:row++ inSection:0];
-                //dispatch_sync(dispatch_get_main_queue(), ^{
-                    [_heightArray addObject:@(height)];
-                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                //});
-            }
+        CGFloat commentIndicatorHeight = responseCell.btnComments.frame.size.height;
+        NSInteger row = 0;
+        NSIndexPath *indexPath;
+        for (Response * response in responses) {
             //dispatch_sync(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
+            [self configureResponseCell:responseCell withResponse:response];
             //});
+            CGFloat height = 16 + responseCell.userImage.frame.size.height;
+            
+            CGFloat labelHeight = [responseCell.lblResponse sizeThatFits:CGSizeMake(responseCell.lblResponse.frame.size.width, CGFLOAT_MAX)].height;
+            height += 8 + ((labelHeight>90.0f) ? 90.0f : labelHeight)  + 8;
+            
+            if (response.files.count) {
+                height += responseCell.collectionView.frame.size.height; // V: -(8)-collectionView
+            }
+            height += 8+commentIndicatorHeight+16; // -(8)-commentIndicator
+            
+            //[_cellsArray addObject:response];
+            
+            indexPath = [NSIndexPath indexPathForRow:row++ inSection:1];
+            //dispatch_sync(dispatch_get_main_queue(), ^{
+            [_responseCellHeights addObject:@(height)];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            //});
+        }
+        //dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        //});
         //});
         
     }
@@ -280,6 +284,8 @@
                       [sself markThisActivityRead];
                       [sself.refreshControl endRefreshing];
                       
+                      
+                      NSLog(@"%lu", sself.fetchedResultsController.fetchedObjects.count);
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -348,8 +354,6 @@
     if (response.textareaResponses && response.textareaResponses.count>0) {
         TextareaResponse * textResponse = response.textareaResponses.anyObject;
         [cell setResponseText:textResponse.response];
-        
-        
         //responseCell.responseHeightConst.constant = MIN(size.height + 5, 50);
     }
     
@@ -365,22 +369,21 @@
 }
 
 - (Response*)responseForIndexPath:(NSIndexPath*)indexPath {
-    NSUInteger adjustedIndex = indexPath.row - _cellsArray.count-1;
-    return self.fetchedResultsController.fetchedObjects[adjustedIndex];
+    return self.fetchedResultsController.fetchedObjects[indexPath.row];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.fetchedResultsController.fetchedObjects) {
-        return _cellsArray.count + 1 + self.fetchedResultsController.fetchedObjects.count;
+    if (section == 0) {
+        return _cellsArray.count + 1;
     } else {
-        return _cellsArray.count;
+        return self.fetchedResultsController.fetchedObjects.count;
     }
 }
 
@@ -388,79 +391,80 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell;
-    if (indexPath.row == _cellsArray.count) {
-        NSUInteger responseCount = self.fetchedResultsController.fetchedObjects.count;
-        
-        NSString *countString;
-        if (responseCount == 1) {
-            countString = NSLocalizedString(@"1 Response", nil);
+    if (indexPath.section == 0) {
+        if (indexPath.row == _cellsArray.count) {
+            NSUInteger responseCount = self.fetchedResultsController.fetchedObjects.count;
+            
+            NSString *countString;
+            if (responseCount == 1) {
+                countString = NSLocalizedString(@"1 Response", nil);
+            } else {
+                countString = [NSString stringWithFormat:NSLocalizedString(@"%lu Responses", nil), (long)responseCount];
+            }
+            
+            DefaultCell * defaultCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell"];
+            [defaultCell.label setText:countString];
+            cell = defaultCell;
+            
         } else {
-            countString = [NSString stringWithFormat:NSLocalizedString(@"%lu Responses", nil), (long)responseCount];
+            if ([[_cellsArray objectAtIndex:indexPath.row] isKindOfClass:[Module class]]) {
+                Module * module = [_cellsArray objectAtIndex:indexPath.row];
+                if ([module themeType] == ThemeTypeDisplayImage) {
+                    if (module.displayFile.file && [module.displayFile.file.fileType isEqualToString:@"Image"]) {
+                        ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+                        [imgCell.image sd_setImageWithURL:module.displayFile.file.filePathURL];
+                        
+                        cell = imgCell;
+                    }
+                    else{
+                        VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
+                        cell = vidCell;
+                        if (module.displayFile.file) {
+                            [vidCell.imageView sd_setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
+                            vidCell.videoIndicatorView.hidden = false;
+                        } else {
+                            vidCell.videoIndicatorView.hidden = true;
+                        }
+                    }
+                }
+                else if ([module themeType] == ThemeTypeDisplayText){
+                    
+                    RTCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+                    
+                    [textCell setText:module.displayText.text];
+                    if (self.fetchedResultsController.fetchedObjects.count) {
+                        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(textCell.fullHeight, 100))];
+                    }
+                    else{
+                        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(textCell.fullHeight)];
+                    }
+                    cell = textCell;
+                }
+                else if ([module themeType] == ThemeTypeImageGallery){
+                    
+                    GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
+                    galleryCell.viewController = self;
+                    galleryCell.files = [module.imageGallery.files allObjects];
+                    [galleryCell reloadGallery];
+                    galleryCell.scrollView.delegate = galleryCell;
+                    cell = galleryCell;
+                }
+                else if ([module themeType] == ThemeTypeMarkup){
+                    
+                    RTCell *textCell = (RTCell*)[tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+                    
+                    
+                    [textCell.bodyLabel setText:NSLocalizedString(@"markup warning", nil)];
+                    [textCell.bodyLabel setTextAlignment:NSTextAlignmentCenter];
+                    cell = textCell;
+                }
+            }
         }
-        
-        DefaultCell * defaultCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell"];
-        [defaultCell.label setText:countString];
-        cell = defaultCell;
-        
-    } else if (indexPath.row > _cellsArray.count) {
+    } else {
         ResponseViewCell * responseCell = [tableView dequeueReusableCellWithIdentifier:@"responseCell" forIndexPath:indexPath];
         [self configureResponseCell:responseCell atIndexPath:indexPath];
         
         cell = responseCell;
-        
-    } else {
-        if ([[_cellsArray objectAtIndex:indexPath.row] isKindOfClass:[Module class]]) {
-            Module * module = [_cellsArray objectAtIndex:indexPath.row];
-            if ([module themeType] == ThemeTypeDisplayImage) {
-                if (module.displayFile.file && [module.displayFile.file.fileType isEqualToString:@"Image"]) {
-                    ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                    [imgCell.image sd_setImageWithURL:module.displayFile.file.filePathURL];
-                    
-                    cell = imgCell;
-                }
-                else{
-                    VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-                    cell = vidCell;
-                    if (module.displayFile.file) {
-                        [vidCell.imageView sd_setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
-                        vidCell.videoIndicatorView.hidden = false;
-                    } else {
-                        vidCell.videoIndicatorView.hidden = true;
-                    }
-                }
-            }
-            else if ([module themeType] == ThemeTypeDisplayText){
-                
-                RTCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-                
-                [textCell setText:module.displayText.text];
-                if (self.fetchedResultsController.fetchedObjects.count) {
-                    [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(textCell.fullHeight, 100))];
-                }
-                else{
-                    [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(textCell.fullHeight)];
-                }
-                cell = textCell;
-            }
-            else if ([module themeType] == ThemeTypeImageGallery){
-                
-                GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
-                galleryCell.viewController = self;
-                galleryCell.files = [module.imageGallery.files allObjects];
-                [galleryCell reloadGallery];
-                galleryCell.scrollView.delegate = galleryCell;
-                cell = galleryCell;
-            }
-            else if ([module themeType] == ThemeTypeMarkup){
-                
-                RTCell *textCell = (RTCell*)[tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-                
-                
-                [textCell.bodyLabel setText:@"You must use your computer to complete this theme"];
-                [textCell.bodyLabel setTextAlignment:NSTextAlignmentCenter];
-                cell = textCell;
-            }
-        }
     }
     
     cell.separatorInset = UIEdgeInsetsZero;
@@ -471,16 +475,14 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _cellsArray.count) {
-        return 40.0f;
-    } else if (indexPath.row >= _heightArray.count) {
-        return 100.0f;
+    if (indexPath.section == 0) {
+        if (indexPath.row == _cellsArray.count) {
+            return 40.0f;
+        } else return [_heightArray[indexPath.row] floatValue];
     } else {
-        NSInteger adjustedIndex = indexPath.row;
-        if (adjustedIndex > _cellsArray.count) {
-            --adjustedIndex;
-        }
-        return [_heightArray[adjustedIndex] floatValue];
+        if (indexPath.row >= _responseCellHeights.count) {
+            return 100.0f;
+        } else return [_responseCellHeights[indexPath.row] floatValue];
     }
 }
 
@@ -612,12 +614,12 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
     UITableView *tableView = self.tableView;
-    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row+_cellsArray.count inSection:indexPath.section];
+    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:1];
     
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [self insertNewRowForResponseAtIndexPath:newIndexPath];
+            [self insertNewRowForResponseAtIndexPath:[NSIndexPath indexPathForRow:newIndexPath.row inSection:1]];
             break;
             
         case NSFetchedResultsChangeDelete:
@@ -626,7 +628,7 @@
             
         case NSFetchedResultsChangeUpdate:
             
-            [self configureResponseCell:(ResponseViewCell*)[tableView cellForRowAtIndexPath:adjustedIndexPath] atIndexPath:adjustedIndexPath];
+            [self configureResponseCell:(ResponseViewCell*)[tableView cellForRowAtIndexPath:adjustedIndexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:

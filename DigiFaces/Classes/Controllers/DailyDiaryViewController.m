@@ -344,7 +344,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 }
 
 - (Diary*)diaryForIndexPath:(NSIndexPath*)indexPath {
-    return self.diariesByDateIndex[indexPath.section-1][indexPath.row-3];
+    return self.diariesByDateIndex[indexPath.section-1][indexPath.row];
 }
 
 #pragma mark - Model Management

@@ -30,6 +30,7 @@
     _collectionView.dataSource = self;
     _files = files;
     
+    [self.collectionView.collectionViewLayout invalidateLayout];
     if (files != nil) {
         [self.collectionView reloadData];
     }
@@ -43,7 +44,7 @@
 -(void)reloadFiles
 {
     NSInteger xOffset= 0;
-    for (File * file in _files) {
+    for (int i = 0; i<self.files.count; ++i) {//(File * file in _files) {
         UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 0, _scrollView.frame.size.height, _scrollView.frame.size.height)];
         iv.clipsToBounds = true;
         [_scrollView addSubview:iv];
@@ -68,7 +69,11 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _files.count;
+    if (_files) {
+        return _files.count;
+    } else {
+        return 0;
+    }
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

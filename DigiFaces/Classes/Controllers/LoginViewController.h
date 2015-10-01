@@ -10,9 +10,9 @@
 #import "AFNetworking.h"
 #import "CustomAlertView.h"
 
-@protocol MessageToViewMain;
+//@protocol MessageToViewMain;
 @protocol PopUpDelegate;
-@interface LoginViewController : UIViewController<UITextFieldDelegate,MessageToViewMain,PopUpDelegate>
+@interface LoginViewController : UIViewController<UITextFieldDelegate/*,MessageToViewMain*/,PopUpDelegate>
 
 @property(nonatomic,strong)CustomAlertView * customAlert;
 @property (nonatomic,strong)IBOutlet UITextField * email;

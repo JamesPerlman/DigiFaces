@@ -23,7 +23,13 @@
     customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     customAlert.delegate = self;
     [self tryAutoLogin];
+    
+    [self.navigationController setNavigationBarHidden:YES];
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (void)tryAutoLogin {
     if (LS.loginUsername && LS.loginPassword) {
         defwself

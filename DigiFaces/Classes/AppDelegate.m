@@ -78,7 +78,7 @@
 
 - (void)checkNetworkStatus:(NSNotification *)notice {
     NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
-    NSLog(@"Network status: %i", internetStatus);
+    NSLog(@"Network status: %lu", (long)internetStatus);
     
     if (internetStatus == NotReachable) {
         [self showNetworkError];

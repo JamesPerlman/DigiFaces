@@ -37,7 +37,7 @@
 
 - (void)checkForUnreadComments;
 - (NSInteger)numberOfUnreadResponses;
-- (instancetype)initWithDictionary:(NSDictionary*)dict;
+//- (instancetype)initWithDictionary:(NSDictionary*)dict;
 - (Diary*)getResponseWithThreadID:(NSNumber*)threadId;
 
 @end

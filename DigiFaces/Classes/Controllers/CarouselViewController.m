@@ -77,7 +77,7 @@
 
 -(void)setTitleWithIndex:(NSInteger)index
 {
-    [self setTitle:[NSString stringWithFormat:@"%d of %d", index+1, _files.count]];
+    [self setTitle:[NSString stringWithFormat:NSLocalizedString(@"%lu of %lu", nil), index+1, self.files.count]];
 }
 
 -(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController

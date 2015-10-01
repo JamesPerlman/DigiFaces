@@ -25,6 +25,9 @@
 
 @implementation DailyDiary (DynamicMethods)
 
+@dynamic diariesDict;
+@dynamic diariesDate;
+
 - (void)checkForUnreadComments {
     /* Faizan said the server side still needed some work here - The problem is that each Diary.IsRead = false, even when there are new comments.  This should be removed to save client energy, once that problem is fixed. */
     

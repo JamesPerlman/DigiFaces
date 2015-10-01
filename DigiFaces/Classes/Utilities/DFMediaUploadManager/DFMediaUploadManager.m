@@ -53,6 +53,12 @@
     [actionSheet showInView:((UIViewController*)self.viewController).view];
 }
 
+- (void)monitorAppState {
+    NSNotificationCenter *NC = [NSNotificationCenter defaultCenter];
+    [NC addObserver:self selector:@selector(applicationDidEnterForeground) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [NC addObserver:self selector:@selector(applicationWillEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
+}
+
 #pragma mark - DFMediaUploadViewDelegate
 - (void)didTapMediaUploadView:(DFMediaUploadView *)view {
     
@@ -391,7 +397,7 @@
     mediaUploadView.progressView.progress = 0.0f;
     
     __weak DFMediaUploadManager *weakSelf = self;
-    [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
+    id (^uploadBlock)(AWSTask *task) = ^id(AWSTask *task) {
         if (task.error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 DFMediaUploadManager *strongSelf = weakSelf;
@@ -412,13 +418,24 @@
         }
         
         return nil;
-    }];
+    };
+    
+    [[transferManager upload:uploadRequest] continueWithBlock:uploadBlock];
+    
     [uploadRequest setUploadProgress:^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [mediaUploadView.progressView setProgress:(float)((double)totalBytesSent / (double)totalBytesExpectedToSend)];
         });
     }];
     
+}
+
+- (void)applicationWillEnterBackground {
+    NSLog(@"Application is entering background.");
+}
+
+- (void)applicationDidEnterForeground {
+    NSLog(@"Application entered foreground.");
 }
 
 #pragma mark - Viddler
@@ -517,7 +534,10 @@
                 mediaUploadView.progressView.progress = (float)((double)totalBytesWritten / (double)totalBytesExpectedToWrite);
             });
         }];
+        
+        [uploadOperation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
         [uploadClient enqueueHTTPRequestOperation:uploadOperation];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             __typeof(self) strongSelf = wself;

@@ -86,7 +86,7 @@
             
             profileController.type = ProfilePictureTypeGallery;
             profileController.delegate = self;
-            profileController.files = [imageGalleryModule.imageGallery files];
+            profileController.files = [[imageGalleryModule.imageGallery files] allObjects];
             profileController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addSubview:profileController.collectionView];
             [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
@@ -140,9 +140,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showAlertWithMessage:(NSString*)message {
-    [_alertView showAlertWithMessage:message inView:self.navigationController.view withTag:0];
-}
+#pragma mark - Server Interaction
 
 -(void)createThreadWithActivityID:(NSInteger)activityId
 {
@@ -171,9 +169,10 @@
                        params:params
                       success:^(NSDictionary *response, Thread *result) {
                           defsself
+                          
                           sself.thread = result;
                           
-                          if (_dailyDiary) {
+                          if (sself.dailyDiary) {
                               sself.createdDiary = [NSEntityDescription insertNewObjectForEntityForName:@"Diary" inManagedObjectContext:[sself managedObjectContext]];
                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                               formatter.dateFormat = @"yyyy-MM-dd'T'hh:mm:ss";
@@ -188,8 +187,9 @@
                               
                               [sself addEntryWithActivityId:activityId];
                           }
-                          else if(_diaryTheme){
+                          else if(sself.diaryTheme){
                               sself.createdResponse = [NSEntityDescription insertNewObjectForEntityForName:@"Response" inManagedObjectContext:[sself managedObjectContext]];
+                              sself.createdResponse.activityId = sself.diaryTheme.activityId;
                               sself.createdResponse.threadId = result.threadId;
                               sself.createdResponse.dateCreatedFormatted = @"Just now";
                               sself.createdResponse.files = [NSSet set];
@@ -351,6 +351,7 @@
     
 }
 
+#pragma mark - Data Model Synchronization
 
 - (void)addFileToWhateverObjectIsCreated:(File*)file {
     if (self.createdDiary) {
@@ -365,11 +366,16 @@
         [self forceClose];
     }
 }
+
+#pragma mark - UI Methods
+
 -(void)resignAllResponders
 {
     [_txtTitle resignFirstResponder];
     [_txtResponse resignFirstResponder];
 }
+
+// activates upload
 
 - (IBAction)postData:(id)sender {
     if (_dailyDiary && [_txtTitle.text isEqualToString:@""]) {
@@ -436,6 +442,7 @@
     [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
 }
 
+// When the camera button is pressed
 - (IBAction)cameraSwitched:(id)sender {
     if (self.textActive) {
         [_txtResponse resignFirstResponder];
@@ -463,6 +470,7 @@
     
 }
 
+// this is used for image gallery responses, it sets the image for the single MediaUploadView that represents the user's selection
 
 -(void)setImageURL:(NSString*)url withImage:(UIImage*)image
 {
@@ -483,6 +491,10 @@
     }];
 }
 
+
+- (void)showAlertWithMessage:(NSString*)message {
+    [_alertView showAlertWithMessage:message inView:self.navigationController.view withTag:0];
+}
 
 
 #pragma mark - PopUpDelegate
