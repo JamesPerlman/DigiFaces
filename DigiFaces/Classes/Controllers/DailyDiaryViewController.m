@@ -117,15 +117,15 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     
     
     NSMutableArray *mutableDates = [NSMutableArray arrayWithArray:[sortedDiaries valueForKeyPath:@"dateCreated"]];
-    NSLog(@"%@", mutableDates);
+   // NSLog(@"%@", mutableDates);
     for (NSInteger i = 0, n = mutableDates.count; i < n; ++i) {
         mutableDates[i] = [mutableDates[i] substringToIndex:10];
     }
-    NSLog(@"%@", mutableDates);
+   // NSLog(@"%@", mutableDates);
     
     self.diaryDates = [mutableDates valueForKeyPath:@"@orderedDistinctUnionOfStrings.self"];
     
-    NSLog(@"%@", self.diaryDates);
+   // NSLog(@"%@", self.diaryDates);
     
     // now index the dates
     
@@ -146,7 +146,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 #pragma mark - API Methods
 -(void)fetchDailyDiaryFromServer
 {
-    if (!self.fetchedResultsController.fetchedObjects.count) {
+    if (!self.dailyDiary) {
         [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     }
     defwself
@@ -363,8 +363,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     NSError *error = nil;
     NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects != nil) {
-        self.dailyDiary = fetchedObjects.firstObject;
-        [self.fetchedResultsController performFetch:nil];
+        [self reloadDataWithDailyDiary:fetchedObjects.firstObject];
     }
 }
 
@@ -444,7 +443,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"activityId = %@", self.dailyDiary.activityId];
         
-        fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
+        fetchRequest.entity = [NSEntityDescription entityForName:@"Diary" inManagedObjectContext:self.managedObjectContext];
         
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"activityId" ascending:YES]];
         
@@ -460,6 +459,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [self.tableView beginUpdates];
 }
 

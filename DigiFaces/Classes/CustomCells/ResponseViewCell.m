@@ -112,7 +112,6 @@
     
     
     MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarHidden];
-    gallery.preferredStatusBarStyleMH = UIStatusBarStyleLightContent;
     gallery.galleryItems = [NSArray arrayWithArray:galleryDataMutable];
     gallery.presentationIndex = indexPath.item;
     
@@ -124,12 +123,13 @@
         defsself
         NSIndexPath *newIndex = [NSIndexPath indexPathForItem:currentIndex inSection:0];
         
-        [sself.collectionView scrollToItemAtIndexPath:newIndex atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            [sself.collectionView scrollToItemAtIndexPath:newIndex atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 //            UIImageView *imageView = [(DFCollectionViewImageCell*)[sself.collectionView cellForItemAtIndexPath:newIndex] imageView];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
             [interactiveTransition.moviePlayer stop];
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
             
         });
         

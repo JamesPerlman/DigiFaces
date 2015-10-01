@@ -66,6 +66,7 @@
     __weak MHGalleryController *blockGallery = gallery;
     
     defwself
+
     gallery.finishedCallback = ^(NSInteger currentIndex,UIImage *image,MHTransitionDismissMHGallery *interactiveTransition, MHGalleryViewMode viewMode){
         
         defsself
@@ -75,6 +76,7 @@
             [sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
             [sself showArrowButtonsAsNeeded];
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         });
         
     };

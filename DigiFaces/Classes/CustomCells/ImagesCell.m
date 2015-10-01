@@ -112,6 +112,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         });
         
     };
