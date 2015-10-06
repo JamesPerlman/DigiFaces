@@ -502,7 +502,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row >= _cellsArray.count) {
+    if (indexPath.section == 1) {
         
         [self performSegueWithIdentifier:@"responseSegue" sender:self];
         ResponseViewCell *cell = (ResponseViewCell*)[tableView cellForRowAtIndexPath:indexPath];
@@ -633,7 +633,7 @@
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:adjustedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:newIndexPath.row inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

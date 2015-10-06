@@ -60,9 +60,9 @@
 }
 
 - (CGFloat)fullHeight {
-    CGSize sizeThatFits = [self.bodyLabel sizeThatFits:CGSizeMake(self.bodyLabel.frame.size.width-16.0f, CGFLOAT_MAX)];
+    CGSize sizeThatFits = [self.bodyLabel sizeThatFits:CGSizeMake([UIScreen mainScreen].bounds.size.width-16, CGFLOAT_MAX)];
     CGFloat mlbh = self.moreLessButton?self.moreLessButton.frame.size.height:0.0f;
-    return sizeThatFits.height + 8.0f + mlbh + 8.0f ;
+    return sizeThatFits.height + 8.0f + mlbh + 8.0f;
 }
 
 - (CGFloat)maxHeight {

@@ -44,6 +44,7 @@
         AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
         
         self.maximumNumberOfSelection = 1;
+        
     }
     return self;
 }
@@ -54,9 +55,17 @@
 }
 
 - (void)monitorAppState {
+    [self stopMonitoringAppState];
+    
     NSNotificationCenter *NC = [NSNotificationCenter defaultCenter];
     [NC addObserver:self selector:@selector(applicationDidEnterForeground) name:UIApplicationDidBecomeActiveNotification object:nil];
     [NC addObserver:self selector:@selector(applicationWillEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
+}
+
+- (void)stopMonitoringAppState {
+    NSNotificationCenter *NC = [NSNotificationCenter defaultCenter];
+    [NC removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [NC removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
 }
 
 #pragma mark - DFMediaUploadViewDelegate
@@ -313,6 +322,7 @@
 #pragma mark - Media Uploading
 
 - (void)uploadMediaFiles {
+    [self monitorAppState];
     [self uploadNextMediaFile];
 }
 
@@ -332,10 +342,7 @@
     }
     
     // if the code has gotten this far, it means all uploads are done.
-    
-    if ([self.delegate respondsToSelector:@selector(mediaUploadManagerDidFinishAllUploads:)]) {
-        [self.delegate mediaUploadManagerDidFinishAllUploads:self];
-    }
+    [self didFinishUploading];
 }
 
 - (BOOL)uploadMediaFileForView:(DFMediaUploadView*)mediaUploadView {
@@ -347,10 +354,10 @@
             // enqueue video upload with completion block
             [self uploadVideoFileForMediaView:mediaUploadView];
             return true;
-        } else if (mediaUploadView.uploadType == DFMediaUploadTypeNone) {
-            [self handleOtherTypeForMediaView:mediaUploadView];
-            return true;
-        }
+        } /* else if (mediaUploadView.uploadType == DFMediaUploadTypeNone) {
+           [self handleOtherTypeForMediaView:mediaUploadView];
+           return true;
+           }*/
     }
     return false;
 }
@@ -367,6 +374,13 @@
         }
     }
     return i==n;
+}
+
+- (void)didFinishUploading {
+    if ([self.delegate respondsToSelector:@selector(mediaUploadManagerDidFinishAllUploads:)]) {
+        [self.delegate mediaUploadManagerDidFinishAllUploads:self];
+    }
+    [self stopMonitoringAppState];
 }
 
 #pragma mark - AWS
@@ -396,29 +410,15 @@
     mediaUploadView.uploading = true;
     mediaUploadView.progressView.progress = 0.0f;
     
-    __weak DFMediaUploadManager *weakSelf = self;
-    id (^uploadBlock)(AWSTask *task) = ^id(AWSTask *task) {
-        if (task.error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                DFMediaUploadManager *strongSelf = weakSelf;
-                [strongSelf handleUploadError:task.error forMediaUploadView:mediaUploadView];
-            });
-        }
-        
-        if (task.result) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                DFMediaUploadManager *strongSelf = weakSelf;
-                NSString *imageURLString = [NSString stringWithFormat:@"https://%@.amazonaws.com/%@/%@", kS3URLSubdomain, kS3BucketName, resourceKey];
-                
-                mediaUploadView.publicURLString = imageURLString;
-                mediaUploadView.resourceKey = resourceKey;
-                
-                [strongSelf handleUploadSuccessResult:nil forMediaUploadView:mediaUploadView];
-            });
-        }
-        
-        return nil;
-    };
+    NSString *imageURLString = [NSString stringWithFormat:@"https://%@.amazonaws.com/%@/%@", kS3URLSubdomain, kS3BucketName, resourceKey];
+    
+    mediaUploadView.publicURLString = imageURLString;
+    mediaUploadView.resourceKey = resourceKey;
+    
+    
+    
+    
+    id (^uploadBlock)(AWSTask *task) = [self getAWSUploadBlockForMediaView:mediaUploadView];
     
     [[transferManager upload:uploadRequest] continueWithBlock:uploadBlock];
     
@@ -436,6 +436,23 @@
 
 - (void)applicationDidEnterForeground {
     NSLog(@"Application entered foreground.");
+}
+
+- (id (^)(AWSTask *task))getAWSUploadBlockForMediaView:(DFMediaUploadView*)mediaUploadView {
+    __weak DFMediaUploadManager *weakSelf = self;
+    return ^id(AWSTask *task) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (task.error) {
+                DFMediaUploadManager *strongSelf = weakSelf;
+                [strongSelf handleUploadError:task.error forMediaUploadView:mediaUploadView];
+            } else if (task.result) {
+                DFMediaUploadManager *strongSelf = weakSelf;
+                [strongSelf handleUploadSuccessResult:nil forMediaUploadView:mediaUploadView];
+            }
+        });
+        
+        return nil;
+    };
 }
 
 #pragma mark - Viddler
@@ -463,7 +480,6 @@
     
     
     [authClient postPath:@"" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
         
         __typeof__(wself) sself = wself;
         if (!sself) { return; }

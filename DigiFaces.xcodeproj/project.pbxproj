@@ -144,6 +144,7 @@
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
+		F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -445,6 +446,8 @@
 		F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DFMediaUploadView.xib; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.xib"; sourceTree = "<group>"; };
 		F4E670DE1B61669B00871FA9 /* DFMediaUploadViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadViewDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadViewDelegate.h"; sourceTree = "<group>"; };
 		F4E670E31B61720E00871FA9 /* AddResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddResponseViewController.m; sourceTree = "<group>"; };
+		F4FC8CAB1BBEE88C00B12DEE /* DFDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFDataManager.h; sourceTree = "<group>"; };
+		F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -832,6 +835,7 @@
 			isa = PBXGroup;
 			children = (
 				F4864F711B6809C0000D2615 /* LocalStorage */,
+				F4FC8CAA1BBEE82300B12DEE /* DFDataManager */,
 				F4864F6C1B680832000D2615 /* DFClient */,
 			);
 			path = Singletons;
@@ -1461,6 +1465,15 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		F4FC8CAA1BBEE82300B12DEE /* DFDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				F4FC8CAB1BBEE88C00B12DEE /* DFDataManager.h */,
+				F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */,
+			);
+			path = DFDataManager;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1659,6 +1672,7 @@
 				F4B8B3491BA35B1D007E4104 /* TextareaResponse.m in Sources */,
 				F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */,
 				F42669E31B70310500A6E6D7 /* UILabel+setHTML.m in Sources */,
+				F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */,
 				F4DD49CC1B65A7DC00F4016B /* NSString+FontAwesome.m in Sources */,
 				F4B8B3401BA35B1D007E4104 /* Notification.m in Sources */,
 				F4B8B3481BA35B1D007E4104 /* Company.m in Sources */,
@@ -1952,7 +1966,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

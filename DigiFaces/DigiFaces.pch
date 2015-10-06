@@ -16,6 +16,7 @@
 
 #import "DFConstants.h"
 #import "DFClient.h"
+#import "DFDataManager.h"
 #import "LocalStorage.h"
 
 #define defwself __weak __typeof(self) wself = self;

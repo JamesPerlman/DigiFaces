@@ -42,7 +42,7 @@ typedef enum {
     CellTypeComment
 }CellType;
 
-@interface ResponseViewController () <CommentCellDelegate, ImageCellDelegate, HPGrowingTextViewDelegate>
+@interface ResponseViewController () <CommentCellDelegate, ImageCellDelegate, HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 {
     NSInteger contentHeight;
     RTCell *infoCell;
@@ -128,9 +128,9 @@ typedef enum {
     }
     if (allRead) self.diary.isRead = @YES;
     
-    if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
-        [self.delegate didSetDailyDiary:self.dailyDiary];
-    }
+   // if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
+   //     [self.delegate didSetDailyDiary:self.dailyDiary];
+   // }
 }
 
 - (CustomAlertView*)customAlert {
@@ -142,6 +142,8 @@ typedef enum {
 }
 
 - (void)prepareAndLoadData {
+    
+    NSLog(@"%@", self.heightArray);
     
     [self pullComments];
     
@@ -181,28 +183,31 @@ typedef enum {
     [_cellsArray addObject:@(CellTypeHeader)];
     [_heightArray addObject:@44];
     // Comment Cell
+    
+    NotificationCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"userCommentCell"];
     if (_diary) {
-        for (int i=0;i<_diary.comments.count;i++) {
-            [_cellsArray addObject:@(CellTypeComment)];
-            [_heightArray addObject:@110];
-        }
     }
     else if (_response){
         if (_response.files.count) {
             [_cellsArray addObject:@(CellTypeImages)];
             [_heightArray addObject:@85];
         }
-        for (int i=0;i<_response.comments.count; i++) {
-            [_cellsArray addObject:@(CellTypeComment)];
-            [_heightArray addObject:@110];
-        }
     }
+    
+    for (Comment *comment in self.comments) {
+        [_cellsArray addObject:@(CellTypeComment)];
+        [self configureCommentCell:cell withComment:comment];
+        [_heightArray addObject:@([self heightForCommentCell:cell])];
+    }
+    
+    
     [self.tableView reloadData];
+    
 }
 
 - (void)pullComments {
     
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"commentId" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"commentId" ascending:YES];
     
     if (self.response) {
         self.comments = [self.response.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
@@ -251,9 +256,6 @@ typedef enum {
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (_diary) {
-        [self updateDiaryInfo];
-    }
 }
 
 -(void)updateDiaryInfo
@@ -415,7 +417,10 @@ typedef enum {
                           [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                           [sself addCommentToDataModel:result];
                           sself.txtResposne.text = @"";
-                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_cellsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                          NSInteger section = [sself numberOfSectionsInTableView:sself.tableView]-1;
+                          NSInteger row = [sself tableView:sself.tableView numberOfRowsInSection:section]-1;
+                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                          //[sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_cellsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                       }
                       failure:^(NSError *error) {
                           defsself
@@ -433,12 +438,13 @@ typedef enum {
     if (self.diary) {
         [self.diary addCommentsObject:comment];
     }
+    comment.dateCreatedFormatted = NSLocalizedString(@"Just now", nil);
     [self.managedObjectContext save:nil];
     [self prepareAndLoadData];
     //[self organizeData];
-    /*[_cellsArray addObject:@(CellTypeComment)];
-    [_heightArray addObject:@110];
-    [self.tableView reloadData];*/
+    //[_cellsArray addObject:@(CellTypeComment)];
+    //[_heightArray addObject:@110];
+    //[self.tableView reloadData];
 }
 
 -(void)keyboardWillShow:(NSNotification*)notification
@@ -553,7 +559,13 @@ typedef enum {
         else if (_diary){
             counts = _diary.comments.count;
         }
-        [cell.textLabel setText:[NSString stringWithFormat:@"%ld Comment%@", (long)counts, (counts==1)?@"" : @"s"]];
+        NSString *text;
+        if (counts == 1) {
+            text = NSLocalizedString(@"1 Comment", nil);
+        } else {
+            text = [NSString stringWithFormat:NSLocalizedString(@"%ld Comments", nil), (long)counts];
+        }
+        [cell.textLabel setText:text];
         return cell;
     }
     else if (type == CellTypeTitle){
@@ -583,21 +595,30 @@ typedef enum {
         
         NotificationCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"userCommentCell" forIndexPath:indexPath];
         
-        [cell.lblDate setText:comment.dateCreatedFormatted];
-        [cell.lblUserName setText:comment.userInfo.appUserName];
-        [cell.userImage sd_setImageWithURL:comment.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
-        [cell setContentText:comment.response];
+        [self configureCommentCell:cell withComment:comment];
         
-        CGFloat height = [cell.contentLabel sizeThatFits:CGSizeMake(cell.contentLabel.frame.size.width, CGFLOAT_MAX)].height;
-        height += cell.userImage.frame.size.height + 32;
-        
-        [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
+        //[_heightArray replaceObjectAtIndex:indexPath.row withObject:@(height)];
         
         [cell makeImageCircular];
         return cell;
     }
     
     return nil;
+}
+
+- (void)configureCommentCell:(NotificationCell*)cell withComment:(Comment*)comment {
+    [cell.lblDate setText:comment.dateCreatedFormatted];
+    [cell.lblUserName setText:comment.userInfo.appUserName];
+    [cell.userImage sd_setImageWithURL:comment.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
+    [cell setContentText:comment.response];
+}
+
+- (CGFloat)heightForCommentCell:(NotificationCell*)cell {
+    
+    CGFloat height = [cell.contentLabel sizeThatFits:CGSizeMake(cell.contentLabel.frame.size.width, CGFLOAT_MAX)].height;
+    height += cell.userImage.frame.size.height + 32;
+    
+    return height;
 }
 
 - (void)markCommentRead:(Comment*)comment {
@@ -631,6 +652,7 @@ typedef enum {
     }
     return cell;
 }
+
 
 #pragma mark - CommentCellDelegate
 -(void)commentCell:(id)cell didSendText:(NSString *)text

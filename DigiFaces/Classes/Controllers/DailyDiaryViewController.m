@@ -44,7 +44,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     NSNumber *_diaryID;
     
 }
-@property (nonatomic, retain) DailyDiary * dailyDiary;
+@property (nonatomic, strong) DailyDiary * dailyDiary;
 @property (nonatomic, retain) NSArray *diariesByDateIndex;
 @property (nonatomic, retain) NSArray *diaryDates;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
