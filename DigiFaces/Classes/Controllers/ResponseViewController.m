@@ -419,7 +419,7 @@ typedef enum {
                           sself.txtResposne.text = @"";
                           NSInteger section = [sself numberOfSectionsInTableView:sself.tableView]-1;
                           NSInteger row = [sself tableView:sself.tableView numberOfRowsInSection:section]-1;
-                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                           //[sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_cellsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                       }
                       failure:^(NSError *error) {

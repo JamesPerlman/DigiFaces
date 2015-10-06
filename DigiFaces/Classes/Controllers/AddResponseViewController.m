@@ -183,7 +183,7 @@
                               sself.createdDiary.userInfo = LS.myUserInfo;
                               sself.createdDiary.comments = [NSSet set];
                               sself.createdDiary.files = [NSSet set];
-                              sself.dailyDiary.userDiaries = [[NSSet setWithObject:sself.createdDiary] setByAddingObjectsFromSet:sself.dailyDiary.userDiaries];
+                              sself.dailyDiary.userDiaries = [sself.dailyDiary.userDiaries setByAddingObject:sself.createdDiary];
                               
                               [sself addEntryWithActivityId:activityId];
                           }
@@ -195,7 +195,7 @@
                               sself.createdResponse.files = [NSSet set];
                               sself.createdResponse.comments = [NSSet set];
                               sself.createdResponse.userInfo = LS.myUserInfo;
-                              sself.diaryTheme.responses = [[NSSet setWithObject:sself.createdResponse] setByAddingObjectsFromSet:sself.diaryTheme.responses];
+                              sself.diaryTheme.responses = [sself.diaryTheme.responses setByAddingObject:sself.createdResponse];
                               if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
                                   [sself addImageGalleryResponse];
                               }
@@ -204,6 +204,7 @@
                                   [sself addTextAreaResponseWithActivityId:activityId];
                               }
                           }
+                          [sself.managedObjectContext save:nil];
                       }
                       failure:^(NSError *error) {
                           defsself
@@ -239,6 +240,7 @@
                           defsself
                           sself.createdResponse.imageGalleryResponses = [NSSet setWithObject:result];
                           sself.createdResponse.files = [NSSet setWithObject:profileController.selectedImageFile];
+                          
                           [sself forceClose];
                       }
                       failure:^(NSError *error) {
@@ -298,8 +300,10 @@
                           
                           dispatch_async(dispatch_get_main_queue(), ^{
                               defsself
+                              sself.createdDiary.responseId = result.dailyDiaryResponseId;
                               sself.createdDiary.response = result.response;
                               sself.createdDiary.title = result.title;
+                              [sself.managedObjectContext save:nil];
                               [sself.mediaUploadManager uploadMediaFiles];
                           });
                           
