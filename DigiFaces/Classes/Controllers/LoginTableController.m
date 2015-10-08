@@ -125,6 +125,8 @@
         
         [MBProgressHUD hideHUDForView:sself.view animated:YES];
         
+        userInfo.userId = userInfo.id;
+        [userInfo.managedObjectContext save:nil];
         LS.myUserInfo = userInfo;
         
         if (userInfo.isUserNameSet.boolValue) {

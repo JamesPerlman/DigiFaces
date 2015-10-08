@@ -269,7 +269,7 @@
     if (indexPath.row == 0) {
         
         // show home item
-        homeCell.titleLabel.text = @"Home";
+        homeCell.titleLabel.text = NSLocalizedString(@"home", nil);
         homeCell.unreadCount = 0;
         homeCell.unreadItemIndicator.hidden = true;
         
@@ -280,7 +280,7 @@
         if (LS.myUserInfo.currentProject.hasDailyDiary.boolValue) {
             ++indexAdjustment;
             if (indexPath.row == 1) {
-                homeCell.titleLabel.text = @"Diary";
+                homeCell.titleLabel.text = NSLocalizedString(@"diary", nil);
                 homeCell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
                 
                 return;

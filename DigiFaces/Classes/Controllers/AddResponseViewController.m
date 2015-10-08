@@ -40,14 +40,13 @@
     UIImagePickerController * imagePicker;
     CalendarViewController * calendarView;
     
-    NSDate * selectedDate;
     ProfilePictureCollectionViewController * profileController;
     BOOL _uploaded;
     BOOL willClose;
     
     id lastFocusedField;
 }
-
+@property (nonatomic, strong) NSDate * selectedDate;
 @property (nonatomic, retain) NSMutableArray * dataArray;
 @property (nonatomic, retain) CustomAlertView * alertView;
 
@@ -68,7 +67,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [_btnDate setTitle:[Utility stringFromDate:[NSDate date]] forState:UIControlStateNormal];
-    selectedDate = [NSDate date];
+    self.selectedDate = [NSDate date];
     
     _alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
     _alertView.delegate = self;
@@ -181,7 +180,7 @@
                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                               formatter.dateFormat = @"yyyy-MM-dd'T'hh:mm:ss";
                               sself.createdDiary.dateCreatedFormatted = @"Today";//[formatter stringFromDate:[NSDate date]];
-                              sself.createdDiary.dateCreated = [formatter stringFromDate:[NSDate date]];
+                              sself.createdDiary.dateCreated = [formatter stringFromDate:sself.selectedDate];
                               sself.createdDiary.isRead = @YES;
                               sself.createdDiary.threadId = result.threadId;
                               sself.createdDiary.userInfo = LS.myUserInfo;
@@ -294,7 +293,7 @@
                               @"Title" : _txtTitle.text,
                               @"IsActive" : @YES,
                               @"Response" : _txtResponse.text,
-                              @"DiaryDate" : [Utility stringDateFromDMYDate:selectedDate]};
+                              @"DiaryDate" : [Utility stringDateFromDMYDate:self.selectedDate]};
     
     defwself
     [DFClient makeJSONRequest:APIPathUpdateDailyDiary
@@ -559,7 +558,7 @@
 #pragma mark - CalendarViewDelegate
 -(void)calendarController:(id)controller didSelectDate:(NSDate *)date
 {
-    selectedDate = date;
+    self.selectedDate = date;
     NSString * strDate = [Utility stringFromDate:date];
     [_btnDate setTitle:strDate forState:UIControlStateNormal];
     [calendarView.view removeFromSuperview];

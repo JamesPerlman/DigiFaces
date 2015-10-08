@@ -20,9 +20,13 @@
 @property (nonatomic) NSString *loginUsername;
 @property (nonatomic) NSString *loginPassword;
 
+@property (nonatomic, readonly) NSNumber *currentProjectId;
+
 @property (nonatomic, strong) UserInfo *myUserInfo;
 
 - (id)objectForKeyedSubscript:(NSString*)key;
 - (void)setObject:(id)obj forKeyedSubscript:(NSString*)key;
 
+
+- (void)setMyUserInfo:(UserInfo *)myUserInfo;
 @end

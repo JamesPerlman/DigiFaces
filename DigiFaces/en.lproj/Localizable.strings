@@ -10,10 +10,6 @@
 
 "home" = "Home";
 "diary" = "Diary";
-"woman cell" = "Being a woman online";
-"friend cell" = "Friendship and web";
-"talking cell" = "Talking about brands";
-"brand cell" = "Brands and social media";
 
 "MY cell" = "MY PROFILE";
 "ABOUT cell" = "ABOUT DIGIFACES";
@@ -22,8 +18,12 @@
 "GET cell" = "GET HELP";
 "VERSION cell" = "VERSION 1.0";
 
+"Reply..." = "Reply...";
+"Leave a comment..." = "Leave a comment...";
+
 "error ok/swipe" = "Something went wrong.  Press OK or swipe down to try again.";
 "markup warning" = "You must use your computer to complete this theme";
+"error try again later" = "Something went wrong with the server.  Please try again later.";
 
 "1 Response" = "1 Response";
 "%lu Responses" = "%lu Responses";
@@ -32,6 +32,8 @@
 "1 Comment" = "1 Comment";
 
 "Just now" = "Just now";
+
+"(No content)" = "(No content)";
 
 "Please enter a valid email address" = "Please enter a valid email address";
 "Fields can't be empty" = "Fields can't be empty";

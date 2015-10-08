@@ -142,8 +142,8 @@
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="toUser" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="childMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" syncable="YES"/>
-        <relationship name="fromUserInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
-        <relationship name="toUserInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInfo" syncable="YES"/>
+        <relationship name="fromUserInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" syncable="YES"/>
+        <relationship name="toUserInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" syncable="YES"/>
     </entity>
     <entity name="Module" representedClassName="Module" syncable="YES">
         <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -264,7 +264,7 @@
         <element name="ImageGalleryResponse" positionX="547" positionY="575" width="128" height="163"/>
         <element name="Integer" positionX="-335" positionY="417" width="128" height="60"/>
         <element name="MarkUp" positionX="-488" positionY="924" width="128" height="30"/>
-        <element name="Message" positionX="684" positionY="342" width="128" height="225"/>
+        <element name="Message" positionX="684" positionY="342" width="128" height="223"/>
         <element name="Module" positionX="-425" positionY="603" width="128" height="210"/>
         <element name="Notification" positionX="385" positionY="-108" width="128" height="240"/>
         <element name="Project" positionX="-83" positionY="378" width="128" height="30"/>
@@ -272,6 +272,6 @@
         <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>
         <element name="TextareaResponse" positionX="-110" positionY="969" width="128" height="120"/>
         <element name="Thread" positionX="673" positionY="15" width="128" height="30"/>
-        <element name="UserInfo" positionX="214" positionY="378" width="128" height="315"/>
+        <element name="UserInfo" positionX="214" positionY="378" width="128" height="313"/>
     </elements>
 </model>

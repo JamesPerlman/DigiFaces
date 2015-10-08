@@ -134,6 +134,8 @@
 		F4B8B36C1BA36C99007E4104 /* Diary.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B36B1BA36C99007E4104 /* Diary.m */; };
 		F4B8B3721BA4BFC8007E4104 /* Integer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B3711BA4BFC8007E4104 /* Integer.m */; };
 		F4B8B3761BA4C43A007E4104 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B8B3751BA4C43A007E4104 /* CoreData.framework */; };
+		F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
+		F4B988451BC707C80010F139 /* JPKeyboardSensitiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -429,6 +431,10 @@
 		F4B8B3701BA4BFC8007E4104 /* Integer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Integer.h; sourceTree = "<group>"; };
 		F4B8B3711BA4BFC8007E4104 /* Integer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Integer.m; sourceTree = "<group>"; };
 		F4B8B3751BA4C43A007E4104 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F4B9883D1BC6E2940010F139 /* NSArray+Reverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Reverse.h"; sourceTree = "<group>"; };
+		F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
+		F4B988411BC706C00010F139 /* JPKeyboardSensitiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPKeyboardSensitiveView.h; path = JPKeyboardSensitiveView/JPKeyboardSensitiveView.h; sourceTree = "<group>"; };
+		F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPKeyboardSensitiveView.m; path = JPKeyboardSensitiveView/JPKeyboardSensitiveView.m; sourceTree = "<group>"; };
 		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
 		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
 		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
@@ -678,6 +684,7 @@
 		4ACDB96A1B3E7E66009EFB91 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F4B988441BC706CA0010F139 /* JPKeyboardSensitiveView */,
 				F420FB6D1B6162EE007092CB /* DFMediaUploadManager */,
 				4AD8501C1B45ABB40059A457 /* Reachability.h */,
 				4AD8501D1B45ABB40059A457 /* Reachability.m */,
@@ -1434,6 +1441,15 @@
 			name = Integer;
 			sourceTree = "<group>";
 		};
+		F4B988441BC706CA0010F139 /* JPKeyboardSensitiveView */ = {
+			isa = PBXGroup;
+			children = (
+				F4B988411BC706C00010F139 /* JPKeyboardSensitiveView.h */,
+				F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */,
+			);
+			name = JPKeyboardSensitiveView;
+			sourceTree = "<group>";
+		};
 		F4DD49BB1B6548B700F4016B /* PhotoGallerySection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1461,6 +1477,8 @@
 				F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */,
 				F42669E11B70310500A6E6D7 /* UILabel+setHTML.h */,
 				F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */,
+				F4B9883D1BC6E2940010F139 /* NSArray+Reverse.h */,
+				F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1633,7 +1651,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B988451BC707C80010F139 /* JPKeyboardSensitiveView.m in Sources */,
 				F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */,
+				F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */,
 				4ACDB9DB1B3E7E66009EFB91 /* NSDate+InternetDateTime.m in Sources */,
 				F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */,
 				4ACDB9D51B3E7E66009EFB91 /* DetailTableViewController.m in Sources */,
@@ -1946,8 +1966,8 @@
 			baseConfigurationReference = 9AA822F53CE98F4F4EE4DB83 /* Pods-DigiFaces.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1966,7 +1986,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

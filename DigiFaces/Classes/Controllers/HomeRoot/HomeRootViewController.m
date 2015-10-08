@@ -56,7 +56,7 @@
 - (WYPopoverController*)popover {
     if (!_popover) {
         _popover = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
-        _popover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 120.0f);
+        _popover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * [self.messagesVC tableView:self.messagesVC.tableView numberOfRowsInSection:0]);
         
     }
     return _popover;
@@ -80,10 +80,8 @@
 }
 
 - (void)didTapNotifications {
-    
     [self performSegueWithIdentifier:@"toNotifications" sender:nil];
     [self.popover dismissPopoverAnimated:YES];
-    
 }
 
 #pragma mark - messages delegate callbacks

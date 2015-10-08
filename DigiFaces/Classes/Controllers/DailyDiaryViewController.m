@@ -20,6 +20,7 @@
 #import "AFNetworking.h"
 #import "Utility.h"
 #import "NSArray+orderedDistinctUnionOfObjects.h"
+#import "NSArray+Reverse.h"
 
 #import "RTCell.h"
 #import "ImageCell.h"
@@ -117,15 +118,15 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     
     
     NSMutableArray *mutableDates = [NSMutableArray arrayWithArray:[sortedDiaries valueForKeyPath:@"dateCreated"]];
-   // NSLog(@"%@", mutableDates);
+    //NSLog(@"%@", mutableDates);
     for (NSInteger i = 0, n = mutableDates.count; i < n; ++i) {
         mutableDates[i] = [mutableDates[i] substringToIndex:10];
     }
-   // NSLog(@"%@", mutableDates);
+    //NSLog(@"%@", mutableDates);
     
-    self.diaryDates = [mutableDates valueForKeyPath:@"@orderedDistinctUnionOfStrings.self"];
+    self.diaryDates = [[[mutableDates valueForKeyPath:@"@orderedDistinctUnionOfStrings.self"] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] reversedArray];
     
-   // NSLog(@"%@", self.diaryDates);
+    //NSLog(@"%@", self.diaryDates);
     
     // now index the dates
     

@@ -467,9 +467,10 @@
 - (RKEntityMapping*)userInfoMapping {
     RKEntityMapping *mapping = MAPENTITY(@"UserInfo");
     
-    [mapping setIdentificationAttributes:@[@"id"]];
+    [mapping setIdentificationAttributes:@[@"id", @"userId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"Id",
+                                                  @"UserId",
                                                   @"Email",
                                                   @"FirstName",
                                                   @"LastName",
@@ -482,6 +483,8 @@
                                                   @"AboutMeText",
                                                   @"HasRegistered",
                                                   @"LoginProvider"].camelCaseDict];
+    
+    
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"AvatarFile" toKeyPath:@"avatarFile" withMapping:[self fileMapping]]];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"CurrentProject" toKeyPath:@"currentProject" withMapping:[self projectMapping]]];

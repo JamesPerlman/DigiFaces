@@ -353,7 +353,7 @@
     [cell.lblName setText:response.userInfo.appUserName];
     [cell.lblTime setText:response.dateCreatedFormatted];
     [cell setImageCircular];
-    [cell.btnComments setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d Comment%@", nil), (int)response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
+    [cell.btnComments setTitle:[NSString stringWithFormat:NSLocalizedString(@"%lu Comment%@", nil), (long unsigned)response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
     
     cell.unreadIndicator.hidden = response.isRead.boolValue;
     

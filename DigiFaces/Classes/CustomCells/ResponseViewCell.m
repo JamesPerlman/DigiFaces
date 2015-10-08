@@ -137,6 +137,9 @@
     [self.viewController presentMHGalleryController:gallery animated:YES completion:nil];
 }
 
+- (UILabel *)lblResponse {
+    return _lblResponse;
+}
 
 - (void)setResponseText:(NSString *)text {
     [self.lblResponse setHTML:text];

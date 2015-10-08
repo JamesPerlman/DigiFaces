@@ -13,6 +13,12 @@
 #import <FXKeychain/FXKeychain.h>
 #import "UserInfo.h"
 
+@interface LocalStorage () {
+    UserInfo *_myUserInfo;
+    NSNumber *_currentProjectId;
+}
+@end
+
 @implementation LocalStorage
 
 + (instancetype)proxy
@@ -66,6 +72,13 @@
             return _myUserInfo;
         }
     }
+}
+
+- (void)setMyUserInfo:(UserInfo *)myUserInfo {
+    _myUserInfo = myUserInfo;
+    _myUserInfo.userId = myUserInfo.id;
+    [_myUserInfo.managedObjectContext save:nil];
+    _currentProjectId = [myUserInfo.currentProjectId copy];
 }
 
 - (id)objectForKeyedSubscript:(NSString *)key {

@@ -19,13 +19,14 @@
 
 static NSString *messageCellID = @"conversationCell";
 
-@interface ConversationsTableViewController ()<PopUpDelegate> {
+@interface ConversationsTableViewController ()<PopUpDelegate, ConversationDetailDelegate> {
     CustomAlertView *customAlert;
 }
 
 @property (nonatomic, strong) NSArray *conversations;
 @property (nonatomic, strong) Message *selectedMessage;
 
+@property (nonatomic, strong) NSMutableSet *addedMessages;
 @end
 
 @implementation ConversationsTableViewController
@@ -34,7 +35,13 @@ static NSString *messageCellID = @"conversationCell";
     [super viewDidLoad];
     customAlert = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
     customAlert.delegate = self;
+    self.addedMessages = [NSMutableSet set];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                            action:@selector(loadConversations)
+                  forControlEvents:UIControlEventValueChanged];
     [self loadConversations];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +76,8 @@ static NSString *messageCellID = @"conversationCell";
     cell.lblDate.text = message.dateCreatedFormatted;
     cell.lblUserName.text = message.fromUserInfo.appUserName;
     cell.contentLabel.text = message.subject;
+    cell.userImage.layer.cornerRadius = cell.userImage.bounds.size.height/2.0;
+    cell.userImage.clipsToBounds = YES;
     
     return cell;
 }
@@ -97,12 +106,14 @@ static NSString *messageCellID = @"conversationCell";
     if ([[segue identifier] isEqualToString:@"toConversation"]) {
         ConversationDetailViewController *cdvc = [segue destinationViewController];
         cdvc.message = self.selectedMessage;
+        cdvc.delegate = self;
     }
 }
 
 #pragma mark - Server Interaction
 
 - (void)loadConversations {
+    [self removeAddedMessages];
     defwself
     [DFClient makeRequest:APIPathGetMessages
                    method:RKRequestMethodGET
@@ -110,6 +121,7 @@ static NSString *messageCellID = @"conversationCell";
                bodyParams:nil
                   success:^(NSDictionary *response, id result) {
                       defsself
+                      [sself.refreshControl endRefreshing];
                       if ([result isKindOfClass:[NSArray class]]) {
                           sself.conversations = result;
                       } else {
@@ -119,6 +131,7 @@ static NSString *messageCellID = @"conversationCell";
                   }
                   failure:^(NSError *error) {
                       defsself
+                      [sself.refreshControl endRefreshing];
                       [customAlert showAlertWithMessage:NSLocalizedString(@"Could not load conversations.  Try again?", nil) inView:sself.view withTag:0];
                   }];
 }
@@ -127,6 +140,19 @@ static NSString *messageCellID = @"conversationCell";
 
 - (void)okayButtonTappedWithTag:(NSInteger)tag {
     [self loadConversations];
+}
+
+#pragma mark - ConversationDetailDelegate
+
+- (void)didAddMessages:(NSSet *)messages {
+    [self.addedMessages addObjectsFromArray:[messages allObjects]];
+}
+
+- (void)removeAddedMessages {
+    for (Message *message in self.addedMessages) {
+        [message.managedObjectContext deleteObject:message];
+    }
+    [self.addedMessages removeAllObjects];
 }
 
 @end

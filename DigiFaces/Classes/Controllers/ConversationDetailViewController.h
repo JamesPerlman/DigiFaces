@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 @class Message;
-@interface ConversationDetailViewController : UITableViewController
+
+@protocol ConversationDetailDelegate <NSObject>
+
+- (void)didAddMessages:(NSSet*)messages;
+
+@end
+
+@interface ConversationDetailViewController : UIViewController
 
 @property (nonatomic, strong) Message *message;
 
 @property (nonatomic, strong) NSArray *messages;
+
+@property (nonatomic, assign) id<ConversationDetailDelegate> delegate;
 
 @end

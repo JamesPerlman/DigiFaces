@@ -10,28 +10,65 @@
 
 #import "NotificationCell.h"
 
+#import "CustomAlertView.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <HPGrowingTextView/HPGrowingTextView.h>
+#import "MBProgressHUD.h"
 
 #import "Message.h"
 #import "UserInfo.h"
 #import "File.h"
 
-static NSString *rightCellID = @"rightSideComment";
 static NSString *leftCellID = @"leftSideComment";
 
 
-@interface ConversationDetailViewController () {
-    NSMutableArray *_cellHeights;
+@interface ConversationDetailViewController ()<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+
 }
+@property (nonatomic, weak) IBOutlet HPGrowingTextView *messageTextView;
+@property (nonatomic, weak) IBOutlet UIButton *submitButton;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
+@property (nonatomic, strong) CustomAlertView *alertView;
+@property (nonatomic, strong) NSMutableSet *addedMessages;
+@property (nonatomic, strong) NSMutableArray *cellHeights;
 @end
 
 @implementation ConversationDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.cellHeights = [NSMutableArray array];
+    self.addedMessages = [NSMutableSet set];
     // Do any additional setup after loading the view.
     self.navigationItem.title = self.message.subject;
     [self calculateHeightsForTableViewRows];
+    
+    self.messageTextView.layer.cornerRadius = 4.0f;
+    self.messageTextView.clipsToBounds = true;
+    self.messageTextView.placeholder = NSLocalizedString(@"Reply...", nil);
+    self.messageTextView.delegate = self;
+    
+    self.alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNewMessages];
+}
+
+- (void)removeNewMessages {
+    /*for (Message *message in self.addedMessages) {
+        [self.managedObjectContext deleteObject:message];
+    }
+    */
+    if ([self.delegate respondsToSelector:@selector(didAddMessages:)]) {
+        [self.delegate didAddMessages:[NSSet setWithSet:self.addedMessages]];
+    }
+
+    [self.addedMessages removeAllObjects];
+    //[self.managedObjectContext save:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,20 +77,12 @@ static NSString *leftCellID = @"leftSideComment";
 }
 
 - (void)calculateHeightsForTableViewRows {
-    _cellHeights = [NSMutableArray array];
-    NotificationCell *leftCell = [self.tableView dequeueReusableCellWithIdentifier:leftCellID];
-    
-    NotificationCell *rightCell = [self.tableView dequeueReusableCellWithIdentifier:rightCellID];
+    [self.cellHeights removeAllObjects];
+    NotificationCell *cell = [self.tableView dequeueReusableCellWithIdentifier:leftCellID];
     
     
     for (NSInteger i = 0, n = self.messages.count; i<n; ++i) {
         Message *message = self.messages[i];
-        NotificationCell *cell = nil;
-        if ([message.fromUser isEqualToString:LS.myUserInfo.userId]) {
-            cell = rightCell;
-        } else {
-            cell = leftCell;
-        }
         [self configureCell:cell withMessage:message];
         
         CGFloat height = 8 + cell.userImage.frame.size.height + 8;
@@ -66,7 +95,7 @@ static NSString *leftCellID = @"leftSideComment";
 #pragma mark - UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (CGFloat)[_cellHeights[indexPath.row] floatValue];
+    return (CGFloat)[self.cellHeights[indexPath.row] floatValue];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -79,19 +108,13 @@ static NSString *leftCellID = @"leftSideComment";
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *identifier;
     
     Message *message = self.messages[indexPath.row];
-    
-    if ([message.fromUser isEqualToString:LS.myUserInfo.id]) {
-        identifier = rightCellID;
-    } else {
-        identifier = leftCellID;
-    }
-    
-    
-    NotificationCell *cell = (NotificationCell*)[tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+
+    NotificationCell *cell = (NotificationCell*)[tableView dequeueReusableCellWithIdentifier:leftCellID forIndexPath:indexPath];
     [cell.userImage sd_setImageWithURL:message.fromUserInfo.avatarFile.filePathURL];
+    cell.userImage.layer.cornerRadius = cell.userImage.bounds.size.width/2.0;
+    cell.userImage.clipsToBounds = YES;
     [self configureCell:cell withMessage:message];
     
     return cell;
@@ -101,7 +124,7 @@ static NSString *leftCellID = @"leftSideComment";
     cell.lblUserName.text = message.fromUserInfo.appUserName;
     cell.lblDate.text = message.dateCreatedFormatted;
     cell.lblInfo.text = message.subject;
-    cell.contentLabel.text = message.response;
+    cell.contentLabel.text = message.response.length ? message.response : NSLocalizedString(@"(No content)", nil);
 }
 
 
@@ -118,14 +141,72 @@ static NSString *leftCellID = @"leftSideComment";
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark - Server Interaction
+
+- (IBAction)sendMessage:(id)sender {
+    NSString *responseText = self.messageTextView.text;
+    if (!responseText.length) {
+        return;
+    }
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    defwself
+    [DFClient makeJSONRequest:APIPathReplyFromModerator
+                       method:RKRequestMethodPOST
+                    urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId,
+                                @"parentMessageId" : self.message.messageId}
+                   bodyParams:@{@"Response" : responseText}
+                      success:^(NSDictionary *response, id result) {
+                          defsself
+                          
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                          [sself addNewMessageWithContent:responseText];
+                          [sself.messageTextView setText:nil];
+                      }
+                      failure:^(NSError *error) {
+                          defsself
+                          NSLog(@"Error replying to conversation: %@", error);
+                          [sself.alertView showAlertWithMessage:NSLocalizedString(@"error try again later", nil) inView:sself.view withTag:0];
+                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      }];
+}
+
+#pragma mark - Text View Delegate
+- (void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView {
+    [self sendMessage:nil];
+}
 
 #pragma mark - Property Accessors
 
 - (void)setMessage:(Message *)message {
     _message = message;
-    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"messageId" ascending:YES];
-    NSArray *orderedMessages = [message.childMessages sortedArrayUsingDescriptors:@[sortDesc]];
-    self.messages = [@[message] arrayByAddingObjectsFromArray:orderedMessages];
+    [self orderMessages];
 }
 
+- (void)orderMessages {
+    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"messageId" ascending:YES];
+    NSArray *orderedMessages = [self.message.childMessages sortedArrayUsingDescriptors:@[sortDesc]];
+    self.messages = [@[self.message] arrayByAddingObjectsFromArray:orderedMessages];
+}
+
+
+#pragma mark - CoreData
+
+- (void)addNewMessageWithContent:(NSString*)content {
+    Message *message = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:self.managedObjectContext];
+    message.response = content;
+    message.messageId = @((NSInteger)[[NSDate date] timeIntervalSince1970]);
+    message.fromUserInfo = LS.myUserInfo;
+    [self.message addChildMessagesObject:message];
+    [self.addedMessages addObject:message];
+    [self.managedObjectContext save:nil];
+    [self orderMessages];
+    [self calculateHeightsForTableViewRows];
+    [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:0]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+- (NSManagedObjectContext*)managedObjectContext {
+    return [RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext;
+}
 @end
+
