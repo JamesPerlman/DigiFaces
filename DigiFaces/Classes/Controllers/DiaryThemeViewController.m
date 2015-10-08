@@ -49,6 +49,7 @@
 @property (nonatomic, retain) NSMutableArray * cellsArray;
 @property (nonatomic, retain) NSMutableArray * heightArray;
 @property (nonatomic, retain) NSMutableArray * responseCellHeights;
+@property (nonatomic, retain) NSMutableSet *addedResponses;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @end
@@ -57,6 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _addedResponses = [[NSMutableSet alloc] init];
     _cellsArray = [[NSMutableArray alloc] init];
     _responseCellHeights = [[NSMutableArray alloc] init];
     _heightArray = [[NSMutableArray alloc] init];
@@ -87,7 +89,7 @@
     [super viewWillAppear:animated];
     //[self.tableView reloadData];
     if (_currentResponseIndex) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_currentResponseIndex.integerValue inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_currentResponseIndex.integerValue inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
     }
     
 }
@@ -95,7 +97,10 @@
 #pragma mark - Data Model Management
 
 - (void)didAddDiaryThemeResponse:(Response *)response {
-    NSLog(@"%lu", self.fetchedResultsController.fetchedObjects.count);
+    if (response) {
+        [self.addedResponses addObject:response];
+        [self refreshResponseCellHeights];
+    }
     //[self reloadDataSource:false];
 }
 
@@ -132,11 +137,11 @@
     
 }
 
-- (void)addDiaryThemeResponsesToDataArray {
+- (void)refreshResponseCellHeights {
     [_responseCellHeights removeAllObjects];
     
     
-    NSArray *responses = self.fetchedResultsController.fetchedObjects.copy;
+    NSArray *responses = self.fetchedResultsController.fetchedObjects;
     if (responses && responses.count) {
         
         ResponseViewCell *responseCell = [self.tableView dequeueReusableCellWithIdentifier:@"responseCell"];
@@ -218,7 +223,7 @@
         if (loadFromServer) {
             [self fetchResponses];
         }
-        [self addDiaryThemeResponsesToDataArray];
+        [self refreshResponseCellHeights];
     }
 }
 
@@ -269,6 +274,12 @@
 {
     if (!self.fetchedResultsController.fetchedObjects.count) {
         [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    } else {
+        for (Response *response in self.addedResponses) {
+            [self.managedObjectContext deleteObject:response];
+        }
+        [self.managedObjectContext save:nil];
+        [self.addedResponses removeAllObjects];
     }
     
     defwself
@@ -279,7 +290,7 @@
                bodyParams:nil
                   success:^(NSDictionary *response, id result) {
                       defsself
-                      [sself addDiaryThemeResponsesToDataArray];
+                      [sself refreshResponseCellHeights];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself markThisActivityRead];
                       [sself.refreshControl endRefreshing];
@@ -344,7 +355,7 @@
     [cell setImageCircular];
     [cell.btnComments setTitle:[NSString stringWithFormat:NSLocalizedString(@"%d Comment%@", nil), (int)response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
     
-    cell.unreadIndicator.hidden = !response.isRead.boolValue;
+    cell.unreadIndicator.hidden = response.isRead.boolValue;
     
     if (response.imageGalleryResponses && response.imageGalleryResponses.count>0) {
         ImageGalleryResponse * imageGalleryResponse = response.imageGalleryResponses.anyObject;
@@ -545,6 +556,7 @@
         ResponseViewController * responseController = [segue destinationViewController];
         responseController.responseType = ResponseControllerTypeDiaryTheme;
         responseController.response = response;
+        [self markResponseRead:response completion:nil];
     }
     else if ([segue.identifier isEqualToString:@"addThemeEntrySegue"]){
         AddResponseViewController * addResponseController = (AddResponseViewController*)[(UINavigationController*)[segue destinationViewController] topViewController];

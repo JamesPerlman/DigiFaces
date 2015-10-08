@@ -93,7 +93,11 @@
             
         } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse]) {
             [self.cameraButton setImage:[UIImage imageNamed:@"videocam_blue"] forState:UIControlStateNormal];
+            for (DFMediaUploadView *view in self.mediaUploadManager.mediaUploadViews) {
+                view.hidden = true;
+            }
             self.videoUploadView.hidden = false;
+            
         }
         [self.txtResponse becomeFirstResponder];
     } else {
@@ -195,6 +199,7 @@
                               sself.createdResponse.files = [NSSet set];
                               sself.createdResponse.comments = [NSSet set];
                               sself.createdResponse.userInfo = LS.myUserInfo;
+                              sself.createdResponse.isRead = @YES;
                               sself.diaryTheme.responses = [sself.diaryTheme.responses setByAddingObject:sself.createdResponse];
                               if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
                                   [sself addImageGalleryResponse];
@@ -269,6 +274,7 @@
                           defsself
                           [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
                           sself.createdResponse.textareaResponses = [NSSet setWithObject:result];
+                          [sself.managedObjectContext save:nil];
                           [sself.mediaUploadManager uploadMediaFiles];
                       }
                       failure:^(NSError *error) {
@@ -366,7 +372,7 @@
     }
     [self.managedObjectContext save:nil];
     if ([self.mediaUploadManager isUploadingDone]) {
-       _uploaded = true;
+        _uploaded = true;
         [self forceClose];
     }
 }
@@ -453,7 +459,7 @@
         [_txtTitle resignFirstResponder];
         
         [self setTextActive:false];
-        if ([self.mediaUploadManager numberOfUnusedMediaViews] > 0) {
+        if ([self.mediaUploadManager numberOfUnusedMediaViews] > 0 && ![self.diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
             [self.mediaUploadManager presentMediaSelectionDialog];
         }
     } else {
@@ -579,8 +585,10 @@
 
 
 - (void)mediaUploadManagerDidFinishAllUploads:(DFMediaUploadManager *)mediaUploadManager {
-    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
-    [self forceClose];
+    if (![self.diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse]) {
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+        [self forceClose];
+    }
 }
 
 

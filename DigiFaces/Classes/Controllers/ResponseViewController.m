@@ -128,9 +128,9 @@ typedef enum {
     }
     if (allRead) self.diary.isRead = @YES;
     
-   // if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
-   //     [self.delegate didSetDailyDiary:self.dailyDiary];
-   // }
+    // if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
+    //     [self.delegate didSetDailyDiary:self.dailyDiary];
+    // }
 }
 
 - (CustomAlertView*)customAlert {
@@ -208,12 +208,11 @@ typedef enum {
 - (void)pullComments {
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"commentId" ascending:YES];
-    
     if (self.response) {
-        self.comments = [self.response.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+        self.comments = [[self.response.comments allObjects] sortedArrayUsingDescriptors:@[sortDescriptor]];
     }
     if (self.diary) {
-        self.comments = [self.diary.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+        self.comments = [[self.diary.comments allObjects] sortedArrayUsingDescriptors:@[sortDescriptor]];
     }
     
     
@@ -279,17 +278,23 @@ typedef enum {
 -(void)fetchDailyDiaryWithDiaryID:(NSInteger)diaryID
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
+    NSNumber *threadId = 0;
+    if (self.notification) {
+        threadId = self.notification.referenceId;
+    } else if (self.diary) {
+        threadId = self.diary.threadId;
+    }
     defwself
     [DFClient makeRequest:APIPathGetDailyDiary
                    method:kPOST
                 urlParams:@{@"diaryId" : @(diaryID)}
                bodyParams:nil
                   success:^(NSDictionary *response, DailyDiary *dailyDiary) {
-                      LS.myUserInfo.currentProject.dailyDiary = dailyDiary;
                       defsself
+                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                      LS.myUserInfo.currentProject.dailyDiary = dailyDiary;
                       for (Diary * d in dailyDiary.userDiaries) {
-                          if ([d.threadId isEqualToNumber:_diary.threadId]) {
+                          if ([d.threadId isEqualToNumber:threadId]) {
                               sself.diary = d;
                               break;
                           }
@@ -297,6 +302,10 @@ typedef enum {
                       sself.dailyDiary = dailyDiary;
                       
                       if (sself.notification) {
+                          if (sself.diary == nil) {
+                              [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Unable to load the content you requested.", nil) inView:sself.view withTag:0];
+                              return;
+                          }
                           [sself prepareAndLoadData];
                           NSInteger idx = [sself.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
                               if ([c.commentId isEqualToNumber:sself.notification.referenceId]) {
@@ -305,13 +314,12 @@ typedef enum {
                               }
                               return false;
                           }];
-                          NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_cellsArray.count - sself.diary.comments.count + idx inSection:0];
+                          NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_cellsArray.count - [sself.diary.comments allObjects].count + idx inSection:0];
                           [sself.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                       } else {
                           
                           [sself.tableView reloadData];
                       }
-                      [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -366,10 +374,21 @@ typedef enum {
                       if ([result isKindOfClass:[Response class]]) {
                           sself.response = result;
                       } else if ([result isKindOfClass:[NSArray class]]) {
-                          sself.response = result[0];
+                          if (sself.notification) {
+                              for (Response *obj in result) {
+                                  if ([sself.notification.referenceId isEqualToNumber:obj.threadId]) {
+                                      sself.response = obj;
+                                      break;
+                                  }
+                              }
+                          } else {
+                              sself.response = result[0];
+                          }
                       } else return;
                       // [sself organizeData];
-                      
+                      for (Comment *comment in [sself.response comments]) {
+                          NSLog(@"%@", comment);
+                      }
                       if (sself.notification) {
                           [sself prepareAndLoadData];
                           NSInteger idx = [sself.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
@@ -388,7 +407,6 @@ typedef enum {
                               [sself.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                           }
                       } else {
-                          
                           [sself.tableView reloadData];
                       }
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -417,9 +435,16 @@ typedef enum {
                           [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                           [sself addCommentToDataModel:result];
                           sself.txtResposne.text = @"";
+                          /*
                           NSInteger section = [sself numberOfSectionsInTableView:sself.tableView]-1;
                           NSInteger row = [sself tableView:sself.tableView numberOfRowsInSection:section]-1;
-                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                          [sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] atScrollPosition:UITableViewScrollPositionBottom animated:YES];*/
+                           // Not sure why this works.
+                          CGFloat scrollY = (CGFloat)[[sself.heightArray valueForKeyPath:@"@sum.self"] doubleValue];
+                          CGFloat tblHeight = sself.tableView.bounds.size.height;
+                          CGRect rect = CGRectMake(0, scrollY-tblHeight, sself.tableView.bounds.size.width, tblHeight);
+                          NSLog(@"%@", NSStringFromCGRect(rect));
+                          [sself.tableView scrollRectToVisible:rect animated:YES];
                           //[sself.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_cellsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                       }
                       failure:^(NSError *error) {
@@ -429,7 +454,6 @@ typedef enum {
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
-
 - (void)addCommentToDataModel:(Comment*)comment {
     comment.userInfo = LS.myUserInfo;
     if (self.response) {
@@ -484,7 +508,7 @@ typedef enum {
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[_heightArray objectAtIndex:indexPath.row] integerValue];
+    return [[_heightArray objectAtIndex:indexPath.row] floatValue];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -523,7 +547,7 @@ typedef enum {
             } else if (_response.imageGalleryResponses.count>0) {
                 ImageGalleryResponse *igr = [_response.imageGalleryResponses anyObject];
                 [infoCell setText:igr.response];
-        } else {
+            } else {
                 [infoCell.bodyLabel setText:@""];
             }
         }
@@ -563,7 +587,7 @@ typedef enum {
         if (counts == 1) {
             text = NSLocalizedString(@"1 Comment", nil);
         } else {
-            text = [NSString stringWithFormat:NSLocalizedString(@"%ld Comments", nil), (long)counts];
+            text = [NSString stringWithFormat:NSLocalizedString(@"%lu Comments", nil), (long unsigned)counts];
         }
         [cell.textLabel setText:text];
         return cell;
@@ -652,7 +676,6 @@ typedef enum {
     }
     return cell;
 }
-
 
 #pragma mark - CommentCellDelegate
 -(void)commentCell:(id)cell didSendText:(NSString *)text

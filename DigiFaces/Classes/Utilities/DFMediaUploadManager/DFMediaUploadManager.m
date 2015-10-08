@@ -211,6 +211,10 @@
     if ([mediaType isEqualToString:(NSString*)kUTTypeImage]){
         
         [self updateMediaView:self.currentView withImage:image data:nil type:DFMediaUploadTypeImage];
+        
+        // save photo to phone
+        
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
     
     else if ([mediaType isEqualToString:(NSString*)kUTTypeMovie]){
@@ -224,6 +228,10 @@
         image = [self imageForAVURLAsset:asset];
         
         [self updateMediaView:self.currentView withImage:image data:mediaData type:DFMediaUploadTypeVideo];
+        
+        // save video to phone
+        
+        UISaveVideoAtPathToSavedPhotosAlbum([videoURL path], nil, nil, nil);
         
     } else return;
     

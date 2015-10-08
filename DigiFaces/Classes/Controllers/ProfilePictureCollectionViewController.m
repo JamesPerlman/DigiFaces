@@ -124,7 +124,7 @@
         // Let DFMediaUploadManager deal with the Tap gesture on the DFMediaUploadView
     }
     else{
-        self.selectedImageFile = [_avatarsArray objectAtIndex:indexPath.row-(NSInteger)(_type == ProfilePictureTypeDefault)];
+        self.selectedImageFile = [_avatarsArray objectAtIndex:indexPath.row];
         ImageCollectionCell *cell = (ImageCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.selectedImage = cell.imgPicture.image;
     }

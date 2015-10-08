@@ -39,11 +39,11 @@
         file.fileDictionary = dictionary;
         
         file.fileType = dictionary[@"FileType"];
-        file.fileId = dictionary[@"FileId"];
+        file.fileId = @([dictionary[@"FileId"] integerValue]);
         file.fileName = dictionary[@"FileName"];
-        file.isCameraTagFile = dictionary[@"IsCameraTagFile"];
-        file.isAmazonFile = dictionary[@"IsAmazonFile"];
-        file.isViddlerFile = dictionary[@"IsViddlerFile"];
+        file.isCameraTagFile = @([dictionary[@"IsCameraTagFile"] boolValue]);
+        file.isAmazonFile = @([dictionary[@"IsAmazonFile"] boolValue]);
+        file.isViddlerFile = @([dictionary[@"IsViddlerFile"] boolValue]);
         file.viddlerKey = dictionary[@"ViddlerKey"];
         file.amazonKey = dictionary[@"AmazonKey"];
         file.cameraTagKey = dictionary[@"CameraTagKey"];

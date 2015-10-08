@@ -415,6 +415,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         responseController.diary = diary;
         responseController.responseType = ResponseControllerTypeDiaryResponse;
         responseController.delegate = self;
+        
     }
 }
 

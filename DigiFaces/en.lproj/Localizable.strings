@@ -28,7 +28,7 @@
 "1 Response" = "1 Response";
 "%lu Responses" = "%lu Responses";
 "%lu of %lu" = "%lu of %lu";
-"%ld Comments" = "%ld Comments";
+"%lu Comments" = "%lu Comments";
 "1 Comment" = "1 Comment";
 
 "Just now" = "Just now";
@@ -37,3 +37,4 @@
 "Fields can't be empty" = "Fields can't be empty";
 "Login failed.  Invalid username or password." = "Login failed.  Invalid username or password.";
 "The content you requested could not be found." = "The content you requested could not be found.";
+"Unable to load the content you requested." = "Unable to load the content you requested.";

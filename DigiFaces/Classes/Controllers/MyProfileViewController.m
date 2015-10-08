@@ -106,7 +106,7 @@
     }
     
     NSDictionary * params = @{@"AboutMeId" : self.aboutMe.aboutMeId,
-                              @"ProjectId" : [Utility getStringForKey:kCurrentPorjectID],
+                              @"ProjectId" : LS.myUserInfo.currentProjectId,
                               @"UserId" : LS.myUserInfo.id,
                               @"AboutMeText" : _aboutMeTextView.text};
     defwself
