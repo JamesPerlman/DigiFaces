@@ -25,10 +25,10 @@
 
 @interface ProjectIntroViewController ()
 {
-    RTCell * introCell;
 }
+@property (nonatomic, strong) RTCell *introCell;
 @property (nonatomic, retain) NSMutableArray * dataAray;
-
+@property (nonatomic, strong) NSMutableArray * heightArray;
 @property (nonatomic, strong) APIHomeAnnouncementResponse *homeAnnouncement;
 @end
 
@@ -37,6 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _dataAray = [[NSMutableArray alloc] init];
+    self.heightArray = [[NSMutableArray alloc] init];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -67,18 +68,26 @@
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       sself.homeAnnouncement = result;
                       
-                      [_dataAray removeAllObjects];
+                      [sself.dataAray removeAllObjects];
                       if (result.file) {
-                          [_dataAray addObject:result.file];
+                          [sself.dataAray addObject:result.file];
+                          [sself.heightArray addObject:@170];
                       }
                       if (result.title) {
-                          [_dataAray addObject:result.title];
+                          [sself.dataAray addObject:result.title];
+                          RTCell *cell = [sself.tableView dequeueReusableCellWithIdentifier:@"textCell"];
+                          [cell setText:result.title];
+                          [sself.heightArray addObject:@(cell.fullHeight)];
                       }
                       if (result.text) {
-                          [_dataAray addObject:result.text];
+                          [sself.dataAray addObject:result.text];
+                          
+                          RTCell *cell = [sself.tableView dequeueReusableCellWithIdentifier:@"textCell"];
+                          [cell setText:result.text];
+                          [sself.heightArray addObject:@(cell.fullHeight)];
                       }
                       
-                      [self.tableView reloadData];
+                      [sself.tableView reloadData];
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -102,14 +111,13 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return [self.heightArray[indexPath.row] floatValue];
+    /*
     if (indexPath.row == 0) {
         return 170;
     }
     else if (indexPath.row ==1){
-        return 44;
-    }
-    else if (indexPath.row == 2){
-        /*NSAttributedString *attributedText =
+        / *NSAttributedString *attributedText =
         [[NSAttributedString alloc]
          initWithString:self.homeAnnouncement.text
          attributes:@{
@@ -119,12 +127,12 @@
         //                                           options:NSStringDrawingUsesLineFragmentOrigin
           //                                         context:nil];
         //CGSize size = rect.size;
-        */
+        * /
         
-        return introCell.fullHeight + 30;
+        return self.introCell.fullHeight + 30;
     }
     
-    return 0;
+    return 0;*/
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -154,14 +162,14 @@
     
     if ([item isKindOfClass:[NSString class]]) {
         // Title
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        [cell.textLabel setHTML:item];
+        RTCell *cell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+        [cell setText:item];
         return cell;
     }
     else{
-        introCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-        [introCell setText:item];
-        return introCell;
+        self.introCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+        [self.introCell setText:item];
+        return self.introCell;
     }
 }
 

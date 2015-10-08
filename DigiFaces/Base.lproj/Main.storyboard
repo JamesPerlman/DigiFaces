@@ -2259,7 +2259,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YC-wi-gGK">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YC-wi-gGK">
                                             <rect key="frame" x="8" y="8" width="304" height="28"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -5391,12 +5391,12 @@
     <inferredMetricsTieBreakers>
         <segue reference="sw5-fw-ulw"/>
         <segue reference="Hhl-QA-hmh"/>
-        <segue reference="3io-xh-2yf"/>
         <segue reference="xm7-nE-fcs"/>
-        <segue reference="PJM-GU-RyY"/>
+        <segue reference="Taj-qP-dlL"/>
         <segue reference="Z1a-cS-acW"/>
         <segue reference="veF-sC-LAA"/>
-        <segue reference="Taj-qP-dlL"/>
         <segue reference="GFi-U1-0d9"/>
+        <segue reference="3io-xh-2yf"/>
+        <segue reference="rh1-KO-Byx"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -1966,7 +1966,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
