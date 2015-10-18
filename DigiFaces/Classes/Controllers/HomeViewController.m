@@ -30,7 +30,15 @@
 #import "File.h"
 #import "Project.h"
 
-
+typedef enum : NSUInteger {
+    DFHomeCellTypeNone,
+    DFHomeCellTypeHome,
+    DFHomeCellTypeDiary,
+    DFHomeCellTypeGeneralTheme,
+    DFHomeCellTypeImageGalleryTheme,
+    DFHomeCellTypeVideoTheme,
+    DFHomeCellTypeMarkupTheme
+} DFHomeCellType;
 
 @interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, NSFetchedResultsControllerDelegate>
 {
@@ -57,8 +65,6 @@
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:38/255.0f green:218/255.0f blue:1 alpha:1]}];
     
     
-    _imageNames = [[NSArray alloc]initWithObjects:@"home.png",@"diary.png",@"chat.png",@"friedship.png",@"talking.png",@"chat.png", nil];
-    
     [self fetchUserInfo];
     // Do any additional setup after loading the view.
     
@@ -81,7 +87,6 @@
     self.navigationItem.title = DFLocalizedString(@"view.home.navbar.title", nil);
     [self.tableView reloadData];
 }
-
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -279,6 +284,7 @@
     cell.separatorInset = UIEdgeInsetsZero;
     cell.layoutMargins = UIEdgeInsetsZero;
     cell.preservesSuperviewLayoutMargins = NO;
+    cell.imageView.image = [[UIImage alloc] init];
     
     HomeTableViewCell *homeCell = (HomeTableViewCell*)cell;
     if (indexPath.row == 0) {
@@ -288,7 +294,7 @@
         homeCell.unreadCount = 0;
         homeCell.unreadItemIndicator.hidden = true;
         
-        //cell.imageView.image = [UIImage imageNamed:[dict valueForKey:@"Icon"]];
+        cell.imageView.image = [self iconForCellType:DFHomeCellTypeHome];
     } else {
         
         NSUInteger indexAdjustment = 1;
@@ -297,7 +303,7 @@
             if (indexPath.row == 1) {
                 homeCell.titleLabel.text = DFLocalizedString(@"view.home.cell.diary", nil);
                 homeCell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
-                
+                cell.imageView.image = [self iconForCellType:DFHomeCellTypeDiary];
                 return;
             }
         }
@@ -307,6 +313,8 @@
         [homeCell.titleLabel setText:theme.activityTitle];
         homeCell.unreadCount = theme.unreadResponses.integerValue;
         homeCell.unreadItemIndicator.hidden = theme.isRead.boolValue;
+        
+        cell.imageView.image = [self iconForTheme:theme];
         //[cell.imageView setImage:[UIImage imageNamed:@"chat.png"]];
         
     }
@@ -315,6 +323,70 @@
 }
 
 
+- (UIImage*)iconForCellType:(DFHomeCellType)cellType {
+    NSString *imageName;
+    switch (cellType) {
+        case DFHomeCellTypeDiary:{
+            imageName = @"diary";
+        }
+            break;
+            
+        case DFHomeCellTypeGeneralTheme:{
+            imageName = @"chat";
+        }
+            break;
+            
+        case DFHomeCellTypeHome:{
+            imageName = @"home";
+        }
+            break;
+            
+            
+        case DFHomeCellTypeImageGalleryTheme:{
+            imageName = @"gallery";
+        }
+            break;
+            
+        case DFHomeCellTypeVideoTheme: {
+            imageName = @"videocam_black";
+            
+        }
+            break;
+        case DFHomeCellTypeMarkupTheme: {
+            imageName = @"markup";
+        }
+            break;
+            
+        case DFHomeCellTypeNone:
+        default:
+            return nil;
+            break;
+    }
+    return [UIImage imageNamed:imageName];
+}
+
+
+- (UIImage*)iconForTheme:(DiaryTheme*)theme {
+    DFHomeCellType cellType = DFHomeCellTypeNone;
+    switch (theme.activityTypeId.intValue) {
+        case 9:
+            cellType = DFHomeCellTypeGeneralTheme;
+        case 13:
+            cellType = DFHomeCellTypeMarkupTheme;
+            break;
+        case 14:
+            cellType = DFHomeCellTypeImageGalleryTheme;
+            break;
+        case 15:
+            cellType = DFHomeCellTypeVideoTheme;
+            break;
+            
+        default:
+            cellType = DFHomeCellTypeNone;
+    }
+    
+    return [self iconForCellType:cellType];
+}
 #pragma mark - UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

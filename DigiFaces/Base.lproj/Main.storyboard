@@ -577,7 +577,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehf-Bo-r4R">
-                                            <rect key="frame" x="8" y="13" width="259" height="18"/>
+                                            <rect key="frame" x="40" y="13" width="227" height="18"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -601,7 +601,7 @@
                                     <animations/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="Wzp-7C-ksj" secondAttribute="centerY" id="KQk-Rz-uf8"/>
-                                        <constraint firstItem="Ehf-Bo-r4R" firstAttribute="leading" secondItem="phg-Ol-t3V" secondAttribute="leadingMargin" id="X7Y-Uu-sh6"/>
+                                        <constraint firstItem="Ehf-Bo-r4R" firstAttribute="leading" secondItem="phg-Ol-t3V" secondAttribute="leadingMargin" constant="32" id="X7Y-Uu-sh6"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Wzp-7C-ksj" secondAttribute="trailing" constant="-8" id="f2a-aw-3f4"/>
                                         <constraint firstItem="Wzp-7C-ksj" firstAttribute="leading" secondItem="Ehf-Bo-r4R" secondAttribute="trailing" constant="8" id="pP7-2d-rmY"/>
                                         <constraint firstAttribute="centerY" secondItem="Ehf-Bo-r4R" secondAttribute="centerY" id="qnN-oE-4ox"/>
@@ -5224,11 +5224,11 @@
         <segue reference="DRp-1t-WNc"/>
         <segue reference="sw5-fw-ulw"/>
         <segue reference="v7h-oQ-d3S"/>
+        <segue reference="xm7-nE-fcs"/>
         <segue reference="f8n-jW-t9J"/>
         <segue reference="3r5-SJ-zjd"/>
         <segue reference="kgY-B9-zM2"/>
         <segue reference="Sh4-6s-X9J"/>
         <segue reference="XNZ-ng-ebc"/>
-        <segue reference="CE9-GG-Yoe"/>
     </inferredMetricsTieBreakers>
 </document>
