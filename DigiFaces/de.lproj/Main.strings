@@ -1,42 +1,135 @@
+"1cN-Jg-3Fy.title" = "fr_RESPONSE";
 
-/* Class = "UITextField"; placeholder = " Password"; ObjectID = "1xv-xq-8mw"; */
-"1xv-xq-8mw.placeholder" = " Password";
+"72J-bD-Kq9.normalTitle" = "Forgot Password ?";
 
-/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "21E-gX-BfQ"; */
-"21E-gX-BfQ.normalTitle" = "Logout";
+"7Ls-cd-dNf.title" = "DIARY";
 
-/* Class = "UIButton"; normalTitle = "Forgot Password ?"; ObjectID = "63L-HD-OMQ"; */
-"63L-HD-OMQ.normalTitle" = "Forgot Password ?";
+"7cY-LN-dil.normalTitle" = "Send";
 
-/* Class = "UILabel"; text = "HOME"; ObjectID = "OPe-EV-YPj"; */
+"8jM-xr-j9t.normalTitle" = "Send";
+
+"CWQ-GD-qC5.title" = "PROFILE PICTURE";
+
+"DXu-bE-yG0.placeholder" = "Subject";
+
+"DpD-JO-KX1.title" = "ANNOUNCEMENTS";
+
+"ElG-VW-FzE.title" = "SETTINGS";
+
+"FNU-bO-FPJ.normalTitle" = "View questions";
+
+"FO7-Wt-U8i.normalTitle" = "Send";
+
+"H2p-Ip-nIM.title" = "SEND";
+
+"Hde-1x-aro.title" = "EMAIL MODERATOR";
+
+"Hm4-bP-mHf.title" = "TECH SUPPORT";
+
+"IFX-4O-PUG.normalTitle" = "SUBMIT";
+
+"IcR-9q-07d.placeholder" = "Subject";
+
+"KRo-bR-EA7.title" = "MY PROFILE";
+
+"Nu6-MI-VkY.title" = "DIARY THEME";
+
 "OPe-EV-YPj.text" = "HOME";
 
-/* Class = "UILabel"; text = "SIGN IN"; ObjectID = "cFw-ve-SaT"; */
-"cFw-ve-SaT.text" = "SIGN IN";
+"P3r-zQ-RN6.text" = "Title";
 
-/* Class = "UILabel"; text = "Please chose a username, its necessory to enter a unique username."; ObjectID = "dKO-4t-z5r"; */
-"dKO-4t-z5r.text" = "Please chose a username, its necessory to enter a unique username.";
+"R1J-4v-Kmt.title" = "VERSION";
 
-/* Class = "UITextField"; placeholder = " Email"; ObjectID = "f7i-5S-a9i"; */
-"f7i-5S-a9i.placeholder" = " Email";
+"RtQ-JK-axF.text" = "Azra Kenen";
 
-/* Class = "UILabel"; text = "SELECT USERNAME"; ObjectID = "ktr-hT-uXz"; */
+"SAK-Fg-APs.title" = "Message with {username}";
+
+"SoD-D6-CUL.text" = "Title";
+
+"T0h-sB-WEc.text" = "APP VERSION : 1.0.0";
+
+"TPl-cp-fNf.text" = "Label";
+
+"TaI-my-Cps.text" = "T";
+
+"Uc7-Um-CI4.normalTitle" = "LOGOUT";
+
+"VnC-RW-xZt.title" = "Back";
+
+"W0o-tb-PNn.title" = "SEND";
+
+"WS8-bu-UKe.text" = "Details";
+
+"YQo-NV-iLk.title" = "DIARY";
+
+"Yed-KL-cDe.title" = "POST";
+
+"Z0q-Ui-eWR.title" = "RESPONSE";
+
+"Zwg-Kh-K9h.text" = "Enter your message here";
+
+"aid-yd-j4T.title" = "RESPOND";
+
+"c13-wF-Jev.normalTitle" = "APPLY";
+
+"cJy-VF-Hat.normalTitle" = "More";
+
+"cuG-Bn-ftB.normalTitle" = "Send";
+
+"dKO-4t-z5r.text" = "Please choose a username, its necessory to enter a unique username.";
+
+"dOj-Vw-z5W.text" = "Please enter your username and password to begin";
+
+"f10-jU-lIo.title" = "ABOUT DIGIFACES";
+
+"fcp-Aa-jfR.placeholder" = " Email";
+
+"gNO-d1-p4D.normalTitle" = "SUBMIT";
+
+"gSx-sW-XyK.title" = "NOTFICATIONS";
+
+"i5Z-h4-mzC.title" = "1 of 1";
+
+"jLZ-xU-XAe.title" = "HOME";
+
+"jbz-Bw-fcR.title" = "POST";
+
 "ktr-hT-uXz.text" = "SELECT USERNAME";
 
-/* Class = "UILabel"; text = "Please enter your email address, we will send you your password via email."; ObjectID = "pnS-P6-qZ1"; */
+"pJL-wg-cdK.normalTitle" = "Send";
+
+"pcL-sm-wkK.title" = "RESPONSE";
+
 "pnS-P6-qZ1.text" = "Please enter your email address, we will send you your password via email.";
 
-/* Class = "UILabel"; text = "Please enter your username and password to begin"; ObjectID = "rP4-de-Z81"; */
-"rP4-de-Z81.text" = "Please enter your username and password to begin";
+"qzG-MN-wIH.text" = "Label";
 
-/* Class = "UITextField"; placeholder = " Email"; ObjectID = "tuT-7U-iiZ"; */
+"r0F-ie-ih8.text" = "Label";
+
+"rh1-R1-BQL.title" = "HOME";
+
+"rpg-Wx-Ddt.placeholder" = " Password";
+
+"sTC-Hs-fKm.text" = "No network connection found. ";
+
+"tgM-Hi-3QY.text" = "SIGN IN";
+
 "tuT-7U-iiZ.placeholder" = " Email";
 
-/* Class = "UITextField"; placeholder = " Username"; ObjectID = "wMN-Wt-lNi"; */
+"vGy-7O-fWq.normalTitle" = "SIGN IN";
+
+"vwH-kU-iND.title" = "DONE";
+
 "wMN-Wt-lNi.placeholder" = " Username";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "xAR-Ae-pQD"; */
-"xAR-Ae-pQD.text" = "Label";
+"wYc-t2-wDu.title" = "RESPONSE";
 
-/* Class = "UILabel"; text = "RECOVER PASSWORD"; ObjectID = "yQ3-9l-bq5"; */
 "yQ3-9l-bq5.text" = "RECOVER PASSWORD";
+
+"yct-hD-MPN.placeholder" = "Title Name";
+
+"yxw-u9-9Sw.title" = "HOME";
+
+"zNX-iw-FA3.text" = "Enter your message here";
+
+"zrG-I5-CdK.text" = "Enter your message here";

@@ -11,6 +11,7 @@
 #import "NointernetController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "UIViewController+DFLocalization.h"
 
 #import "DFResponseDescriptorsProvider.h"
 @interface AppDelegate ()
@@ -25,7 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [self resetDatabase];
+    [DFDataManager setPersistentStoreURL:[self persistentStoreURL]];
+    
+    [DFDataManager resetDatabase];
     
     [self setupRestKit];
     
@@ -57,6 +60,10 @@
     [self.window makeKeyAndVisible];
 
     [Fabric with:@[CrashlyticsKit]];
+    
+    [[DFLanguageSynchronizer sharedInstance] downloadLocalizedStringsFromServerWithCompletion:^(NSError *error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DFLocalizationDidSynchronizeNotification object:nil];
+    }];
     
     return YES;
 }
@@ -178,11 +185,7 @@
     return _managedObjectContext;
 }
 
-- (void)resetDatabase {
-NSURL *storeURL = [self persistentStoreURL];
-NSError *error = nil;
-[[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
-}
+
 
 - (NSURL *)persistentStoreURL {
     return [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"DigiFaces.sqlite"];
@@ -225,8 +228,8 @@ NSError *error = nil;
     [objectManager.HTTPClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         if (status == AFNetworkReachabilityStatusNotReachable) {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"No network connection", @"No network connection")
-                                  message:NSLocalizedString(@"The Internet connection appears to be offline",
+                                  initWithTitle:DFLocalizedString(@"app.error.no_internet", nil)
+                                  message:DFLocalizedString(@"app.error.no_internet_descriptive",
                                                             nil)
                                   delegate:nil
                                   cancelButtonTitle:NSLocalizedString(@"OK",  @"OK")

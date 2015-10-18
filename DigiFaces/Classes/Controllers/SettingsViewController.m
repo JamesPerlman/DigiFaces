@@ -12,7 +12,10 @@
 #import "UIImageView+AFNetworking.h"
 
 
-@interface SettingsViewController ()
+@interface SettingsViewController () {
+    BOOL canEmailMod;
+}
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
 @end
 
@@ -20,7 +23,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    canEmailMod = [LS.myUserInfo canEmailMods];
     // Do any additional setup after loading the view.
+}
+
+- (void)localizeUI {
+    [self.logoutButton setTitle:DFLocalizedString(@"view.settings.button.log_out", nil) forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +49,7 @@
     else if (indexPath.row == 1){
         [self performSegueWithIdentifier:@"emailTecSupportSegue" sender:self];
     }
-    else if (indexPath.row == 2){
+    else if (indexPath.row == 2 && canEmailMod){
         [self performSegueWithIdentifier:@"emailModeratorSegue" sender:self];
     }
     else if (indexPath.row == 3){
@@ -58,26 +66,35 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = NSLocalizedString(@"MY cell", @"MY PROFILE") ;
+        cell.textLabel.text = DFLocalizedString(@"view.settings.button.profile", nil);
     }
     else if (indexPath.row == 1){
-        cell.textLabel.text = NSLocalizedString(@"EmailTech cell", @"EMAIL TECH SUPPORT") ;
+        cell.textLabel.text = DFLocalizedString(@"view.settings.button.email_support", nil);
     }
     else if (indexPath.row == 2){
-        cell.textLabel.text = NSLocalizedString(@"Email cell", @"EMAIL THE MODERATOR");
+        cell.textLabel.text = DFLocalizedString(@"view.settings.button.email_mod", nil);
+        if (!canEmailMod) {
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        }
     }
     else if(indexPath.row ==3){
-        cell.textLabel.text = NSLocalizedString(@"ABOUT cell", @"ABOUT DIGIFACES") ;
+        cell.textLabel.text = DFLocalizedString(@"view.settings.button.about", nil);
         
     }
     
     else if(indexPath.row ==4){
-        cell.textLabel.text = NSLocalizedString(@"VERSION cell", @"VERSION 1.0") ;
+        cell.textLabel.text = [NSString stringWithFormat:DFLocalizedString(@"view.settings.button.version", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
         
     }
     
     
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 2 && !canEmailMod) {
+        return false;
+    } else return true;
 }
 
 -(IBAction)gotoback:(id)sender{

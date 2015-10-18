@@ -482,7 +482,8 @@
                                                   @"CurrentProjectId",
                                                   @"AboutMeText",
                                                   @"HasRegistered",
-                                                  @"LoginProvider"].camelCaseDict];
+                                                  @"LoginProvider",
+                                                  @"ProjectRoleId"].camelCaseDict];
     
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"AvatarFile" toKeyPath:@"avatarFile" withMapping:[self fileMapping]]];

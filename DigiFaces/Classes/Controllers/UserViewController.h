@@ -21,8 +21,6 @@
 @end
 
 @interface UserViewController : UIViewController<UITextFieldDelegate,PopUpDelegate>
-@property (nonatomic,strong)IBOutlet UITextField * username;
-@property (nonatomic,strong)IBOutlet UILabel * errorMessage;
 @property (nonatomic,strong) id<MessageToViewMain>delegate;
 @property(nonatomic,retain)CustomAlertView * customAlert;
 

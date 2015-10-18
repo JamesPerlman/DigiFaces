@@ -46,6 +46,7 @@ typedef enum {
     _cellsArray = [[NSMutableArray alloc] init];
     
     if (_dailyDiary) {
+        self.navigationItem.title = DFLocalizedString(@"view.entry_info.navbar.title", nil);
         if ([_dailyDiary.file.fileType isEqualToString:@"Image"]) {
             [_cellsArray addObject:@(CellsTypeImage)];
         }
@@ -85,6 +86,7 @@ typedef enum {
     
     
 }
+
 
 -(Module*)getModuleForThemeType:(ThemeType)type
 {

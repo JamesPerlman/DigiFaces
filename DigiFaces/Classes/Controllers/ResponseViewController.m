@@ -63,6 +63,7 @@ typedef enum {
 
 @property (nonatomic, strong) NSArray *comments;
 
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 @end
 
@@ -97,13 +98,14 @@ typedef enum {
         }
         
         if (error) {
-            [self.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:self.navigationController.view withTag:0];
+            [self.customAlert showAlertWithMessage:DFLocalizedString(@"view.response.alert.content_not_found", nil) inView:self.navigationController.view withTag:0];
         }
         
     } else
         [self prepareAndLoadData];
     
     
+    self.messageTextView.hidden = ![LS.myUserInfo canAddCommentsToDiaryResponses];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -111,9 +113,14 @@ typedef enum {
     //  self.txtResposne.layer.borderWidth = 1.0f;
     self.txtResposne.layer.cornerRadius = 4.0f;
     self.txtResposne.clipsToBounds = true;
-    self.txtResposne.placeholder = NSLocalizedString(@"Leave a comment...", nil);
     self.txtResposne.delegate = self;
     // [self organizeData];
+}
+
+- (void)localizeUI {
+    
+    self.txtResposne.placeholder = DFLocalizedString(@"view.response.input.response", nil);
+    [self.sendButton setTitle:DFLocalizedString(@"view.response.button.send", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -244,7 +251,7 @@ typedef enum {
         NSLog(@"ResponseViewController setThreadId:commentId: error - Couldn't find a comment with id %@", commentId);
     }
     if (error) {
-        [self.customAlert showAlertWithMessage:NSLocalizedString(@"The content you requested could not be found.", nil) inView:self.navigationController.view withTag:0];
+        [self.customAlert showAlertWithMessage:DFLocalizedString(@"view.response.alert.content_not_found", nil) inView:self.navigationController.view withTag:0];
     }
 }
 
@@ -303,7 +310,7 @@ typedef enum {
                       
                       if (sself.notification) {
                           if (sself.diary == nil) {
-                              [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Unable to load the content you requested.", nil) inView:sself.view withTag:0];
+                              [sself.customAlert showAlertWithMessage:DFLocalizedString(@"view.response.alert.content_load_failure", nil) inView:sself.view withTag:0];
                               return;
                           }
                           [sself prepareAndLoadData];
@@ -386,9 +393,9 @@ typedef enum {
                           }
                       } else return;
                       // [sself organizeData];
-                      for (Comment *comment in [sself.response comments]) {
-                          NSLog(@"%@", comment);
-                      }
+                      //for (Comment *comment in [sself.response comments]) {
+                      //    NSLog(@"%@", comment);
+                      //}
                       if (sself.notification) {
                           [sself prepareAndLoadData];
                           NSInteger idx = [sself.comments indexOfObjectPassingTest:^BOOL(Comment *c, NSUInteger idx, BOOL *stop) {
@@ -400,7 +407,7 @@ typedef enum {
                           }];
                           
                           if (idx == NSNotFound) {
-                              [sself.customAlert showAlertWithMessage:NSLocalizedString(@"Unable to load the content you requested.", nil) inView:sself.view withTag:0];
+                              [sself.customAlert showAlertWithMessage:DFLocalizedString(@"view.response.alert.content_load_failure", nil) inView:sself.view withTag:0];
                               NSLog(@"Could not find a comment with id %@", sself.notification.referenceId2);
                           } else {
                               NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_cellsArray.count - sself.response.comments.count + idx inSection:0];
@@ -462,7 +469,7 @@ typedef enum {
     if (self.diary) {
         [self.diary addCommentsObject:comment];
     }
-    comment.dateCreatedFormatted = NSLocalizedString(@"Just now", nil);
+    comment.dateCreatedFormatted = DFLocalizedString(@"app.dates.text.just_now", nil);
     [self.managedObjectContext save:nil];
     [self prepareAndLoadData];
     //[self organizeData];
@@ -585,9 +592,9 @@ typedef enum {
         }
         NSString *text;
         if (counts == 1) {
-            text = NSLocalizedString(@"1 Comment", nil);
+            text = DFLocalizedString(@"view.response.text.1_comment", nil);
         } else {
-            text = [NSString stringWithFormat:NSLocalizedString(@"%lu Comments", nil), (long unsigned)counts];
+            text = [NSString stringWithFormat:DFLocalizedString(@"view.response.text.n_comments", nil), (long unsigned)counts];
         }
         [cell.textLabel setText:text];
         return cell;

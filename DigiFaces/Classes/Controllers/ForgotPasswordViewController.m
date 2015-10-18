@@ -10,12 +10,17 @@
 #import "MBProgressHUD.h"
 
 @interface ForgotPasswordViewController () <PopUpDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *header1Label;
+@property (weak, nonatomic) IBOutlet UILabel *header2Label;
 
+@property (nonatomic,weak)IBOutlet UITextField * emailTextField;
+@property (nonatomic,weak)IBOutlet UILabel * errorMessageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
 
 @implementation ForgotPasswordViewController
-@synthesize email = _email;
-@synthesize errorMessage = _errorMessage;
+@synthesize emailTextField = _emailTextField;
+@synthesize errorMessageLabel = _errorMessageLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,13 +31,20 @@
     [self.customAlert setSingleButton:YES];
     self.customAlert.delegate = self;
 
-    _errorMessage.hidden = YES;
+    _errorMessageLabel.hidden = YES;
     
     
-    [_email becomeFirstResponder];
+    [_emailTextField becomeFirstResponder];
     // Do any additional setup after loading the view.
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+}
+
+- (void)localizeUI {
+    self.header1Label.text = DFLocalizedString(@"view.forgot_pass.header1", nil);
+    self.header2Label.text = DFLocalizedString(@"view.forgot_pass.header2", nil);
+    self.emailTextField.placeholder = DFLocalizedString(@"view.forgot_pass.input.email.placeholder", nil);
+    [self.submitButton setTitle:DFLocalizedString(@"view.forgot_pass.button.submit", nil) forState:UIControlStateNormal];
 }
 /*
 -(BOOL)prefersStatusBarHidden{
@@ -62,24 +74,27 @@
 
 -(IBAction)recoverPassword:(id)sender{
 
-    [_email resignFirstResponder];
-    if ([_email.text isEqualToString:@""] ) {
+    [_emailTextField resignFirstResponder];
+    if ([_emailTextField.text isEqualToString:@""] ) {
         
-        _errorMessage.text = @"Fields can't be empty";
-        [_customAlert showAlertWithMessage:@"Fields can't be empty" inView:self.view withTag:0];
+        NSString *errorMessage = DFLocalizedString(@"view.forgot_pass.error.empty_fields", nil);
+        
+        _errorMessageLabel.text = errorMessage;
+        [_customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
         
         return;
     }
-    else if(![self validateEmailWithString:_email.text]){
+    else if(![self validateEmailWithString:_emailTextField.text]){
+        NSString *errorMessage = DFLocalizedString(@"view.forgot_pass.error.invalid_email", nil);
         
-        _errorMessage.text = @"Enter a valid email address";
-        [_customAlert showAlertWithMessage:@"Enter a valid email address" inView:self.view withTag:0];
+        _errorMessageLabel.text = errorMessage;
+        [_customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
         
         return;
         
     }
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSString * email = [NSString stringWithString:_email.text];
+    NSString * email = [NSString stringWithString:_emailTextField.text];
     parameters[@"Email"] = email;
     
     
@@ -92,10 +107,11 @@
                    params:@{@"Email" : email}
                   success:^(NSDictionary *response, id result) {
                       defsself
-                      _errorMessage.textColor = [UIColor greenColor];
-                      _errorMessage.text = @"Please check your inbox, password sent";
+                      NSString *alertMessage = DFLocalizedString(@"view.forgot_pass.alert.success", nil);
+                      _errorMessageLabel.textColor = [UIColor greenColor];
+                      _errorMessageLabel.text = alertMessage;
                       
-                      [_customAlert showAlertWithMessage:@"Please check your inbox, password sent" inView:sself.view withTag:0];
+                      [_customAlert showAlertWithMessage:alertMessage inView:sself.view withTag:0];
                       
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                       
@@ -104,10 +120,10 @@
                   failure:^(NSError *error) {
                       
                       defsself
+                      NSString *errorMessage = DFLocalizedString(@"view.forgot_pass.alert.failure", nil);
+                      _errorMessageLabel.text = errorMessage;
                       
-                      _errorMessage.text = @"An error in request, verify that your email is correct";
-                      
-                      [_customAlert showAlertWithMessage:@"An error in request, verify that your email is correct" inView:sself.view withTag:0];
+                      [_customAlert showAlertWithMessage:errorMessage inView:sself.view withTag:0];
                       
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                   }];

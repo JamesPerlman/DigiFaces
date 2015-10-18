@@ -13,6 +13,13 @@
 #import "UserViewController.h"
 
 @interface LoginTableController() <PopUpDelegate, MessageToViewMain>
+@property (weak, nonatomic) IBOutlet UILabel *signInLabel;
+@property (weak, nonatomic) IBOutlet UILabel *loginMessageLabel;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
 @end
 
@@ -26,18 +33,31 @@
     self.customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     [self.customAlert setSingleButton:YES];
     self.customAlert.delegate = self;
-    _errorMessage.hidden = YES;
+    _errorMessageLabel.hidden = YES;
     
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     
-    _email.leftView = paddingView1;
-    _email.leftViewMode = UITextFieldViewModeAlways;
+    _emailTextField.leftView = paddingView1;
+    _emailTextField.leftViewMode = UITextFieldViewModeAlways;
     
-    _password.leftView = paddingView2;
-    _password.leftViewMode = UITextFieldViewModeAlways;
+    _passwordTextField.leftView = paddingView2;
+    _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+}
+
+- (void)localizeUI {
     
+    self.signInLabel.text = DFLocalizedString(@"view.login.header1", nil);
     
+    self.loginMessageLabel.text = DFLocalizedString(@"view.login.header2", nil);
+    
+    self.emailTextField.placeholder = DFLocalizedString(@"view.login.input.email.placeholder", nil);
+    
+    self.passwordTextField.placeholder = DFLocalizedString(@"view.login.input.password.placeholder", nil);
+    
+    [self.signInButton setTitle:DFLocalizedString(@"view.login.button.sign_in", nil) forState:UIControlStateNormal];
+    
+    [self.forgotPasswordButton setTitle:DFLocalizedString(@"view.login.button.forgot_password", nil) forState:UIControlStateNormal];
 }
 
 /*
@@ -65,24 +85,26 @@
 }
 
 - (IBAction)signInPressed:(id)sender {
-    [_email resignFirstResponder];
-    [_password resignFirstResponder];
+    [_emailTextField resignFirstResponder];
+    [_passwordTextField resignFirstResponder];
     
-    if ([_email.text isEqualToString:@""] || [_password.text isEqualToString:@""] ) {
+    if ([_emailTextField.text isEqualToString:@""] || [_passwordTextField.text isEqualToString:@""] ) {
         
-        _errorMessage.text = @"Fields can't be empty";
+        NSString *errorMessage = DFLocalizedString(@"view.login.error.empty_fields", nil);
+        _errorMessageLabel.text = errorMessage;
         
         self.customAlert.fromW = @"login";
         
-        [self.customAlert showAlertWithMessage:@"Fields can't be empty" inView:self.view withTag:0];
+        [self.customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
         
         
         return;
     }
-    else if(![self validateEmailWithString:_email.text]){
-        _errorMessage.text = @"Enter a valid email address";
+    else if(![self validateEmailWithString:_emailTextField.text]){
+        NSString *errorMessage = DFLocalizedString(@"view.login.error.invalid_email", nil);
+        _errorMessageLabel.text = errorMessage;
         self.customAlert.fromW = @"login";
-        [self.customAlert showAlertWithMessage:@"Enter a valid email address" inView:self.view withTag:0];
+        [self.customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
         
         return;
         
@@ -92,10 +114,10 @@
     
     
     
-    NSString * username = [NSString stringWithString:_email.text ];//@"xxshabanaxx@focusforums.net";
+    NSString * username = [NSString stringWithString:_emailTextField.text ];//@"xxshabanaxx@focusforums.net";
    // parameters[@"grant_type"] = @"password";
     //parameters[@"username"] = username;// [username stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-    NSString * password = [NSString stringWithString:_password.text ];
+    NSString * password = [NSString stringWithString:_passwordTextField.text ];
     defwself
     [DFClient loginWithUsername:username password:password success:^(NSDictionary *response, id result) {
         defsself
@@ -105,9 +127,13 @@
         [MBProgressHUD hideHUDForView:sself.view animated:YES];
         
         sself.customAlert.fromW = @"login";
-        [sself.customAlert showAlertWithMessage:@"Login failed, please enter correct credentials" inView:sself.view withTag:0];
         
-        _errorMessage.text = @"Login failed, please enter correct credentials";
+        
+        NSString *errorMessage = DFLocalizedString(@"view.login.error.login_failed", nil);
+        
+        [sself.customAlert showAlertWithMessage:errorMessage inView:sself.view withTag:0];
+        
+        sself.errorMessageLabel.text = errorMessage;
     }];
 }
 
@@ -141,7 +167,6 @@
     }];
 }
 
-
 -(void)moveToUserNameScreen{
     
     [self performSegueWithIdentifier: @"ToUserViewController" sender: self];
@@ -167,8 +192,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_email resignFirstResponder];
-    [_password resignFirstResponder];
+    [_emailTextField resignFirstResponder];
+    [_passwordTextField resignFirstResponder];
 }
 
 @end

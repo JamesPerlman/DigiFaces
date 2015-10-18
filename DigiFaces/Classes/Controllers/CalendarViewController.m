@@ -24,6 +24,14 @@
 @property (nonatomic, retain) NSArray * monthDays;
 @property (nonatomic, retain) NSCalendar *calendar;
 
+@property (weak, nonatomic) IBOutlet UILabel *mondayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tuesdayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *wednesdayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *thursdayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fridayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *saturdayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sundayLabel;
+@property (weak, nonatomic) IBOutlet UIButton *applyButton;
 
 @end
 
@@ -41,6 +49,17 @@
     
     [self getMonthYear];
     [self loadCalendar];
+}
+
+- (void)localizeUI {
+    self.mondayLabel.text = DFLocalizedString(@"view.calendar.monday", nil);
+    self.tuesdayLabel.text = DFLocalizedString(@"view.calendar.tuesday", nil);
+    self.wednesdayLabel.text = DFLocalizedString(@"view.calendar.wednesday", nil);
+    self.thursdayLabel.text = DFLocalizedString(@"view.calendar.thursday", nil);
+    self.fridayLabel.text = DFLocalizedString(@"view.calendar.friday", nil);
+    self.saturdayLabel.text = DFLocalizedString(@"view.calendar.saturday", nil);
+    self.sundayLabel.text = DFLocalizedString(@"view.calendar.sunday", nil);
+    [self.applyButton setTitle:DFLocalizedString(@"view.calendar.button.apply", nil) forState:UIControlStateNormal];
 }
 
 -(NSInteger)dayOfWeek:(NSString*)someDay

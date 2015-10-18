@@ -27,9 +27,16 @@
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * loginProvider;
 @property (nonatomic, retain) NSString * password;
+@property (nonatomic, retain) NSNumber * projectRoleId;
 @property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSString * userName;
 @property (nonatomic, retain) File *avatarFile;
 @property (nonatomic, retain) Project *currentProject;
 
+
+- (BOOL)canEmailMods;
+- (BOOL)canReplyToDiaries;
+- (BOOL)canReplyToThemes;
+- (BOOL)canAddCommentsToDiaryResponses;
+- (BOOL)canAddCommentsToThemeResponses;
 @end

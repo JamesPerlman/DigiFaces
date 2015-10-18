@@ -25,7 +25,7 @@ typedef enum {
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-
+@property (weak, nonatomic) IBOutlet UIView *messageTextView;
 @property (nonatomic ,retain) Notification * notification;
 @property (nonatomic, assign) ResponseControllerType responseType;
 @property (nonatomic, retain) Diary * diary;

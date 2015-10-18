@@ -10,10 +10,17 @@
 
 @interface DFDataManager : NSObject
 
+@property (nonatomic, strong) NSURL *persistentStoreURL;
+
+
 + (instancetype)sharedManager;
+
++ (void)setPersistentStoreURL:(NSURL*)persistentStoreURL;
 
 + (void)setManagedObjectContext:(NSManagedObjectContext*)managedObjectContext;
 
 + (void)removeEntitiesWithEntityName:(NSString*)entityName idKey:(NSString*)idKey notInArray:(NSArray*)array predicate:(NSPredicate*)predicate;
+
++ (void)resetDatabase;
 
 @end

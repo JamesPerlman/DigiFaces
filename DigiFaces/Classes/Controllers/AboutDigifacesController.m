@@ -23,6 +23,10 @@
     
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.about_df.navbar.title", nil);
+}
+
 
 -(void)fetchAboutDigifacesText
 {

@@ -50,6 +50,10 @@
     
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.profile_pic.navbar.title", nil);
+}
+
 - (void)fetchAvatarFiles{
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -135,7 +139,7 @@
 }
 - (IBAction)doneClicked:(id)sender {
     if (self.selectedImageFile == nil) {
-        [alertView showAlertWithMessage:@"Please select an image to set as profile picture" inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.profile_pic.error.missing_picture", nil) inView:self.navigationController.view withTag:0];
         
     }
     else{
@@ -166,7 +170,7 @@
 -(void)mediaUploadManager:(DFMediaUploadManager *)mediaUploadManager didFinishUploadingForView:(DFMediaUploadView *)mediaUploadView {
     [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
     if (requestFailed) {
-        [alertView showAlertWithMessage:@"Error uploading image. Please try again." inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.profile_pic.alert.upload_failure", nil) inView:self.navigationController.view withTag:0];
     }
     else{
         NSDictionary * parameters = @{@"FileId" : @"",

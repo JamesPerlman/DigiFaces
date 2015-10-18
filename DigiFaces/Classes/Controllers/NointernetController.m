@@ -8,6 +8,15 @@
 
 #import "NointernetController.h"
 
+@interface NointernetController ()
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+
+@end
+
 @implementation NointernetController
+
+- (void)localizeUI {
+    self.messageLabel.text = DFLocalizedString(@"app.error.no_internet", nil);
+}
 
 @end

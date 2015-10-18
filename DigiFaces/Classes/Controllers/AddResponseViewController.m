@@ -106,6 +106,14 @@
     
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.respond.navbar.title", nil);
+    [self.btnViewQuestion setTitle:DFLocalizedString(@"view.respond.button.view_question", nil) forState:UIControlStateNormal];
+    self.txtTitle.placeholder = DFLocalizedString(@"view.respond.input.title.placeholder", nil);
+    self.lblPlaceholder.text = DFLocalizedString(@"view.respond.input.body.placeholder", nil);
+    
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"diaryInfoSegue"]) {
@@ -271,7 +279,6 @@
                        params:params
                       success:^(NSDictionary *response, TextareaResponse *result) {
                           defsself
-                          [MBProgressHUD hideAllHUDsForView:sself.navigationController.view animated:YES];
                           sself.createdResponse.textareaResponses = [NSSet setWithObject:result];
                           [sself.managedObjectContext save:nil];
                           [sself.mediaUploadManager uploadMediaFiles];
@@ -323,7 +330,7 @@
 
 -(void)insertThreadFileWithMediaView:(DFMediaUploadView*)mediaUploadView {
     
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    //[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     NSURL *publicFileURL = [NSURL URLWithString:mediaUploadView.mediaFilePath];
     NSString *fileName = [publicFileURL lastPathComponent];
     NSString *fileExtension = [fileName pathExtension];
@@ -350,7 +357,7 @@
                    bodyParams:[NSDictionary dictionaryWithDictionary:params]
                       success:^(NSDictionary *response, File *result) {
                           defsself
-                          [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
+                          //[MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                           [sself addFileToWhateverObjectIsCreated:result];
                       }
                       failure:^(NSError *error) {
@@ -390,11 +397,11 @@
     if (_dailyDiary && [_txtTitle.text isEqualToString:@""]) {
         // Error
         [self resignAllResponders];
-        [self showAlertWithMessage:NSLocalizedString(@"Title is required.", nil)];
+        [self showAlertWithMessage:DFLocalizedString(@"view.respond.error.empty_title", nil)];
     }
     else if ([_txtResponse.text isEqualToString:@""]){
         [self resignAllResponders];
-        [self showAlertWithMessage:NSLocalizedString(@"Response is required.", nil)];
+        [self showAlertWithMessage:DFLocalizedString(@"view.respond.error.empty_body", nil)];
     }
     else
     {
@@ -423,7 +430,7 @@
             hasUnsavedContent = true;
         }
         if (hasUnsavedContent) {
-            [self showAlertWithMessage:NSLocalizedString(@"Are you sure you want to discard your post?", nil)];
+            [self showAlertWithMessage:DFLocalizedString(@"view.respond.alert.confirm_discard", nil)];
             willClose = true;
             return;
         }

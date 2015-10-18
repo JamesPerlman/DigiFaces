@@ -46,17 +46,18 @@
     if (!self.announcement) {
         [self fetchProjectAnnouncements:LS.myUserInfo.currentProjectId];
     } else {
-        if (self.announcement.files.count) {
-            [_dataAray addObject:self.announcement.files.anyObject];
-        }
-        [_dataAray addObject:self.announcement.title];
-        [_dataAray addObject:self.announcement.text];
-        [self.tableView reloadData];
+        [self generateDataArraysFromAnnouncement:self.announcement];
     }
+}
+
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.proj_intro.navbar.title", nil);
 }
 
 -(void)fetchProjectAnnouncements:(NSNumber*)projectId
 {
+    [_dataAray removeAllObjects];
+    [_heightArray removeAllObjects];
     defwself
     [DFClient makeRequest:APIPathGetHomeAnnouncement
                    method:kGET
@@ -67,27 +68,7 @@
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       sself.homeAnnouncement = result;
-                      
-                      [sself.dataAray removeAllObjects];
-                      if (result.file) {
-                          [sself.dataAray addObject:result.file];
-                          [sself.heightArray addObject:@170];
-                      }
-                      if (result.title) {
-                          [sself.dataAray addObject:result.title];
-                          RTCell *cell = [sself.tableView dequeueReusableCellWithIdentifier:@"textCell"];
-                          [cell setText:result.title];
-                          [sself.heightArray addObject:@(cell.fullHeight)];
-                      }
-                      if (result.text) {
-                          [sself.dataAray addObject:result.text];
-                          
-                          RTCell *cell = [sself.tableView dequeueReusableCellWithIdentifier:@"textCell"];
-                          [cell setText:result.text];
-                          [sself.heightArray addObject:@(cell.fullHeight)];
-                      }
-                      
-                      [sself.tableView reloadData];
+                      [sself generateDataArraysFromAnnouncement:result];
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -95,6 +76,38 @@
                   }];
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+}
+
+- (void)generateDataArraysFromAnnouncement:(id)announcement {
+    
+    [self.dataAray removeAllObjects];
+    if ([announcement respondsToSelector:@selector(file)]) {
+        if ([announcement file]) {
+            [self.dataAray addObject:[announcement file]];
+            [self.heightArray addObject:@170];
+        }
+    } else if ([announcement respondsToSelector:@selector(files)]) {
+        if ([[announcement files] count]) {
+            [self.dataAray addObject:[[announcement files] anyObject]];
+            [self.heightArray addObject:@170];
+        }
+    }
+    if ([announcement title]) {
+        [self.dataAray addObject:[announcement title]];
+        RTCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"textCell"];
+        [cell setText:[announcement title]];
+        [self.heightArray addObject:@(cell.fullHeight)];
+    }
+    if ([announcement text]) {
+        [self.dataAray addObject:[announcement text]];
+        
+        RTCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"textCell"];
+        [cell setText:[announcement text]];
+        [self.heightArray addObject:@(cell.fullHeight)];
+    }
+    
+    [self.tableView reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,26 +126,26 @@
 {
     return [self.heightArray[indexPath.row] floatValue];
     /*
-    if (indexPath.row == 0) {
-        return 170;
-    }
-    else if (indexPath.row ==1){
-        / *NSAttributedString *attributedText =
-        [[NSAttributedString alloc]
-         initWithString:self.homeAnnouncement.text
-         attributes:@{
-         NSFontAttributeName: [UIFont systemFontOfSize:16.0f]
-         }];
-       // CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width, CGFLOAT_MAX}
-        //                                           options:NSStringDrawingUsesLineFragmentOrigin
-          //                                         context:nil];
-        //CGSize size = rect.size;
-        * /
-        
-        return self.introCell.fullHeight + 30;
-    }
-    
-    return 0;*/
+     if (indexPath.row == 0) {
+     return 170;
+     }
+     else if (indexPath.row ==1){
+     / *NSAttributedString *attributedText =
+     [[NSAttributedString alloc]
+     initWithString:self.homeAnnouncement.text
+     attributes:@{
+     NSFontAttributeName: [UIFont systemFontOfSize:16.0f]
+     }];
+     // CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width, CGFLOAT_MAX}
+     //                                           options:NSStringDrawingUsesLineFragmentOrigin
+     //                                         context:nil];
+     //CGSize size = rect.size;
+     * /
+     
+     return self.introCell.fullHeight + 30;
+     }
+     
+     return 0;*/
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -186,38 +199,38 @@
 
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Navigation
 

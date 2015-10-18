@@ -50,7 +50,7 @@
 }
 
 - (void)presentMediaSelectionDialog {
-    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Image" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Photo Library", nil];
+    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:DFLocalizedString(@"view.misc.photo_uploader.select_image", nil) delegate:self cancelButtonTitle:DFLocalizedString(@"view.misc.photo_uploader.cancel", nil) destructiveButtonTitle:nil otherButtonTitles:DFLocalizedString(@"view.misc.photo_uploader.camera", nil), DFLocalizedString(@"view.misc.photo_uploader.library", nil), nil];
     [actionSheet showInView:((UIViewController*)self.viewController).view];
 }
 

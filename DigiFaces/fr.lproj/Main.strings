@@ -1,42 +1,133 @@
+"T0h-sB-WEc.text" = "APP VERSION : 1.0.0";
 
-/* Class = "UITextField"; placeholder = " Password"; ObjectID = "1xv-xq-8mw"; */
-"1xv-xq-8mw.placeholder" = " Password";
+"72J-bD-Kq9.normalTitle" = "Forgot Password ?";
 
-/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "21E-gX-BfQ"; */
-"21E-gX-BfQ.normalTitle" = "Logout";
+"rpg-Wx-Ddt.placeholder" = " Password";
 
-/* Class = "UIButton"; normalTitle = "Forgot Password ?"; ObjectID = "63L-HD-OMQ"; */
-"63L-HD-OMQ.normalTitle" = "Forgot Password ?";
+"c13-wF-Jev.normalTitle" = "APPLY";
 
-/* Class = "UILabel"; text = "HOME"; ObjectID = "OPe-EV-YPj"; */
+"f10-jU-lIo.title" = "ABOUT DIGIFACES";
+
+"7Ls-cd-dNf.title" = "DIARY";
+
+"YQo-NV-iLk.title" = "DIARY";
+
+"Hde-1x-aro.title" = "EMAIL MODERATOR";
+
+"Hm4-bP-mHf.title" = "TECH SUPPORT";
+
+"CWQ-GD-qC5.title" = "PROFILE PICTURE";
+
+"ElG-VW-FzE.title" = "SETTINGS";
+
+"XBK-eS-VDD.title" = "NOTIFICATIONS";
+
+"Z0q-Ui-eWR.title" = "RESPONSE";
+
+"1cN-Jg-3Fy.title" = "RESPONSE";
+
+"pcL-sm-wkK.title" = "RESPONSE";
+
+"wYc-t2-wDu.title" = "RESPONSE";
+
+"aid-yd-j4T.title" = "RESPOND";
+
 "OPe-EV-YPj.text" = "HOME";
 
-/* Class = "UILabel"; text = "SIGN IN"; ObjectID = "cFw-ve-SaT"; */
-"cFw-ve-SaT.text" = "SIGN IN";
+"jLZ-xU-XAe.title" = "HOME";
 
-/* Class = "UILabel"; text = "Please chose a username, its necessory to enter a unique username."; ObjectID = "dKO-4t-z5r"; */
-"dKO-4t-z5r.text" = "Please chose a username, its necessory to enter a unique username.";
+"KRo-bR-EA7.title" = "MY PROFILE";
 
-/* Class = "UITextField"; placeholder = " Email"; ObjectID = "f7i-5S-a9i"; */
-"f7i-5S-a9i.placeholder" = " Email";
+"Nu6-MI-VkY.title" = "DIARY THEME";
 
-/* Class = "UILabel"; text = "SELECT USERNAME"; ObjectID = "ktr-hT-uXz"; */
+"R1J-4v-Kmt.title" = "VERSION";
+
+"Suu-wp-bbp.title" = "ANNOUNCEMENTS";
+
+"Uc7-Um-CI4.normalTitle" = "LOGOUT";
+
+"jc6-71-Mrl.title" = "MESSAGES";
+
 "ktr-hT-uXz.text" = "SELECT USERNAME";
 
-/* Class = "UILabel"; text = "Please enter your email address, we will send you your password via email."; ObjectID = "pnS-P6-qZ1"; */
-"pnS-P6-qZ1.text" = "Please enter your email address, we will send you your password via email.";
+"tgM-Hi-3QY.text" = "SIGN IN";
 
-/* Class = "UILabel"; text = "Please enter your username and password to begin"; ObjectID = "rP4-de-Z81"; */
-"rP4-de-Z81.text" = "Please enter your username and password to begin";
+"vGy-7O-fWq.normalTitle" = "SIGN IN";
 
-/* Class = "UITextField"; placeholder = " Email"; ObjectID = "tuT-7U-iiZ"; */
+"vwH-kU-iND.title" = "DONE";
+
+"yxw-u9-9Sw.title" = "HOME";
+
+"rh1-R1-BQL.title" = "HOME";
+
+"yQ3-9l-bq5.text" = "RECOVER PASSWORD";
+
+"H2p-Ip-nIM.title" = "SEND";
+
+"W0o-tb-PNn.title" = "SEND";
+
+"gNO-d1-p4D.normalTitle" = "SUBMIT";
+
+"IFX-4O-PUG.normalTitle" = "SUBMIT";
+
+"cuG-Bn-ftB.normalTitle" = "Send";
+
+"7cY-LN-dil.normalTitle" = "Send";
+
+"8jM-xr-j9t.normalTitle" = "Send";
+
+"FO7-Wt-U8i.normalTitle" = "Send";
+
+"IcR-9q-07d.placeholder" = "Subject";
+
+"DXu-bE-yG0.placeholder" = "Subject";
+
+"SoD-D6-CUL.text" = "Title";
+
+"P3r-zQ-RN6.text" = "Title";
+
+"VnC-RW-xZt.title" = "Back";
+
+"WS8-bu-UKe.text" = "Details";
+
+"fcp-Aa-jfR.placeholder" = " Email";
+
 "tuT-7U-iiZ.placeholder" = " Email";
 
-/* Class = "UITextField"; placeholder = " Username"; ObjectID = "wMN-Wt-lNi"; */
 "wMN-Wt-lNi.placeholder" = " Username";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "xAR-Ae-pQD"; */
-"xAR-Ae-pQD.text" = "Label";
+"yct-hD-MPN.placeholder" = "Title Name";
 
-/* Class = "UILabel"; text = "RECOVER PASSWORD"; ObjectID = "yQ3-9l-bq5"; */
-"yQ3-9l-bq5.text" = "RECOVER PASSWORD";
+"FNU-bO-FPJ.normalTitle" = "View questions";
+
+"cJy-VF-Hat.normalTitle" = "More";
+
+"WDT-nP-wel.normalTitle" = "More/Less";
+
+"Uih-ob-icF.text" = "S"; /* S for Sunday */
+
+"Hzg-fY-bDo.text" = "M"; /* M for monday */
+
+"qy8-pt-FaB.text" = "T"; /* T for Tuesday */
+
+"teX-iE-o53.text" = "W"; /* W for Wednesday */
+
+"TaI-my-Cps.text" = "T"; /* T for Thursday */
+
+"bqP-wP-eem.text" = "F"; /* F for Friday */
+
+"4TC-tP-OVL.text" = "S"; /* S for Saturday */
+
+"Zwg-Kh-K9h.text" = "Enter your message here";
+
+"dKO-4t-z5r.text" = "Please choose a username. It is necessary to enter a unique username.";
+
+"dOj-Vw-z5W.text" = "Please enter your email and password to begin";
+
+"pnS-P6-qZ1.text" = "Please enter your email address, we will send you your password via email.";
+
+"sTC-Hs-fKm.text" = "No network connection found. ";
+
+"zNX-iw-FA3.text" = "Enter your message here";
+
+"zrG-I5-CdK.text" = "Enter your message here";

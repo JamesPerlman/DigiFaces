@@ -24,9 +24,13 @@
     self.view.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
     
     if([_fromW isEqualToString:@"login"])
-    self.view.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-
-
+        self.view.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    
+    NSString *okLocal = DFLocalizedString(@"view.misc.alert.ok", nil);
+    [self.bigOKButton setTitle:okLocal forState:UIControlStateNormal];
+    [self.smallOKButton setTitle:okLocal forState:UIControlStateNormal];
+    [self.smallCancelButton setTitle:DFLocalizedString(@"view.misc.alert.cancel", nil) forState:UIControlStateNormal];
+    
     self.textLabel.numberOfLines = 0;
     
     self.textLabel.text = _textstrg;
@@ -86,13 +90,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

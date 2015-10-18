@@ -40,12 +40,12 @@
 
 - (void)minimize {
     expanded = false;
-    [self.moreLessButton setTitle:@"More" forState:UIControlStateNormal];
+    [self.moreLessButton setTitle:DFLocalizedString(@"view.misc.article.button.show_more", nil) forState:UIControlStateNormal];
 }
 
 - (void)maximize {
     expanded = true;
-    [self.moreLessButton setTitle:@"Less" forState:UIControlStateNormal];
+    [self.moreLessButton setTitle:DFLocalizedString(@"view.misc.article.button.show_less", nil) forState:UIControlStateNormal];
     
 }
 

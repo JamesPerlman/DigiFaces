@@ -13,6 +13,14 @@
 
 #define kSuccessTag 2
 #define kDiscardTag 1
+@interface TechSupportController ()
+
+@property (weak, nonatomic) IBOutlet UITextField *txtSubject;
+
+@property (weak, nonatomic) IBOutlet UITextView *textArea;
+@property (weak, nonatomic) IBOutlet UILabel *lblPlaceholder;
+
+@end
 
 @implementation TechSupportController
 
@@ -25,11 +33,17 @@
     [self.txtSubject becomeFirstResponder];
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.email_support.navbar.title", nil);
+    self.lblPlaceholder.text = DFLocalizedString(@"view.email_support.input.message.placeholder", nil);
+    self.txtSubject.placeholder = DFLocalizedString(@"view.email_support.input.subject.placeholder", nil);
+}
+
 - (IBAction)cancelThis:(id)sender {
-    if (![_textArea.text isEqualToString:@""] && ![_textArea.text isEqualToString:@"Some Text to Post"]) {
+    if (![_textArea.text isEqualToString:@""]) {
         [self resignAllResponder];
         [alertView setSingleButton:NO];
-        [alertView showAlertWithMessage:@"Your changes will be discarded. Do you want to cancel it?" inView:self.navigationController.view withTag:kDiscardTag];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.email_support.alert.confirm_discard", nil) inView:self.navigationController.view withTag:kDiscardTag];
     }
     else{
         [_txtSubject resignFirstResponder];
@@ -48,13 +62,13 @@
     if ([_textArea.text isEqualToString:@""]) {
         [self resignAllResponder];
         [alertView setSingleButton:YES];
-        [alertView showAlertWithMessage:@"Subject and message are required." inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.email_support.error.empty_message", nil) inView:self.navigationController.view withTag:0];
         return;
     }
     else if ([_txtSubject.text isEqualToString:@""]){
         [self resignAllResponder];
         [alertView setSingleButton:YES];
-        [alertView showAlertWithMessage:@"Subject and message are required." inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.email_support.error.empty_subject", nil) inView:self.navigationController.view withTag:0];
         return;
     }
     
@@ -74,10 +88,11 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [alertView setSingleButton:YES];
-                      [alertView showAlertWithMessage:@"Your message posted successfully" inView:sself.navigationController.view withTag:kSuccessTag];
+                      [alertView showAlertWithMessage:DFLocalizedString(@"view.email_support.alert.success", nil) inView:sself.navigationController.view withTag:kSuccessTag];
                   }
                   failure:^(NSError *error) {
                       defsself
+                      [alertView showAlertWithMessage:DFLocalizedString(@"view.email_support.alert.failure", nil) inView:sself.navigationController.view withTag:0];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }];
        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];

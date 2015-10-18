@@ -1,10 +1,54 @@
-/* 
-  Localizable.strings
-  DigiFaces
+/*
+ Localizable.strings
+ DigiFaces
+ 
+ Created by Apple on 16/06/2015.
+ Copyright (c) 2015 Usasha studio. All rights reserved.
+ */
 
-  Created by Apple on 16/06/2015.
-  Copyright (c) 2015 Usasha studio. All rights reserved.
-*/
 
 
-"home cell" = "Home";
+"home" = "fr_Home";
+"diary" = "fr_Diary";
+
+"MY cell" = "fr_MY PROFILE";
+"ABOUT cell" = "fr_ABOUT DIGIFACES";
+"EmailTech cell" = "fr_EMAIL TECH SUPPORT";
+"Email cell" = "fr_EMAIL THE MODERATOR";
+"GET cell" = "fr_GET HELP";
+"VERSION cell" = "fr_VERSION 1.0";
+
+"Reply..." = "fr_Reply...";
+"Leave a comment..." = "fr_Leave a comment...";
+
+"error ok/swipe" = "fr_Something went wrong.  Press OK or swipe down to try again.";
+"markup warning" = "fr_You must use your computer to complete this theme";
+"error try again later" = "fr_Something went wrong with the server.  Please try again later.";
+
+"%lu of %lu" = "fr_%lu of %lu";
+
+"1 Response" = "fr_1 Response";
+"%lu Responses" = "fr_%lu Responses";
+
+"1 Comment" = "fr_1 Comment";
+"%lu Comments" = "fr_%lu Comments";
+
+"1 Entry" = "fr_1 Entry";
+"%lu Entries" = "fr_%lu Entries";
+
+"Just now" = "fr_Just now";
+"More" = "fr_More";
+"(No content)" = "fr_(No content)";
+
+"Title Name" = "fr_Title Name";
+"Enter your message here" = "fr_Enter your message here";
+
+"Please enter a valid email address" = "fr_Please enter a valid email address";
+"Fields can't be empty" = "fr_Fields can't be empty";
+"Login failed.  Invalid username or password." = "fr_Login failed.  Invalid username or password.";
+"The content you requested could not be found." = "fr_The content you requested could not be found.";
+"Unable to load the content you requested." = "fr_Unable to load the content you requested.";
+
+"Notifications" = "fr_Notifications";
+"Announcements" = "fr_Announcements";
+"Conversations" = "fr_Conversations";

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomAlertView">
             <connections>
                 <outlet property="alertBackgroundView" destination="Tn5-6o-Al7" id="ZiY-2m-Mq4"/>
+                <outlet property="bigOKButton" destination="zXa-Ai-VsW" id="kFT-mh-zjr"/>
                 <outlet property="okCancelView" destination="DkN-9B-G4r" id="q2w-z7-uFh"/>
                 <outlet property="okView" destination="FSi-UM-fUn" id="Jof-cO-pd7"/>
                 <outlet property="textLabel" destination="xH0-v1-qiw" id="VoA-29-rnT"/>
@@ -26,6 +28,7 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jpc-Bc-oXD">
                                     <rect key="frame" x="0.0" y="0.0" width="134" height="44"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="Cancel"/>
                                     <connections>
@@ -34,6 +37,7 @@
                                 </button>
                                 <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oeM-xu-SFc">
                                     <rect key="frame" x="134" y="0.0" width="1" height="44"/>
+                                    <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="m1g-md-4xB"/>
@@ -41,6 +45,7 @@
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9se-zg-qdG">
                                     <rect key="frame" x="135" y="0.0" width="133" height="44"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <state key="normal" title="OK">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,6 +55,7 @@
                                     </connections>
                                 </button>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="oeM-xu-SFc" firstAttribute="height" secondItem="DkN-9B-G4r" secondAttribute="height" id="3dW-H7-1qU"/>
@@ -90,6 +96,7 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXa-Ai-VsW">
                                     <rect key="frame" x="0.0" y="0.0" width="268" height="44"/>
+                                    <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <state key="normal" title="OK">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,6 +107,7 @@
                                     </connections>
                                 </button>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="zXa-Ai-VsW" secondAttribute="trailing" id="Ker-ee-X6V"/>
@@ -110,6 +118,7 @@
                         </view>
                         <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="odP-xO-i8x" userLabel="horizontal line">
                             <rect key="frame" x="0.0" y="81" width="268" height="1"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="yZh-HX-AEA"/>
@@ -120,6 +129,7 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xH0-v1-qiw">
                                     <rect key="frame" x="8" y="8" width="252" height="65"/>
+                                    <animations/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="78" id="vgv-rq-KqD"/>
                                     </constraints>
@@ -133,6 +143,7 @@
                                     </variation>
                                 </label>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="xH0-v1-qiw" firstAttribute="top" secondItem="ufg-yW-UNa" secondAttribute="top" constant="8" id="IUT-9r-YJI"/>
@@ -143,6 +154,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.80298715089999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="DkN-9B-G4r" secondAttribute="trailing" id="2CJ-EK-Tiu"/>
@@ -188,6 +200,7 @@
                     </variation>
                 </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>

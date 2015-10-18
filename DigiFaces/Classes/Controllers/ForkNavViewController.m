@@ -43,7 +43,7 @@
                             } failure:^(NSError *error) {
                                 defsself
                                 [MBProgressHUD hideHUDForView:sself.view animated:YES];
-                                [customAlert showAlertWithMessage:NSLocalizedString(@"Login failed for some reason.  Try again?", nil) inView:sself.view withTag:0];
+                                [customAlert showAlertWithMessage:DFLocalizedString(@"view.login.alert.failure_try_again", nil) inView:sself.view withTag:0];
                             }];
     } else {
         [self performSegueWithIdentifier:@"toLogin" sender:nil];

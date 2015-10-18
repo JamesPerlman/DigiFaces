@@ -15,6 +15,7 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 
 @interface MultiDisplayMenuViewController () {
     NSMutableArray *_viewControllers;
+    BOOL firstTime;
 }
 @end
 
@@ -22,6 +23,7 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    firstTime = YES;
     // Do any additional setup after loading the view.
     _viewControllers = [NSMutableArray array];
     
@@ -45,7 +47,8 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     
     [self addChildViewController:viewController];
     
-    static BOOL firstTime = YES;
+    self.navigationItem.title = viewController.navigationItem.title;
+    
     if (firstTime) {
         firstTime = NO;
     } else {

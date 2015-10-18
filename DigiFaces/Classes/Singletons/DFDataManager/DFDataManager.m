@@ -31,6 +31,10 @@
     [[self sharedInstance] setManagedObjectContext:managedObjectContext];
 }
 
++ (void)setPersistentStoreURL:(NSURL *)persistentStoreURL {
+    [[self sharedInstance] setPersistentStoreURL:persistentStoreURL];
+}
+
 + (void)removeEntitiesWithEntityName:(NSString*)entityName idKey:(NSString*)idKey notInArray:(NSArray*)array predicate:(NSPredicate*)predicate {
     [[self sharedInstance] removeEntitiesWithEntityName:entityName idKey:idKey notInArray:array predicate:predicate];
 }
@@ -78,4 +82,15 @@
     }
     
 }
+
++ (void)resetDatabase {
+    [[self sharedInstance] resetDatabase];
+}
+
+- (void)resetDatabase {
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:[self.persistentStoreURL path] error:&error];
+    
+}
+
 @end

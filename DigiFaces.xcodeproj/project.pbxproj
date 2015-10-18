@@ -39,7 +39,6 @@
 		4ACDB9AE1B3E7E66009EFB91 /* EmailModeratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9301B3E7E66009EFB91 /* EmailModeratorController.m */; };
 		4ACDB9AF1B3E7E66009EFB91 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9321B3E7E66009EFB91 /* ForgotPasswordViewController.m */; };
 		4ACDB9B01B3E7E66009EFB91 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9341B3E7E66009EFB91 /* HomeViewController.m */; };
-		4ACDB9B11B3E7E66009EFB91 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9361B3E7E66009EFB91 /* LoginViewController.m */; };
 		4ACDB9B21B3E7E66009EFB91 /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB9381B3E7E66009EFB91 /* MyProfileViewController.m */; };
 		4ACDB9B31B3E7E66009EFB91 /* PhotoGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB93A1B3E7E66009EFB91 /* PhotoGalleryViewController.m */; };
 		4ACDB9B51B3E7E66009EFB91 /* ProjectIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACDB93E1B3E7E66009EFB91 /* ProjectIntroViewController.m */; };
@@ -136,6 +135,8 @@
 		F4B8B3761BA4C43A007E4104 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B8B3751BA4C43A007E4104 /* CoreData.framework */; };
 		F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
 		F4B988451BC707C80010F139 /* JPKeyboardSensitiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */; };
+		F4C8AA491BD2DC3D00B137CB /* DFLanguageSynchronizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C8AA481BD2DC3D00B137CB /* DFLanguageSynchronizer.m */; settings = {ASSET_TAGS = (); }; };
+		F4C8AA4C1BD3599900B137CB /* UIViewController+DFLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C8AA4B1BD3599900B137CB /* UIViewController+DFLocalization.m */; settings = {ASSET_TAGS = (); }; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -234,8 +235,6 @@
 		4ACDB9321B3E7E66009EFB91 /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		4ACDB9331B3E7E66009EFB91 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		4ACDB9341B3E7E66009EFB91 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		4ACDB9351B3E7E66009EFB91 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		4ACDB9361B3E7E66009EFB91 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4ACDB9371B3E7E66009EFB91 /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
 		4ACDB9381B3E7E66009EFB91 /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
 		4ACDB9391B3E7E66009EFB91 /* PhotoGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGalleryViewController.h; sourceTree = "<group>"; };
@@ -435,6 +434,10 @@
 		F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Reverse.m"; sourceTree = "<group>"; };
 		F4B988411BC706C00010F139 /* JPKeyboardSensitiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JPKeyboardSensitiveView.h; path = JPKeyboardSensitiveView/JPKeyboardSensitiveView.h; sourceTree = "<group>"; };
 		F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JPKeyboardSensitiveView.m; path = JPKeyboardSensitiveView/JPKeyboardSensitiveView.m; sourceTree = "<group>"; };
+		F4C8AA471BD2DC3D00B137CB /* DFLanguageSynchronizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFLanguageSynchronizer.h; sourceTree = "<group>"; };
+		F4C8AA481BD2DC3D00B137CB /* DFLanguageSynchronizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFLanguageSynchronizer.m; sourceTree = "<group>"; };
+		F4C8AA4A1BD3599900B137CB /* UIViewController+DFLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DFLocalization.h"; sourceTree = "<group>"; };
+		F4C8AA4B1BD3599900B137CB /* UIViewController+DFLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DFLocalization.m"; sourceTree = "<group>"; };
 		F4DD49BC1B65490400F4016B /* PhotoGallerySelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoGallerySelectionViewController.h; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.h; sourceTree = "<group>"; };
 		F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoGallerySelectionViewController.m; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.m; sourceTree = "<group>"; };
 		F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoGallerySelectionViewController.xib; path = PhotoGallerySelectionViewController/PhotoGallerySelectionViewController.xib; sourceTree = "<group>"; };
@@ -575,7 +578,6 @@
 			isa = PBXGroup;
 			children = (
 				F4A759D31B7150E700B94176 /* Announcements */,
-				F495B7BB1B646EF000F8295B /* Auth */,
 				F4864FA21B6822A6000D2615 /* AddResponse */,
 				F4864FA51B6822BC000D2615 /* Calendar */,
 				F4864FA61B6822C2000D2615 /* Carousel */,
@@ -684,6 +686,7 @@
 		4ACDB96A1B3E7E66009EFB91 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F4C8AA461BD2DBFA00B137CB /* DFLanguageSynchronizer */,
 				F4B988441BC706CA0010F139 /* JPKeyboardSensitiveView */,
 				F420FB6D1B6162EE007092CB /* DFMediaUploadManager */,
 				4AD8501C1B45ABB40059A457 /* Reachability.h */,
@@ -1143,15 +1146,6 @@
 			name = About;
 			sourceTree = "<group>";
 		};
-		F495B7BB1B646EF000F8295B /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				4ACDB9351B3E7E66009EFB91 /* LoginViewController.h */,
-				4ACDB9361B3E7E66009EFB91 /* LoginViewController.m */,
-			);
-			name = Auth;
-			sourceTree = "<group>";
-		};
 		F4A759CF1B7150C800B94176 /* Conversations */ = {
 			isa = PBXGroup;
 			children = (
@@ -1450,6 +1444,15 @@
 			name = JPKeyboardSensitiveView;
 			sourceTree = "<group>";
 		};
+		F4C8AA461BD2DBFA00B137CB /* DFLanguageSynchronizer */ = {
+			isa = PBXGroup;
+			children = (
+				F4C8AA471BD2DC3D00B137CB /* DFLanguageSynchronizer.h */,
+				F4C8AA481BD2DC3D00B137CB /* DFLanguageSynchronizer.m */,
+			);
+			path = DFLanguageSynchronizer;
+			sourceTree = "<group>";
+		};
 		F4DD49BB1B6548B700F4016B /* PhotoGallerySection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1479,6 +1482,8 @@
 				F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */,
 				F4B9883D1BC6E2940010F139 /* NSArray+Reverse.h */,
 				F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */,
+				F4C8AA4A1BD3599900B137CB /* UIViewController+DFLocalization.h */,
+				F4C8AA4B1BD3599900B137CB /* UIViewController+DFLocalization.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1718,7 +1723,6 @@
 				F4B8B3411BA35B1D007E4104 /* ImageGallery.m in Sources */,
 				4ACDB9DC1B3E7E66009EFB91 /* NSString+HTML.m in Sources */,
 				4ACDB9C11B3E7E66009EFB91 /* LogoutSegue.m in Sources */,
-				4ACDB9B11B3E7E66009EFB91 /* LoginViewController.m in Sources */,
 				F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */,
 				4ACDB9D41B3E7E66009EFB91 /* MBProgressHUD.m in Sources */,
 				F4864FB61B6839E1000D2615 /* DFClient.m in Sources */,
@@ -1749,11 +1753,13 @@
 				4ACDB9DD1B3E7E66009EFB91 /* NSString+XMLEntities.m in Sources */,
 				F4B8B3431BA35B1D007E4104 /* AboutMe.m in Sources */,
 				4ACDB9C21B3E7E66009EFB91 /* ProfilePicCell.m in Sources */,
+				F4C8AA4C1BD3599900B137CB /* UIViewController+DFLocalization.m in Sources */,
 				F4B8B3471BA35B1D007E4104 /* About.m in Sources */,
 				4ACDB9B81B3E7E66009EFB91 /* TechSupportController.m in Sources */,
 				4AC49FE11B4AEEBB003CE06E /* CommentCell.m in Sources */,
 				F4022FBE1B68659F0080C157 /* NSArray+RKHelper.m in Sources */,
 				F48C33411B7BC6EA00D7C764 /* ConversationDetailViewController.m in Sources */,
+				F4C8AA491BD2DC3D00B137CB /* DFLanguageSynchronizer.m in Sources */,
 				4ABC3D3E1B4048BF0090A619 /* ImagesScrollviewer.m in Sources */,
 				F4B8B33C1BA35B1D007E4104 /* Comment.m in Sources */,
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,

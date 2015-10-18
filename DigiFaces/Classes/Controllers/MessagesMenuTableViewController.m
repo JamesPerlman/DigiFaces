@@ -60,13 +60,13 @@
     // Configure the cell...
     NSInteger i = indexPath.row;
     if (i == 0) {
-        cell.textLabel.text = @"Notifications";
+        cell.textLabel.text = DFLocalizedString(@"view.alerts_menu.notifications", nil);
         [self configureCell:cell withCount:self.alertCounts.notificationsUnreadCount];
     } else if (i == 1) {
-        cell.textLabel.text = @"Announcements";
+        cell.textLabel.text = DFLocalizedString(@"view.alerts_menu.announcements", nil);
         [self configureCell:cell withCount:self.alertCounts.announcementUnreadCount];
     } else if (i == 2) {
-        cell.textLabel.text = @"Conversations";
+        cell.textLabel.text = DFLocalizedString(@"view.alerts_menu.conversations", nil);
         [self configureCell:cell withCount:self.alertCounts.messagesUnreadCount];
     }
     

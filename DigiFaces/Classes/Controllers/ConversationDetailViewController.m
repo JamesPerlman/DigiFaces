@@ -47,10 +47,13 @@ static NSString *leftCellID = @"leftSideComment";
     
     self.messageTextView.layer.cornerRadius = 4.0f;
     self.messageTextView.clipsToBounds = true;
-    self.messageTextView.placeholder = NSLocalizedString(@"Reply...", nil);
     self.messageTextView.delegate = self;
     
     self.alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
+}
+
+- (void)localizeUI {
+    self.messageTextView.placeholder = DFLocalizedString(@"view.conversation.input.reply", nil);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -124,7 +127,7 @@ static NSString *leftCellID = @"leftSideComment";
     cell.lblUserName.text = message.fromUserInfo.appUserName;
     cell.lblDate.text = message.dateCreatedFormatted;
     cell.lblInfo.text = message.subject;
-    cell.contentLabel.text = message.response.length ? message.response : NSLocalizedString(@"(No content)", nil);
+    cell.contentLabel.text = message.response.length ? message.response : DFLocalizedString(@"app.misc.text.no_content", nil);
 }
 
 
@@ -165,7 +168,8 @@ static NSString *leftCellID = @"leftSideComment";
                       failure:^(NSError *error) {
                           defsself
                           NSLog(@"Error replying to conversation: %@", error);
-                          [sself.alertView showAlertWithMessage:NSLocalizedString(@"error try again later", nil) inView:sself.view withTag:0];
+                          
+                          [sself.alertView showAlertWithMessage:DFLocalizedString(@"view.conversation.error.post_reply_failure", nil) inView:sself.view withTag:0];
                           [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       }];
 }

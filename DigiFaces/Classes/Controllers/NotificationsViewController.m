@@ -36,6 +36,10 @@
     [self getNotifications];
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.notifications.navbar.title", nil);
+}
+
 - (IBAction)closeThis:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

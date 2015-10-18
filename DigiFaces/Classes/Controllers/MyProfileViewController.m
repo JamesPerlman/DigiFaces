@@ -53,6 +53,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.profile.navbar.title", nil);
+    self.navigationItem.rightBarButtonItem.title = DFLocalizedString(@"view.profile.button.save", nil);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -64,7 +69,7 @@
     
     if (![_aboutMeTextView.text isEqualToString:@""] && ![_aboutMeTextView.text isEqualToString:aboutMe]) {
         [_aboutMeTextView resignFirstResponder];
-        [alertview showAlertWithMessage:@"Your changes will be discarded. Do you want to descard changes?" inView:self.navigationController.view withTag:kTagDiscardChanges];
+        [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.alert.confirm_discard", nil) inView:self.navigationController.view withTag:kTagDiscardChanges];
     }
     else{
         [_aboutMeTextView resignFirstResponder];
@@ -90,7 +95,7 @@
                       
                   } failure:^(NSError *error) {
                       
-                      [alertview showAlertWithMessage:@"There was an error.  Please verify that your email is correct." inView:self.view withTag:0];
+                      [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.error.load_failure", nil) inView:self.view withTag:0];
                       
                       [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                   }];
@@ -99,12 +104,12 @@
 
 -(IBAction)postpressed:(id)sender{
     NSLog(@"Posted");
-    [_aboutMeTextView resignFirstResponder];
     if ([_aboutMeTextView.text isEqualToString:@""]) {
-        [alertview showAlertWithMessage:@"Please enter something about yourself." inView:self.navigationController.view withTag:0];
+        [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.error.empty_bio", nil) inView:self.navigationController.view withTag:0];
         return;
     }
     
+    [_aboutMeTextView resignFirstResponder];
     NSDictionary * params = @{@"AboutMeId" : self.aboutMe.aboutMeId,
                               @"ProjectId" : LS.myUserInfo.currentProjectId,
                               @"UserId" : LS.myUserInfo.id,
@@ -117,11 +122,11 @@
                       defsself
                       [Utility saveString:_aboutMeTextView.text forKey:kAboutMeText];
                       [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-                      
+                      [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.alert.save_success", nil) inView:sself.view withTag:0];
                       LS.myUserInfo.aboutMeText = _aboutMeTextView.text;                      [sself dismissViewControllerAnimated:YES completion:nil];
                   } failure:^(NSError *error) {
                       defsself
-                      [alertview showAlertWithMessage:@"An error in request, verify that your email is correct" inView:sself.view withTag:0];
+                      [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.alert.save_failure", nil) inView:sself.view withTag:0];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }];
@@ -160,7 +165,7 @@
                   }
                   failure:^(NSError *error) {
                       defsself
-                      [alertview showAlertWithMessage:@"An error occurred.  Please verify that your email is correct." inView:sself.view withTag:0];
+                      [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.alert.photo_upload_failure", nil) inView:sself.view withTag:0];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }];

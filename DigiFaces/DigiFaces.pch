@@ -18,6 +18,7 @@
 #import "DFClient.h"
 #import "DFDataManager.h"
 #import "LocalStorage.h"
+#import "DFLanguageSynchronizer.h"
 
 #define defwself __weak __typeof(self) wself = self;
 #define defsself __typeof(wself) sself = wself;

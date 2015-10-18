@@ -60,7 +60,10 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.layoutMargins = UIEdgeInsetsZero;
     
-    [self addEditButton];
+    // check if user has enough permissions to see edit button (projectRoleId != 1 and projectRoleId != 3 or 4)
+    if ([LS.myUserInfo canReplyToDiaries]) {
+        [self addEditButton];
+    }
     
     _diaryID = [(Integer*)[LS.myUserInfo.currentProject.dailyDiaryList anyObject] value];
     
@@ -75,6 +78,10 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     [self.refreshControl addTarget:self
                             action:@selector(fetchDailyDiaryFromServer)
                   forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.diary.navbar.title", nil);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -165,7 +172,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       
-                      [_alertView showAlertWithMessage:NSLocalizedString(@"error ok/swipe", nil) inView:sself.view withTag:0];
+                      [_alertView showAlertWithMessage:DFLocalizedString(@"view.diary.alert.load_error", nil) inView:sself.view withTag:0];
                       [sself.refreshControl endRefreshing];
                       
                   }];
@@ -251,7 +258,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
             }
             else{
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-                [vidCell.imageView sd_setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL]];
+                [vidCell.videoImageView sd_setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL]];
                 vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePath];
                 vidCell.moviePlayerController.view.hidden = true;
                 cell = vidCell;
@@ -265,7 +272,14 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         }
         else if (indexPath.row == 2){
             DefaultCell * headerCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell" forIndexPath:indexPath];
-            [headerCell.label setText:[NSString stringWithFormat:NSLocalizedString(@"%lu Entries", nil), (unsigned long)[_dailyDiary.userDiaries count]]];
+            NSUInteger numEntries = [_dailyDiary.userDiaries count];
+            NSString *entriesString;
+            if (numEntries == 1) {
+                entriesString = DFLocalizedString(@"view.diary.text.1_entry", nil);
+            } else {
+                entriesString = [NSString stringWithFormat:DFLocalizedString(@"view.diary.text.n_entries", nil), numEntries];
+            }
+            [headerCell.label setText:entriesString];
             cell = headerCell;
         }
     }
@@ -383,7 +397,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     } else {
         [infoCell maximize];
     }
-
+    
 }
 
 #pragma mark - Navigation

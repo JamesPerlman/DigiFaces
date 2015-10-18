@@ -13,31 +13,45 @@
 #import "APISetUserNameResponse.h"
 
 @interface UserViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *header1Label;
+@property (weak, nonatomic) IBOutlet UILabel *header2Label;
+@property (nonatomic, weak) IBOutlet UITextField * usernameTextField;
+@property (nonatomic, weak) IBOutlet UILabel * errorMessageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 @end
 
 @implementation UserViewController
-@synthesize errorMessage = _errorMessage;
+@synthesize errorMessageLabel = _errorMessageLabel;
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     
-        _errorMessage.hidden = YES;
+    _errorMessageLabel.hidden = YES;
     self.customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     [self.customAlert setSingleButton:YES];
     self.customAlert.delegate = self;
     
-    _username.leftView = paddingView1;
-    _username.leftViewMode = UITextFieldViewModeAlways;
+    _usernameTextField.leftView = paddingView1;
+    _usernameTextField.leftViewMode = UITextFieldViewModeAlways;
     
-    [_username becomeFirstResponder];
+    [_usernameTextField becomeFirstResponder];
     
     // Do any additional setup after loading the view from its nib.
 }
+
+- (void)localizeUI {
+    self.header1Label.text = DFLocalizedString(@"view.select_username.header1", nil);
+    self.header2Label.text = DFLocalizedString(@"view.select_username.header2", nil);
+    self.usernameTextField.placeholder = DFLocalizedString(@"view.select_username.input.username.placeholder", nil);
+    
+    [self.submitButton setTitle:DFLocalizedString(@"view.select_username.button.submit", nil) forState:UIControlStateNormal];
+    
+}
 /*
--(BOOL)prefersStatusBarHidden{
-    return YES;
-}*/
+ -(BOOL)prefersStatusBarHidden{
+ return YES;
+ }*/
 
 
 - (void)didReceiveMemoryWarning {
@@ -48,31 +62,37 @@
 -(IBAction)check_user_validation:(id)sender{
     
     NSCharacterSet *alphaSet = [NSCharacterSet alphanumericCharacterSet];
-    BOOL valid = [[_username.text stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""];
+    BOOL valid = [[_usernameTextField.text stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""];
     
-    if ([_username.text isEqualToString:@""] ) {
+    NSString *errorMessage = nil;
+    
+    if ([_usernameTextField.text isEqualToString:@""] ) {
         
-        _errorMessage.text = @"Fields can't be empty";
-
-        [self.customAlert showAlertWithMessage:@"Fields can't be empty" inView:self.view withTag:0];
+        errorMessage = DFLocalizedString(@"view.select_username.error.empty_fields", nil);
+        _errorMessageLabel.text = errorMessage;
+        
+        [self.customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
         
         return;
     }
-    else if([_username.text length]<6){
-        [self.customAlert showAlertWithMessage:@"Username should be atleast 6 characters long" inView:self.view withTag:0];
-        _errorMessage.text = @"Username should be atleast 6 characters long";
+    else if([_usernameTextField.text length]<6){
+        errorMessage = DFLocalizedString(@"view.select_username.error.too_short", nil);
+        [self.customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
+        _errorMessageLabel.text = errorMessage;
         return;
-
+        
     }
     if (!valid) // found bad characters
     {
-        [self.customAlert showAlertWithMessage:@"Special characters are not allowed" inView:self.view withTag:0];
+        errorMessage = DFLocalizedString(@"view.select_username.error.invalid_characters", nil);
         
-        _errorMessage.text = @"Special characters are not allowed";
+        [self.customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
+        
+        _errorMessageLabel.text = errorMessage;
         return;
         
     }
-    [self check_username_availability:_username.text];
+    [self check_username_availability:_usernameTextField.text];
     
 }
 
@@ -105,7 +125,7 @@
 - (void)check_username_availability:(NSString*)username
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-
+    
     defwself
     [DFClient makeRequest:APIPathIsUserNameAvailable
                    method:kPOST
@@ -115,8 +135,9 @@
                       if ([result.isAvailable boolValue] == YES) {
                           [sself set_username:username];
                       } else {
-                          _errorMessage.text = @"User name already exists";
-                          [sself.customAlert showAlertWithMessage:@"User name already exists" inView:self.view withTag:0];
+                          NSString *errorMessage = DFLocalizedString(@"view.select_username.error.already_taken", nil);
+                          sself.errorMessageLabel.text = errorMessage;
+                          [sself.customAlert showAlertWithMessage:errorMessage inView:self.view withTag:0];
                           [MBProgressHUD hideHUDForView:self.view animated:YES];
                           
                       }
@@ -125,7 +146,7 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                   }];
-
+    
     
 }
 
@@ -141,8 +162,8 @@
                    params:@{@"NewUserName" : username}
                   success:^(NSDictionary *response, APISetUserNameResponse *result) {
                       defsself
-                      _errorMessage.textColor = [UIColor greenColor];
-                      _errorMessage.text = @"User name registered successfully";
+                      _errorMessageLabel.textColor = [UIColor greenColor];
+                      _errorMessageLabel.text = DFLocalizedString(@"view.select_username.alert.success", nil);
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                       
                       [[NSUserDefaults standardUserDefaults]setObject:username forKey:@"userName"];
@@ -152,14 +173,14 @@
                   }
                   failure:^(NSError *error) {
                       defsself
-                      _errorMessage.text = @"Server error, try again!";
+                      _errorMessageLabel.text = DFLocalizedString(@"app.error.server_error", nil);
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                   }];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
-
+    
     return YES;
 }
 
@@ -170,13 +191,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

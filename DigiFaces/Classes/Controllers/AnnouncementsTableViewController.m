@@ -40,6 +40,10 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
     [self getAnnouncements];
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.announcements.navbar.title", nil);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

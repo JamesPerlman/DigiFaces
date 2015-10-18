@@ -76,6 +76,11 @@
     
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.home.navbar.title", nil);
+    [self.tableView reloadData];
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -98,10 +103,13 @@
                 urlParams:@{@"diaryId" : diaryId}
                bodyParams:nil
                   success:^(NSDictionary *response, DailyDiary *result) {
+                      
+                      [DFDataManager removeEntitiesWithEntityName:@"DailyDiary" idKey:@"diaryId" notInArray:@[result] predicate:nil];
                       LS.myUserInfo.currentProject.dailyDiary = result;
                       defsself
                       [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                       [sself fetchAlertCounts];
+                      
                   }
                   failure:nil];
 }
@@ -136,19 +144,22 @@
                    method:kPOST
                 urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
                bodyParams:nil
-                  success:^(NSDictionary *response, NSArray *diaryThemes) {
+                  success:^(NSDictionary *response, id result) {
                       defsself
                       //sself.dataArray = diaryThemes;
                       //[sself.tableView reloadData];
+                      NSArray *diaryThemes = [result isKindOfClass:[NSArray class]] ? result : @[result];
+                      [DFDataManager removeEntitiesWithEntityName:@"DiaryTheme" idKey:@"activityId" notInArray:diaryThemes predicate:nil];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself fetchDailyDiary:LS.myUserInfo.currentProject.dailyDiaryList.anyObject];
                       [self.refreshControl endRefreshing];
+                      
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself.customAlert showAlertWithMessage:NSLocalizedString(@"error ok/swipe", nil) inView:sself.view withTag:0];
+                      [sself.customAlert showAlertWithMessage:DFLocalizedString(@"view.home.error.load_failure", nil) inView:sself.view withTag:0];
                       [self.refreshControl endRefreshing];
                   }];
 }
@@ -192,6 +203,9 @@
                   success:^(NSDictionary *response, id result) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
+                      
+                      NSArray *receivedProjects = [result isKindOfClass:[NSArray class]] ? result : @[result];
+                      [DFDataManager removeEntitiesWithEntityName:@"Project" idKey:@"projectId" notInArray:receivedProjects predicate:nil];
                       
                   }
                   failure:^(NSError *error) {
@@ -269,7 +283,7 @@
     if (indexPath.row == 0) {
         
         // show home item
-        homeCell.titleLabel.text = NSLocalizedString(@"home", nil);
+        homeCell.titleLabel.text = DFLocalizedString(@"view.home.cell.home", nil);
         homeCell.unreadCount = 0;
         homeCell.unreadItemIndicator.hidden = true;
         
@@ -280,7 +294,7 @@
         if (LS.myUserInfo.currentProject.hasDailyDiary.boolValue) {
             ++indexAdjustment;
             if (indexPath.row == 1) {
-                homeCell.titleLabel.text = NSLocalizedString(@"diary", nil);
+                homeCell.titleLabel.text = DFLocalizedString(@"view.home.cell.diary", nil);
                 homeCell.unreadCount = LS.myUserInfo.currentProject.dailyDiary.numberOfUnreadResponses;
                 
                 return;
@@ -455,27 +469,30 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
+    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row+2 inSection:0];
+    
+    NSIndexPath *adjustedNewIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row+2 inSection:0];
     UITableView *tableView = self.tableView;
     
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:adjustedNewIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:adjustedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:[tableView cellForRowAtIndexPath:adjustedIndexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                               arrayWithObject:adjustedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                               arrayWithObject:adjustedNewIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

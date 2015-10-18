@@ -10,6 +10,9 @@
 #ifndef DigiFaces_SDConstants_h
 #define DigiFaces_SDConstants_h
 
+extern NSString * const DFLocalizedStringsDirectoryURLPath;
+extern NSString * const DFLocalizedStringsFileExtension;
+extern NSString * const DFLocalizationDidSynchronizeNotification;
 extern NSString * const APIServerAddress;
 
 

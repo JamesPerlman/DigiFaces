@@ -31,5 +31,25 @@
 @dynamic userName;
 @dynamic avatarFile;
 @dynamic currentProject;
+@dynamic projectRoleId;
 
+- (BOOL)canEmailMods {
+    return ![self.projectRoleId isEqualToNumber:@1];
+}
+
+- (BOOL)canReplyToDiaries {
+    return !([self.projectRoleId isEqualToNumber:@1] || [self.projectRoleId isEqualToNumber:@3] || [self.projectRoleId isEqualToNumber:@4]);
+}
+
+- (BOOL)canReplyToThemes {
+    return [self canReplyToDiaries];
+}
+
+- (BOOL)canAddCommentsToDiaryResponses {
+    return !([self.projectRoleId isEqualToNumber:@3] || [self.projectRoleId isEqualToNumber:@4]);
+}
+
+- (BOOL)canAddCommentsToThemeResponses {
+    return [self canAddCommentsToDiaryResponses];
+}
 @end

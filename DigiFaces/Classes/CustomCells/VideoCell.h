@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 @interface VideoCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *videoImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *videoIndicatorView;
 @property (nonatomic, retain) MPMoviePlayerController *moviePlayerController;
+
+- (void)setMediaURL:(NSURL*)url;
+- (void)playVideo;
 @end

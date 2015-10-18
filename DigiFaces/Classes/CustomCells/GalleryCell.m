@@ -86,6 +86,7 @@
 -(UIButton*)getImageWithFile:(File*)file
 {
     UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    button.contentMode = UIViewContentModeScaleAspectFill;
     NSString * url;
     if ([file.fileType isEqualToString:@"Image"]) {
         url = file.filePath;

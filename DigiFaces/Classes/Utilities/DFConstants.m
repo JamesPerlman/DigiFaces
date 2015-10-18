@@ -8,10 +8,12 @@
 
 #import "DFConstants.h"
 
+NSString * const DFLocalizedStringsDirectoryURLPath = @"http://192.168.0.2/~home/DigiFaces/";
+NSString * const DFLocalizedStringsFileExtension = @"strings";
+NSString * const DFLocalizationDidSynchronizeNotification = @"com.inet360.digifaces.notification.localizationDidSync";
 
 NSString * const APIServerAddress = @"http://digifacesservices.focusforums.com/";
 NSString * const APIPathGetToken = @"Token";
-
 
 // account
 NSString * const APIPathGetUserInfo = @"api/Account/UserInfo";

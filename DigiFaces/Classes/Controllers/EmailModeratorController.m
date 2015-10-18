@@ -24,11 +24,17 @@
     [self.txtSubject becomeFirstResponder];
 }
 
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.email_mod.navbar.title", nil);
+    self.txtSubject.placeholder = DFLocalizedString(@"view.email_mod.input.subject.placeholder", nil);
+    self.lblPlaceholder.text = DFLocalizedString(@"view.email_mod.input.message.placeholder", nil);
+}
+
 - (IBAction)cancelThis:(id)sender {
-    if (![_textview.text isEqualToString:@""] && ![_textview.text isEqualToString:@"Some Text to Post"]) {
+    if (![_textview.text isEqualToString:@""]) {
         [_textview resignFirstResponder];
         [alertView setSingleButton:NO];
-        [alertView showAlertWithMessage:@"Your changes will be discarded. Do you want to cancel it?" inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.alert.confirm_discard", nil) inView:self.navigationController.view withTag:0];
     }
     else{
         [_txtSubject resignFirstResponder];
@@ -46,13 +52,13 @@
     if ([_textview.text isEqualToString:@""]) {
         [self resignAllResponder];
         [alertView setSingleButton:YES];
-        [alertView showAlertWithMessage:@"Subject and message are required." inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.error.empty_message", nil) inView:self.navigationController.view withTag:0];
         return;
     }
     else if ([_txtSubject.text isEqualToString:@""]){
         [self resignAllResponder];
         [alertView setSingleButton:YES];
-        [alertView showAlertWithMessage:@"Subject and message are required." inView:self.navigationController.view withTag:0];
+        [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.error.empty_subject", nil) inView:self.navigationController.view withTag:0];
         return;
     }
     
@@ -75,10 +81,11 @@
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [alertView setSingleButton:YES];
-                      [alertView showAlertWithMessage:@"Your message posted successfully" inView:sself.navigationController.view withTag:kSuccessTag];
+                      [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.alert.success", nil) inView:sself.navigationController.view withTag:kSuccessTag];
                   }
                   failure:^(NSError *error) {
                       defsself
+                      [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.alert.failure", nil) inView:sself.navigationController.view withTag:0];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                   }];
     

@@ -13,8 +13,6 @@
 @protocol MessageToViewMain;
 
 @interface ForgotPasswordViewController : UIViewController<UITextFieldDelegate,MessageToViewMain>
-@property (nonatomic,strong)IBOutlet UITextField * email;
-@property (nonatomic,strong)IBOutlet UILabel * errorMessage;
 @property(nonatomic,retain)CustomAlertView * customAlert;
 
 -(IBAction)cancelThis:(id)sender;

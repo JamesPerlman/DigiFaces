@@ -43,7 +43,6 @@ static NSString *messageCellID = @"conversationCell";
     [self loadConversations];
     
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -132,8 +131,12 @@ static NSString *messageCellID = @"conversationCell";
                   failure:^(NSError *error) {
                       defsself
                       [sself.refreshControl endRefreshing];
-                      [customAlert showAlertWithMessage:NSLocalizedString(@"Could not load conversations.  Try again?", nil) inView:sself.view withTag:0];
+                      [customAlert showAlertWithMessage:DFLocalizedString(@"view.conversations.error.load_failure", nil) inView:sself.view withTag:0];
                   }];
+}
+
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.conversations.navbar.title", nil);
 }
 
 #pragma mark - PopUpDelegate

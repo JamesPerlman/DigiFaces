@@ -10,10 +10,7 @@
 #import "CustomAlertView.h"
 
 @interface LoginTableController : UITableViewController
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *password;
 @property(nonatomic,strong) CustomAlertView * customAlert;
-@property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 
 - (IBAction)forgotPasswordPressed:(id)sender;
 - (IBAction)exitOnEnd:(id)sender;

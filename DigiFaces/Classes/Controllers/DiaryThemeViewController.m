@@ -72,8 +72,16 @@
     [self reloadDataSource:true];
     
     Module * markup = [self getModuleWithThemeType:ThemeTypeMarkup];
-    if (!markup) {
+    if (!markup && [LS.myUserInfo canReplyToThemes]) {
         [self addEditButton];
+    } else if (markup) {
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"monitor"]];
+        imageView.frame = CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height/4.0);
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.tableView.tableHeaderView = imageView;
+        self.tableView.scrollEnabled = false;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -82,6 +90,10 @@
     [self.refreshControl addTarget:self
                             action:@selector(fetchResponses)
                   forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.theme.navbar.title", nil);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -203,11 +215,11 @@
     }
     else{
         Module * image = [self getModuleWithThemeType:ThemeTypeDisplayImage];
-        if (image) {
+        if (image && image.displayFile) {
             [_cellsArray addObject:image];
             [_heightArray addObject:@160];
         }
-        else{
+        else {
             Module * gallery = [self getModuleWithThemeType:ThemeTypeImageGallery];
             if (gallery) {
                 [_cellsArray addObject:gallery];
@@ -295,14 +307,14 @@
                       [sself markThisActivityRead];
                       [sself.refreshControl endRefreshing];
                       
-                      
                       NSLog(@"%lu", sself.fetchedResultsController.fetchedObjects.count);
+                      [sself.tableView reloadData];
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself.refreshControl endRefreshing];
-                      [_alertView showAlertWithMessage:NSLocalizedString(@"error ok/swipe", nil) inView:sself.view withTag:0];
+                      [_alertView showAlertWithMessage:DFLocalizedString(@"view.theme.alert.load_failure", nil) inView:sself.view withTag:0];
                   }];
 }
 
@@ -353,7 +365,13 @@
     [cell.lblName setText:response.userInfo.appUserName];
     [cell.lblTime setText:response.dateCreatedFormatted];
     [cell setImageCircular];
-    [cell.btnComments setTitle:[NSString stringWithFormat:NSLocalizedString(@"%lu Comment%@", nil), (long unsigned)response.comments.count, (response.comments.count==1)?@"":@"s"] forState:UIControlStateNormal];
+    NSString *commentCountStr;
+    if (response.comments.count == 1) {
+        commentCountStr = DFLocalizedString(@"view.theme.text.1_comment", nil);
+    } else {
+        commentCountStr = [NSString stringWithFormat:DFLocalizedString(@"view.theme.text.n_comments", nil), (long unsigned)response.comments.count];
+    }
+    [cell.btnComments setTitle:commentCountStr forState:UIControlStateNormal];
     
     cell.unreadIndicator.hidden = response.isRead.boolValue;
     
@@ -408,9 +426,9 @@
             
             NSString *countString;
             if (responseCount == 1) {
-                countString = NSLocalizedString(@"1 Response", nil);
+                countString = DFLocalizedString(@"view.theme.text.1_response", nil);
             } else {
-                countString = [NSString stringWithFormat:NSLocalizedString(@"%lu Responses", nil), (long)responseCount];
+                countString = [NSString stringWithFormat:DFLocalizedString(@"view.theme.text.n_responses", nil), (long)responseCount];
             }
             
             DefaultCell * defaultCell = [tableView dequeueReusableCellWithIdentifier:@"noResponseHeaderCell"];
@@ -431,7 +449,9 @@
                         VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
                         cell = vidCell;
                         if (module.displayFile.file) {
-                            [vidCell.imageView sd_setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
+                            
+                            [vidCell.videoImageView sd_setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
+                            vidCell.moviePlayerController.contentURL = module.displayFile.file.filePathURL;
                             vidCell.videoIndicatorView.hidden = false;
                         } else {
                             vidCell.videoIndicatorView.hidden = true;
@@ -463,9 +483,9 @@
                 else if ([module themeType] == ThemeTypeMarkup){
                     
                     RTCell *textCell = (RTCell*)[tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+                   
                     
-                    
-                    [textCell.bodyLabel setText:NSLocalizedString(@"markup warning", nil)];
+                    [textCell.bodyLabel setText:DFLocalizedString(@"view.theme.text.markup_warning", nil)];
                     [textCell.bodyLabel setTextAlignment:NSTextAlignmentCenter];
                     cell = textCell;
                 }
@@ -488,7 +508,7 @@
 {
     if (indexPath.section == 0) {
         if (indexPath.row == _cellsArray.count) {
-            return 40.0f;
+            return self.fetchedResultsController.fetchedObjects.count ? 40.0f : 0.0f;
         } else return [_heightArray[indexPath.row] floatValue];
     } else {
         if (indexPath.row >= _responseCellHeights.count) {
@@ -526,6 +546,11 @@
             
             if ([module themeType] == ThemeTypeDisplayImage) {
                 // do nothing, let the display image cell handle this
+                id cell = [tableView cellForRowAtIndexPath:indexPath];
+                if ([cell isKindOfClass:[VideoCell class]]) {
+                    [(VideoCell*)cell playVideo];
+                    [[(VideoCell*)cell moviePlayerController] setFullscreen:YES animated:YES];
+                } else
                 [self performSegueWithIdentifier:@"webViewSegue" sender:self];
             }
             else if ([module themeType] == ThemeTypeDisplayText){
