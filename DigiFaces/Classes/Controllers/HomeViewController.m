@@ -371,6 +371,7 @@ typedef enum : NSUInteger {
     switch (theme.activityTypeId.intValue) {
         case 9:
             cellType = DFHomeCellTypeGeneralTheme;
+            break;
         case 13:
             cellType = DFHomeCellTypeMarkupTheme;
             break;

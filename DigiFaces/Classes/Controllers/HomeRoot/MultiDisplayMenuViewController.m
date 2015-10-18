@@ -40,10 +40,37 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 }
 
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    for (id vc in self.viewControllers) {
+        [self stopObserving:vc];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    for (id vc in self.viewControllers) {
+        [self observe:vc];
+    }
+}
+
+- (void)observe:(UIViewController*)viewController {
+    [self stopObserving:viewController];
+    [viewController addObserver:self forKeyPath:@"navigationItem.title" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:NULL];
+}
+
+- (void)stopObserving:(UIViewController*)viewController {
+    @try {
+        [viewController removeObserver:self forKeyPath:@"navigationItem.title"];
+    } @catch(id anException){
+        //do nothing, obviously it wasn't attached because an exception was thrown
+    }
+}
+
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated {
     UIViewController *oldVC = _viewControllers.lastObject;
     
-    [viewController addObserver:self forKeyPath:@"navigationItem.title" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:NULL];
+    [self observe:viewController];
     
     [_viewControllers addObject:viewController]; // adds it to the end.
     
@@ -72,7 +99,7 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     void (^removeOldVC)(void) = ^{
         if (oldVC) {
             defsself
-            [oldVC removeObserver:sself forKeyPath:@"navigationItem.title"];
+            [sself stopObserving:oldVC];
             [oldVC.view removeFromSuperview];
             [oldVC removeFromParentViewController];
             [sself.viewControllers removeObject:oldVC];

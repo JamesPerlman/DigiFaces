@@ -12,7 +12,7 @@
 #import "UserInfo.h"
 #import "UserViewController.h"
 
-@interface LoginTableController() <PopUpDelegate, MessageToViewMain>
+@interface LoginTableController() <PopUpDelegate, MessageToViewMain, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *signInLabel;
 @property (weak, nonatomic) IBOutlet UILabel *loginMessageLabel;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -40,9 +40,12 @@
     
     _emailTextField.leftView = paddingView1;
     _emailTextField.leftViewMode = UITextFieldViewModeAlways;
+    _emailTextField.delegate = self;
     
     _passwordTextField.leftView = paddingView2;
     _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    _passwordTextField.delegate = self;
     [self localizeUI];
 }
 
@@ -195,6 +198,19 @@
 {
     [_emailTextField resignFirstResponder];
     [_passwordTextField resignFirstResponder];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _passwordTextField) {
+        [self signInPressed:textField];
+    }
+    return true;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == _emailTextField) {
+        [_passwordTextField becomeFirstResponder];
+    }
 }
 
 @end
