@@ -53,6 +53,7 @@
 
 - (void)localizeUI {
     self.navigationItem.title = DFLocalizedString(@"view.profile_pic.navbar.title", nil);
+    self.navigationItem.rightBarButtonItem.title = DFLocalizedString(@"view.profile_pic.button.done", nil);
 }
 
 - (void)fetchAvatarFiles{

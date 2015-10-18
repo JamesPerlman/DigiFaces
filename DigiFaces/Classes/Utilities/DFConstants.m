@@ -8,8 +8,8 @@
 
 #import "DFConstants.h"
 
-NSString * const DFLocalizedStringsDirectoryURLPath = @"http://192.168.0.2/~home/DigiFaces/";
-NSString * const DFLocalizedStringsFileExtension = @"strings";
+NSString * const DFLocalizedStringsDirectoryURLPath = @"http://digifacesservices.focusforums.com/localization/"; //@"http://192.168.0.2/~home/DigiFaces/";
+NSString * const DFLocalizedStringsFileExtension = @"txt"; //@"strings";
 NSString * const DFLocalizationDidSynchronizeNotification = @"com.inet360.digifaces.notification.localizationDidSync";
 NSTimeInterval const DFLocalizationSynchronizerUpdateInterval = 60;
 

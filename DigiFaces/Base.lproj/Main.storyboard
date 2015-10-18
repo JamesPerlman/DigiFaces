@@ -1303,12 +1303,11 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJy-VF-Hat">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJy-VF-Hat">
                                             <rect key="frame" x="272" y="56" width="40" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="4xI-hd-zEF"/>
-                                                <constraint firstAttribute="width" constant="40" id="V4e-Sj-xfF"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <state key="normal" title="More">
@@ -3373,8 +3372,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDT-nP-wel">
-                                            <rect key="frame" x="240" y="54" width="72" height="30"/>
+                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDT-nP-wel">
+                                            <rect key="frame" x="112" y="54" width="200" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="DyD-nW-lib"/>
@@ -3403,10 +3402,12 @@
                                         <constraint firstItem="WDT-nP-wel" firstAttribute="top" secondItem="prs-kP-XTF" secondAttribute="bottom" constant="8" id="lCe-OC-O3A"/>
                                         <constraint firstItem="prs-kP-XTF" firstAttribute="leading" secondItem="q3j-pw-N5k" secondAttribute="leadingMargin" id="q33-Fd-duD"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="WDT-nP-wel" secondAttribute="bottom" constant="-8" id="vz9-k4-JQQ"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="WDT-nP-wel" secondAttribute="leading" id="w7s-qk-3pe"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
                                             <exclude reference="kP2-e3-bet"/>
+                                            <exclude reference="w7s-qk-3pe"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -5220,14 +5221,14 @@
         <image name="top_bar_back_arrow" width="13" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CE9-GG-Yoe"/>
-        <segue reference="GNd-Wo-Hrw"/>
-        <segue reference="EYx-dI-yCG"/>
-        <segue reference="YVH-jF-Mn7"/>
-        <segue reference="M5f-4n-50k"/>
-        <segue reference="sw5-fw-ulw"/>
         <segue reference="DRp-1t-WNc"/>
-        <segue reference="Sf2-TU-VcE"/>
+        <segue reference="sw5-fw-ulw"/>
         <segue reference="v7h-oQ-d3S"/>
+        <segue reference="f8n-jW-t9J"/>
+        <segue reference="3r5-SJ-zjd"/>
+        <segue reference="kgY-B9-zM2"/>
+        <segue reference="Sh4-6s-X9J"/>
+        <segue reference="XNZ-ng-ebc"/>
+        <segue reference="CE9-GG-Yoe"/>
     </inferredMetricsTieBreakers>
 </document>

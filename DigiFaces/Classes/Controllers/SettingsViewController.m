@@ -29,6 +29,7 @@
 }
 
 - (void)localizeUI {
+    self.navigationItem.title = DFLocalizedString(@"view.settings.navbar.title", nil);
     [self.logoutButton setTitle:DFLocalizedString(@"view.settings.button.log_out", nil) forState:UIControlStateNormal];
 }
 

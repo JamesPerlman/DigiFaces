@@ -97,6 +97,7 @@
 "view.entry_info.navbar.title" = "DIARY";
 
 /* Diary / Diary Theme Response View */
+"view.response.navbar.title" = "NAVBAR";
 "view.response.button.send" = "Send";
 "view.response.input.response" = "Leave a comment...";
 "view.response.alert.content_not_found" = "The content you requested could not be found.";
@@ -115,7 +116,7 @@
 
 /* Settings View */
 
-"view.settings.title" = "SETTINGS";
+"view.settings.navbar.title" = "SETTINGS";
 "view.settings.button.profile" = "MY PROFILE";
 "view.settings.button.email_support" = "EMAIL TECH SUPPORT";
 "view.settings.button.email_mod" = "EMAIL THE MODERATOR";
@@ -124,10 +125,10 @@
 "view.settings.button.log_out" = "LOGOUT";
 
 /* About DigiFaces View */
-"view.about_df.navbar.title" = "ABOUT DIGIFACES";
+"view.about_df.navbar.default_title" = "ABOUT DIGIFACES";
 
 /* Conversations View */
-"view.conversations.navbar.title" = "Conversations";
+"view.conversations.navbar.title" = "CONVERSATIONS";
 "view.conversations.error.load_failure" = "Could not load conversations.  Try again?";
 
 /* Conversation with User */
@@ -135,10 +136,10 @@
 "view.conversation.error.post_reply_failure" = "Something went wrong with the server.  Please try again later.";
 
 /* Announcements View */
-"view.announcements.navbar.title" = "Announcements";
+"view.announcements.navbar.title" = "ANNOUNCEMENTS";
 
 /* Notifications View */
-"view.notifications.navbar.title" = "Notifications";
+"view.notifications.navbar.title" = "NOTIFICATIONS";
 
 /* Email Tech Support View */
 "view.email_support.navbar.title" = "TECH SUPPORT";
@@ -172,6 +173,7 @@
 
 /* Profile Picture Chooser View */
 "view.profile_pic.navbar.title" = "PROFILE PICTURE";
+"view.profile_pic.button.done" = "DONE";
 "view.profile_pic.error.missing_picture" = "Please select an image to set as profile picture";
 "view.profile_pic.alert.upload_failure" = "Something went wrong and your picture could not be uploaded. Please try again later.";
 
@@ -185,6 +187,3 @@
 "view.calendar.friday"    = "F";
 "view.calendar.saturday"  = "S";
 "view.calendar.sunday"    = "S";
-
-
-

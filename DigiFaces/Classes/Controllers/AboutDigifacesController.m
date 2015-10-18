@@ -24,7 +24,7 @@
 }
 
 - (void)localizeUI {
-    self.navigationItem.title = DFLocalizedString(@"view.about_df.navbar.title", nil);
+    self.navigationItem.title = DFLocalizedString(@"view.about_df.navbar.default_title", nil);
 }
 
 

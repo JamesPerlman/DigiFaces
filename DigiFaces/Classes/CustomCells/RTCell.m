@@ -41,11 +41,13 @@
 - (void)minimize {
     expanded = false;
     [self.moreLessButton setTitle:DFLocalizedString(@"view.misc.article.button.show_more", nil) forState:UIControlStateNormal];
+    [self.moreLessButton layoutIfNeeded];
 }
 
 - (void)maximize {
     expanded = true;
     [self.moreLessButton setTitle:DFLocalizedString(@"view.misc.article.button.show_less", nil) forState:UIControlStateNormal];
+    [self.moreLessButton layoutIfNeeded];
     
 }
 

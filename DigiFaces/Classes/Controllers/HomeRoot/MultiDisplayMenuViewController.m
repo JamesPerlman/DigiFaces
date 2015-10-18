@@ -43,7 +43,7 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated {
     UIViewController *oldVC = _viewControllers.lastObject;
     
-    [viewController addObserver:self forKeyPath:@"navigationItem.title" options:NSKeyValueObservingOptionNew context:NULL];
+    [viewController addObserver:self forKeyPath:@"navigationItem.title" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:NULL];
     
     [_viewControllers addObject:viewController]; // adds it to the end.
     

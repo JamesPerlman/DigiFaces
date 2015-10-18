@@ -119,7 +119,7 @@ typedef enum {
 }
 
 - (void)localizeUI {
-    
+    self.navigationItem.title = DFLocalizedString(@"view.response.navbar.title", nil);
     self.txtResposne.placeholder = DFLocalizedString(@"view.response.input.response", nil);
     [self.sendButton setTitle:DFLocalizedString(@"view.response.button.send", nil) forState:UIControlStateNormal];
 }
