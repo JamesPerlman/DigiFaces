@@ -94,10 +94,10 @@ typedef enum {
 */
 
 #define kCognitoRegionType AWSRegionUSEast1
-#define kS3DefaultServiceRegionType AWSRegionUSWest2
-#define kCognitoIdentityPoolId @"us-east-1:5e6119ff-7f36-4c36-be82-8b8eb5ff0ae9"
-#define kS3BucketName @"kar8g944" // TESTING ONLY
-#define kS3URLSubdomain @"s3-us-west-2"
+#define kS3DefaultServiceRegionType AWSRegionUSEast1
+#define kCognitoIdentityPoolId @"us-east-1:633ad485-1e3e-49c4-9e3c-24382bf03749"//@"us-east-1:5e6119ff-7f36-4c36-be82-8b8eb5ff0ae9"
+#define kS3BucketName @"ios.digifaces.com"//@"kar8g944" // TESTING ONLY
+#define kS3URLSubdomain @"s3"
 
 
 #define kCurrentPorjectID       @"CurrentProjectId"

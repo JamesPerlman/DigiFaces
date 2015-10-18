@@ -584,7 +584,7 @@
 #pragma mark - Errors and Successes
 
 - (void)handleUploadError:(NSError*)error forMediaUploadView:(DFMediaUploadView*)mediaUploadView {
-    
+    NSLog(@"%@", error);
     mediaUploadView.uploading = false;
     mediaUploadView.error = true;
     if ([self.delegate respondsToSelector:@selector(mediaUploadManager:didFailToUploadForView:)]) {

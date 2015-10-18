@@ -97,7 +97,7 @@
 "view.entry_info.navbar.title" = "DIARY";
 
 /* Diary / Diary Theme Response View */
-"view.response.navbar.title" = "NAVBAR";
+"view.response.navbar.title" = "RESPONSE";
 "view.response.button.send" = "Send";
 "view.response.input.response" = "Leave a comment...";
 "view.response.alert.content_not_found" = "The content you requested could not be found.";
