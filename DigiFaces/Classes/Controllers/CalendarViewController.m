@@ -49,6 +49,7 @@
     
     [self getMonthYear];
     [self loadCalendar];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

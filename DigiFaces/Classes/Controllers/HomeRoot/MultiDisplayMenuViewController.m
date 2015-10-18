@@ -14,9 +14,9 @@ static NSTimeInterval MDMAnimationDuration = 0.5;
 static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey";
 
 @interface MultiDisplayMenuViewController () {
-    NSMutableArray *_viewControllers;
     BOOL firstTime;
 }
+@property (nonatomic, strong) NSMutableArray *viewControllers;
 @end
 
 @implementation MultiDisplayMenuViewController
@@ -43,6 +43,8 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated {
     UIViewController *oldVC = _viewControllers.lastObject;
     
+    [viewController addObserver:self forKeyPath:@"navigationItem.title" options:NSKeyValueObservingOptionNew context:NULL];
+    
     [_viewControllers addObject:viewController]; // adds it to the end.
     
     [self addChildViewController:viewController];
@@ -65,12 +67,15 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
      */
     objc_setAssociatedObject(oldVC, (__bridge const void *)mdmvc_assoc_key, nil, OBJC_ASSOCIATION_ASSIGN);
     
+    defwself;
     objc_setAssociatedObject(viewController, (__bridge const void *)mdmvc_assoc_key, self, OBJC_ASSOCIATION_ASSIGN);
     void (^removeOldVC)(void) = ^{
         if (oldVC) {
+            defsself
+            [oldVC removeObserver:sself forKeyPath:@"navigationItem.title"];
             [oldVC.view removeFromSuperview];
             [oldVC removeFromParentViewController];
-            [_viewControllers removeObject:oldVC];
+            [sself.viewControllers removeObject:oldVC];
             
         }
     };
@@ -84,6 +89,15 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
         }];
     } else {
         removeOldVC();
+    }
+}
+
+
+
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"navigationItem.title"]) {
+        self.navigationItem.title = [object navigationItem].title;
     }
 }
 

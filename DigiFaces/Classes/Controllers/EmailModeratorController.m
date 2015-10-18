@@ -22,6 +22,7 @@
     alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
     alertView.delegate = self;
     [self.txtSubject becomeFirstResponder];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

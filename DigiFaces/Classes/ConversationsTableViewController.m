@@ -123,7 +123,7 @@ static NSString *messageCellID = @"conversationCell";
                       [sself.refreshControl endRefreshing];
                       if ([result isKindOfClass:[NSArray class]]) {
                           sself.conversations = result;
-                      } else {
+                      } else if (result != nil) {
                           sself.conversations = @[result];
                       }
                       [sself.tableView reloadData];
@@ -133,6 +133,7 @@ static NSString *messageCellID = @"conversationCell";
                       [sself.refreshControl endRefreshing];
                       [customAlert showAlertWithMessage:DFLocalizedString(@"view.conversations.error.load_failure", nil) inView:sself.view withTag:0];
                   }];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

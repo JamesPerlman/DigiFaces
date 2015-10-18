@@ -43,6 +43,7 @@
     
     _passwordTextField.leftView = paddingView2;
     _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    [self localizeUI];
 }
 
 - (void)localizeUI {

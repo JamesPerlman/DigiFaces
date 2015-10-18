@@ -51,6 +51,7 @@
     alertview.delegate = self;
     
     // Do any additional setup after loading the view.
+    [self localizeUI];
 }
 
 - (void)localizeUI {

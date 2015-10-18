@@ -13,6 +13,8 @@
 extern NSString * const DFLocalizedStringsDirectoryURLPath;
 extern NSString * const DFLocalizedStringsFileExtension;
 extern NSString * const DFLocalizationDidSynchronizeNotification;
+extern NSTimeInterval const DFLocalizationSynchronizerUpdateInterval;
+
 extern NSString * const APIServerAddress;
 
 

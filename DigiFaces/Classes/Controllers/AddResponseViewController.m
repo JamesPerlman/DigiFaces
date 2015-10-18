@@ -104,6 +104,7 @@
         [self.txtTitle becomeFirstResponder];
     }
     
+    [self localizeUI];
 }
 
 - (void)localizeUI {

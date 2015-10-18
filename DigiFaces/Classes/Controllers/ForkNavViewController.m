@@ -22,7 +22,21 @@
     
     customAlert = [[CustomAlertView alloc]initWithNibName:@"CustomAlertView" bundle:nil];
     customAlert.delegate = self;
-    [self tryAutoLogin];
+
+    defwself;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [[DFLanguageSynchronizer sharedInstance] synchronizeStringsWithCompletion:^(NSError *error) {
+        defsself
+        if (sself) {
+            [MBProgressHUD hideHUDForView:sself.view animated:YES];
+            [sself tryAutoLogin];
+        }
+        
+        if (error) {
+            NSLog(@"ERROR! %@", error);
+        }
+    }];
+    
     
     [self.navigationController setNavigationBarHidden:YES];
 }

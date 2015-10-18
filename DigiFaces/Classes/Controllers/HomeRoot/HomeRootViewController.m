@@ -58,7 +58,6 @@
     if (!_popover) {
         _popover = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
         _popover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * [self.messagesVC tableView:self.messagesVC.tableView numberOfRowsInSection:0]);
-        
     }
     return _popover;
 }

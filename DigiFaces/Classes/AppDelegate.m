@@ -11,7 +11,6 @@
 #import "NointernetController.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "UIViewController+DFLocalization.h"
 
 #import "DFResponseDescriptorsProvider.h"
 @interface AppDelegate ()
@@ -49,21 +48,15 @@
     
     
     
+    
     UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    
     UIViewController * rootViewController = [storyBoard instantiateViewControllerWithIdentifier:@"autoLoginController"];
-
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
-    
     
     [self.window setRootViewController:navController];
     [self.window makeKeyAndVisible];
-
-    [Fabric with:@[CrashlyticsKit]];
     
-    [[DFLanguageSynchronizer sharedInstance] downloadLocalizedStringsFromServerWithCompletion:^(NSError *error) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DFLocalizationDidSynchronizeNotification object:nil];
-    }];
+    [Fabric with:@[CrashlyticsKit]];
     
     return YES;
 }

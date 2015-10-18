@@ -90,6 +90,7 @@
     [self.refreshControl addTarget:self
                             action:@selector(fetchResponses)
                   forControlEvents:UIControlEventValueChanged];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

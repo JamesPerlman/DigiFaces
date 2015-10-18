@@ -50,6 +50,7 @@ static NSString *leftCellID = @"leftSideComment";
     self.messageTextView.delegate = self;
     
     self.alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:[NSBundle mainBundle]];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

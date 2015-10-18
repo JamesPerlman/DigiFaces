@@ -136,7 +136,6 @@
 		F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
 		F4B988451BC707C80010F139 /* JPKeyboardSensitiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */; };
 		F4C8AA491BD2DC3D00B137CB /* DFLanguageSynchronizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C8AA481BD2DC3D00B137CB /* DFLanguageSynchronizer.m */; settings = {ASSET_TAGS = (); }; };
-		F4C8AA4C1BD3599900B137CB /* UIViewController+DFLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C8AA4B1BD3599900B137CB /* UIViewController+DFLocalization.m */; settings = {ASSET_TAGS = (); }; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -1753,7 +1752,6 @@
 				4ACDB9DD1B3E7E66009EFB91 /* NSString+XMLEntities.m in Sources */,
 				F4B8B3431BA35B1D007E4104 /* AboutMe.m in Sources */,
 				4ACDB9C21B3E7E66009EFB91 /* ProfilePicCell.m in Sources */,
-				F4C8AA4C1BD3599900B137CB /* UIViewController+DFLocalization.m in Sources */,
 				F4B8B3471BA35B1D007E4104 /* About.m in Sources */,
 				4ACDB9B81B3E7E66009EFB91 /* TechSupportController.m in Sources */,
 				4AC49FE11B4AEEBB003CE06E /* CommentCell.m in Sources */,

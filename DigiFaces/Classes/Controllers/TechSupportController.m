@@ -31,6 +31,7 @@
     [alertView setSingleButton:YES];
     alertView.delegate = self;
     [self.txtSubject becomeFirstResponder];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

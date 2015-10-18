@@ -38,6 +38,7 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self getAnnouncements];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

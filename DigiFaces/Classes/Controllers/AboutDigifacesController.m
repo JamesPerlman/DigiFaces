@@ -20,7 +20,7 @@
     
     
     [self fetchAboutDigifacesText];
-    
+    [self localizeUI];
 }
 
 - (void)localizeUI {

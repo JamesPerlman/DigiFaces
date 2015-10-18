@@ -14,6 +14,10 @@
 @end
 
 @implementation NointernetController
+- (void)viewDidLoad {
+    
+    [self localizeUI];
+}
 
 - (void)localizeUI {
     self.messageLabel.text = DFLocalizedString(@"app.error.no_internet", nil);

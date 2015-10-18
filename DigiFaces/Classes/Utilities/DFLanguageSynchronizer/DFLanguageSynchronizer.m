@@ -82,12 +82,30 @@ static NSBundle *staticCustomBundle = nil;
     return [NSString stringWithFormat:@"%@/%@.lproj", DFCustomLanguageBundleName, [self currentLanguageCode]];
 }
 
+- (void)completeProcessWithError:(NSError*)error {
+    if (self.processCompletionBlock) {
+        self.processCompletionBlock(error);
+        self.processCompletionBlock = nil;
+    }
+}
+
 #pragma mark - Data Loading
 
--(void)downloadLocalizedStringsFromServerWithCompletion:(void (^)(NSError* error))completionBlock {
+-(void)synchronizeStringsWithCompletion:(void (^)(NSError* error))completionBlock {
     
     self.processCompletionBlock = completionBlock;
     
+    NSError *error = nil;
+    [self loadStringsData:&error];
+    
+    if (error) {
+        [self downloadStringsFromServer];
+    } else {
+        [self completeProcessWithError:nil];
+    }
+}
+
+- (void)downloadStringsFromServer {
     NSURL *url = [self urlPathForCurrentLanguage];
     // adapt this
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -111,26 +129,53 @@ static NSBundle *staticCustomBundle = nil;
 
 - (void)handleStringsDownloadSuccessWithData:(NSData*)stringsData {
     NSError *error = nil;
-    [self saveData:stringsData toFolder:[self folderPathForCustomLocalizationFile] usingFilename:@"Localizable.strings" error:&error];
+    [self saveStringsData:stringsData error:&error];
     if (error) {
         [self handleStringsDownloadFailureWithError:error];
-    } else if (self.processCompletionBlock) {
-        self.processCompletionBlock(nil);
-        self.processCompletionBlock = nil;
+    } else {
+        [self completeProcessWithError:nil];
     }
 }
 
 - (void)handleStringsDownloadFailureWithError:(NSError*)error {
-    if (self.processCompletionBlock) {
-        self.processCompletionBlock(error);
-        self.processCompletionBlock = nil;
-    }
+    [self completeProcessWithError:error];
 }
 
 #pragma mark Data Caching
 
--(void)saveData:(NSData *)data toFolder:(NSString *)folder usingFilename:(NSString *)filename error:(NSError* _Nullable __autoreleasing*)error {
+-(void)loadStringsData:(NSError * _Nullable __autoreleasing*)error {
     *error = nil;
+    
+    NSString *folder = [self folderPathForCustomLocalizationFile];
+    NSString *filename = @"Localizable.strings";
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = paths[0];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:folder];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", dataPath, filename];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSURL *backUrl = [NSURL fileURLWithPath:filePath];
+        [self addSkipBackupAttributeToItemAtURL:backUrl];
+        
+        // check if date is too old
+        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:error];
+        NSDate *date = [attributes fileModificationDate];
+        
+        if ([[NSDate date] timeIntervalSinceDate:date] > DFLocalizationSynchronizerUpdateInterval) {
+            NSString *errorDescription = [NSString stringWithFormat:@"Localization data requires update."];
+            *error = [NSError errorWithDomain:@"DFLanguageSynchronizer.data.needsUpdate" code:3 userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
+        }
+    } else {
+        NSString *errorDescription = [NSString stringWithFormat:@"File does not exist: %@", filePath];
+        *error = [NSError errorWithDomain:@"DFLanguageSynchronizer.NSFileManager.load" code:2 userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
+    }
+}
+
+-(void)saveStringsData:(NSData *)data error:(NSError* _Nullable __autoreleasing*)error {
+    *error = nil;
+    
+    NSString *folder = [self folderPathForCustomLocalizationFile];
+    NSString *filename = @"Localizable.strings";
     NSData *dataToSave = data;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = paths[0];
@@ -160,7 +205,7 @@ static NSBundle *staticCustomBundle = nil;
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL {
     assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
     NSError *error = nil;
-    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]                                   forKey: NSURLIsExcludedFromBackupKey error: &error];
+    BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES] forKey: NSURLIsExcludedFromBackupKey error: &error];
     if(!success){
         NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
     }

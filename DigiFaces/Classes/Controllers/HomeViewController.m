@@ -72,6 +72,7 @@
     [self.refreshControl addTarget:self
                             action:@selector(fetchActivites)
                   forControlEvents:UIControlEventValueChanged];
+    [self localizeUI];
     
     
 }

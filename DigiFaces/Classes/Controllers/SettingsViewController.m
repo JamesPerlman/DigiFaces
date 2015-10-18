@@ -25,6 +25,7 @@
     [super viewDidLoad];
     canEmailMod = [LS.myUserInfo canEmailMods];
     // Do any additional setup after loading the view.
+    [self localizeUI];
 }
 
 - (void)localizeUI {

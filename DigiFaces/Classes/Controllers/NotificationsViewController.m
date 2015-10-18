@@ -34,6 +34,7 @@
     [super viewDidLoad];
     _arrNotifications = [[NSMutableArray alloc] init];
     [self getNotifications];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

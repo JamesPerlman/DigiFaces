@@ -47,6 +47,7 @@
     CGFloat _collectionViewItemPadding = ((UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout).minimumInteritemSpacing;
     CGFloat _collectionViewItemSideLength = ([UIScreen mainScreen].bounds.size.width/4.0f-_collectionViewItemPadding);
     _collectionViewItemSize = CGSizeMake(_collectionViewItemSideLength, _collectionViewItemSideLength);
+    [self localizeUI];
     
 }
 

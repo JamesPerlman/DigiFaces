@@ -48,6 +48,7 @@
     } else {
         [self generateDataArraysFromAnnouncement:self.announcement];
     }
+    [self localizeUI];
 }
 
 - (void)localizeUI {

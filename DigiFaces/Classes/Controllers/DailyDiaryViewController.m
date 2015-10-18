@@ -78,6 +78,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     [self.refreshControl addTarget:self
                             action:@selector(fetchDailyDiaryFromServer)
                   forControlEvents:UIControlEventValueChanged];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

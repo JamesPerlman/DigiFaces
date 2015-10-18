@@ -38,6 +38,7 @@
     // Do any additional setup after loading the view.
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

@@ -115,6 +115,7 @@ typedef enum {
     self.txtResposne.clipsToBounds = true;
     self.txtResposne.delegate = self;
     // [self organizeData];
+    [self localizeUI];
 }
 
 - (void)localizeUI {

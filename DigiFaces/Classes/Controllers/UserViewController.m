@@ -38,6 +38,7 @@
     [_usernameTextField becomeFirstResponder];
     
     // Do any additional setup after loading the view from its nib.
+    [self localizeUI];
 }
 
 - (void)localizeUI {
