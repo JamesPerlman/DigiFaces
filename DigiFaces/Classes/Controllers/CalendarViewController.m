@@ -241,6 +241,12 @@
     
 }
 
+- (IBAction)close:(id)sender {
+    if ([_delegate respondsToSelector:@selector(calendarController:didSelectDate:)]) {
+        [_delegate calendarController:self didSelectDate:[NSDate date]];
+    }
+}
+
 - (IBAction)gotoPreviousMonth:(id)sender {
     selectedDay = nil;
     month--;

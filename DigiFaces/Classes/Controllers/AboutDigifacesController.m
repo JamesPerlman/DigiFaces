@@ -36,7 +36,16 @@
     [DFClient makeRequest:APIPathGetAbout method:kGET urlParams:@{@"languageCode" : @"en"} bodyParams:nil success:^(NSDictionary *response, About *result) {
         defsself
         [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-        [sself.webView loadHTMLString:result.aboutText baseURL:nil];
+        NSString *myDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
+                                       "<head> \n"
+                                       "<style type=\"text/css\"> \n"
+                                       "body {font-family: \"%@\"; font-size: %@;}\n"
+                                       "</style> \n"
+                                       "</head> \n"
+                                       "<body>%@</body> \n"
+                                       "</html>", @"Arial", @17, result.aboutText];
+        
+        [sself.webView loadHTMLString:myDescriptionHTML baseURL:nil];
         if (result.aboutTitle.length) {
             sself.navigationItem.title = result.aboutTitle;
         }

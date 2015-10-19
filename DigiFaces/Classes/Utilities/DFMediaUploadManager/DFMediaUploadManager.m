@@ -223,7 +223,9 @@
         
         // save photo to phone
         
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        }
     }
     
     else if ([mediaType isEqualToString:(NSString*)kUTTypeMovie]){
@@ -239,8 +241,9 @@
         [self updateMediaView:self.currentView withImage:image data:mediaData type:DFMediaUploadTypeVideo];
         
         // save video to phone
-        
-        UISaveVideoAtPathToSavedPhotosAlbum([videoURL path], nil, nil, nil);
+        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([videoURL path])) {
+            UISaveVideoAtPathToSavedPhotosAlbum([videoURL path], nil, nil, nil);
+        }
         
     } else return;
     

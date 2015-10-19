@@ -92,26 +92,18 @@
             
         } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse]) {
             [self.cameraButton setImage:[UIImage imageNamed:@"videocam_blue"] forState:UIControlStateNormal];
-            /*
+            
             for (DFMediaUploadView *view in self.mediaUploadManager.mediaUploadViews) {
                 view.hidden = true;
             }
             self.mediaUploadManager.maximumNumberOfSelection = 1;
             self.videoUploadView.hidden = false;
-             */
-            
         }
         [self.txtResponse becomeFirstResponder];
     } else {
         
         [self.txtTitle becomeFirstResponder];
     }
-    
-    for (DFMediaUploadView *view in self.mediaUploadManager.mediaUploadViews) {
-        view.hidden = true;
-    }
-    self.mediaUploadManager.maximumNumberOfSelection = 1;
-    self.videoUploadView.hidden = false;
     
     [self localizeUI];
 }
@@ -374,7 +366,6 @@
                           defsself
                           [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       }];
-    
 }
 
 #pragma mark - Data Model Synchronization

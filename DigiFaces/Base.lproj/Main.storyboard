@@ -1907,6 +1907,17 @@
                                         <color key="textColor" red="0.1529411765" green="0.6705882353" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkO-MO-EPp">
+                                        <rect key="frame" x="8" y="220" width="22" height="22"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="hkO-MO-EPp" secondAttribute="height" multiplier="1:1" id="b2P-XS-nQh"/>
+                                        </constraints>
+                                        <state key="normal" image="x_black"/>
+                                        <connections>
+                                            <action selector="close:" destination="Ln0-gE-6IK" eventType="touchUpInside" id="1lh-b9-S4B"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1917,6 +1928,8 @@
                                     <constraint firstItem="Hzg-fY-bDo" firstAttribute="top" secondItem="sOF-LT-Ncg" secondAttribute="bottom" constant="8" id="4zD-9M-uHL"/>
                                     <constraint firstItem="Uih-ob-icF" firstAttribute="top" secondItem="sOF-LT-Ncg" secondAttribute="bottom" constant="8" id="6KB-7M-1pn"/>
                                     <constraint firstAttribute="trailing" secondItem="Fgn-sy-3ZG" secondAttribute="trailing" constant="8" id="962-lX-EmH"/>
+                                    <constraint firstItem="hkO-MO-EPp" firstAttribute="height" secondItem="c13-wF-Jev" secondAttribute="height" id="AIl-Dp-Is1"/>
+                                    <constraint firstItem="hkO-MO-EPp" firstAttribute="leading" secondItem="Rqc-dH-uZk" secondAttribute="leading" constant="8" id="AeW-lV-gNo"/>
                                     <constraint firstAttribute="trailing" secondItem="sOF-LT-Ncg" secondAttribute="trailing" id="Auz-pg-PCb"/>
                                     <constraint firstItem="qy8-pt-FaB" firstAttribute="top" secondItem="sOF-LT-Ncg" secondAttribute="bottom" constant="8" id="CnV-Jt-U9z"/>
                                     <constraint firstAttribute="height" constant="250" id="EEA-p0-1bg"/>
@@ -1938,6 +1951,7 @@
                                     <constraint firstItem="Fgn-sy-3ZG" firstAttribute="top" secondItem="4TC-tP-OVL" secondAttribute="bottom" constant="1" id="hXI-hT-Fmu"/>
                                     <constraint firstItem="bqP-wP-eem" firstAttribute="leading" secondItem="TaI-my-Cps" secondAttribute="trailing" id="iJ8-kw-YJU"/>
                                     <constraint firstItem="4TC-tP-OVL" firstAttribute="leading" secondItem="bqP-wP-eem" secondAttribute="trailing" id="kFL-Xr-JHi"/>
+                                    <constraint firstItem="hkO-MO-EPp" firstAttribute="centerY" secondItem="c13-wF-Jev" secondAttribute="centerY" id="kK0-VW-a97"/>
                                     <constraint firstItem="TaI-my-Cps" firstAttribute="leading" secondItem="teX-iE-o53" secondAttribute="trailing" id="lsP-27-fmm"/>
                                     <constraint firstItem="Fgn-sy-3ZG" firstAttribute="top" secondItem="teX-iE-o53" secondAttribute="bottom" constant="1" id="qAO-1U-XiM"/>
                                     <constraint firstItem="qy8-pt-FaB" firstAttribute="leading" secondItem="Hzg-fY-bDo" secondAttribute="trailing" id="qyq-aV-xWQ"/>
@@ -5219,16 +5233,17 @@
         <image name="tobbar_loading_cross" width="32" height="33"/>
         <image name="top_bar" width="375" height="58"/>
         <image name="top_bar_back_arrow" width="13" height="23"/>
+        <image name="x_black" width="32" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="xm7-nE-fcs"/>
         <segue reference="DRp-1t-WNc"/>
         <segue reference="sw5-fw-ulw"/>
         <segue reference="v7h-oQ-d3S"/>
-        <segue reference="xm7-nE-fcs"/>
-        <segue reference="f8n-jW-t9J"/>
-        <segue reference="3r5-SJ-zjd"/>
-        <segue reference="kgY-B9-zM2"/>
         <segue reference="Sh4-6s-X9J"/>
-        <segue reference="XNZ-ng-ebc"/>
+        <segue reference="PJM-GU-RyY"/>
+        <segue reference="Taj-qP-dlL"/>
+        <segue reference="veF-sC-LAA"/>
+        <segue reference="Z1a-cS-acW"/>
     </inferredMetricsTieBreakers>
 </document>

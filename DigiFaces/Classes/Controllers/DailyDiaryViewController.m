@@ -49,6 +49,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 @property (nonatomic, retain) NSArray *diariesByDateIndex;
 @property (nonatomic, retain) NSArray *diaryDates;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) CGFloat bannerImageHeight;
 
 @end
 
@@ -79,6 +80,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
                             action:@selector(fetchDailyDiaryFromServer)
                   forControlEvents:UIControlEventValueChanged];
     [self localizeUI];
+    self.bannerImageHeight = 160;
 }
 
 - (void)localizeUI {
@@ -221,7 +223,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            return 160;
+            return self.bannerImageHeight;
         }
         else if (indexPath.row == 1) {
             // if there are responses, show the more/less button
@@ -253,8 +255,13 @@ static NSString *infoCellReuseIdentifier = @"textCell";
         if (indexPath.row == 0) {
             if (_dailyDiary.file && [_dailyDiary.file.fileType isEqualToString:@"Image"]) {
                 ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                [imgCell.image sd_setImageWithURL:_dailyDiary.file.filePathURL];
-                
+                if (nil == imgCell.image.image) {
+                    defwself
+                    [imgCell.image sd_setImageWithURL:_dailyDiary.file.filePathURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                        defsself
+                        [sself resizeTopBannerToFitImage:image];
+                    }];
+                }
                 cell = imgCell;
             }
             else{
@@ -361,6 +368,13 @@ static NSString *infoCellReuseIdentifier = @"textCell";
 
 - (Diary*)diaryForIndexPath:(NSIndexPath*)indexPath {
     return self.diariesByDateIndex[indexPath.section-1][indexPath.row];
+}
+
+- (void)resizeTopBannerToFitImage:(UIImage*)image {
+    CGSize screen = [UIScreen mainScreen].bounds.size;
+    CGFloat height = MIN(screen.height/2.0, screen.width / image.size.width * image.size.height);
+    self.bannerImageHeight = height;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Model Management

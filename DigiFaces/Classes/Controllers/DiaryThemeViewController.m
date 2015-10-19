@@ -442,8 +442,13 @@
                 if ([module themeType] == ThemeTypeDisplayImage) {
                     if (module.displayFile.file && [module.displayFile.file.fileType isEqualToString:@"Image"]) {
                         ImageCell * imgCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-                        [imgCell.image sd_setImageWithURL:module.displayFile.file.filePathURL];
-                        
+                        if (!imgCell.image.image) {
+                            defwself
+                            [imgCell.image sd_setImageWithURL:module.displayFile.file.filePathURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                defsself
+                                [sself resizeTopBannerToFitImage:image];
+                            }];
+                        }
                         cell = imgCell;
                     }
                     else{
@@ -484,7 +489,7 @@
                 else if ([module themeType] == ThemeTypeMarkup){
                     
                     RTCell *textCell = (RTCell*)[tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
-                   
+                    
                     
                     [textCell.bodyLabel setText:DFLocalizedString(@"view.theme.text.markup_warning", nil)];
                     [textCell.bodyLabel setTextAlignment:NSTextAlignmentCenter];
@@ -552,7 +557,7 @@
                     [(VideoCell*)cell playVideo];
                     [[(VideoCell*)cell moviePlayerController] setFullscreen:YES animated:YES];
                 } else
-                [self performSegueWithIdentifier:@"webViewSegue" sender:self];
+                    [self performSegueWithIdentifier:@"webViewSegue" sender:self];
             }
             else if ([module themeType] == ThemeTypeDisplayText){
                 [self performSegueWithIdentifier:@"diaryInfoSegue" sender:self];
@@ -560,7 +565,14 @@
         }
     }
 }
+#pragma mark - Table View Convenience Methods
 
+- (void)resizeTopBannerToFitImage:(UIImage*)image {
+    CGSize screen = [UIScreen mainScreen].bounds.size;
+    CGFloat height = MIN(screen.height/2.0, screen.width / image.size.width * image.size.height);
+    _heightArray[0] = @(height);
+    [self.tableView reloadData];
+}
 #pragma mark - Navigation
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
