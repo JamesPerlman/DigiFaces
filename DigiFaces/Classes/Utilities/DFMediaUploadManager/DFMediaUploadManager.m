@@ -100,9 +100,10 @@
         // Camera
         [self initializeCameraImagePicker];
     }
-    else if (buttonIndex == 1){
+    else if (buttonIndex == 1 && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
         // Library
-        [self initializeQBImagePicker];
+//        [self initializeQBImagePicker];
+        [self initializeImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
     else{
         return;
@@ -132,10 +133,9 @@
     self.qbImagePickerController.maximumNumberOfSelection = self.maximumNumberOfSelection;
     
 }
--(void)initializeCameraImagePicker
-{
-    
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+
+- (void)initializeImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType {
+    self.imagePickerController.sourceType = sourceType;
     self.imagePickerController.allowsEditing = YES;
     NSArray *mediaTypes = @[];
     if (self.currentView.allowsVideo) {
@@ -150,6 +150,11 @@
         self.imagePickerController.mediaTypes = mediaTypes;
         [self.viewController presentViewController:self.imagePickerController animated:YES completion:nil];
     }
+
+}
+-(void)initializeCameraImagePicker
+{
+    [self initializeImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
 }
 #pragma mark - UIImagePickerController
 - (UIImagePickerController*)imagePickerController {
@@ -163,6 +168,10 @@
 }
 
 
+- (void)updateMediaView:(DFMediaUploadView*)mediaView withImage:(UIImage*)image {
+    [self updateMediaView:mediaView withImage:image data:nil type:DFMediaUploadTypeImage];
+}
+
 - (void)updateMediaView:(DFMediaUploadView*)mediaView withImage:(UIImage*)image data:(NSData*)data type:(DFMediaUploadType)mediaType {
     
     // delete old file
@@ -173,8 +182,8 @@
         }
     }
     
-    
-    NSString * filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[Utility getUniqueId]];
+    NSString * fileName = [Utility getUniqueId];
+    NSString * filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
     
     NSData *mediaData = data;
     
@@ -210,7 +219,7 @@
     
     if ([mediaType isEqualToString:(NSString*)kUTTypeImage]){
         
-        [self updateMediaView:self.currentView withImage:image data:nil type:DFMediaUploadTypeImage];
+        [self updateMediaView:self.currentView withImage:image];
         
         // save photo to phone
         
@@ -294,7 +303,7 @@
                                          dispatch_async(dispatch_get_main_queue(), ^{
                                              defsself
                                              if (sself) {
-                                                 [sself updateMediaView:targetView withImage:result data:nil type:DFMediaUploadTypeImage];
+                                                 [sself updateMediaView:targetView withImage:result];
                                              }
                                          });
                                      }];
@@ -306,16 +315,23 @@
                 // request AVAsset for PHAsset
                 
                 PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc]init];
+                options.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
                 defwself
                 [imageManager requestAVAssetForVideo:asset
                                              options:options
                                        resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-                                           AVURLAsset *urlAsset = (AVURLAsset*)asset;
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                defsself
-                                               UIImage *image = [sself imageForAVURLAsset:urlAsset];
-                                               NSData *mediaData = [NSData dataWithContentsOfURL:urlAsset.URL];
-                                               [sself updateMediaView:targetView withImage:image data:mediaData type:DFMediaUploadTypeVideo];
+                                               if (sself) {
+                                                   [sself cropAndScaleAsset:asset toWidth:360 height:640 completion:^(AVURLAsset *urlAsset) {
+                                                       __strong __typeof(wself) ssself = wself;
+                                                       if (ssself) {
+                                                           UIImage *image = [sself imageForAVURLAsset:urlAsset];
+                                                           NSData *mediaData = [NSData dataWithContentsOfURL:urlAsset.URL];
+                                                           [ssself updateMediaView:targetView withImage:image data:mediaData type:DFMediaUploadTypeVideo];
+                                                       }
+                                                   }];
+                                               }
                                            });
                                        }];
             }
@@ -506,7 +522,7 @@
         
         
         
-        
+        //path = @"http://192.168.0.2/~home/DigiFaces/upload.php";
         NSMutableURLRequest *urlRequest = [uploadClient multipartFormRequestWithMethod:@"POST" path:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [formData appendPartWithFileData:videoData
                                         name:@"file"
@@ -540,8 +556,14 @@
                 }
                 else
                 {
-                    NSDictionary *userInfo = errorObj;
-                    NSError *error = [[NSError alloc] initWithDomain:errorObj code:[userInfo[@"code"] integerValue] userInfo:userInfo];
+                    NSError *error;
+                    if ([errorObj isKindOfClass:[NSDictionary class]]) {
+                        NSDictionary *userInfo = errorObj;
+                        error = [[NSError alloc] initWithDomain:errorObj code:[userInfo[@"code"] integerValue] userInfo:userInfo];
+                    } else {
+                        NSString *errorString = [NSString stringWithFormat:@"%@", errorObj];
+                        error = [[NSError alloc] initWithDomain:@"Unknown" code:0 userInfo:@{NSLocalizedDescriptionKey : errorString}];
+                    }
                     [strongSelf handleUploadError:error forMediaUploadView:mediaUploadView];
                 }
                 
@@ -637,4 +659,98 @@
     
     return n;
 }
+
+- (void)cropAndScaleAsset:(AVAsset*)asset toWidth:(CGFloat)desiredWidth height:(CGFloat)desiredHeight completion:(void(^)(AVURLAsset* urlAsset))completionHandler {
+    
+    
+    //create an avassetrack with our asset
+    AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    
+    //create a video composition and preset some settings
+    AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
+    videoComposition.frameDuration = CMTimeMake(1, 30);
+    
+    //here we are setting its render size to its height x height (Square)
+    CGFloat originalWidth = clipVideoTrack.naturalSize.width;
+    CGFloat originalHeight = clipVideoTrack.naturalSize.height;
+    CGFloat cropToWidth, cropToHeight;
+    
+    
+    if (desiredHeight > desiredWidth) {
+        if (desiredHeight > originalHeight) {
+            // use original height
+            cropToHeight = originalHeight;
+        } else { // desiredHeight <= originalHeight
+            // use desired height
+            cropToHeight = desiredHeight;
+        }
+        cropToWidth = desiredWidth / desiredHeight * cropToHeight;
+    } else { // desiredWidth >= desiredHeight
+        if (originalWidth > desiredWidth) {
+            cropToWidth = originalWidth;
+        } else { // originalWidth <= desiredWidth
+            cropToWidth = desiredWidth;
+        }
+        cropToHeight = desiredHeight / desiredWidth * cropToWidth;
+    }
+    
+    CGFloat scale = cropToWidth / originalWidth;
+    
+    videoComposition.renderSize = CGSizeMake(desiredWidth, desiredHeight);
+    
+    //create a video instruction
+    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30));
+    
+    AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];
+    
+    //Here we shift the viewing square up to the TOP of the video so we only see the top
+    //CGAffineTransform t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, 0 );
+    
+    CGAffineTransform t = CGAffineTransformMakeScale(scale, scale);
+    
+    //Use this code if you want the viewing square to be in the middle of the video
+    CGAffineTransform t1 = CGAffineTransformTranslate(t, originalHeight, -(originalWidth - originalHeight) /2 );
+    
+    //Make sure the square is portrait
+    CGAffineTransform t2 = CGAffineTransformRotate(t1, M_PI_2);
+    
+    // scale?
+    CGAffineTransform t3 = CGAffineTransformScale(t2, scale, scale);
+    
+    CGAffineTransform finalTransform = t;
+    [transformer setTransform:finalTransform atTime:kCMTimeZero];
+    
+    //add the transformer layer instructions, then add to video composition
+    instruction.layerInstructions = [NSArray arrayWithObject:transformer];
+    videoComposition.instructions = [NSArray arrayWithObject: instruction];
+    
+    //Create an Export Path to store the cropped video
+    NSString * documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *exportPath = [documentsPath stringByAppendingFormat:@"/CroppedVideo.mov"];
+    NSURL *exportUrl = [NSURL fileURLWithPath:exportPath];
+    
+    //Remove any prevouis videos at that path
+    [[NSFileManager defaultManager]  removeItemAtURL:exportUrl error:nil];
+    
+    //Export
+    AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetHighestQuality] ;
+    session.videoComposition = videoComposition;
+    session.outputURL = exportUrl;
+    session.outputFileType = AVFileTypeQuickTimeMovie;
+    
+    [session exportAsynchronouslyWithCompletionHandler:^
+     {
+         if (completionHandler) {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 //Call when finished
+                 //Play the New Cropped video
+                 NSURL *outputURL = session.outputURL;
+                 AVURLAsset* asset = [AVURLAsset URLAssetWithURL:outputURL options:nil];
+                 completionHandler(asset);
+             });
+         }
+     }];
+}
+
 @end

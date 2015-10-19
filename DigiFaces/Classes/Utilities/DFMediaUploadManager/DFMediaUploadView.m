@@ -56,6 +56,7 @@
 
 - (IBAction)xButtonPress:(id)sender {
     // cancel upload?
+    self.error = false;
     self.xButton.enabled = false;
     [UIView animateWithDuration:0.25 animations:^{
         self.cameraIconView.alpha = 1;
@@ -112,7 +113,9 @@
     _uploading = uploading;
     self.tapGestureRecognizer.enabled = !uploading;
     if (uploading) {
+        self.xButton.enabled = false;
         [UIView animateWithDuration:0.25 animations:^{
+            self.xButton.alpha = 0;
             self.progressView.alpha = 1;
             
         }];
@@ -133,7 +136,9 @@
 
 - (void)setError:(BOOL)error {
     _error = error;
+    self.xButton.enabled = true;
     [UIView animateWithDuration:0.25 animations:^{
+        self.xButton.alpha = 1;
         self.errorLabel.alpha = error ? 1.0f : 0.0f;
     }];
 }

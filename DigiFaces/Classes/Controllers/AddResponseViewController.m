@@ -92,10 +92,13 @@
             
         } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse]) {
             [self.cameraButton setImage:[UIImage imageNamed:@"videocam_blue"] forState:UIControlStateNormal];
+            /*
             for (DFMediaUploadView *view in self.mediaUploadManager.mediaUploadViews) {
                 view.hidden = true;
             }
+            self.mediaUploadManager.maximumNumberOfSelection = 1;
             self.videoUploadView.hidden = false;
+             */
             
         }
         [self.txtResponse becomeFirstResponder];
@@ -103,6 +106,12 @@
         
         [self.txtTitle becomeFirstResponder];
     }
+    
+    for (DFMediaUploadView *view in self.mediaUploadManager.mediaUploadViews) {
+        view.hidden = true;
+    }
+    self.mediaUploadManager.maximumNumberOfSelection = 1;
+    self.videoUploadView.hidden = false;
     
     [self localizeUI];
 }
