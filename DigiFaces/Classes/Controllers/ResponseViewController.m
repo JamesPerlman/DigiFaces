@@ -136,6 +136,9 @@ typedef enum {
     }
     if (allRead) self.diary.isRead = @YES;
     
+    self.diary = nil;
+    self.dailyDiary = nil;
+    
     // if ([self.delegate respondsToSelector:@selector(didSetDailyDiary:)]) {
     //     [self.delegate didSetDailyDiary:self.dailyDiary];
     // }
@@ -322,6 +325,9 @@ typedef enum {
                               }
                               return false;
                           }];
+                          if (idx == NSNotFound) {
+                              idx = 0;
+                          }
                           NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_cellsArray.count - [sself.diary.comments allObjects].count + idx inSection:0];
                           [sself.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                       } else {

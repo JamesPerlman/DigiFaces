@@ -10,4 +10,9 @@
 
 @implementation DFCollectionViewImageCell
 
+- (void)awakeFromNib {
+    self.layer.borderColor = [UIColor blackColor].CGColor;
+    self.layer.borderWidth = 1.0f;
+}
+
 @end

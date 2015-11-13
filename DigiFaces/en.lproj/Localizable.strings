@@ -20,6 +20,12 @@
 "app.misc.text.no_content" = "(No content)";
 "app.dates.text.just_now" = "Just now";
 
+/* Notification types */
+"app.notification.new_thread_comment" = "New comment on your thread.";
+"app.notification.new_comment_on_my_thread" = "New comment on a thread you commented on.";
+"app.notification.new_thread_response" = "New response to your post.";
+
+
 /* Misc Views / Cells */
 "view.misc.article.button.show_more" = "More";
 "view.misc.article.button.show_less" = "Less";
@@ -130,16 +136,21 @@
 /* Conversations View */
 "view.conversations.navbar.title" = "CONVERSATIONS";
 "view.conversations.error.load_failure" = "Could not load conversations.  Try again?";
+"view.conversations.alert.empty_table" = "You have no messages.";
 
 /* Conversation with User */
 "view.conversation.input.reply" = "Reply...";
-"view.conversation.error.post_reply_failure" = "Something went wrong with the server.  Please try again later.";
+"view.conversation.error.post_reply_failure" = "Something went wrong and your reply was not posted.  Please try again.";
+"view.conversation.error.server_error" = "Something went wrong with the server.  Please try again later.";
+"view.conversation.alert.message_not_found" = "The message you requested was not found.";
 
 /* Announcements View */
 "view.announcements.navbar.title" = "ANNOUNCEMENTS";
+"view.announcements.alert.empty_table" = "There are no announcements.";
 
 /* Notifications View */
 "view.notifications.navbar.title" = "NOTIFICATIONS";
+"view.notifications.alert.empty_table" = "You have no notifications.";
 
 /* Email Tech Support View */
 "view.email_support.navbar.title" = "TECH SUPPORT";

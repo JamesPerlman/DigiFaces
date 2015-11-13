@@ -154,7 +154,12 @@ typedef enum : NSUInteger {
                       defsself
                       //sself.dataArray = diaryThemes;
                       //[sself.tableView reloadData];
-                      NSArray *diaryThemes = [result isKindOfClass:[NSArray class]] ? result : @[result];
+                      NSArray *diaryThemes;
+                      if (result) {
+                          diaryThemes = [result isKindOfClass:[NSArray class]] ? result : @[result];
+                      } else {
+                          diaryThemes = @[];
+                      }
                       [DFDataManager removeEntitiesWithEntityName:@"DiaryTheme" idKey:@"activityId" notInArray:diaryThemes predicate:nil];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -268,7 +273,7 @@ typedef enum : NSUInteger {
 
 -(void)configurePicCell
 {
-    NSString * userNameSaved = LS.myUserInfo.userName;//[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]?[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]:@"";
+    NSString * userNameSaved = LS.myUserInfo.appUserName;//[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]?[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"]:@"";
     
     picCell.delegate = self;
     picCell.lblUserName.text =  userNameSaved;

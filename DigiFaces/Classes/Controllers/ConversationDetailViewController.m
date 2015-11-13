@@ -16,6 +16,7 @@
 #import <HPGrowingTextView/HPGrowingTextView.h>
 #import "MBProgressHUD.h"
 
+#import "Notification.h"
 #import "Message.h"
 #import "UserInfo.h"
 #import "File.h"
@@ -24,7 +25,7 @@ static NSString *leftCellID = @"leftSideComment";
 
 
 @interface ConversationDetailViewController ()<HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate> {
-
+    
 }
 @property (nonatomic, weak) IBOutlet HPGrowingTextView *messageTextView;
 @property (nonatomic, weak) IBOutlet UIButton *submitButton;
@@ -43,8 +44,10 @@ static NSString *leftCellID = @"leftSideComment";
     self.addedMessages = [NSMutableSet set];
     // Do any additional setup after loading the view.
     self.navigationItem.title = self.message.subject;
-    [self calculateHeightsForTableViewRows];
     
+    if (self.message) {
+        [self calculateHeightsForTableViewRows];
+    }
     self.messageTextView.layer.cornerRadius = 4.0f;
     self.messageTextView.clipsToBounds = true;
     self.messageTextView.delegate = self;
@@ -56,6 +59,47 @@ static NSString *leftCellID = @"leftSideComment";
 - (void)localizeUI {
     self.messageTextView.placeholder = DFLocalizedString(@"view.conversation.input.reply", nil);
 }
+/*
+- (void)setNotification:(Notification *)notification {
+    _notification = notification;
+    NSLog(@"%@", notification);
+    defwself
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [DFClient makeRequest:APIPathGetMessages method:RKRequestMethodGET urlParams:@{@"projectId":LS.myUserInfo.currentProjectId} bodyParams:nil  success:^(NSDictionary *response, id result) {
+        defsself
+        NSArray *convos = nil;
+        if ([result isKindOfClass:[NSArray class]]) {
+            convos = result;
+        } else if (result != nil) {
+            convos = @[result];
+        }
+        
+        NSUInteger msgIndex = NSNotFound;
+        for (Message *msg in convos) {
+            if ([msg.messageId isEqualToNumber:notification.referenceId]) {
+                sself.message = msg;
+                break;
+            }
+        }
+        if (msgIndex == NSNotFound) {
+            [sself setEmptyTableMessage:DFLocalizedString(@"view.conversation.alert.message_not_found", nil)];
+        }
+        
+        [MBProgressHUD hideAllHUDsForView:sself.view animated:YES];
+        
+    } failure:^(NSError *error) {
+        defsself
+        [sself setEmptyTableMessage:DFLocalizedString(@"view.conversation.error.server_error", nil)];
+        [MBProgressHUD hideAllHUDsForView:sself.view animated:YES];
+    }];
+}
+*/
+- (void)setEmptyTableMessage:(NSString*)message {
+    UILabel *labelNotFound = [[UILabel alloc] init];
+    labelNotFound.numberOfLines = 0;
+    labelNotFound.text = message;
+    [self.tableView setBackgroundView:labelNotFound];
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -64,13 +108,13 @@ static NSString *leftCellID = @"leftSideComment";
 
 - (void)removeNewMessages {
     /*for (Message *message in self.addedMessages) {
-        [self.managedObjectContext deleteObject:message];
-    }
-    */
+     [self.managedObjectContext deleteObject:message];
+     }
+     */
     if ([self.delegate respondsToSelector:@selector(didAddMessages:)]) {
         [self.delegate didAddMessages:[NSSet setWithSet:self.addedMessages]];
     }
-
+    
     [self.addedMessages removeAllObjects];
     //[self.managedObjectContext save:nil];
 }
@@ -107,6 +151,9 @@ static NSString *leftCellID = @"leftSideComment";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (!self.message) {
+        return 0;
+    }
     return self.message.childMessages.count + 1;
 }
 
@@ -114,7 +161,7 @@ static NSString *leftCellID = @"leftSideComment";
     
     
     Message *message = self.messages[indexPath.row];
-
+    
     NotificationCell *cell = (NotificationCell*)[tableView dequeueReusableCellWithIdentifier:leftCellID forIndexPath:indexPath];
     [cell.userImage sd_setImageWithURL:message.fromUserInfo.avatarFile.filePathURL];
     cell.userImage.layer.cornerRadius = cell.userImage.bounds.size.width/2.0;

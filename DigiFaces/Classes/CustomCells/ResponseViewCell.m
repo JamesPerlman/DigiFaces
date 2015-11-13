@@ -88,6 +88,7 @@
         cell.videoIndicatorView.hidden = true;
     }
     
+    
     return cell;
 }
 

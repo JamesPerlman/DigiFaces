@@ -22,7 +22,7 @@
         NSError *error = nil;
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"</p>[\\\\r|\\\\n|\\s]*?<p>" options:NSRegularExpressionCaseInsensitive error:&error];
         htmlString = [regex stringByReplacingMatchesInString:html options:0 range:NSMakeRange(0, [html length]) withTemplate:@"</p><br/><p>"];
-        NSLog(@"%@", htmlString);
+
     } @catch (NSException *exc) {
         htmlString = html;
     }

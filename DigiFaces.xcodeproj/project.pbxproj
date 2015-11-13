@@ -94,7 +94,7 @@
 		F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
-		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; settings = {ASSET_TAGS = (); }; };
+		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
 		F4864FAC1B682519000D2615 /* DFResponseDescriptorsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */; };
@@ -134,9 +134,9 @@
 		F4B8B36C1BA36C99007E4104 /* Diary.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B36B1BA36C99007E4104 /* Diary.m */; };
 		F4B8B3721BA4BFC8007E4104 /* Integer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B8B3711BA4BFC8007E4104 /* Integer.m */; };
 		F4B8B3761BA4C43A007E4104 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B8B3751BA4C43A007E4104 /* CoreData.framework */; };
-		F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */; settings = {ASSET_TAGS = (); }; };
+		F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B9883E1BC6E2940010F139 /* NSArray+Reverse.m */; };
 		F4B988451BC707C80010F139 /* JPKeyboardSensitiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B988421BC706C00010F139 /* JPKeyboardSensitiveView.m */; };
-		F4C8AA491BD2DC3D00B137CB /* DFLanguageSynchronizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C8AA481BD2DC3D00B137CB /* DFLanguageSynchronizer.m */; settings = {ASSET_TAGS = (); }; };
+		F4C8AA491BD2DC3D00B137CB /* DFLanguageSynchronizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C8AA481BD2DC3D00B137CB /* DFLanguageSynchronizer.m */; };
 		F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49BD1B65490400F4016B /* PhotoGallerySelectionViewController.m */; };
 		F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4DD49BE1B65490400F4016B /* PhotoGallerySelectionViewController.xib */; };
 		F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = F4DD49C41B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m */; };
@@ -147,7 +147,7 @@
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
-		F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */; settings = {ASSET_TAGS = (); }; };
+		F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1934,7 +1934,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
+				PROVISIONING_PROFILE = "af71af2e-bf2c-4321-bee9-295a2ada6316";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1946,6 +1946,7 @@
 			baseConfigurationReference = C0301B21C1C898BA480D358D /* Pods-DigiFaces.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1964,7 +1965,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1976,8 +1977,9 @@
 			baseConfigurationReference = 9AA822F53CE98F4F4EE4DB83 /* Pods-DigiFaces.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1994,9 +1996,9 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b246e3ad-ece9-4e02-8d98-9a0642683a8b";
+				PROVISIONING_PROFILE = "af71af2e-bf2c-4321-bee9-295a2ada6316";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

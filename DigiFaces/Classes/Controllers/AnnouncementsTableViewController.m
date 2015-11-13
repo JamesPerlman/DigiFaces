@@ -63,9 +63,15 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
                       
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                       if ([result isKindOfClass:[NSArray class]]) {
-                          sself.announcements = result;
+                          if ([result count] == 0) {
+                              [sself showEmptyTableMessage];
+                          } else {
+                              sself.announcements = result;
+                          }
                       } else if ([result isKindOfClass:[Announcement class]]) {
                           sself.announcements = @[result];
+                      } else {
+                          [sself showEmptyTableMessage];
                       }
                       [sself.tableView reloadData];
                       
@@ -76,6 +82,16 @@ static NSString *announcementCellReuseIdentifier = @"announcementCell";
                   }];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void)showEmptyTableMessage {
+    UILabel *labelNotFound = [[UILabel alloc] init];
+    labelNotFound.numberOfLines = 0;
+    labelNotFound.text = DFLocalizedString(@"view.announcements.alert.empty_table", nil);
+    labelNotFound.textAlignment = NSTextAlignmentCenter;
+    self.tableView.scrollEnabled = false;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.tableView setBackgroundView:labelNotFound];
 }
 
 #pragma mark - Table view data source

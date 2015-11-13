@@ -32,11 +32,11 @@
 
 - (NotificationType)type {
     NSInteger t = self.notificationTypeId.integerValue;
-    if (t == 1 || t == 2) {
+    if (t == 1 || t == 2 || t == 3) {
         return NotificationTypeThreadComment;
-    } else if (t == 3) {
+    }/* else if (t == 3) {
         return NotificationTypeModeratorMessage;
-    } else {
+    } */else {
         return NotificationTypeUnknown;
     }
 }
@@ -45,13 +45,13 @@
     NSInteger t = self.notificationTypeId.integerValue;
     switch (t) {
         case 1:
-            return @"New comment on your thread.";
+            return DFLocalizedString(@"app.notification.new_thread_comment", nil);
             break;
         case 2:
-            return @"New comment on a thread you commented on.";
+            return DFLocalizedString(@"app.notification.new_comment_on_my_thread", nil);
             break;
         case 3:
-            return @"New response to your message.";
+            return DFLocalizedString(@"app.notification.new_thread_response", nil);
         default:
             return self.notificationType;
             break;

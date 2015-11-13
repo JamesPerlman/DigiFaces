@@ -44,6 +44,7 @@
     UIButton * btnEdit;
     NSInteger galleryItemIndex;
     NSNumber *_currentResponseIndex;
+    BOOL showMarkupMessage;
     CustomAlertView *_alertView;
 }
 @property (nonatomic, retain) NSMutableArray * cellsArray;
@@ -69,20 +70,23 @@
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];
     
-    [self reloadDataSource:true];
     
     Module * markup = [self getModuleWithThemeType:ThemeTypeMarkup];
     if (!markup && [LS.myUserInfo canReplyToThemes]) {
         [self addEditButton];
-    } else if (markup) {
-        
+    }
+    if (markup && [LS.myUserInfo.projectRoleId isEqualToNumber:@2]) {
+        showMarkupMessage = true;
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"monitor"]];
         imageView.frame = CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height/4.0);
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         self.tableView.tableHeaderView = imageView;
         self.tableView.scrollEnabled = false;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }
+     }
+     [self reloadDataSource:true];
+
+
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Initialize the refresh control.
@@ -90,12 +94,9 @@
     [self.refreshControl addTarget:self
                             action:@selector(fetchResponses)
                   forControlEvents:UIControlEventValueChanged];
-    [self localizeUI];
+    self.navigationItem.title = _diaryTheme.activityTitle;
 }
 
-- (void)localizeUI {
-    self.navigationItem.title = DFLocalizedString(@"view.theme.navbar.title", nil);
-}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -206,13 +207,14 @@
 - (void)reloadDataSource:(BOOL)loadFromServer {
     [_cellsArray removeAllObjects];
     [_heightArray removeAllObjects];
-    
-    Module * markup = [self getModuleWithThemeType:ThemeTypeMarkup];
-    if (markup) {
-        [_cellsArray addObject:markup];
-        [_heightArray addObject:@150];
+    if (showMarkupMessage) {
+        Module * markup = [self getModuleWithThemeType:ThemeTypeMarkup];
+        if (markup) {
+            [_cellsArray addObject:markup];
+            [_heightArray addObject:@150];
+            [self.tableView reloadData];
+        }
         
-        [self.tableView reloadData];
     }
     else{
         Module * image = [self getModuleWithThemeType:ThemeTypeDisplayImage];
@@ -389,9 +391,17 @@
     
     
     if (response.files && response.files.count) {
-        cell.collectionViewHeightConstraint.constant = 50;
+        cell.collectionView.hidden = false;
+        CGFloat s = 100.0, pad = 10.0;
+        CGFloat rowHeight = s+pad;
+        CGFloat cellWidth = [UIScreen mainScreen].bounds.size.width-16.0;
+        CGFloat nFiles = (CGFloat)[response.files count];
+        CGFloat cvHeight = ceil(nFiles *  rowHeight / cellWidth) * rowHeight - pad;
+
+        cell.collectionViewHeightConstraint.constant = cvHeight;
         cell.files = [response.files allObjects];
     } else {
+        cell.collectionView.hidden = true;
         cell.collectionViewHeightConstraint.constant = 0;
         cell.files = nil;
     }
@@ -487,7 +497,6 @@
                     cell = galleryCell;
                 }
                 else if ([module themeType] == ThemeTypeMarkup){
-                    
                     RTCell *textCell = (RTCell*)[tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
                     
                     

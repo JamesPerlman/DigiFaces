@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "bluebar.png"
+      "filename" : "bluebar.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "bluebar@2x.png"
+      "filename" : "bluebar@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",

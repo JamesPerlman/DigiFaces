@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Lry-Fx-Eve">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Lry-Fx-Eve">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -65,7 +65,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="i7C-dh-qMk">
-                                <rect key="frame" x="61" y="234" width="198" height="42"/>
+                                <rect key="frame" x="60" y="235" width="200" height="40"/>
                                 <animations/>
                             </imageView>
                         </subviews>
@@ -106,7 +106,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="ARs-a3-twb">
-                                                    <rect key="frame" x="61" y="33" width="198" height="42"/>
+                                                    <rect key="frame" x="60" y="33" width="200" height="42"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="42" id="kSM-II-ju5"/>
@@ -182,7 +182,7 @@
                                                         <constraint firstAttribute="height" constant="37" id="49e-cu-ymx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="49e-cu-ymx"/>
@@ -398,7 +398,7 @@
                                 <animations/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7L-Q3-9SP">
-                                <rect key="frame" x="6" y="17" width="32" height="33"/>
+                                <rect key="frame" x="6" y="16" width="32" height="33"/>
                                 <animations/>
                                 <state key="normal" image="tobbar_loading_cross">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -415,7 +415,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="YUM-wI-gAo">
-                                <rect key="frame" x="61" y="12" width="198" height="42"/>
+                                <rect key="frame" x="60" y="12" width="200" height="40"/>
                                 <animations/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please choose a username. It is necessary to enter a unique username." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKO-4t-z5r">
@@ -512,7 +512,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qds-ra-TML">
                                             <rect key="frame" x="8" y="129" width="304" height="21"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -839,6 +839,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="Llw-KH-PDU" kind="push" identifier="responseSegue" id="Sf2-TU-VcE"/>
+                        <segue destination="QLH-Dz-ayZ" kind="show" identifier="messageSegue" id="G6u-mh-Xg1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oQ-lM-LEf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3558,7 +3559,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LGj-Gl-zNW">
-                                            <rect key="frame" x="8" y="61" width="304" height="55"/>
+                                            <rect key="frame" x="8" y="61" width="304" height="5"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="49" id="AfV-S2-T3l"/>
@@ -3573,32 +3574,32 @@
                                             </variation>
                                         </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Bmz-EA-WeC">
-                                            <rect key="frame" x="8" y="124" width="304" height="50"/>
+                                            <rect key="frame" x="8" y="74" width="304" height="100"/>
                                             <animations/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="pKY-1z-LFx"/>
+                                                <constraint firstAttribute="height" constant="100" id="pKY-1z-LFx"/>
                                             </constraints>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="avO-nC-2EK">
-                                                <size key="itemSize" width="50" height="50"/>
+                                                <size key="itemSize" width="100" height="100"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageViewCell" id="g9m-pz-beA" customClass="DFCollectionViewImageCell">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lFF-0f-Cab">
-                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                                 <animations/>
                                                             </imageView>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playButton.png" translatesAutoresizingMaskIntoConstraints="NO" id="JnD-hj-hnt">
-                                                                <rect key="frame" x="13" y="13" width="25" height="25"/>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="playButton.png" translatesAutoresizingMaskIntoConstraints="NO" id="JnD-hj-hnt">
+                                                                <rect key="frame" x="26" y="26" width="50" height="50"/>
                                                                 <animations/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             </imageView>
@@ -5221,7 +5222,7 @@
         <image name="home-white" width="30" height="30"/>
         <image name="imageBorder" width="107" height="106"/>
         <image name="left-arrow" width="30" height="30"/>
-        <image name="logo" width="198" height="42"/>
+        <image name="logo" width="200" height="40"/>
         <image name="nextArrow" width="9" height="16"/>
         <image name="paperplane" width="40" height="40"/>
         <image name="playButton.png" width="72" height="72"/>
@@ -5236,14 +5237,15 @@
         <image name="x_black" width="32" height="33"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xm7-nE-fcs"/>
         <segue reference="DRp-1t-WNc"/>
         <segue reference="sw5-fw-ulw"/>
+        <segue reference="Sf2-TU-VcE"/>
+        <segue reference="G6u-mh-Xg1"/>
         <segue reference="v7h-oQ-d3S"/>
+        <segue reference="xm7-nE-fcs"/>
+        <segue reference="XNZ-ng-ebc"/>
+        <segue reference="f8n-jW-t9J"/>
+        <segue reference="3r5-SJ-zjd"/>
         <segue reference="Sh4-6s-X9J"/>
-        <segue reference="PJM-GU-RyY"/>
-        <segue reference="Taj-qP-dlL"/>
-        <segue reference="veF-sC-LAA"/>
-        <segue reference="Z1a-cS-acW"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -122,9 +122,15 @@ static NSString *messageCellID = @"conversationCell";
                       defsself
                       [sself.refreshControl endRefreshing];
                       if ([result isKindOfClass:[NSArray class]]) {
-                          sself.conversations = result;
+                          if ([result count] == 0) {
+                              [sself showEmptyTableMessage];
+                          } else {
+                              sself.conversations = result;
+                          }
                       } else if (result != nil) {
                           sself.conversations = @[result];
+                      } else {
+                          [sself showEmptyTableMessage];
                       }
                       [sself.tableView reloadData];
                   }
@@ -138,6 +144,16 @@ static NSString *messageCellID = @"conversationCell";
 
 - (void)localizeUI {
     self.navigationItem.title = DFLocalizedString(@"view.conversations.navbar.title", nil);
+}
+
+- (void)showEmptyTableMessage {
+    UILabel *labelNotFound = [[UILabel alloc] init];
+    labelNotFound.numberOfLines = 0;
+    labelNotFound.text = DFLocalizedString(@"view.conversations.alert.empty_table", nil);
+    labelNotFound.textAlignment = NSTextAlignmentCenter;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.scrollEnabled = false;
+    [self.tableView setBackgroundView:labelNotFound];
 }
 
 #pragma mark - PopUpDelegate

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class Message;
+@class Notification;
 
 @protocol ConversationDetailDelegate <NSObject>
 
@@ -22,5 +23,7 @@
 @property (nonatomic, strong) NSArray *messages;
 
 @property (nonatomic, assign) id<ConversationDetailDelegate> delegate;
+
+@property (nonatomic, strong) Notification *notification;
 
 @end

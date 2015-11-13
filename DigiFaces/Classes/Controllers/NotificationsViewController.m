@@ -15,6 +15,7 @@
 #import "NotificationCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ResponseViewController.h"
+#import "ConversationDetailViewController.h"
 #import "UILabel+setHTML.h"
 
 #import "File.h"
@@ -62,7 +63,18 @@
                bodyParams:nil
                   success:^(NSDictionary *response, NSArray *result) {
                       defsself
-                      sself.arrNotifications = result.mutableCopy;
+                      
+                      if ([result isKindOfClass:[NSArray class]]) {
+                          if ([result count] == 0) {
+                              [sself showEmptyTableMessage];
+                          } else {
+                              sself.arrNotifications = result.mutableCopy;
+                          }
+                      } else if ([result isKindOfClass:[Notification class]]) {
+                          sself.arrNotifications = @[result].mutableCopy;
+                      } else {
+                          [sself showEmptyTableMessage];
+                      }
                       
                       [sself.tableView reloadData];
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
@@ -71,9 +83,19 @@
                       defsself
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-
+                      
                   }];
-    }
+}
+
+- (void)showEmptyTableMessage {
+    UILabel *labelNotFound = [[UILabel alloc] init];
+    labelNotFound.numberOfLines = 0;
+    labelNotFound.text = DFLocalizedString(@"view.notifications.alert.empty_table", nil);
+    labelNotFound.textAlignment = NSTextAlignmentCenter;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.tableView setBackgroundView:labelNotFound];
+    self.tableView.scrollEnabled = false;
+}
 
 #pragma mark - Table view data source
 
@@ -89,7 +111,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notificationCell" forIndexPath:indexPath];
-
+    
     Notification * notification = [_arrNotifications objectAtIndex:indexPath.row];
     [cell.userImage sd_setImageWithURL:[NSURL URLWithString:notification.commenterUserInfo.avatarFile.filePath]];
     [cell.lblUserName setText:notification.commenterUserInfo.appUserName];
@@ -102,7 +124,7 @@
     cell.separatorInset = UIEdgeInsetsZero;
     cell.layoutMargins = UIEdgeInsetsZero;
     cell.preservesSuperviewLayoutMargins = NO;
-
+    
     return cell;
 }
 
@@ -111,6 +133,8 @@
     self.targetNotification = _arrNotifications[indexPath.row];
     if (self.targetNotification.type == NotificationTypeThreadComment) {
         [self performSegueWithIdentifier:@"responseSegue" sender:self];
+    } else if (self.targetNotification.type == NotificationTypeModeratorMessage) {
+        [self performSegueWithIdentifier:@"messageSegue" sender:self];
     }
     [self markNotificationRead:self.targetNotification];
     NotificationCell *cell = (NotificationCell*)[tableView cellForRowAtIndexPath:indexPath];
@@ -132,10 +156,10 @@
                       }
                       [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_arrNotifications indexOfObject:notification] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                       /*
-                      [sself.tableView beginUpdates];
-                      [sself.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_arrNotifications indexOfObject:notification] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-                      [_arrNotifications removeObject:notification];
-                      [sself.tableView endUpdates];*/
+                       [sself.tableView beginUpdates];
+                       [sself.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[_arrNotifications indexOfObject:notification] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                       [_arrNotifications removeObject:notification];
+                       [sself.tableView endUpdates];*/
                   } failure:nil];
     
     
@@ -143,38 +167,38 @@
     
 }
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Navigation
 
@@ -185,6 +209,9 @@
     if ([segue.identifier isEqualToString:@"responseSegue"]) {
         ResponseViewController * responseController = [segue destinationViewController];
         [responseController setNotification:self.targetNotification];
+    } else if ([segue.identifier isEqualToString:@"messageSegue"]) {
+        ConversationDetailViewController *convoController = [segue destinationViewController];
+        [convoController setNotification:self.targetNotification];
     }
 }
 

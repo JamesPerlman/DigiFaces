@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DigiFaces/Classes/Categories/UILabel+setHTML.m"
-            timestampString = "466914869.795222"
+            filePath = "DigiFaces/Classes/Controllers/DiaryThemeViewController.m"
+            timestampString = "467090876.862772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "-setHTML:"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

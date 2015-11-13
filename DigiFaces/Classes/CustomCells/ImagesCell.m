@@ -69,7 +69,6 @@
         }
         xOffset += self.frame.size.height - 5;
     }
-    
 }
 -(void)imageViewTapped:(UITapGestureRecognizer*)gr
 {
