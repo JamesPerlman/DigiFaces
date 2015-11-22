@@ -93,6 +93,11 @@
 		F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F01B71399800A6E6D7 /* MessagesMenuTableViewController.m */; };
 		F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
+		F42DC8C01BFD717400ED1D41 /* Airship in Resources */ = {isa = PBXBuildFile; fileRef = F42DC8BE1BFD717400ED1D41 /* Airship */; };
+		F42DC8C11BFD717400ED1D41 /* AirshipKit in Resources */ = {isa = PBXBuildFile; fileRef = F42DC8BF1BFD717400ED1D41 /* AirshipKit */; };
+		F42DC8C81BFD71B400ED1D41 /* AirshipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42DC8C71BFD71A200ED1D41 /* AirshipKit.framework */; };
+		F42DC8C91BFD71B400ED1D41 /* AirshipKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F42DC8C71BFD71A200ED1D41 /* AirshipKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F42DC8CE1BFD71F400ED1D41 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F42DC8CD1BFD71F400ED1D41 /* AirshipConfig.plist */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
 		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
@@ -158,7 +163,35 @@
 			remoteGlobalIDString = 19F0BD091B1DBC6400E4B048;
 			remoteInfo = DigiFaces;
 		};
+		F42DC8C61BFD71A200ED1D41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F42DC8C21BFD71A200ED1D41 /* AirshipKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 494DD9571B0EB677009C134E;
+			remoteInfo = AirshipKit;
+		};
+		F42DC8CA1BFD71B400ED1D41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F42DC8C21BFD71A200ED1D41 /* AirshipKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 494DD9561B0EB677009C134E;
+			remoteInfo = AirshipKit;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F42DC8CC1BFD71B400ED1D41 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F42DC8C91BFD71B400ED1D41 /* AirshipKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		19328DC31B2FFCA4008BFAA6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -349,6 +382,10 @@
 		F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIAlertCounts.m; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
+		F42DC8BE1BFD717400ED1D41 /* Airship */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Airship; sourceTree = "<group>"; };
+		F42DC8BF1BFD717400ED1D41 /* AirshipKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AirshipKit; sourceTree = "<group>"; };
+		F42DC8C21BFD71A200ED1D41 /* AirshipKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirshipKit.xcodeproj; path = AirshipKit/AirshipKit.xcodeproj; sourceTree = "<group>"; };
+		F42DC8CD1BFD71F400ED1D41 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
 		F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Transformations.h"; sourceTree = "<group>"; };
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
@@ -474,6 +511,7 @@
 				19F0BD421B1F14D800E4B048 /* UIKit.framework in Frameworks */,
 				19F0BD401B1F14CC00E4B048 /* Security.framework in Frameworks */,
 				19F0BD3E1B1F14C700E4B048 /* MobileCoreServices.framework in Frameworks */,
+				F42DC8C81BFD71B400ED1D41 /* AirshipKit.framework in Frameworks */,
 				19F0BD3C1B1F14BC00E4B048 /* CoreLocation.framework in Frameworks */,
 				19F0BD3A1B1F14B600E4B048 /* CoreGraphics.framework in Frameworks */,
 				20142B03FF01559511AD6C84 /* libPods-DigiFaces.a in Frameworks */,
@@ -493,6 +531,9 @@
 		19F0BD011B1DBC6400E4B048 = {
 			isa = PBXGroup;
 			children = (
+				F42DC8C21BFD71A200ED1D41 /* AirshipKit.xcodeproj */,
+				F42DC8BE1BFD717400ED1D41 /* Airship */,
+				F42DC8BF1BFD717400ED1D41 /* AirshipKit */,
 				19F0BD0C1B1DBC6400E4B048 /* DigiFaces */,
 				19F0BD261B1DBC6400E4B048 /* DigiFacesTests */,
 				19F0BD0B1B1DBC6400E4B048 /* Products */,
@@ -527,6 +568,7 @@
 		19F0BD0D1B1DBC6400E4B048 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F42DC8CD1BFD71F400ED1D41 /* AirshipConfig.plist */,
 				F4421F7D1BA5F29D000EC46E /* Info.plist */,
 				F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */,
 				19328DD71B2FFDE5008BFAA6 /* Localizable.strings */,
@@ -841,6 +883,14 @@
 				F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */,
 			);
 			name = UnreadAnnouncementCounts;
+			sourceTree = "<group>";
+		};
+		F42DC8C31BFD71A200ED1D41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F42DC8C71BFD71A200ED1D41 /* AirshipKit.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
@@ -1514,10 +1564,12 @@
 				19F0BD081B1DBC6400E4B048 /* Resources */,
 				F4DD49B51B64B3E100F4016B /* ShellScript */,
 				48B7E8DD17C1CE12DBE1F7ED /* Copy Pods Resources */,
+				F42DC8CC1BFD71B400ED1D41 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F42DC8CB1BFD71B400ED1D41 /* PBXTargetDependency */,
 			);
 			name = DigiFaces;
 			productName = DigiFaces;
@@ -1554,6 +1606,11 @@
 					19F0BD091B1DBC6400E4B048 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = HKDB5639JA;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					19F0BD221B1DBC6400E4B048 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -1572,10 +1629,20 @@
 				de,
 				ja,
 				"zh-Hans",
+				es,
+				it,
+				pt,
+				"zh-Hant",
 			);
 			mainGroup = 19F0BD011B1DBC6400E4B048;
 			productRefGroup = 19F0BD0B1B1DBC6400E4B048 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F42DC8C31BFD71A200ED1D41 /* Products */;
+					ProjectRef = F42DC8C21BFD71A200ED1D41 /* AirshipKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				19F0BD091B1DBC6400E4B048 /* DigiFaces */,
@@ -1583,6 +1650,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F42DC8C71BFD71A200ED1D41 /* AirshipKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AirshipKit.framework;
+			remoteRef = F42DC8C61BFD71A200ED1D41 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		19F0BD081B1DBC6400E4B048 /* Resources */ = {
@@ -1592,8 +1669,11 @@
 				F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */,
 				19F0BE331B28BBE500E4B048 /* LaunchScreen.xib in Resources */,
 				F4DD49C01B65490400F4016B /* PhotoGallerySelectionViewController.xib in Resources */,
+				F42DC8C01BFD717400ED1D41 /* Airship in Resources */,
+				F42DC8CE1BFD71F400ED1D41 /* AirshipConfig.plist in Resources */,
 				F4DD49D11B65AFFF00F4016B /* FontAwesome.ttf in Resources */,
 				19F0BD191B1DBC6400E4B048 /* Main.storyboard in Resources */,
+				F42DC8C11BFD717400ED1D41 /* AirshipKit in Resources */,
 				19F0BD1B1B1DBC6400E4B048 /* Images.xcassets in Resources */,
 				4ACDB9BD1B3E7E66009EFB91 /* CustomAlertView.xib in Resources */,
 				19328DD51B2FFDE5008BFAA6 /* Localizable.strings in Resources */,
@@ -1800,6 +1880,11 @@
 			target = 19F0BD091B1DBC6400E4B048 /* DigiFaces */;
 			targetProxy = 19F0BD241B1DBC6400E4B048 /* PBXContainerItemProxy */;
 		};
+		F42DC8CB1BFD71B400ED1D41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AirshipKit;
+			targetProxy = F42DC8CA1BFD71B400ED1D41 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1959,6 +2044,10 @@
 				INFOPLIST_FILE = DigiFaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Airship",
+				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1978,8 +2067,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Inet360 Solutions Inc (HKDB5639JA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1990,6 +2079,10 @@
 				INFOPLIST_FILE = DigiFaces/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Airship",
+				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -1998,7 +2091,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "af71af2e-bf2c-4321-bee9-295a2ada6316";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
