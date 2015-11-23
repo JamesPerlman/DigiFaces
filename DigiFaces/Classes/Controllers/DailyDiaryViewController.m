@@ -264,12 +264,15 @@ static NSString *infoCellReuseIdentifier = @"textCell";
                 }
                 cell = imgCell;
             }
-            else{
+            else if (_dailyDiary.file.getVideoThumbURL){
                 VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
                 [vidCell.videoImageView sd_setImageWithURL:[NSURL URLWithString:_dailyDiary.file.getVideoThumbURL]];
                 vidCell.moviePlayerController.contentURL = [NSURL URLWithString:_dailyDiary.file.filePath];
                 vidCell.moviePlayerController.view.hidden = true;
                 cell = vidCell;
+            } else {
+                self.bannerImageHeight = 0;
+                cell  = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
             }
         }
         else if (indexPath.row == 1) {

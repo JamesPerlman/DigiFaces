@@ -30,6 +30,7 @@
 @property (nonatomic, retain) NSMutableArray * dataAray;
 @property (nonatomic, strong) NSMutableArray * heightArray;
 @property (nonatomic, strong) APIHomeAnnouncementResponse *homeAnnouncement;
+@property (nonatomic) CGFloat bannerImageHeight;
 @end
 
 @implementation ProjectIntroViewController
@@ -49,6 +50,13 @@
         [self generateDataArraysFromAnnouncement:self.announcement];
     }
     [self localizeUI];
+}
+
+- (void)adjustTopBannerSizeForImage:(UIImage*)image {
+    CGSize screen = [UIScreen mainScreen].bounds.size;
+    CGFloat height = MIN(screen.height/2.0, screen.width / image.size.width * image.size.height);
+    _heightArray[0] = @(height);
+    [self.tableView reloadData];
 }
 
 - (void)localizeUI {
@@ -160,8 +168,11 @@
         File *attachment = item;
         if ([attachment.fileType isEqualToString:@"Image"]) {
             ImageCell * cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+            defwself;
+            if (!cell.image.image)
             [cell.image sd_setImageWithURL:attachment.filePathURL placeholderImage:[UIImage imageNamed:@"blank"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                
+                defsself;
+                [sself adjustTopBannerSizeForImage:image];
             }];
             return cell;
         }

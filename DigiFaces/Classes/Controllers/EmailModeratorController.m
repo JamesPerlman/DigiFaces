@@ -20,7 +20,6 @@
 {
     [super viewDidLoad];
     alertView = [[CustomAlertView alloc] initWithNibName:@"CustomAlertView" bundle:nil];
-    alertView.delegate = self;
     [self.txtSubject becomeFirstResponder];
     [self localizeUI];
 }
@@ -36,6 +35,7 @@
         [_textview resignFirstResponder];
         [alertView setSingleButton:NO];
         [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.alert.confirm_discard", nil) inView:self.navigationController.view withTag:0];
+        alertView.delegate = self;
     }
     else{
         [_txtSubject resignFirstResponder];
@@ -71,7 +71,7 @@
     [DFClient makeRequest:APIPathSendMessageToModerator
                    method:kPOST
                 urlParams:@{
-                            @"projectId" : [Utility getStringForKey:kCurrentPorjectID],
+                            @"projectId" : LS.myUserInfo.currentProjectId,
                             @"parentMessageId" : @0
                             }
                bodyParams:@{
@@ -83,6 +83,7 @@
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [alertView setSingleButton:YES];
                       [alertView showAlertWithMessage:DFLocalizedString(@"view.email_mod.alert.success", nil) inView:sself.navigationController.view withTag:kSuccessTag];
+                      alertView.delegate = sself;
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -97,13 +98,15 @@
 #pragma mark - Popup dlegate
 -(void)cancelButtonTappedWithTag:(NSInteger)tag
 {
-    
+    alertView.delegate = nil;
 }
 
 -(void)okayButtonTappedWithTag:(NSInteger)tag
 {
     //if (tag == kSuccessTag) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    alertView.delegate = nil;
     //}
 }
 

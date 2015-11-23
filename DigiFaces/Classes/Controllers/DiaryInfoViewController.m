@@ -50,7 +50,7 @@ typedef enum {
         if ([_dailyDiary.file.fileType isEqualToString:@"Image"]) {
             [_cellsArray addObject:@(CellsTypeImage)];
         }
-        else{
+        else {
             [_cellsArray addObject:@(CellsTypeVideo)];
         }
         
@@ -134,7 +134,14 @@ typedef enum {
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 160;
+        return 0;
+        /*
+         if ((_dailyDiary && _dailyDiary.file) || (_diaryTheme && [self getModuleForThemeType:ThemeTypeDisplayImage].displayFile) ) {
+         return 160;
+         } else {
+         return 0;
+         }
+         */
     }
     if (indexPath.row == 1) {
         infoCell = [tableView dequeueReusableCellWithIdentifier:@"textCell"];

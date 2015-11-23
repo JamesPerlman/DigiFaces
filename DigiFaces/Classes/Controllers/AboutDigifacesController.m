@@ -18,8 +18,8 @@
 {
     [super viewDidLoad];
     
-    
-    [self fetchAboutDigifacesText];
+    [self setAboutDigifacesTextFromLocalizationString];
+    //[self fetchAboutDigifacesText];
     [self localizeUI];
 }
 
@@ -27,7 +27,18 @@
     self.navigationItem.title = DFLocalizedString(@"view.about_df.navbar.default_title", nil);
 }
 
-
+-(void)setAboutDigifacesTextFromLocalizationString {
+    NSString *myDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
+                                   "<head> \n"
+                                   "<style type=\"text/css\"> \n"
+                                   "body {font-family: \"%@\"; font-size: %@;}\n"
+                                   "</style> \n"
+                                   "</head> \n"
+                                   "<body>%@</body> \n"
+                                   "</html>", @"Arial", @17, DFLocalizedString(@"view.about_df.content.about_digifaces", nil)];
+    
+    [self.webView loadHTMLString:myDescriptionHTML baseURL:nil];
+}
 -(void)fetchAboutDigifacesText
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
