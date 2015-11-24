@@ -1,10 +1,11 @@
 /*
-  Localizable.strings
-  DigiFaces
+ Localizable.strings
+ DigiFaces
+ 
+ Copyright (c) 2015 INET 360. All rights reserved.
+ */
 
-  Created by Apple on 16/06/2015.
-  Copyright (c) 2015 INET 360. All rights reserved.
-*/
+/* The following line ("localization.test") is for debugging purposes and is not visible to the user.  Please do not translate it. */
 "localization.test" = "Failed to pull localization data.  Using local localization file";
 
 /* Uncategorized */
@@ -131,7 +132,7 @@
 "view.settings.button.log_out" = "LOGOUT";
 
 /* About DigiFaces View */
-"view.about_df.navbar.default_title" = "ABOUT DIGIFACES";
+"view.about_df.navbar.title" = "ABOUT DIGIFACES";
 "view.about_df.content.about_digifaces" = "<p>DigiFaces is a blogging tool designed to help us understand your life - the way you think and the reasons you do the things that you do. This research may be different to others you have taken part in. In this blog, there are various question areas (\"themes\") for you to respond to. In addition to posting your thoughts on themes, please comment on the ideas posted by fellow participants. Also, we'd like to encourage you to post videos, links and any other material that will help us understand your point of view.</p> <p>Take your time and try to be as thorough as possible. Also, please check the site daily in case new themes are posted. The site is accessible 24 hours a day while the project is live, so please respond to themes whenever you feel like it, so that responses are inspired by your daily activities.</p>";
 
 /* Conversations View */

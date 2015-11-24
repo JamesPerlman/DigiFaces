@@ -2622,7 +2622,7 @@
                                 <action selector="cancelThis:" destination="8gN-81-gu8" id="csM-OP-1VC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="DONE" id="vwH-kU-iND">
+                        <barButtonItem key="rightBarButtonItem" image="paperplane" id="vwH-kU-iND">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="doneClicked:" destination="8gN-81-gu8" id="Zus-Dk-p1S"/>

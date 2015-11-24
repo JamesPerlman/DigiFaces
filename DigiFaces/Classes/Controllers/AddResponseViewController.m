@@ -159,11 +159,10 @@
 {
     if ([_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery] && !profileController.selectedImageFile) {
         
-        [self showAlertWithMessage:@"You must select an image before posting a response."];
+        [self showAlertWithMessage:@"You must select an image before posting a response." singleButton:YES];
         return;
     } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse] && !self.videoUploadView.hasMedia) {
-        
-        [self showAlertWithMessage:@"You must select a video before posting a response."];
+        [self showAlertWithMessage:@"You must select a video before posting a response." singleButton:YES];
         return;
     }
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -398,11 +397,12 @@
     if (_dailyDiary && [_txtTitle.text isEqualToString:@""]) {
         // Error
         [self resignAllResponders];
-        [self showAlertWithMessage:DFLocalizedString(@"view.respond.error.empty_title", nil)];
+        [self showAlertWithMessage:DFLocalizedString(@"view.respond.error.empty_title", nil) singleButton:YES];
     }
     else if ([_txtResponse.text isEqualToString:@""]){
         [self resignAllResponders];
-        [self showAlertWithMessage:DFLocalizedString(@"view.respond.error.empty_body", nil)];
+        _alertView.singleButton = false;
+        [self showAlertWithMessage:DFLocalizedString(@"view.respond.error.empty_body", nil) singleButton:YES];
     }
     else
     {
@@ -431,7 +431,7 @@
             hasUnsavedContent = true;
         }
         if (hasUnsavedContent) {
-            [self showAlertWithMessage:DFLocalizedString(@"view.respond.alert.confirm_discard", nil)];
+            [self showAlertWithMessage:DFLocalizedString(@"view.respond.alert.confirm_discard", nil) singleButton:NO];
             willClose = true;
             return;
         }
@@ -509,7 +509,8 @@
 }
 
 
-- (void)showAlertWithMessage:(NSString*)message {
+- (void)showAlertWithMessage:(NSString*)message singleButton:(BOOL)singleButton {
+    _alertView.singleButton = singleButton;
     [_alertView showAlertWithMessage:message inView:self.navigationController.view withTag:0];
 }
 

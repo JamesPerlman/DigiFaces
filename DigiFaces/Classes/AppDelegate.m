@@ -225,7 +225,7 @@
                                   message:DFLocalizedString(@"app.error.no_internet_descriptive",
                                                             nil)
                                   delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"OK",  @"OK")
+                                  cancelButtonTitle:DFLocalizedString(@"app.misc.alert.ok",  nil)
                                   otherButtonTitles:nil];
             [alert show];
         }

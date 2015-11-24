@@ -63,7 +63,7 @@
 -(IBAction)check_user_validation:(id)sender{
     
     NSCharacterSet *alphaSet = [NSCharacterSet alphanumericCharacterSet];
-    BOOL valid = [[_usernameTextField.text stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""];
+    //BOOL valid = [[_usernameTextField.text stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""];
     
     NSString *errorMessage = nil;
     
@@ -83,7 +83,7 @@
         return;
         
     }
-    if (!valid) // found bad characters
+    /*if (!valid) // found bad characters
     {
         errorMessage = DFLocalizedString(@"view.select_username.error.invalid_characters", nil);
         
@@ -92,7 +92,7 @@
         _errorMessageLabel.text = errorMessage;
         return;
         
-    }
+    }*/
     [self check_username_availability:_usernameTextField.text];
     
 }

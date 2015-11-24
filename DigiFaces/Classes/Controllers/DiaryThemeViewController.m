@@ -66,6 +66,7 @@
     
     _alertView = [[CustomAlertView alloc] init];
     _alertView.delegate = self;
+    _alertView.singleButton = true;
     
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];

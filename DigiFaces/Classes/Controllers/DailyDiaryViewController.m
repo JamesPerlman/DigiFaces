@@ -70,6 +70,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     
     _alertView = [[CustomAlertView alloc] init];
     _alertView.delegate = self;
+    _alertView.singleButton = true;
     
     [self fetchDailyDiaryFromCoreData];
     [self fetchDailyDiaryFromServer];

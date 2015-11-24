@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomAlertView">
@@ -11,6 +11,8 @@
                 <outlet property="bigOKButton" destination="zXa-Ai-VsW" id="kFT-mh-zjr"/>
                 <outlet property="okCancelView" destination="DkN-9B-G4r" id="q2w-z7-uFh"/>
                 <outlet property="okView" destination="FSi-UM-fUn" id="Jof-cO-pd7"/>
+                <outlet property="smallCancelButton" destination="Jpc-Bc-oXD" id="fAC-5d-c8s"/>
+                <outlet property="smallOKButton" destination="9se-zg-qdG" id="9Mv-oi-35e"/>
                 <outlet property="textLabel" destination="xH0-v1-qiw" id="VoA-29-rnT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

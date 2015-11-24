@@ -114,10 +114,11 @@ typedef enum : NSUInteger {
                       LS.myUserInfo.currentProject.dailyDiary = result;
                       defsself
                       [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                      [sself fetchAlertCounts];
+                      
                       
                   }
                   failure:nil];
+    [self fetchAlertCounts];
 }
 
 -(void)fetchUserHomeAnnouncements{

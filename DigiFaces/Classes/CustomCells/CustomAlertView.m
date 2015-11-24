@@ -20,16 +20,18 @@
 @synthesize fromW = _fromW;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    NSString *okLocal = DFLocalizedString(@"view.misc.alert.ok", nil);
+    [self.bigOKButton setTitle:okLocal forState:UIControlStateNormal];
+    [self.smallOKButton setTitle:okLocal forState:UIControlStateNormal];
+    [self.smallCancelButton setTitle:DFLocalizedString(@"view.misc.alert.cancel", nil) forState:UIControlStateNormal];
+
     self.view.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
     
     if([_fromW isEqualToString:@"login"])
         self.view.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
     
-    NSString *okLocal = DFLocalizedString(@"view.misc.alert.ok", nil);
-    [self.bigOKButton setTitle:okLocal forState:UIControlStateNormal];
-    [self.smallOKButton setTitle:okLocal forState:UIControlStateNormal];
-    [self.smallCancelButton setTitle:DFLocalizedString(@"view.misc.alert.cancel", nil) forState:UIControlStateNormal];
+    
     
     self.textLabel.numberOfLines = 0;
     
@@ -40,6 +42,7 @@
     self.alertBackgroundView.layer.borderWidth = 1.0f;
     self.alertBackgroundView.layer.cornerRadius = 5.0f;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
