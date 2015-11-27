@@ -103,6 +103,9 @@
 		F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB41B6835E4000D2615 /* APITokenResponse.m */; };
 		F4864FB61B6839E1000D2615 /* DFClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F6E1B680859000D2615 /* DFClient.m */; };
 		F48C33411B7BC6EA00D7C764 /* ConversationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C33401B7BC6EA00D7C764 /* ConversationDetailViewController.m */; };
+		F48F8ACD1C084742002CA8D0 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48F8ACC1C084742002CA8D0 /* AirshipConfig.plist */; };
+		F48F8AD31C08485C002CA8D0 /* AirshipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */; };
+		F48F8AD41C08485C002CA8D0 /* AirshipKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */; };
 		F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */; };
 		F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759E01B7193F600B94176 /* AnnouncementCell.m */; };
@@ -159,6 +162,20 @@
 			remoteInfo = DigiFaces;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F48F8AD51C08485D002CA8D0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F48F8AD41C08485C002CA8D0 /* AirshipKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		19328DC31B2FFCA4008BFAA6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -348,7 +365,6 @@
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
 		F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Transformations.h"; sourceTree = "<group>"; };
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
-		F4421F7D1BA5F29D000EC46E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4864F681B670E06000D2615 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
@@ -367,6 +383,10 @@
 		F4864FB41B6835E4000D2615 /* APITokenResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APITokenResponse.m; sourceTree = "<group>"; };
 		F48C333F1B7BC6EA00D7C764 /* ConversationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationDetailViewController.h; path = Controllers/ConversationDetailViewController.h; sourceTree = "<group>"; };
 		F48C33401B7BC6EA00D7C764 /* ConversationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationDetailViewController.m; path = Controllers/ConversationDetailViewController.m; sourceTree = "<group>"; };
+		F48F8ACC1C084742002CA8D0 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
+		F48F8ACE1C084751002CA8D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F48F8AD01C084847002CA8D0 /* AirshipKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AirshipKit.framework; path = "AirshipKit/build/Debug-iphoneos/AirshipKit.framework"; sourceTree = "<group>"; };
+		F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = AirshipKit.framework; path = "/Users/home/Library/Developer/Xcode/DerivedData/DigiFaces-gozvzuqhtapwalfsatrgiodizseo/Build/Products/Debug-iphoneos/AirshipKit.framework"; sourceTree = "<absolute>"; };
 		F4A759D01B7150E300B94176 /* ConversationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsTableViewController.h; sourceTree = "<group>"; };
 		F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsTableViewController.m; sourceTree = "<group>"; };
 		F4A759D41B71510400B94176 /* AnnouncementsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementsTableViewController.h; sourceTree = "<group>"; };
@@ -470,6 +490,7 @@
 				19F0BD421B1F14D800E4B048 /* UIKit.framework in Frameworks */,
 				19F0BD401B1F14CC00E4B048 /* Security.framework in Frameworks */,
 				19F0BD3E1B1F14C700E4B048 /* MobileCoreServices.framework in Frameworks */,
+				F48F8AD31C08485C002CA8D0 /* AirshipKit.framework in Frameworks */,
 				19F0BD3C1B1F14BC00E4B048 /* CoreLocation.framework in Frameworks */,
 				19F0BD3A1B1F14B600E4B048 /* CoreGraphics.framework in Frameworks */,
 				20142B03FF01559511AD6C84 /* libPods-DigiFaces.a in Frameworks */,
@@ -489,6 +510,7 @@
 		19F0BD011B1DBC6400E4B048 = {
 			isa = PBXGroup;
 			children = (
+				F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */,
 				19F0BD0C1B1DBC6400E4B048 /* DigiFaces */,
 				19F0BD261B1DBC6400E4B048 /* DigiFacesTests */,
 				19F0BD0B1B1DBC6400E4B048 /* Products */,
@@ -523,7 +545,8 @@
 		19F0BD0D1B1DBC6400E4B048 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F4421F7D1BA5F29D000EC46E /* Info.plist */,
+				F48F8ACE1C084751002CA8D0 /* Info.plist */,
+				F48F8ACC1C084742002CA8D0 /* AirshipConfig.plist */,
 				F4DD49D01B65AAE300F4016B /* FontAwesome.ttf */,
 				19328DD71B2FFDE5008BFAA6 /* Localizable.strings */,
 				19F0BD0F1B1DBC6400E4B048 /* main.m */,
@@ -729,6 +752,7 @@
 		7635E5FD8D52F1B9E96DE8C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F48F8AD01C084847002CA8D0 /* AirshipKit.framework */,
 				F4B8B3751BA4C43A007E4104 /* CoreData.framework */,
 				F4DD49C81B6585B700F4016B /* MediaPlayer.framework */,
 				19F0BE2C1B28519B00E4B048 /* QuartzCore.framework */,
@@ -1510,6 +1534,7 @@
 				19F0BD081B1DBC6400E4B048 /* Resources */,
 				F4DD49B51B64B3E100F4016B /* ShellScript */,
 				48B7E8DD17C1CE12DBE1F7ED /* Copy Pods Resources */,
+				F48F8AD51C08485D002CA8D0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1591,6 +1616,7 @@
 				F4DD49D11B65AFFF00F4016B /* FontAwesome.ttf in Resources */,
 				19F0BD191B1DBC6400E4B048 /* Main.storyboard in Resources */,
 				19F0BD1B1B1DBC6400E4B048 /* Images.xcassets in Resources */,
+				F48F8ACD1C084742002CA8D0 /* AirshipConfig.plist in Resources */,
 				4ACDB9BD1B3E7E66009EFB91 /* CustomAlertView.xib in Resources */,
 				19328DD51B2FFDE5008BFAA6 /* Localizable.strings in Resources */,
 			);
@@ -1946,6 +1972,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/DigiFaces/Frameworks",
 					"$(PROJECT_DIR)/DigiFaces/Classes/Frameworks",
+					"$(PROJECT_DIR)/AirshipKit/build/Debug-iphoneos",
 				);
 				GCC_PREFIX_HEADER = DigiFaces/DigiFaces.pch;
 				INFOPLIST_FILE = DigiFaces/Info.plist;
@@ -1977,6 +2004,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/DigiFaces/Frameworks",
 					"$(PROJECT_DIR)/DigiFaces/Classes/Frameworks",
+					"$(PROJECT_DIR)/AirshipKit/build/Debug-iphoneos",
 				);
 				GCC_PREFIX_HEADER = DigiFaces/DigiFaces.pch;
 				INFOPLIST_FILE = DigiFaces/Info.plist;

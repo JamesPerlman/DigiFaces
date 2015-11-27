@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:AirshipKit/AirshipKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Airship">
+   </FileRef>
+   <FileRef
+      location = "group:AirshipKit">
+   </FileRef>
+   <FileRef
       location = "group:DigiFaces.xcodeproj">
    </FileRef>
    <FileRef
