@@ -103,21 +103,23 @@ typedef enum : NSUInteger {
 #pragma mark - Server Interaction
 
 -(void)fetchDailyDiary:(NSNumber*)diaryId {
-    defwself
-    [DFClient makeRequest:APIPathGetDailyDiary
-                   method:kPOST
-                urlParams:@{@"diaryId" : diaryId}
-               bodyParams:nil
-                  success:^(NSDictionary *response, DailyDiary *result) {
-                      
-                      [DFDataManager removeEntitiesWithEntityName:@"DailyDiary" idKey:@"diaryId" notInArray:@[result] predicate:nil];
-                      LS.myUserInfo.currentProject.dailyDiary = result;
-                      defsself
-                      [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                      
-                      
-                  }
-                  failure:nil];
+    if (diaryId) {
+        defwself
+        [DFClient makeRequest:APIPathGetDailyDiary
+                       method:kPOST
+                    urlParams:@{@"diaryId" : diaryId}
+                   bodyParams:nil
+                      success:^(NSDictionary *response, DailyDiary *result) {
+                          if (result) {
+                              [DFDataManager removeEntitiesWithEntityName:@"DailyDiary" idKey:@"diaryId" notInArray:@[result] predicate:nil];
+                              LS.myUserInfo.currentProject.dailyDiary = result;
+                              defsself
+                              [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                          }
+                          
+                      }
+                      failure:nil];
+    }
     [self fetchAlertCounts];
 }
 
