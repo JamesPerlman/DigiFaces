@@ -14,7 +14,11 @@ NSString * const DFLocalizationDidSynchronizeNotification = @"com.inet360.digifa
 NSTimeInterval const DFLocalizationSynchronizerUpdateInterval = 60;
 
 NSString * const APIServerAddress = @"http://digifacesservices.focusforums.com/";
+
+
+// misc
 NSString * const APIPathGetToken = @"Token";
+NSString * const APIPathUARegisterDevice = @"api/UrbanAirship/RegisterDevice";
 
 // account
 NSString * const APIPathGetUserInfo = @"api/Account/UserInfo";

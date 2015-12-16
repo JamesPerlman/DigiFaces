@@ -17,8 +17,9 @@ extern NSTimeInterval const DFLocalizationSynchronizerUpdateInterval;
 
 extern NSString * const APIServerAddress;
 
-
+// misc
 extern NSString * const APIPathGetToken;
+extern NSString * const APIPathUARegisterDevice;
 
 // account
 extern NSString * const APIPathGetProjects;

@@ -12,6 +12,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <AirshipKit/AirshipKit.h>
+#import "DFPushService.h"
 #import "DFResponseDescriptorsProvider.h"
 @interface AppDelegate ()
 {

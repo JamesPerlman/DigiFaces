@@ -9,6 +9,7 @@
 #import "DFClient.h"
 #import <RestKit/RestKit.h>
 #import "APITokenResponse.h"
+#import "DFPushService.h"
 
 @implementation DFClient
 
@@ -88,6 +89,7 @@
 #pragma mark - Custom API Call Methods
 
 + (void)loginWithUsername:(NSString*)username password:(NSString *)password success:(APISuccessBlock)success failure:(APIFailureBlock)failure {
+    
     [self makeRequest:APIPathGetToken
                method:RKRequestMethodPOST
                params:@{@"username" : username, @"password" : password, @"grant_type" : @"password"}

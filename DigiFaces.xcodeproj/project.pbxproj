@@ -86,6 +86,7 @@
 		F4022FF01B69A2920080C157 /* LocalStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F731B6809DF000D2615 /* LocalStorage.m */; };
 		F4022FF71B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */; };
 		F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */; };
+		F416E09A1C20D56D0095E972 /* DFPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = F416E0991C20D56D0095E972 /* DFPushService.m */; };
 		F42669DB1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DA1B6EA82000A6E6D7 /* DFCollectionViewImageCell.m */; };
 		F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669DD1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m */; };
 		F42669E31B70310500A6E6D7 /* UILabel+setHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669E21B70310500A6E6D7 /* UILabel+setHTML.m */; };
@@ -344,6 +345,8 @@
 		F4022FF61B69CF620080C157 /* NSArray+orderedDistinctUnionOfObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+orderedDistinctUnionOfObjects.m"; sourceTree = "<group>"; };
 		F40FE1BB1B6C2C5F003C4DE7 /* NSString+StripHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StripHTML.h"; sourceTree = "<group>"; };
 		F40FE1BC1B6C2C5F003C4DE7 /* NSString+StripHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StripHTML.m"; sourceTree = "<group>"; };
+		F416E0981C20D56D0095E972 /* DFPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPushService.h; sourceTree = "<group>"; };
+		F416E0991C20D56D0095E972 /* DFPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPushService.m; sourceTree = "<group>"; };
 		F426699F1B6D837300A6E6D7 /* AddResponseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddResponseDelegate.h; sourceTree = "<group>"; };
 		F42669D81B6DAEBD00A6E6D7 /* DiaryResponseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryResponseDelegate.h; sourceTree = "<group>"; };
 		F42669D91B6EA82000A6E6D7 /* DFCollectionViewImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFCollectionViewImageCell.h; sourceTree = "<group>"; };
@@ -822,6 +825,15 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		F416E0971C20D4CC0095E972 /* PushService */ = {
+			isa = PBXGroup;
+			children = (
+				F416E0981C20D56D0095E972 /* DFPushService.h */,
+				F416E0991C20D56D0095E972 /* DFPushService.m */,
+			);
+			path = PushService;
+			sourceTree = "<group>";
+		};
 		F420FB6D1B6162EE007092CB /* DFMediaUploadManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,6 +878,7 @@
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
+				F416E0971C20D4CC0095E972 /* PushService */,
 				F4864F711B6809C0000D2615 /* LocalStorage */,
 				F4FC8CAA1BBEE82300B12DEE /* DFDataManager */,
 				F4864F6C1B680832000D2615 /* DFClient */,
@@ -1765,6 +1778,7 @@
 				F4022FDF1B6977090080C157 /* APISetUserNameResponse.m in Sources */,
 				F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */,
 				4ACDB9FF1B3EC155009EFB91 /* NotificationCell.m in Sources */,
+				F416E09A1C20D56D0095E972 /* DFPushService.m in Sources */,
 				F4022FCB1B68789D0080C157 /* APIUploadAvatarResponse.m in Sources */,
 				4ACDB9B01B3E7E66009EFB91 /* HomeViewController.m in Sources */,
 				4ABC3D3B1B4001460090A619 /* ResponseViewCell.m in Sources */,
