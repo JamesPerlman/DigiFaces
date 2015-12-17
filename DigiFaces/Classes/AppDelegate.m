@@ -48,20 +48,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    /*****  URBAN AIRSHIP ***/
-    // Call takeOff (which creates the UAirship singleton)
-    [UAirship takeOff];
-    
-    // User notifications will not be enabled until userPushNotificationsEnabled is
-    // set YES on UAPush. Once enabled, the setting will be persisted and the user
-    // will be prompted to allow notifications. Normally, you should wait for a more
-    // appropriate time to enable push to increase the likelihood that the user will
-    // accept notifications.
-    [UAirship push].userPushNotificationsEnabled = YES;
-    
-    [UAirship push].userNotificationTypes = (UIUserNotificationTypeAlert |
-                                             UIUserNotificationTypeBadge |
-                                             UIUserNotificationTypeSound);
+    [DFPushService begin];
     
     /***** UI INITIALIZATION ****/
     
@@ -77,35 +64,24 @@
     
     return YES;
 }
-
-#pragma mark - Urban Airship stuff
+#pragma mark - DFPushNotifications application remote notification method-forwarding
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    UA_LTRACE(@"Application registered for remote notifications with device token: %@", deviceToken);
-    [[UAirship push] appRegisteredForRemoteNotificationsWithDeviceToken:deviceToken];
+    [[DFPushService manager] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
-
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    UA_LTRACE(@"Application did register with user notification types %ld", (unsigned long)notificationSettings.types);
-    [[UAirship push] appRegisteredUserNotificationSettings];
+    [[DFPushService manager] application:application didRegisterUserNotificationSettings:notificationSettings];
 }
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
-    UA_LERR(@"Application failed to register for remote notifications with error: %@", error);
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    [[DFPushService manager] application:application didFailToRegisterForRemoteNotificationsWithError:error];
 }
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    UA_LINFO(@"Application received remote notification: %@", userInfo);
-    [[UAirship push] appReceivedRemoteNotification:userInfo applicationState:application.applicationState];
+    [[DFPushService manager] application:application didReceiveRemoteNotification:userInfo];
 }
-
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    UA_LINFO(@"Application received remote notification: %@", userInfo);
-    [[UAirship push] appReceivedRemoteNotification:userInfo applicationState:application.applicationState fetchCompletionHandler:completionHandler];
+    [[DFPushService manager] application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
-
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())handler {
-    UA_LINFO(@"Received remote notification button interaction: %@ notification: %@", identifier, userInfo);
-    [[UAirship push] appReceivedActionWithIdentifier:identifier notification:userInfo applicationState:application.applicationState completionHandler:handler];
+    [[DFPushService manager] application:application handleActionWithIdentifier:identifier forRemoteNotification:userInfo completionHandler:handler];
 }
 
 #pragma mark - other stuff

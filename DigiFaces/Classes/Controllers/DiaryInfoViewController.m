@@ -84,7 +84,7 @@ typedef enum {
         [self addEditButton];
     }
     
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 
@@ -128,22 +128,13 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 2;
+    return [_cellsArray count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 0;
-        /*
-         if ((_dailyDiary && _dailyDiary.file) || (_diaryTheme && [self getModuleForThemeType:ThemeTypeDisplayImage].displayFile) ) {
-         return 160;
-         } else {
-         return 0;
-         }
-         */
-    }
-    if (indexPath.row == 1) {
+    
+    if (indexPath.row == 1 || CellsTypeText == (CellsType)[_cellsArray[indexPath.row] integerValue]) {
         infoCell = [tableView dequeueReusableCellWithIdentifier:@"textCell"];
         if (_dailyDiary) {
             [infoCell setText:_dailyDiary.diaryQuestion];

@@ -68,7 +68,7 @@
              DESCRIPTOR(APIPathSendHelpMessage,                     kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathSendMessageToModerator,              kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathSetUserName,                         kPOST, setUserNameResponseMapping),
-             DESCRIPTOR(APIPathUARegisterDevice,                    kPOST, pushRegisterResponseMapping),
+             DESCRIPTOR(APIPathUARegisterDevice,                    kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathUpdateAboutMe,                       kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathUpdateDailyDiary,                    kPOST, dailyDiaryResponseMapping),
              DESCRIPTOR(APIPathUploadUserCustomAvatar,              kPOST, emptyResponseMapping)

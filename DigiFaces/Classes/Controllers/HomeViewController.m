@@ -191,7 +191,6 @@ typedef enum : NSUInteger {
                    params:nil
                   success:^(NSDictionary *response, UserInfo *result) {
                       LS.myUserInfo = result;
-                      [[DFPushService manager] syncDeviceToken];
                       
                       LS[LSMyUserIdKey] = result.id;
                       

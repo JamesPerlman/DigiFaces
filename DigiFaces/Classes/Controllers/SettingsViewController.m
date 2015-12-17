@@ -75,7 +75,7 @@
     }
     else if (indexPath.row == 2){
         cell.textLabel.text = DFLocalizedString(@"view.settings.button.email_mod", nil);
-        if (!canEmailMod) {
+        if (!canEmailMod || [LS.myUserInfo.isModerator boolValue]) {
             cell.textLabel.textColor = [UIColor lightGrayColor];
         }
     }
