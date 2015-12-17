@@ -220,8 +220,12 @@ typedef enum : NSUInteger {
                   success:^(NSDictionary *response, id result) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
-                      
-                      NSArray *receivedProjects = [result isKindOfClass:[NSArray class]] ? result : @[result];
+                      NSArray *receivedProjects;
+                      if (result == nil) {
+                          receivedProjects = @[];
+                      } else {
+                          receivedProjects = [result isKindOfClass:[NSArray class]] ? result : @[result];
+                      }
                       [DFDataManager removeEntitiesWithEntityName:@"Project" idKey:@"projectId" notInArray:receivedProjects predicate:nil];
                       
                   }

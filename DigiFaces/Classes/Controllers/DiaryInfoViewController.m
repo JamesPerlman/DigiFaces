@@ -144,6 +144,12 @@ typedef enum {
             [infoCell setText:module.displayText.text];
         }
         return infoCell.fullHeight;
+    } else {
+        if ((_dailyDiary && _dailyDiary.file) || (_diaryTheme && [self getModuleForThemeType:ThemeTypeDisplayImage].displayFile) ) {
+            return 160;
+        } else {
+            return 0;
+        }
     }
     return 0;
 }
