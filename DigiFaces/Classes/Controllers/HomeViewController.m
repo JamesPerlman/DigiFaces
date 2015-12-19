@@ -544,7 +544,7 @@ typedef enum : NSUInteger {
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
-        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"", ];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"project = %@", LS.myUserInfo.currentProject];
         
         fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
         

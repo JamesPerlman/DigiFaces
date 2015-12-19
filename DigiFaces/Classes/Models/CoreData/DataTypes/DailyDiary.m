@@ -2,28 +2,19 @@
 //  DailyDiary.m
 //  
 //
-//  Created by James on 9/11/15.
+//  Created by James on 12/18/15.
 //
 //
 
 #import "DailyDiary.h"
-#import "Comment.h"
 #import "Diary.h"
 #import "File.h"
-
+#import "Project.h"
+#import "Comment.h"
 
 @implementation DailyDiary
 
-@dynamic activityId;
-@dynamic diaryId;
-@dynamic diaryIntroduction;
-@dynamic diaryQuestion;
-@dynamic userDiaries;
-@dynamic file;
-
-@end
-
-@implementation DailyDiary (DynamicMethods)
+// Insert code here to add functionality to your managed object subclass
 
 @dynamic diariesDict;
 @dynamic diariesDate;
@@ -57,5 +48,6 @@
     
     return [self.userDiaries filteredSetUsingPredicate:searchPredicate].anyObject;
 }
+
 
 @end

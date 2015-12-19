@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="15A284" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 4.3">
     <entity name="About" representedClassName="About" syncable="YES">
         <attribute name="aboutId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="aboutText" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,6 +20,7 @@
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+        <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="announcements" inverseEntity="Project" syncable="YES"/>
     </entity>
     <entity name="Comment" representedClassName="Comment" syncable="YES">
         <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -44,6 +45,7 @@
         <attribute name="diaryIntroduction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="diaryQuestion" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="file" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+        <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="dailyDiary" inverseEntity="Project" syncable="YES"/>
         <relationship name="userDiaries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Diary" syncable="YES"/>
     </entity>
     <entity name="DailyDiaryResponse" representedClassName="DailyDiaryResponse" syncable="YES">
@@ -78,6 +80,7 @@
         <attribute name="parentActivityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="unreadResponses" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Module" syncable="YES"/>
+        <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" syncable="YES"/>
         <relationship name="responses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Response" syncable="YES"/>
     </entity>
     <entity name="DisplayFile" representedClassName="DisplayFile" syncable="YES">
@@ -187,8 +190,10 @@
         <attribute name="projectName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="projectStartDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="regionId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DiaryTheme" syncable="YES"/>
+        <relationship name="announcements" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Announcement" inverseName="project" inverseEntity="Announcement" syncable="YES"/>
         <relationship name="company" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Company" syncable="YES"/>
-        <relationship name="dailyDiary" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DailyDiary" syncable="YES"/>
+        <relationship name="dailyDiary" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DailyDiary" inverseName="project" inverseEntity="DailyDiary" syncable="YES"/>
         <relationship name="dailyDiaryList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Integer" syncable="YES"/>
     </entity>
     <entity name="Response" representedClassName="Response" syncable="YES">
@@ -251,13 +256,13 @@
     <elements>
         <element name="About" positionX="675" positionY="228" width="128" height="105"/>
         <element name="AboutMe" positionX="675" positionY="-117" width="128" height="105"/>
-        <element name="Announcement" positionX="531" positionY="-123" width="128" height="150"/>
+        <element name="Announcement" positionX="531" positionY="-123" width="128" height="163"/>
         <element name="Comment" positionX="648" positionY="765" width="128" height="178"/>
         <element name="Company" positionX="-371" positionY="45" width="128" height="105"/>
-        <element name="DailyDiary" positionX="27" positionY="450" width="128" height="135"/>
+        <element name="DailyDiary" positionX="27" positionY="450" width="128" height="148"/>
         <element name="DailyDiaryResponse" positionX="673" positionY="72" width="128" height="150"/>
         <element name="Diary" positionX="72" positionY="117" width="128" height="208"/>
-        <element name="DiaryTheme" positionX="-153" positionY="72" width="128" height="195"/>
+        <element name="DiaryTheme" positionX="-153" positionY="72" width="128" height="208"/>
         <element name="DisplayFile" positionX="-173" positionY="642" width="128" height="105"/>
         <element name="DisplayText" positionX="-56" positionY="756" width="128" height="90"/>
         <element name="File" positionX="448" positionY="270" width="128" height="253"/>
@@ -268,7 +273,7 @@
         <element name="Message" positionX="799" positionY="344" width="128" height="223"/>
         <element name="Module" positionX="-425" positionY="603" width="128" height="210"/>
         <element name="Notification" positionX="385" positionY="-108" width="128" height="238"/>
-        <element name="Project" positionX="-137" positionY="342" width="128" height="283"/>
+        <element name="Project" positionX="-137" positionY="306" width="128" height="313"/>
         <element name="Response" positionX="304" positionY="809" width="128" height="253"/>
         <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>
         <element name="TextareaResponse" positionX="-126" positionY="981" width="128" height="120"/>

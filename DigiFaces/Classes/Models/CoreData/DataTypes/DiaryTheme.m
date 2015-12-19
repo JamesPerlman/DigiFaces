@@ -2,31 +2,18 @@
 //  DiaryTheme.m
 //  
 //
-//  Created by James on 9/11/15.
+//  Created by James on 12/18/15.
 //
 //
 
 #import "DiaryTheme.h"
 #import "Module.h"
 #import "Response.h"
-
+#import "Project.h"
 
 @implementation DiaryTheme
 
-@dynamic activityDesc;
-@dynamic activityId;
-@dynamic activityTitle;
-@dynamic activityTypeId;
-@dynamic isActive;
-@dynamic isRead;
-@dynamic parentActivityId;
-@dynamic unreadResponses;
-@dynamic responses;
-@dynamic modules;
-
-@end
-
-@implementation DiaryTheme (DynamicMethods)
+// Insert code here to add functionality to your managed object subclass
 
 - (Module*)getModuleWithThemeType:(ThemeType)type
 {

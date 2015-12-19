@@ -2,46 +2,26 @@
 //  DiaryTheme.h
 //  
 //
-//  Created by James on 9/11/15.
+//  Created by James on 12/18/15.
 //
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Module, Response;
+@class Module, Response, Project;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DiaryTheme : NSManagedObject
 
-@property (nonatomic, retain) NSString * activityDesc;
-@property (nonatomic, retain) NSNumber * activityId;
-@property (nonatomic, retain) NSString * activityTitle;
-@property (nonatomic, retain) NSNumber * activityTypeId;
-@property (nonatomic, retain) NSNumber * isActive;
-@property (nonatomic, retain) NSNumber * isRead;
-@property (nonatomic, retain) NSNumber * parentActivityId;
-@property (nonatomic, retain) NSNumber * unreadResponses;
-@property (nonatomic, retain) NSSet *responses;
-@property (nonatomic, retain) NSSet *modules;
-@end
-
-@interface DiaryTheme (CoreDataGeneratedAccessors)
-
-- (void)addResponsesObject:(Response *)value;
-- (void)removeResponsesObject:(Response *)value;
-- (void)addResponses:(NSSet *)values;
-- (void)removeResponses:(NSSet *)values;
-
-- (void)addModulesObject:(Module *)value;
-- (void)removeModulesObject:(Module *)value;
-- (void)addModules:(NSSet *)values;
-- (void)removeModules:(NSSet *)values;
-
-@end
-
-@interface DiaryTheme (DynamicMethods)
+// Insert code here to declare functionality of your managed object subclass
 
 - (Module*)getModuleWithThemeType:(ThemeType)type;
 - (NSArray*)sortedResponsesArray;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "DiaryTheme+CoreDataProperties.h"

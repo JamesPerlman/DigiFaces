@@ -2,22 +2,16 @@
 //  Announcement.m
 //  
 //
-//  Created by James on 9/11/15.
+//  Created by James on 12/18/15.
 //
 //
 
 #import "Announcement.h"
 #import "File.h"
-
+#import "Project.h"
 
 @implementation Announcement
 
-@dynamic announcementId;
-@dynamic title;
-@dynamic text;
-@dynamic dateCreated;
-@dynamic dateCreatedFormatted;
-@dynamic isRead;
-@dynamic files;
+// Insert code here to add functionality to your managed object subclass
 
 @end

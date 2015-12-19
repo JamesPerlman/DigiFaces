@@ -97,6 +97,10 @@
 		F4336C541C23BF7D00FC2892 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C531C23BF7D00FC2892 /* SWRevealViewController.m */; };
 		F4336C581C24E41800FC2892 /* UIView+GestureRecognizerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */; };
 		F4336C5C1C24E9D300FC2892 /* ProjectsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C5B1C24E9D300FC2892 /* ProjectsMenuViewController.m */; };
+		F4336C5F1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C5E1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.m */; };
+		F4336C621C24FA7500FC2892 /* Project+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C611C24FA7500FC2892 /* Project+CoreDataProperties.m */; };
+		F4336C651C24FA7D00FC2892 /* Announcement+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C641C24FA7D00FC2892 /* Announcement+CoreDataProperties.m */; };
+		F4336C681C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C671C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
 		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
@@ -374,6 +378,14 @@
 		F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GestureRecognizerControls.m"; sourceTree = "<group>"; };
 		F4336C5A1C24E9D300FC2892 /* ProjectsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectsMenuViewController.h; sourceTree = "<group>"; };
 		F4336C5B1C24E9D300FC2892 /* ProjectsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectsMenuViewController.m; sourceTree = "<group>"; };
+		F4336C5D1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DiaryTheme+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F4336C5E1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DiaryTheme+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F4336C601C24FA7500FC2892 /* Project+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Project+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F4336C611C24FA7500FC2892 /* Project+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Project+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F4336C631C24FA7D00FC2892 /* Announcement+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Announcement+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F4336C641C24FA7D00FC2892 /* Announcement+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Announcement+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F4336C661C24FA8200FC2892 /* DailyDiary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DailyDiary+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F4336C671C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DailyDiary+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
 		F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Transformations.h"; sourceTree = "<group>"; };
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
@@ -1277,6 +1289,8 @@
 		F4B8B3521BA35B2C007E4104 /* DiaryTheme */ = {
 			isa = PBXGroup;
 			children = (
+				F4336C5D1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.h */,
+				F4336C5E1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.m */,
 				F4B8B30A1BA35B1C007E4104 /* DiaryTheme.h */,
 				F4B8B30B1BA35B1C007E4104 /* DiaryTheme.m */,
 			);
@@ -1286,6 +1300,8 @@
 		F4B8B3531BA35B32007E4104 /* DailyDiary */ = {
 			isa = PBXGroup;
 			children = (
+				F4336C661C24FA8200FC2892 /* DailyDiary+CoreDataProperties.h */,
+				F4336C671C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m */,
 				F4B8B30C1BA35B1C007E4104 /* DailyDiary.h */,
 				F4B8B30D1BA35B1C007E4104 /* DailyDiary.m */,
 			);
@@ -1331,6 +1347,8 @@
 		F4B8B3581BA35B53007E4104 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				F4336C601C24FA7500FC2892 /* Project+CoreDataProperties.h */,
+				F4336C611C24FA7500FC2892 /* Project+CoreDataProperties.m */,
 				F4B8B3221BA35B1C007E4104 /* Project.h */,
 				F4B8B3231BA35B1C007E4104 /* Project.m */,
 			);
@@ -1430,6 +1448,8 @@
 		F4B8B3631BA35B92007E4104 /* Announcement */ = {
 			isa = PBXGroup;
 			children = (
+				F4336C631C24FA7D00FC2892 /* Announcement+CoreDataProperties.h */,
+				F4336C641C24FA7D00FC2892 /* Announcement+CoreDataProperties.m */,
 				F4B8B31E1BA35B1C007E4104 /* Announcement.h */,
 				F4B8B31F1BA35B1C007E4104 /* Announcement.m */,
 			);
@@ -1732,6 +1752,7 @@
 				F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */,
 				4ACDB9DB1B3E7E66009EFB91 /* NSDate+InternetDateTime.m in Sources */,
 				F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */,
+				F4336C651C24FA7D00FC2892 /* Announcement+CoreDataProperties.m in Sources */,
 				4ACDB9D51B3E7E66009EFB91 /* DetailTableViewController.m in Sources */,
 				4ACDB9BE1B3E7E66009EFB91 /* ImageCell.m in Sources */,
 				4AD850151B4584CD0059A457 /* LoginTableController.m in Sources */,
@@ -1743,6 +1764,7 @@
 				4ACDB9D71B3E7E66009EFB91 /* MWFeedInfo.m in Sources */,
 				4ACDB9B21B3E7E66009EFB91 /* MyProfileViewController.m in Sources */,
 				4ACDB9DE1B3E7E66009EFB91 /* RootViewController.m in Sources */,
+				F4336C5F1C24FA6D00FC2892 /* DiaryTheme+CoreDataProperties.m in Sources */,
 				4ACDB9ED1B3E8366009EFB91 /* DiaryInfoViewController.m in Sources */,
 				F4DD49CF1B65A97C00F4016B /* DiaryEntryTableViewCell.m in Sources */,
 				4AD850181B45A12B0059A457 /* VideoCell.m in Sources */,
@@ -1770,6 +1792,7 @@
 				F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */,
 				F42669E31B70310500A6E6D7 /* UILabel+setHTML.m in Sources */,
 				F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */,
+				F4336C681C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m in Sources */,
 				F4DD49CC1B65A7DC00F4016B /* NSString+FontAwesome.m in Sources */,
 				F4B8B3401BA35B1D007E4104 /* Notification.m in Sources */,
 				F4B8B3481BA35B1D007E4104 /* Company.m in Sources */,
@@ -1792,6 +1815,7 @@
 				F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */,
 				F4B8B33B1BA35B1D007E4104 /* DailyDiary.m in Sources */,
 				F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */,
+				F4336C621C24FA7500FC2892 /* Project+CoreDataProperties.m in Sources */,
 				F4B8B33F1BA35B1D007E4104 /* DisplayFile.m in Sources */,
 				F4B8B3411BA35B1D007E4104 /* ImageGallery.m in Sources */,
 				4ACDB9DC1B3E7E66009EFB91 /* NSString+HTML.m in Sources */,
