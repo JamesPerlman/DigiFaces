@@ -12,6 +12,8 @@
 
 #import "Project.h"
 
+#import "ProjectTableViewCell.h"
+
 @interface ProjectsMenuViewController ()
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
@@ -68,9 +70,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [self.revealViewController revealToggleAnimated:YES];
     Project *project = self.fetchedResultsController.fetchedObjects[indexPath.row];
     [self setCurrentProject:project];
+    [self.tableView reloadData];
 }
 
 /*
@@ -100,7 +104,9 @@
 
 - (void)configureProjectCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     Project *project = self.fetchedResultsController.fetchedObjects[indexPath.row];
-    cell.textLabel.text = project.projectName;
+    ProjectTableViewCell *projectCell = (ProjectTableViewCell*)cell;
+    projectCell.label.text = project.projectName;
+    projectCell.checkMark.hidden = !(project == LS.myUserInfo.currentProject);
 }
 
 

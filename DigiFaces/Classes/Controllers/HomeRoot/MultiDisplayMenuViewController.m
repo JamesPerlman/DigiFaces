@@ -25,7 +25,6 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     [super viewDidLoad];
     _firstTimeViewControllerLoaded = YES;
     // Do any additional setup after loading the view.
-    _viewControllers = [NSMutableArray array];
     
     /*
     @try {
@@ -70,6 +69,23 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated {
     
+    
+    UIViewController *oldVC = self.viewControllers.lastObject;
+    
+    [self observe:viewController];
+    
+    [self.viewControllers addObject:viewController];
+    
+    self.navigationItem.title = viewController.navigationItem.title;
+    
+    
+    [self stopObserving:oldVC];
+    
+    objc_setAssociatedObject(oldVC, (__bridge const void *)mdmvc_assoc_key, nil, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(viewController, (__bridge const void *)mdmvc_assoc_key, self, OBJC_ASSOCIATION_ASSIGN);
+    
+    [self.viewControllers removeObject:oldVC];
+    
     [self setFrontViewController:viewController animated:animated];
     
     if (_firstTimeViewControllerLoaded) {
@@ -79,13 +95,14 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
         frame.origin = CGPointMake(frame.origin.x, frame.origin.y-self.navigationController.navigationBar.frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height);
         viewController.view.frame = frame;
     }
-    
-    self.navigationItem.title = viewController.navigationItem.title;
-    
-    UIViewController *oldVC = _viewControllers.lastObject;
-    objc_setAssociatedObject(oldVC, (__bridge const void *)mdmvc_assoc_key, nil, OBJC_ASSOCIATION_ASSIGN);
-    objc_setAssociatedObject(viewController, (__bridge const void *)mdmvc_assoc_key, self, OBJC_ASSOCIATION_ASSIGN);
-    [self.viewControllers removeObject:oldVC];
+}
+
+#pragma mark - Accessors
+- (NSMutableArray*)viewControllers {
+    if (!_viewControllers) {
+        _viewControllers = [NSMutableArray array];
+    }
+    return _viewControllers;
 }
 
 #pragma mark - KVO

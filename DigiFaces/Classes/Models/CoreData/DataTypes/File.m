@@ -7,7 +7,7 @@
 //
 
 #import "File.h"
-
+#import <MediaPlayer/MediaPlayer.h>
 
 @implementation File
 
@@ -29,6 +29,7 @@
 @synthesize fileDictionary;
 
 @end
+
 
 @implementation File (DynamicMethods)
 
@@ -82,11 +83,16 @@
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 
+
 -(NSString *)getVideoThumbURL
 {
     NSString * url;
     if (self.isViddlerFile.boolValue) {
-        url = [NSString stringWithFormat:@"http://thumbs.cdn-ec.viddler.com/thumbnail_2_%@_v1.jpg", self.viddlerKey];
+        if ([[self.viddlerKey substringToIndex:7] isEqualToString:@"http://"] || [[self.viddlerKey substringToIndex:8] isEqualToString:@"https://"]) {
+            url = nil;
+        } else {
+            url = [NSString stringWithFormat:@"http://thumbs.cdn-ec.viddler.com/thumbnail_2_%@_v1.jpg", self.viddlerKey];
+        }
     }
     return url;
 }
@@ -97,7 +103,11 @@
     } else if (self.isCameraTagFile.boolValue) {
         return self.cameraTagKey;
     } else if (self.isViddlerFile.boolValue) {
-        return [NSString stringWithFormat:@"http://www.viddler.com/file/%@/html5mobile", self.viddlerKey];
+        if ([[self.viddlerKey substringToIndex:7] isEqualToString:@"http://"] || [[self.viddlerKey substringToIndex:8] isEqualToString:@"https://"]) {
+            return self.viddlerKey;
+        } else {
+            return [NSString stringWithFormat:@"http://www.viddler.com/file/%@/html5mobile", self.viddlerKey];
+        }
     } else if (self.amazonKey) {
         return self.amazonKey;
     } else return nil;

@@ -57,7 +57,12 @@
         if ([file.fileType isEqualToString:@"Image"]) {
             [iv sd_setImageWithURL:file.filePathURL];
         } else if ([file.fileType isEqualToString:@"Video"]) {
-            [iv sd_setImageWithURL:[NSURL URLWithString:[file getVideoThumbURL]]];
+            NSString *vidThumbURLString = [file getVideoThumbURL];
+            if (vidThumbURLString) {
+                [iv sd_setImageWithURL:[NSURL URLWithString:vidThumbURLString]];
+            } else {
+                [iv setImage:[UIImage imageNamed:@"genericvid"]];
+            }
             UIImageView *videoIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playIcon"]];
             [self.scrollView addSubview:videoIndicator];
             videoIndicator.frame = CGRectMake(0,0,20.0f, 20.0f);

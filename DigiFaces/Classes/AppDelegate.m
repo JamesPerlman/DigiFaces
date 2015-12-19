@@ -47,9 +47,6 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:38/255.0f green:218/255.0f blue:1 alpha:1]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    
-    [DFPushService begin];
-    
     /***** UI INITIALIZATION ****/
     
     

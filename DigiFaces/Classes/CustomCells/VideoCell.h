@@ -15,4 +15,6 @@
 
 - (void)setMediaURL:(NSURL*)url;
 - (void)playVideo;
+
+- (void)setImageWithURL:(NSString*)url;
 @end

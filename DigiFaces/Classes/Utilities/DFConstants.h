@@ -17,6 +17,8 @@ extern NSTimeInterval const DFLocalizationSynchronizerUpdateInterval;
 
 extern NSString * const APIServerAddress;
 
+extern NSString * const DFAvatarGenericImageURLKey;
+
 // Notifications
 extern NSString * const DFNotificationDidChangeProject;
 

@@ -94,6 +94,7 @@
                method:RKRequestMethodPOST
                params:@{@"username" : username, @"password" : password, @"grant_type" : @"password"}
               success:^(NSDictionary *response, APITokenResponse *result) {
+                  [DFPushService begin];
                   LS.apiAuthToken = [NSString stringWithFormat:@"Bearer %@", result.accessToken];
                   LS.loginUsername = username;
                   LS.loginPassword = password;

@@ -82,7 +82,13 @@
     File *file = _files[indexPath.row];
     if ([file.fileType isEqualToString:@"Video"]) {
         cell.videoIndicatorView.hidden = false;
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[file getVideoThumbURL]]];
+        NSString *vidThumbURLString = [file getVideoThumbURL];
+        UIImage *genericImage = [UIImage imageNamed:@"genericvid"];
+        if (vidThumbURLString) {
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:vidThumbURLString] placeholderImage:genericImage];
+        } else {
+            [cell.imageView setImage:genericImage];
+        }
     } else {
         [cell.imageView sd_setImageWithURL:file.filePathURL];
         cell.videoIndicatorView.hidden = true;

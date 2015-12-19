@@ -101,6 +101,7 @@
 		F4336C621C24FA7500FC2892 /* Project+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C611C24FA7500FC2892 /* Project+CoreDataProperties.m */; };
 		F4336C651C24FA7D00FC2892 /* Announcement+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C641C24FA7D00FC2892 /* Announcement+CoreDataProperties.m */; };
 		F4336C681C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C671C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m */; };
+		F4336C6B1C25F73100FC2892 /* ProjectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C6A1C25F73100FC2892 /* ProjectTableViewCell.m */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
 		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
@@ -158,6 +159,7 @@
 		F4E670E01B61669B00871FA9 /* DFMediaUploadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670DC1B61669B00871FA9 /* DFMediaUploadView.m */; };
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
+		F4EB32A31C26135C00CEB646 /* GalleryImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB32A21C26135C00CEB646 /* GalleryImageCollectionViewCell.m */; };
 		F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */; };
 /* End PBXBuildFile section */
 
@@ -386,6 +388,8 @@
 		F4336C641C24FA7D00FC2892 /* Announcement+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Announcement+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F4336C661C24FA8200FC2892 /* DailyDiary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DailyDiary+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F4336C671C24FA8200FC2892 /* DailyDiary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DailyDiary+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F4336C691C25F73100FC2892 /* ProjectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectTableViewCell.h; sourceTree = "<group>"; };
+		F4336C6A1C25F73100FC2892 /* ProjectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectTableViewCell.m; sourceTree = "<group>"; };
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
 		F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Transformations.h"; sourceTree = "<group>"; };
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
@@ -497,6 +501,8 @@
 		F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DFMediaUploadView.xib; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadView.xib"; sourceTree = "<group>"; };
 		F4E670DE1B61669B00871FA9 /* DFMediaUploadViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFMediaUploadViewDelegate.h; path = "../../../../../../../../ios/oDesk iOS/Shamsu Bhaidani/DigiFaces/DigiFaces/Classes/Utilities/DFMediaUploadManager/DFMediaUploadViewDelegate.h"; sourceTree = "<group>"; };
 		F4E670E31B61720E00871FA9 /* AddResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddResponseViewController.m; sourceTree = "<group>"; };
+		F4EB32A11C26135C00CEB646 /* GalleryImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryImageCollectionViewCell.h; sourceTree = "<group>"; };
+		F4EB32A21C26135C00CEB646 /* GalleryImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryImageCollectionViewCell.m; sourceTree = "<group>"; };
 		F4FC8CAB1BBEE88C00B12DEE /* DFDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFDataManager.h; sourceTree = "<group>"; };
 		F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -676,6 +682,8 @@
 				F4DD49CE1B65A97C00F4016B /* DiaryEntryTableViewCell.m */,
 				4AA275961B5E64C200367E92 /* GalleryCell.h */,
 				4AA275971B5E64C200367E92 /* GalleryCell.m */,
+				F4EB32A11C26135C00CEB646 /* GalleryImageCollectionViewCell.h */,
+				F4EB32A21C26135C00CEB646 /* GalleryImageCollectionViewCell.m */,
 				F4864F681B670E06000D2615 /* HomeTableViewCell.h */,
 				F4864F691B670E06000D2615 /* HomeTableViewCell.m */,
 				4ACDB94F1B3E7E66009EFB91 /* ImageCell.h */,
@@ -695,6 +703,8 @@
 				4ACDB9FE1B3EC155009EFB91 /* NotificationCell.m */,
 				4ACDB9571B3E7E66009EFB91 /* ProfilePicCell.h */,
 				4ACDB9581B3E7E66009EFB91 /* ProfilePicCell.m */,
+				F4336C691C25F73100FC2892 /* ProjectTableViewCell.h */,
+				F4336C6A1C25F73100FC2892 /* ProjectTableViewCell.m */,
 				4ABC3D391B4001460090A619 /* ResponseViewCell.h */,
 				4ABC3D3A1B4001460090A619 /* ResponseViewCell.m */,
 				4AC7D47A1B510D0B00587045 /* RTCell.h */,
@@ -1842,6 +1852,7 @@
 				4ABC3D3B1B4001460090A619 /* ResponseViewCell.m in Sources */,
 				4ACDB9BF1B3E7E66009EFB91 /* ImageCollectionCell.m in Sources */,
 				4ACDB9B31B3E7E66009EFB91 /* PhotoGalleryViewController.m in Sources */,
+				F4EB32A31C26135C00CEB646 /* GalleryImageCollectionViewCell.m in Sources */,
 				F4B8B34C1BA35B1D007E4104 /* DailyDiaryResponse.m in Sources */,
 				F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */,
 				F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */,
@@ -1865,6 +1876,7 @@
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
 				F4B8B3451BA35B1D007E4104 /* MarkUp.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
+				F4336C6B1C25F73100FC2892 /* ProjectTableViewCell.m in Sources */,
 				F42669ED1B7125D500A6E6D7 /* ForkNavViewController.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				F4B8B3421BA35B1D007E4104 /* Message.m in Sources */,

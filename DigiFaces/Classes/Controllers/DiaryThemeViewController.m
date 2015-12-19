@@ -467,7 +467,7 @@
                         cell = vidCell;
                         if (module.displayFile.file) {
                             
-                            [vidCell.videoImageView sd_setImageWithURL:[NSURL URLWithString:module.displayFile.file.getVideoThumbURL]];
+                            [vidCell setImageWithURL:module.displayFile.file.getVideoThumbURL];
                             vidCell.moviePlayerController.contentURL = module.displayFile.file.filePathURL;
                             vidCell.videoIndicatorView.hidden = false;
                         } else {
@@ -493,7 +493,6 @@
                     GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
                     galleryCell.viewController = self;
                     galleryCell.files = [module.imageGallery.files allObjects];
-                    [galleryCell reloadGallery];
                     galleryCell.scrollView.delegate = galleryCell;
                     cell = galleryCell;
                 }

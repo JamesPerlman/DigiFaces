@@ -14,10 +14,11 @@
 
 @end
 
-@interface GalleryCell : UITableViewCell<UIScrollViewDelegate>
+@interface GalleryCell : UITableViewCell<UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, weak) UIViewController *viewController;
 @property (nonatomic, assign) IBOutlet id<GalleryCellDelegate> delegate;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (nonatomic, strong) NSArray * files;

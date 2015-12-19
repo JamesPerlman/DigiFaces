@@ -8,40 +8,30 @@
 
 #import "GalleryCell.h"
 #import "File.h"
-#import <SDWebImage/UIButton+WebCache.h>
+
+#import "GalleryImageCollectionViewCell.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #import <MHVideoPhotoGallery/MHGallery.h>
 
+@interface GalleryCell ()
+@property (nonatomic, strong) UICollectionViewController *collectionViewController;
+@end
 
 @implementation GalleryCell
 
--(void)reloadGallery
-{
-    [self removeEverything];
-    NSInteger xOffset = 0;
-    NSInteger tag = 0;
-    for (UIView *v in self.scrollView.subviews) {
-        [v removeFromSuperview];
-    }
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
-    [self showArrowButtonsAsNeeded];
-    for (File * file in _files) {
-        UIButton * imageView = [self getImageWithFile:file];
-        imageView.tag = tag++;
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [imageView addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        CGRect rect = imageView.frame;
-        rect.origin.x = xOffset;
-        xOffset += self.scrollView.frame.size.width;
-        [imageView setFrame:rect];
-        
-        [self.scrollView addSubview:imageView];
-    }
-    [self.scrollView setContentSize:CGSizeMake(xOffset, self.scrollView.frame.size.height)];
 }
 
--(void) buttonClicked:(UIButton*)sender
+- (void)setFiles:(NSArray *)files {
+    _files = files;
+    [self.collectionView reloadData];
+}
+
+-(void) indexTapped:(NSIndexPath*)index
 {
     NSMutableArray *galleryDataMutable = [NSMutableArray array];
     
@@ -61,7 +51,7 @@
     
     MHGalleryController *gallery = [MHGalleryController galleryWithPresentationStyle:MHGalleryViewModeImageViewerNavigationBarHidden];
     gallery.galleryItems = [NSArray arrayWithArray:galleryDataMutable];
-    gallery.presentationIndex = sender.tag;
+    gallery.presentationIndex = index.item;
     
     __weak MHGalleryController *blockGallery = gallery;
     
@@ -73,9 +63,8 @@
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
+            //[sself.scrollView scrollRectToVisible:CGRectMake(self.frame.size.width*(CGFloat)currentIndex, 0, self.frame.size.width, self.frame.size.height) animated:NO];
             [blockGallery dismissViewControllerAnimated:YES dismissImageView:nil completion:nil];
-            [sself showArrowButtonsAsNeeded];
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         });
         
@@ -83,75 +72,48 @@
     [self.viewController presentMHGalleryController:gallery animated:YES completion:nil];
 }
 
--(UIButton*)getImageWithFile:(File*)file
-{
-    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    button.contentMode = UIViewContentModeScaleAspectFill;
-    NSString * url;
+#pragma mark - Collection View Data Source
+
+- (File*)fileForIndexPath:(NSIndexPath*)indexPath {
+    return [self.files objectAtIndex:indexPath.item];
+}
+
+
+- (void)configureCell:(UICollectionViewCell*)cell forItemAtIndexPath:(NSIndexPath*)indexPath {
+    GalleryImageCollectionViewCell *galleryImageCell = (GalleryImageCollectionViewCell*)cell;
+    File *file = [self fileForIndexPath:indexPath];
+    
+    NSString *url;
     if ([file.fileType isEqualToString:@"Image"]) {
         url = file.filePath;
     }
     else{
         url = file.getVideoThumbURL;
     }
-    [button sd_setImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
-    
-    return button;
-}
-
--(void)removeEverything
-{
-    for (UIView * vu in self.subviews) {
-        if ([vu isKindOfClass:[UIButton class]]) {
-            [vu removeFromSuperview];
-        }
-    }
-}
-
-
-- (void)showArrowButtonsAsNeeded {
-    CGFloat w = self.scrollView.frame.size.width;
-    CGFloat x = self.scrollView.contentOffset.x;
-    if (roundf(x/w) == self.files.count-1) {
-        self.rightButton.hidden = true;
+    if (!url && [file.fileType isEqualToString:@"Video"]) {
+        [galleryImageCell.imageView setImage:[UIImage imageNamed:@"genericvid"]];
     } else {
-       self.rightButton.hidden = false;
+        [galleryImageCell.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
     }
+
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.files.count;
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"galleryCollectionCell" forIndexPath:indexPath];
+    [self configureCell:cell forItemAtIndexPath:indexPath];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (roundf(x/w) == 0) {
-        self.leftButton.hidden = true;
-    } else {
-        self.leftButton.hidden = false;
-    }
-
 }
 
-#pragma mark - IBActions
-- (IBAction)goLeft:(id)sender {
-    CGFloat w = self.scrollView.frame.size.width;
-    CGFloat newx = self.scrollView.contentOffset.x-w;
-    [self.scrollView scrollRectToVisible:CGRectMake(newx, 0, w, self.scrollView.frame.size.height) animated:YES];
-    
-    if (roundf(newx/w) == 0) {
-        self.leftButton.hidden = true;
-    }
-    self.rightButton.hidden = false;
-}
-
-- (IBAction)goRight:(id)sender {
-    CGFloat w = self.scrollView.frame.size.width;
-    CGFloat newx=    self.scrollView.contentOffset.x+w;
-    [self.scrollView scrollRectToVisible:CGRectMake(newx, 0, w, self.scrollView.frame.size.height) animated:YES];
-    
-    if (roundf(newx/w) == self.files.count-1) {
-        self.rightButton.hidden = true;
-    }
-    self.leftButton.hidden = false;
-}
-
-#pragma mark - Scroll View Delegate
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self showArrowButtonsAsNeeded];
-}
 
 @end

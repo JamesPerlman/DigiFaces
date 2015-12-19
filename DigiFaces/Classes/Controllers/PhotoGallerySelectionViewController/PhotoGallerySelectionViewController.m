@@ -14,7 +14,7 @@
 
 @implementation PhotoGallerySelectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+static NSString * const reuseIdentifier = @"PhotoGalleryCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,7 +43,9 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 */
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark - Data Initialization
+
+#pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 #warning Incomplete method implementation -- Return the number of sections

@@ -15,6 +15,8 @@ NSTimeInterval const DFLocalizationSynchronizerUpdateInterval = 60;
 
 NSString * const APIServerAddress = @"http://digifacesservices.focusforums.com/";
 
+NSString * const DFAvatarGenericImageURLKey = @"https://www.digifaces.com/img/genericavatar.gif";
+
 // notifications
 NSString * const DFNotificationDidChangeProject = @"com.digifaces.notification.didChangeProject";
 

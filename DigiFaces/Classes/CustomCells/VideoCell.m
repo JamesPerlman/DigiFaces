@@ -29,6 +29,16 @@
     self.videoIndicatorView.center = CGPointMake(self.bounds.size.width/2.0, self.bounds.size.height/2.0);
     
 }
+
+- (void)setImageWithURL:(NSString *)urlString {
+    UIImage *genericImage = [UIImage imageNamed:@"genericvid"];
+    if (!urlString) {
+        [self.videoImageView setImage:genericImage];
+    } else {
+        [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:genericImage];
+    }
+}
+
 - (void)playVideo {
     self.moviePlayerController.view.hidden = NO;
     [self.moviePlayerController play];

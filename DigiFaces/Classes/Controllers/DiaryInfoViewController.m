@@ -190,7 +190,7 @@ typedef enum {
             }
             
             VideoCell * vidCell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
-            [vidCell.imageView setImageWithURL:[NSURL URLWithString:file.getVideoThumbURL]];
+            [vidCell setImageWithURL:file.getVideoThumbURL];
             cell = vidCell;
         }
             break;

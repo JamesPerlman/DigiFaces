@@ -180,7 +180,13 @@
             VideoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"videoCell"];
             cell.moviePlayerController.contentURL = [NSURL URLWithString:attachment.filePath];
             cell.moviePlayerController.view.hidden = true;
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[attachment getVideoThumbURL]] placeholderImage:[UIImage imageNamed:@"blank"]];
+            NSString *thumbURLString = [attachment getVideoThumbURL];
+            UIImage *genericImage = [UIImage imageNamed:@"genericvid"];
+            if (thumbURLString) {
+                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:thumbURLString] placeholderImage:genericImage];
+            } else {
+                [cell.imageView setImage:genericImage];
+            }
             return cell;
         }
     }

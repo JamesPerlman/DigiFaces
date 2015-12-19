@@ -37,7 +37,7 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (LS.myUserInfo.projects.count > 1) {
+    if (LS.myUserInfo.projects.count > 1 && self.navigationItem.leftBarButtonItem == nil) {
         [self addRevealControls];
     }
 }

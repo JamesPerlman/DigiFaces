@@ -90,8 +90,11 @@ typedef enum : NSUInteger {
 }
 
 - (void)localizeUI {
-    self.navigationItem.title = DFLocalizedString(@"view.home.navbar.title", nil);
+    [self updateTitle];
     [self.tableView reloadData];
+}
+- (void)updateTitle {
+    self.navigationItem.title = LS.myUserInfo.currentProject.projectName ?: DFLocalizedString(@"view.home.navbar.title", nil);
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -247,14 +250,14 @@ typedef enum : NSUInteger {
                       } else {
                           receivedProjects = [result isKindOfClass:[NSArray class]] ? result : @[result];
                       }
-                      
+                      [sself updateTitle];
                       LS.myUserInfo.projects = [NSSet setWithArray:receivedProjects];
                       [DFDataManager save:nil];
                       
                       if (receivedProjects.count>1) {
-                          [self.homeRootViewController addRevealControls];
+                          [sself.homeRootViewController addRevealControls];
                       } else {
-                          [self.homeRootViewController removeRevealControls];
+                          [sself.homeRootViewController removeRevealControls];
                       }
                       
                       //[DFDataManager removeEntitiesWithEntityName:@"Project" idKey:@"projectId" notInArray:receivedProjects predicate:nil];
@@ -291,7 +294,15 @@ typedef enum : NSUInteger {
         picCell.profileImage.image = image;
         return;
     }
-    [picCell.profileImage sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    __weak __typeof(picCell) weakPicCell = picCell;
+    [picCell.profileImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (!image) {
+            __strong __typeof(weakPicCell) strongPicCell = weakPicCell;
+            if (strongPicCell) {
+                [strongPicCell.profileImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+            }
+        }
+    }];
 }
 
 -(void)updateProfilePicture:(NSDictionary*)profilePicture withImage:(UIImage*)image
@@ -554,6 +565,7 @@ typedef enum : NSUInteger {
     self.fetchedResultsController.fetchRequest.predicate = [NSPredicate predicateWithFormat:@"project = %@", LS.myUserInfo.currentProject];
     [self.fetchedResultsController performFetch:nil];
     [self fetchActivites];
+    [self updateTitle];
 }
 
 #pragma mark - Data Source Convenience Methods
