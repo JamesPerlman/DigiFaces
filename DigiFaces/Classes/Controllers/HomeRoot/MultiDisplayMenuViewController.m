@@ -14,7 +14,7 @@ static NSTimeInterval MDMAnimationDuration = 0.5;
 static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey";
 
 @interface MultiDisplayMenuViewController () {
-    BOOL firstTime;
+    BOOL _firstTimeViewControllerLoaded;
 }
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @end
@@ -23,15 +23,16 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    firstTime = YES;
+    _firstTimeViewControllerLoaded = YES;
     // Do any additional setup after loading the view.
     _viewControllers = [NSMutableArray array];
     
+    /*
     @try {
         [self performSegueWithIdentifier:@"init" sender:nil];
     } @catch (NSException *e) {
         NSLog(@"You better have some sorta plan!  No init segue found on %@.  Exception: %@", NSStringFromClass([self class]), e);
-    }
+    }*/
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +69,21 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 }
 
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated {
+    
+    [self setFrontViewController:viewController animated:animated];
+    
+    if (_firstTimeViewControllerLoaded) {
+        _firstTimeViewControllerLoaded = NO;
+    } else {
+        CGRect frame = self.view.frame;
+        frame.origin = CGPointMake(frame.origin.x, frame.origin.y-self.navigationController.navigationBar.frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height);
+        viewController.view.frame = frame;
+    }
+    
+    self.navigationItem.title = viewController.navigationItem.title;
+    
+    return;
+    
     UIViewController *oldVC = _viewControllers.lastObject;
     
     [self observe:viewController];
@@ -76,15 +92,8 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     
     [self addChildViewController:viewController];
     
-    self.navigationItem.title = viewController.navigationItem.title;
     
-    if (firstTime) {
-        firstTime = NO;
-    } else {
-        CGRect frame = self.view.frame;
-        frame.origin = CGPointMake(frame.origin.x, frame.origin.y-self.navigationController.navigationBar.frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height);
-        viewController.view.frame = frame;
-    }
+    
     [self.view addSubview:viewController.view];
     /*
      [self.view addConstraint:[NSLayoutConstraint equalWidthWithItem:viewController.view toItem:self.view]];
@@ -119,8 +128,6 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     }
 }
 
-
-
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"navigationItem.title"]) {
@@ -153,6 +160,29 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     }
 }
 
+@end
+
+@implementation MDMRevealViewControllerSegue
+
+- (void)reveal {
+    UIViewController *src = self.sourceViewController;
+    UIViewController *dst = self.destinationViewController;
+}
+
+@end
+
+@interface MDMSlideOutRevealTransition : NSObject <UIViewControllerAnimatedTransitioning>
+@end
+
+@implementation MDMSlideOutRevealTransition
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    return 0.35;
+}
+
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+    
+}
 @end
 
 @implementation UIViewController (MultiDisplayMenuViewController)

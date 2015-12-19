@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
+
 @class MultiDisplayMenuViewController;
 @interface UIViewController (MultiDisplayMenuViewController)
 - (MultiDisplayMenuViewController*)multiDisplayViewController;
 @end
 
-@interface MultiDisplayMenuViewController : UIViewController
+@interface MultiDisplayMenuViewController : SWRevealViewController
 
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated;
 
@@ -21,5 +23,13 @@
 @interface MDMSetViewControllerSegue : UIStoryboardSegue
 
 - (void)perform;
+
+@end
+
+@interface MDMRevealViewControllerSegue : UIStoryboardSegue
+
+- (void)perform;
+
+@property (nonatomic) BOOL destinationViewControllerHidden;
 
 @end

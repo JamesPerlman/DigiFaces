@@ -80,8 +80,12 @@ typedef enum : NSUInteger {
     [self.refreshControl addTarget:self
                             action:@selector(fetchActivites)
                   forControlEvents:UIControlEventValueChanged];
-    [self localizeUI];
     
+    // listen for project change notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeProject:) name:DFNotificationDidChangeProject object:nil];
+    
+    
+    [self localizeUI];
     
 }
 
@@ -102,6 +106,8 @@ typedef enum : NSUInteger {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 #pragma mark - Server Interaction
 
 -(void)fetchDailyDiary:(NSNumber*)diaryId {
@@ -234,6 +240,21 @@ typedef enum : NSUInteger {
                       [MBProgressHUD hideHUDForView:sself.view animated:YES];
                   }];
 }
+
+
+-(void)fetchAlertCounts {
+    defwself
+    [DFClient makeRequest:APIPathGetAlertCounts
+                   method:RKRequestMethodGET
+                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
+               bodyParams:nil success:^(NSDictionary *response, APIAlertCounts *result) {
+                   defsself
+                   [sself.homeRootViewController setAlertCounts:result];
+               }
+                  failure:nil];
+}
+
+
 
 #pragma mark - UI Methods
 
@@ -458,8 +479,6 @@ typedef enum : NSUInteger {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    
-    
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
@@ -500,20 +519,11 @@ typedef enum : NSUInteger {
     
 }
 
-#pragma mark - Notifications n stuff
+#pragma mark - Notifications
 
--(void)fetchAlertCounts {
-    defwself
-    [DFClient makeRequest:APIPathGetAlertCounts
-                   method:RKRequestMethodGET
-                urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
-               bodyParams:nil success:^(NSDictionary *response, APIAlertCounts *result) {
-                   defsself
-                   [sself.homeRootViewController setAlertCounts:result];
-               }
-                  failure:nil];
+- (void)didChangeProject:(NSNotification*)notification {
+    [self.fetchedResultsController performFetch:nil];
 }
-
 
 
 #pragma mark - Data Source Convenience Methods
@@ -534,7 +544,7 @@ typedef enum : NSUInteger {
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
-        //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"", ];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"", ];
         
         fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
         
@@ -558,9 +568,10 @@ typedef enum : NSUInteger {
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
-    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row+2 inSection:0];
+    BOOL hasDailyDiary = LS.myUserInfo.currentProject.hasDailyDiary.integerValue;
+    NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row+1+hasDailyDiary inSection:0];
     
-    NSIndexPath *adjustedNewIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row+2 inSection:0];
+    NSIndexPath *adjustedNewIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row+1+hasDailyDiary inSection:0];
     UITableView *tableView = self.tableView;
     
     switch(type) {

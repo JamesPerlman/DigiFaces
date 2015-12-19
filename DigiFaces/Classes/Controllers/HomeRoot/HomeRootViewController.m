@@ -8,9 +8,14 @@
 
 #import "HomeRootViewController.h"
 
+static NSString *kHomeToAnnouncementsSegueID = @"toAnnouncements";
+static NSString *kHomeToConversationsSegueID = @"toConversations";
+static NSString *kHomeToNotificationsSegueID = @"toNotifications";
+static NSString *kHomeToSettingsSegueID = @"toSettings";
+
 @interface HomeRootViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeBarButtonItem;
-
+@property (strong, nonatomic) UIBarButtonItem *sideMenuRevealButtonItem;
 @end
 
 @implementation HomeRootViewController
@@ -29,6 +34,16 @@
     self.messagesVC.delegate = self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self addRevealControls];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeRevealControls];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -41,14 +56,25 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([[segue identifier] isEqualToString:@"init"]) {
-        self.navigationItem.leftBarButtonItem = nil;
+    NSString *segueID = [segue identifier];
+    id destVC = [segue destinationViewController];
+    
+    if ([segueID isEqualToString:@"sw_front"]) {
+        [self addRevealControls];
+        [self setViewController:destVC animated:true];
     } else {
+        [self removeRevealControls];
         self.navigationItem.leftBarButtonItem = self.homeBarButtonItem;
+        if ([segueID isEqualToString:kHomeToConversationsSegueID]
+            || [segueID isEqualToString:kHomeToAnnouncementsSegueID]
+            || [segueID isEqualToString:kHomeToNotificationsSegueID]
+            || [segueID isEqualToString:kHomeToSettingsSegueID]) {
+            [self setViewController:destVC animated:true];
+        }
     }
     
-    if ([[segue destinationViewController] respondsToSelector:@selector(setDelegate:)]) {
-        [[segue destinationViewController] setDelegate:self];
+    if ([destVC respondsToSelector:@selector(setDelegate:)]) {
+        [destVC setDelegate:self];
     }
 }
 
@@ -63,24 +89,24 @@
 }
 
 - (IBAction)didTapAlerts:(id)sender {
-        [self.popover presentPopoverFromRect:[self.view convertRect:self.messagesButton.bounds fromView:self.messagesButton]
-                                      inView:self.view
-                    permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
+    [self.popover presentPopoverFromRect:[self.view convertRect:self.messagesButton.bounds fromView:self.messagesButton]
+                                  inView:self.view
+                permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
     
 }
 
 - (void)didTapAnnouncements {
-    [self performSegueWithIdentifier:@"toAnnouncements" sender:nil];
+    [self performSegueWithIdentifier:kHomeToAnnouncementsSegueID sender:nil];
     [self.popover dismissPopoverAnimated:YES];
 }
 
 - (void)didTapConversations {
-    [self performSegueWithIdentifier:@"toConversations" sender:nil];
+    [self performSegueWithIdentifier:kHomeToConversationsSegueID sender:nil];
     [self.popover dismissPopoverAnimated:YES];
 }
 
 - (void)didTapNotifications {
-    [self performSegueWithIdentifier:@"toNotifications" sender:nil];
+    [self performSegueWithIdentifier:kHomeToNotificationsSegueID sender:nil];
     [self.popover dismissPopoverAnimated:YES];
 }
 
@@ -108,13 +134,39 @@
     self.alertCountLabel.text = [NSString stringWithFormat:@" %@ ", ac.totalUnreadCount];
     [self.messagesVC.tableView reloadData];
 }
+
+#pragma mark - Side Menu Reveal Bar Button Item
+
+- (UIBarButtonItem*)sideMenuRevealButtonItem {
+    if (!_sideMenuRevealButtonItem) {
+        _sideMenuRevealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"dashes"] style:UIBarButtonItemStylePlain target:self action:@selector(revealToggle:)];
+    }
+    return _sideMenuRevealButtonItem;
+}
+
+- (void)addRevealControls {
+    if (self.navigationItem.leftBarButtonItem != self.sideMenuRevealButtonItem) {
+        self.navigationItem.leftBarButtonItem = self.sideMenuRevealButtonItem;
+        [self.navigationController.navigationBar addGestureRecognizer:self.navBarPanGestureRecognizer];
+        [self.navigationController.navigationBar addGestureRecognizer:self.navBarTapGestureRecognizer];
+    }
+}
+
+- (void)removeRevealControls {
+    if (self.navigationItem.leftBarButtonItem == self.sideMenuRevealButtonItem) {
+        self.navigationItem.leftBarButtonItem = nil;
+        [self.navigationController.navigationBar removeGestureRecognizer:self.navBarPanGestureRecognizer];
+        [self.navigationController.navigationBar removeGestureRecognizer:self.navBarTapGestureRecognizer];
+    }
+}
+
 @end
 
 
 @implementation UIViewController (HomeRootViewController)
 
 - (HomeRootViewController*)homeRootViewController {
-    return (HomeRootViewController*)self.multiDisplayViewController;
+    return (HomeRootViewController*)self.revealViewController;
 }
 
 @end

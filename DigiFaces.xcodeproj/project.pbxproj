@@ -94,6 +94,9 @@
 		F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F01B71399800A6E6D7 /* MessagesMenuTableViewController.m */; };
 		F42669F51B713B7900A6E6D7 /* APIAlertCounts.m in Sources */ = {isa = PBXBuildFile; fileRef = F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */; };
 		F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */; };
+		F4336C541C23BF7D00FC2892 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C531C23BF7D00FC2892 /* SWRevealViewController.m */; };
+		F4336C581C24E41800FC2892 /* UIView+GestureRecognizerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */; };
+		F4336C5C1C24E9D300FC2892 /* ProjectsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C5B1C24E9D300FC2892 /* ProjectsMenuViewController.m */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
 		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
@@ -365,6 +368,12 @@
 		F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIAlertCounts.m; sourceTree = "<group>"; };
 		F42A67B91B647A840047F420 /* ProfilePictureCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureCollectionViewController.h; sourceTree = "<group>"; };
 		F42A67BA1B647A840047F420 /* ProfilePictureCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureCollectionViewController.m; sourceTree = "<group>"; };
+		F4336C521C23BF7D00FC2892 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		F4336C531C23BF7D00FC2892 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		F4336C561C24E41800FC2892 /* UIView+GestureRecognizerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GestureRecognizerControls.h"; sourceTree = "<group>"; };
+		F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GestureRecognizerControls.m"; sourceTree = "<group>"; };
+		F4336C5A1C24E9D300FC2892 /* ProjectsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectsMenuViewController.h; sourceTree = "<group>"; };
+		F4336C5B1C24E9D300FC2892 /* ProjectsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectsMenuViewController.m; sourceTree = "<group>"; };
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
 		F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Transformations.h"; sourceTree = "<group>"; };
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
@@ -624,8 +633,9 @@
 				F4864F831B681DAE000D2615 /* PhotoGallery */,
 				F4DD49BB1B6548B700F4016B /* PhotoGallerySection */,
 				F4864F821B681DA5000D2615 /* ProfilePicture */,
-				F4864F841B681DB3000D2615 /* ProjectIntro */,
 				F4864F971B682259000D2615 /* Project */,
+				F4864F841B681DB3000D2615 /* ProjectIntro */,
+				F4336C591C24E99300FC2892 /* ProjectsMenu */,
 				F4864FA01B68229B000D2615 /* Response */,
 				F4864F981B68225E000D2615 /* Settings */,
 				F4864F991B682264000D2615 /* TechSupport */,
@@ -710,6 +720,7 @@
 		4ACDB96A1B3E7E66009EFB91 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F4336C511C23BF5500FC2892 /* SWRevealViewController */,
 				F4C8AA461BD2DBFA00B137CB /* DFLanguageSynchronizer */,
 				F4B988441BC706CA0010F139 /* JPKeyboardSensitiveView */,
 				F420FB6D1B6162EE007092CB /* DFMediaUploadManager */,
@@ -873,6 +884,24 @@
 				F42669F41B713B7900A6E6D7 /* APIAlertCounts.m */,
 			);
 			name = UnreadAnnouncementCounts;
+			sourceTree = "<group>";
+		};
+		F4336C511C23BF5500FC2892 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F4336C521C23BF7D00FC2892 /* SWRevealViewController.h */,
+				F4336C531C23BF7D00FC2892 /* SWRevealViewController.m */,
+			);
+			path = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		F4336C591C24E99300FC2892 /* ProjectsMenu */ = {
+			isa = PBXGroup;
+			children = (
+				F4336C5A1C24E9D300FC2892 /* ProjectsMenuViewController.h */,
+				F4336C5B1C24E9D300FC2892 /* ProjectsMenuViewController.m */,
+			);
+			path = ProjectsMenu;
 			sourceTree = "<group>";
 		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
@@ -1521,6 +1550,8 @@
 				F4C8AA4B1BD3599900B137CB /* UIViewController+DFLocalization.m */,
 				F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */,
 				F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */,
+				F4336C561C24E41800FC2892 /* UIView+GestureRecognizerControls.h */,
+				F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1697,6 +1728,7 @@
 			files = (
 				F4B988451BC707C80010F139 /* JPKeyboardSensitiveView.m in Sources */,
 				F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */,
+				F4336C541C23BF7D00FC2892 /* SWRevealViewController.m in Sources */,
 				F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */,
 				4ACDB9DB1B3E7E66009EFB91 /* NSDate+InternetDateTime.m in Sources */,
 				F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */,
@@ -1717,6 +1749,7 @@
 				F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */,
 				F4B8B3441BA35B1D007E4104 /* Announcement.m in Sources */,
 				4ACDBA111B3EDF75009EFB91 /* ImagesCell.m in Sources */,
+				F4336C5C1C24E9D300FC2892 /* ProjectsMenuViewController.m in Sources */,
 				4ACDB9B61B3E7E66009EFB91 /* ProjectViewController.m in Sources */,
 				F4B8B3501BA35B1D007E4104 /* Thread.m in Sources */,
 				F4B8B3461BA35B1D007E4104 /* Project.m in Sources */,
@@ -1778,6 +1811,7 @@
 				F4022FDF1B6977090080C157 /* APISetUserNameResponse.m in Sources */,
 				F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */,
 				4ACDB9FF1B3EC155009EFB91 /* NotificationCell.m in Sources */,
+				F4336C581C24E41800FC2892 /* UIView+GestureRecognizerControls.m in Sources */,
 				F416E09A1C20D56D0095E972 /* DFPushService.m in Sources */,
 				F4022FCB1B68789D0080C157 /* APIUploadAvatarResponse.m in Sources */,
 				4ACDB9B01B3E7E66009EFB91 /* HomeViewController.m in Sources */,

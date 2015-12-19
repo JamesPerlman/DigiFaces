@@ -45,6 +45,7 @@
              DESCRIPTOR(APIPathActivityMarkThreadRead,              kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathActivityMarkCommentRead,             kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathForgotPassword,                      kPOST, emptyResponseMapping),
+             DESCRIPTOR(APIPathChangeProject,                       kPOST, emptyResponseMapping),
              DESCRIPTOR(APIPathGetAbout,                            kGET,  aboutMapping),
              DESCRIPTOR(APIPathGetAboutMe,                          kGET,  aboutMeMapping),
              DESCRIPTOR(APIPathGetAlertCounts,                      kGET,  alertCountsMapping),

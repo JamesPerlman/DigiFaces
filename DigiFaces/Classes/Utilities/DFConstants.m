@@ -15,12 +15,15 @@ NSTimeInterval const DFLocalizationSynchronizerUpdateInterval = 60;
 
 NSString * const APIServerAddress = @"http://digifacesservices.focusforums.com/";
 
+// notifications
+NSString * const DFNotificationDidChangeProject = @"com.digifaces.notification.didChangeProject";
 
 // misc
 NSString * const APIPathGetToken = @"Token";
 NSString * const APIPathUARegisterDevice = @"api/UrbanAirship/RegisterDevice";
 
 // account
+NSString * const APIPathChangeProject = @"api/Account/ChangeProject";
 NSString * const APIPathGetUserInfo = @"api/Account/UserInfo";
 NSString * const APIPathGetAboutMe = @"api/Account/GetAboutMe/:projectId";
 NSString * const APIPathUpdateAboutMe = @"api/Account/UpdateAboutMe";

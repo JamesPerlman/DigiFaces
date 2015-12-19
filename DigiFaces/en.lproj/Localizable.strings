@@ -84,6 +84,9 @@
 /* Project Intro View */
 "view.proj_intro.navbar.title" = "PROJECT INTRO";
 
+/* Projects Menu View */
+"view.projects_menu.title" = "Projects";
+
 /* Diary View */
 "view.diary.navbar.title" = "DIARY";
 "view.diary.alert.load_error" = "Something went wrong.  Press OK or swipe down to try again.";
@@ -91,7 +94,6 @@
 "view.diary.text.n_entries" = "%lu Entries";
 
 /* Diary Theme View */
-
 "view.theme.navbar.title" = "DIARY THEME";
 "view.theme.alert.load_failure" = "Something went wrong.  Press OK or swipe down to try again.";
 "view.theme.text.markup_warning" = "You must use your computer to complete this theme";
