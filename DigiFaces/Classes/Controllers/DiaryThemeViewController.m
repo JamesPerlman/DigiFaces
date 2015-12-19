@@ -226,8 +226,12 @@
         else {
             Module * gallery = [self getModuleWithThemeType:ThemeTypeImageGallery];
             if (gallery) {
+                CGFloat height = (self.view.frame.size.width - 16.0 - 30.0) / 4.0;
+                if (gallery.imageGallery.files.count > 4) {
+                    height = height * 2.0 + 30.0;
+                }
                 [_cellsArray addObject:gallery];
-                [_heightArray addObject:@160];
+                [_heightArray addObject:@(height)];
             }
         }
         

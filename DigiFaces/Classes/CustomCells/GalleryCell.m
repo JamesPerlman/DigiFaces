@@ -111,8 +111,13 @@
     return cell;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat s = (self.frame.size.width- 16.0 - 30.0) / 4.0;
+    return CGSizeMake(s,s);
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self indexTapped:indexPath];
 }
 
 
