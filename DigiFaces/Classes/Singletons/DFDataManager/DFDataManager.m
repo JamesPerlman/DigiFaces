@@ -93,4 +93,19 @@
     
 }
 
++ (void)save:(NSError**)error {
+    [[self sharedInstance] saveManagedObjectContext:error];
+}
+
+- (void)saveManagedObjectContext:(NSError**)error {
+    NSError *_error = nil;
+    [self.managedObjectContext save:&_error];
+    if (_error) {
+        NSLog(@"-[DFDataManager save]: There was an error when trying to save the managed object context: %@", _error);
+    }
+    if (error) {
+        *error = _error;
+    }
+}
+
 @end

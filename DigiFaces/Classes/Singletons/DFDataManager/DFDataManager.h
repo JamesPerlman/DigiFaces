@@ -23,4 +23,6 @@
 
 + (void)resetDatabase;
 
++ (void)save:(NSError **)error;
+
 @end

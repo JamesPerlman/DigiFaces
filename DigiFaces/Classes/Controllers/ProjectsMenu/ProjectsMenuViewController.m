@@ -74,23 +74,27 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 #pragma mark - Server Interaction
 - (void)setCurrentProject:(Project*)project {
-    LS.myUserInfo.currentProject = project;
-    LS.myUserInfo.currentProjectId = project.projectId;
-    [[NSNotificationCenter defaultCenter] postNotificationName:DFNotificationDidChangeProject object:nil];
-    
-    [DFClient makeRequest:APIPathChangeProject
-                   method:RKRequestMethodPOST
-                   params:@{@"NewProjectId" : project.projectId}
-                  success:nil
-                  failure:nil];
+    if (LS.myUserInfo.currentProject != project) {
+        LS.myUserInfo.currentProject = project;
+        LS.myUserInfo.currentProjectId = project.projectId;
+        [DFDataManager save:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:DFNotificationDidChangeProject object:nil];
+        
+        [DFClient makeRequest:APIPathChangeProject
+                       method:RKRequestMethodPOST
+                       params:@{@"NewProjectId" : project.projectId}
+                      success:nil
+                      failure:nil];
+    }
 }
 #pragma mark - TableView Convenience Methods
 

@@ -29,6 +29,7 @@
 #import "DiaryTheme.h"
 #import "File.h"
 #import "Project.h"
+#import "Integer.h"
 
 #import "DFPushService.h"
 
@@ -59,7 +60,6 @@ typedef enum : NSUInteger {
     
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];
-    
     self.selectedIndexPath = nil;
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
@@ -157,6 +157,7 @@ typedef enum : NSUInteger {
         [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     }
     defwself
+    Project *currentProject = LS.myUserInfo.currentProject;
     [DFClient makeRequest:APIPathProjectGetActivities
                    method:kPOST
                 urlParams:@{@"projectId" : LS.myUserInfo.currentProjectId}
@@ -171,18 +172,28 @@ typedef enum : NSUInteger {
                       } else {
                           diaryThemes = @[];
                       }
+                      
+                      // set project references to current project
+                      for (DiaryTheme *theme in diaryThemes) {
+                          if (theme.project != currentProject)
+                              theme.project = currentProject;
+                      }
+                      [DFDataManager save:nil];
+                      
                       [DFDataManager removeEntitiesWithEntityName:@"DiaryTheme" idKey:@"activityId" notInArray:diaryThemes predicate:nil];
                       
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
-                      [sself fetchDailyDiary:LS.myUserInfo.currentProject.dailyDiaryList.anyObject];
-                      [self.refreshControl endRefreshing];
+                      Integer *anyDiaryInteger = currentProject.dailyDiaryList.anyObject;
+                      NSNumber *anyDiaryID = anyDiaryInteger.value;
+                      [sself fetchDailyDiary:anyDiaryID];
+                      [sself.refreshControl endRefreshing];
                       
                   }
                   failure:^(NSError *error) {
                       defsself
                       [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                       [sself.customAlert showAlertWithMessage:DFLocalizedString(@"view.home.error.load_failure", nil) inView:sself.view withTag:0];
-                      [self.refreshControl endRefreshing];
+                      [sself.refreshControl endRefreshing];
                   }];
 }
 
@@ -202,13 +213,17 @@ typedef enum : NSUInteger {
                       
                       defsself
                       if (sself) {
+                          sself.fetchedResultsController.fetchRequest.predicate = [NSPredicate predicateWithFormat:@"project = %@", LS.myUserInfo.currentProject];
+                          [sself.fetchedResultsController performFetch:nil];
+                          [sself.tableView reloadData];
+                          
                           [MBProgressHUD hideHUDForView:sself.navigationController.view animated:YES];
                           
                           [sself setProfilePicture:LS.myUserInfo.avatarFile.filePath withImage:nil];
                           
                           [sself.tableView reloadData];
                           
-                          [sself fetchActivites];
+                          [self fetchProjects];
                       }
                   }
                   failure:^(NSError *error) {
@@ -234,6 +249,7 @@ typedef enum : NSUInteger {
                       }
                       
                       LS.myUserInfo.projects = [NSSet setWithArray:receivedProjects];
+                      [DFDataManager save:nil];
                       
                       if (receivedProjects.count>1) {
                           [self.homeRootViewController addRevealControls];
@@ -241,8 +257,9 @@ typedef enum : NSUInteger {
                           [self.homeRootViewController removeRevealControls];
                       }
                       
-                      [DFDataManager removeEntitiesWithEntityName:@"Project" idKey:@"projectId" notInArray:receivedProjects predicate:nil];
+                      //[DFDataManager removeEntitiesWithEntityName:@"Project" idKey:@"projectId" notInArray:receivedProjects predicate:nil];
                       
+                      [sself fetchActivites];
                   }
                   failure:^(NSError *error) {
                       defsself
@@ -531,9 +548,13 @@ typedef enum : NSUInteger {
 #pragma mark - Notifications
 
 - (void)didChangeProject:(NSNotification*)notification {
+    self.fetchedResultsController = nil;
+    [self.tableView reloadData];
+    self.fetchedResultsController.delegate = self;
+    self.fetchedResultsController.fetchRequest.predicate = [NSPredicate predicateWithFormat:@"project = %@", LS.myUserInfo.currentProject];
     [self.fetchedResultsController performFetch:nil];
+    [self fetchActivites];
 }
-
 
 #pragma mark - Data Source Convenience Methods
 
@@ -553,15 +574,13 @@ typedef enum : NSUInteger {
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
-        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"project = %@", LS.myUserInfo.currentProject];
+        //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"project = %@", LS.myUserInfo.currentProject];
         
         fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
         
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"activityId" ascending:YES]];
         
         fetchRequest.fetchBatchSize = 20;
-        
-        
         
         _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     }
