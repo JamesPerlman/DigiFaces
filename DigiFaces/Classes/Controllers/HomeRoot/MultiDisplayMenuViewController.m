@@ -82,50 +82,10 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     
     self.navigationItem.title = viewController.navigationItem.title;
     
-    return;
-    
     UIViewController *oldVC = _viewControllers.lastObject;
-    
-    [self observe:viewController];
-    
-    [_viewControllers addObject:viewController]; // adds it to the end.
-    
-    [self addChildViewController:viewController];
-    
-    
-    
-    [self.view addSubview:viewController.view];
-    /*
-     [self.view addConstraint:[NSLayoutConstraint equalWidthWithItem:viewController.view toItem:self.view]];
-     [self.view addConstraint:[NSLayoutConstraint centerXWithItem:viewController.view toItem:self.view]];
-     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(nav)-[view]-(nav)-|" options:0 metrics:@{@"nav" : @(self.navigationController.navigationBar.frame.size.height)} views:@{@"view" : viewController.view}]];
-     [self.view layoutIfNeeded];
-     */
     objc_setAssociatedObject(oldVC, (__bridge const void *)mdmvc_assoc_key, nil, OBJC_ASSOCIATION_ASSIGN);
-    
-    defwself;
     objc_setAssociatedObject(viewController, (__bridge const void *)mdmvc_assoc_key, self, OBJC_ASSOCIATION_ASSIGN);
-    void (^removeOldVC)(void) = ^{
-        if (oldVC) {
-            defsself
-            [sself stopObserving:oldVC];
-            [oldVC.view removeFromSuperview];
-            [oldVC removeFromParentViewController];
-            [sself.viewControllers removeObject:oldVC];
-            
-        }
-    };
-    
-    if (animated) {
-        viewController.view.alpha = 0.0f;
-        [UIView animateWithDuration:MDMAnimationDuration animations:^{
-            viewController.view.alpha = 1.0f;
-        } completion:^(BOOL finished) {
-            removeOldVC();
-        }];
-    } else {
-        removeOldVC();
-    }
+    [self.viewControllers removeObject:oldVC];
 }
 
 #pragma mark - KVO

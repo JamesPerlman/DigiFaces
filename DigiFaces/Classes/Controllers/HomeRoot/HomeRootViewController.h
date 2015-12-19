@@ -27,6 +27,10 @@
 
 - (void)setAlertCounts:(APIAlertCounts*)alertCounts;
 
+- (void)addRevealControls;
+
+- (void)removeRevealControls;
+
 @end
 
 @interface UIViewController (HomeRootViewController)

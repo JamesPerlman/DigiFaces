@@ -232,6 +232,15 @@ typedef enum : NSUInteger {
                       } else {
                           receivedProjects = [result isKindOfClass:[NSArray class]] ? result : @[result];
                       }
+                      
+                      LS.myUserInfo.projects = [NSSet setWithArray:receivedProjects];
+                      
+                      if (receivedProjects.count>1) {
+                          [self.homeRootViewController addRevealControls];
+                      } else {
+                          [self.homeRootViewController removeRevealControls];
+                      }
+                      
                       [DFDataManager removeEntitiesWithEntityName:@"Project" idKey:@"projectId" notInArray:receivedProjects predicate:nil];
                       
                   }

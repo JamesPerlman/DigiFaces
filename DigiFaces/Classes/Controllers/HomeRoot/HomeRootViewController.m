@@ -37,7 +37,9 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self addRevealControls];
+    if (LS.myUserInfo.projects.count > 1) {
+        [self addRevealControls];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -166,7 +168,7 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
 @implementation UIViewController (HomeRootViewController)
 
 - (HomeRootViewController*)homeRootViewController {
-    return (HomeRootViewController*)self.revealViewController;
+    return (HomeRootViewController*)self.multiDisplayViewController;
 }
 
 @end

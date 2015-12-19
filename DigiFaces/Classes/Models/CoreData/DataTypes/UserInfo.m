@@ -32,6 +32,11 @@
 @dynamic avatarFile;
 @dynamic currentProject;
 @dynamic projectRoleId;
+@dynamic projects;
+
+@end
+
+@implementation UserInfo (DynamicMethods)
 
 - (BOOL)canEmailMods {
     return ![self.projectRoleId isEqualToNumber:@1];
@@ -52,4 +57,5 @@
 - (BOOL)canAddCommentsToThemeResponses {
     return [self canAddCommentsToDiaryResponses];
 }
+
 @end

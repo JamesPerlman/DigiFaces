@@ -252,6 +252,7 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="avatarFile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
         <relationship name="currentProject" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Project" syncable="YES"/>
+        <relationship name="projects" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Project" syncable="YES"/>
     </entity>
     <elements>
         <element name="About" positionX="675" positionY="228" width="128" height="105"/>
@@ -278,6 +279,6 @@
         <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>
         <element name="TextareaResponse" positionX="-126" positionY="981" width="128" height="120"/>
         <element name="Thread" positionX="673" positionY="15" width="128" height="30"/>
-        <element name="UserInfo" positionX="268" positionY="344" width="128" height="328"/>
+        <element name="UserInfo" positionX="268" positionY="344" width="128" height="343"/>
     </elements>
 </model>

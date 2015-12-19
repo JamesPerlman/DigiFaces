@@ -32,11 +32,25 @@
 @property (nonatomic, retain) NSString * userName;
 @property (nonatomic, retain) File *avatarFile;
 @property (nonatomic, retain) Project *currentProject;
+@property (nonatomic, retain) NSSet<Project *> *projects;
 
+@end
+
+@interface UserInfo (DynamicMethods)
 
 - (BOOL)canEmailMods;
 - (BOOL)canReplyToDiaries;
 - (BOOL)canReplyToThemes;
 - (BOOL)canAddCommentsToDiaryResponses;
 - (BOOL)canAddCommentsToThemeResponses;
+
+@end
+
+@interface  UserInfo (CoreDataGeneratedAccessors)
+
+- (void)addProjectsObject:(Project *)value;
+- (void)removeProjectsObject:(Project *)value;
+- (void)addProjects:(NSSet<Project *> *)values;
+- (void)removeProjects:(NSSet<Project *> *)values;
+
 @end
