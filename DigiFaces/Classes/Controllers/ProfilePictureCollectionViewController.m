@@ -44,10 +44,15 @@
         self.title = @"GALLERY";
         self.avatarsArray = self.files;
     }
-    CGFloat _collectionViewItemPadding = ((UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout).minimumInteritemSpacing;
-    CGFloat _collectionViewItemSideLength = ([UIScreen mainScreen].bounds.size.width/4.0f-_collectionViewItemPadding);
-    _collectionViewItemSize = CGSizeMake(_collectionViewItemSideLength, _collectionViewItemSideLength);
     [self localizeUI];
+    
+    CGFloat _collectionViewItemPadding = ((UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout).minimumInteritemSpacing;
+    CGFloat _collectionViewItemSideLength = (self.view.bounds.size.width/4.0f-_collectionViewItemPadding);
+    _collectionViewItemSize = CGSizeMake(_collectionViewItemSideLength, _collectionViewItemSideLength);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
 }
 
@@ -130,7 +135,11 @@
         // Let DFMediaUploadManager deal with the Tap gesture on the DFMediaUploadView
     }
     else{
-        self.selectedImageFile = [_avatarsArray objectAtIndex:indexPath.row-1];
+        NSUInteger avatarIndex = indexPath.row;
+        if (_type == ProfilePictureTypeDefault) {
+            avatarIndex -= 1;
+        }
+        self.selectedImageFile = [_avatarsArray objectAtIndex:avatarIndex];
         ImageCollectionCell *cell = (ImageCollectionCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.selectedImage = cell.imgPicture.image;
     }

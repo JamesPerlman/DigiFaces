@@ -88,7 +88,7 @@
 {
     NSString * url;
     if (self.isViddlerFile.boolValue) {
-        if ([[self.viddlerKey substringToIndex:7] isEqualToString:@"http://"] || [[self.viddlerKey substringToIndex:8] isEqualToString:@"https://"]) {
+        if ((self.viddlerKey.length > 6 && [[self.viddlerKey substringToIndex:7] isEqualToString:@"http://"]) || (self.viddlerKey.length > 7 && [[self.viddlerKey substringToIndex:8] isEqualToString:@"https://"])) {
             url = nil;
         } else {
             url = [NSString stringWithFormat:@"http://thumbs.cdn-ec.viddler.com/thumbnail_2_%@_v1.jpg", self.viddlerKey];

@@ -348,8 +348,11 @@ typedef enum : NSUInteger {
     picCell.profileImage.contentMode = UIViewContentModeScaleAspectFill;
     picCell.profileImage.clipsToBounds = YES;
     picCell.profileImage.layer.cornerRadius = picCell.profileImage.frame.size.height/2.0f;
-    
-    [picCell.profileImage sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
+    if (LS.myUserInfo.avatarFile.filePathURL) {
+        [picCell.profileImage sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
+    } else {
+        [picCell.profileImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    }
 }
 
 - (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {

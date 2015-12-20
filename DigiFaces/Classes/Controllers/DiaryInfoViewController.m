@@ -213,7 +213,7 @@ typedef enum {
             GalleryCell * galleryCell = [tableView dequeueReusableCellWithIdentifier:@"galleryCell" forIndexPath:indexPath];
             
             galleryCell.files = [module.imageGallery.files allObjects];
-            [galleryCell reloadGallery];
+            //[galleryCell reloadGallery];
             cell = galleryCell;
             
         }

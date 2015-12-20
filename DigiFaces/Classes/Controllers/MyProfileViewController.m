@@ -179,8 +179,12 @@
         self.profilePicView.image = image;
         return;
     }
-    
-    [self.profilePicView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"dummy_avatar.png"]];
+    NSURL *avatarURL = [NSURL URLWithString:imageUrl];
+    if (avatarURL) {
+        [self.profilePicView sd_setImageWithURL:avatarURL placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    } else {
+        [self.profilePicView sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    }
 }
 
 

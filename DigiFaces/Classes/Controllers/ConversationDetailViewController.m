@@ -163,7 +163,12 @@ static NSString *leftCellID = @"leftSideComment";
     Message *message = self.messages[indexPath.row];
     
     NotificationCell *cell = (NotificationCell*)[tableView dequeueReusableCellWithIdentifier:leftCellID forIndexPath:indexPath];
-    [cell.userImage sd_setImageWithURL:message.fromUserInfo.avatarFile.filePathURL];
+    NSURL *avatarURL = message.fromUserInfo.avatarFile.filePathURL;
+    if (avatarURL) {
+        [cell.userImage sd_setImageWithURL:avatarURL];
+    } else {
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar" ]];
+    }
     cell.userImage.layer.cornerRadius = cell.userImage.bounds.size.width/2.0;
     cell.userImage.clipsToBounds = YES;
     [self configureCell:cell withMessage:message];

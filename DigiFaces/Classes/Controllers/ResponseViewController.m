@@ -540,7 +540,12 @@ typedef enum {
     }
     
     [cell.lblTime setText:[target dateCreatedFormatted]];
-    [cell.userImage sd_setImageWithURL:[[target userInfo] avatarFile].filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
+    NSURL *avatarURL = [[target userInfo] avatarFile].filePathURL;
+    if (avatarURL) {
+        [cell.userImage sd_setImageWithURL:avatarURL placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    } else {
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    }
     [cell.lblUsername setText:[[target userInfo] appUserName]];
     [cell makeImageCircular];
 }
@@ -647,7 +652,12 @@ typedef enum {
 - (void)configureCommentCell:(NotificationCell*)cell withComment:(Comment*)comment {
     [cell.lblDate setText:comment.dateCreatedFormatted];
     [cell.lblUserName setText:comment.userInfo.appUserName];
-    [cell.userImage sd_setImageWithURL:comment.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
+    NSURL *avatarURL = comment.userInfo.avatarFile.filePathURL;
+    if (avatarURL) {
+        [cell.userImage sd_setImageWithURL:avatarURL placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    } else {
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    }
     [cell setContentText:comment.response];
 }
 

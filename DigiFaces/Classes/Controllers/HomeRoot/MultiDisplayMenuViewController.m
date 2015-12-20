@@ -10,7 +10,6 @@
 #import "NSLayoutConstraint+ConvenienceMethods.h"
 #import <objc/runtime.h>
 
-static NSTimeInterval MDMAnimationDuration = 0.5;
 static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey";
 
 @interface MultiDisplayMenuViewController () {
@@ -139,28 +138,6 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
 
 @end
 
-@implementation MDMRevealViewControllerSegue
-
-- (void)reveal {
-    UIViewController *src = self.sourceViewController;
-    UIViewController *dst = self.destinationViewController;
-}
-
-@end
-
-@interface MDMSlideOutRevealTransition : NSObject <UIViewControllerAnimatedTransitioning>
-@end
-
-@implementation MDMSlideOutRevealTransition
-
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.35;
-}
-
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-    
-}
-@end
 
 @implementation UIViewController (MultiDisplayMenuViewController)
 

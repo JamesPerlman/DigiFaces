@@ -368,8 +368,12 @@
 - (void)configureResponseCell:(ResponseViewCell*)cell withResponse:(Response*)response {
     
     cell.viewController = self;
-    [cell.userImage sd_setImageWithURL:response.userInfo.avatarFile.filePathURL placeholderImage:[UIImage imageNamed:@"dummy_avatar"]];
-    
+    NSURL *avatarURL = response.userInfo.avatarFile.filePathURL;
+    if (avatarURL) {
+        [cell.userImage sd_setImageWithURL:avatarURL placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    } else {
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar"]];
+    }
     [cell.lblName setText:response.userInfo.appUserName];
     [cell.lblTime setText:response.dateCreatedFormatted];
     [cell setImageCircular];

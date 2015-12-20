@@ -469,7 +469,7 @@
                                                 <constraint firstAttribute="height" constant="110" id="PEf-8E-z7D"/>
                                             </constraints>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="MrM-Cm-mnp">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genericavatar" translatesAutoresizingMaskIntoConstraints="NO" id="MrM-Cm-mnp">
                                             <rect key="frame" x="112" y="21" width="95" height="95"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="95" id="S2f-Sf-iCV"/>
@@ -2257,7 +2257,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="dummy_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="n3C-hM-PSf">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="genericavatar" translatesAutoresizingMaskIntoConstraints="NO" id="n3C-hM-PSf">
                                 <rect key="frame" x="16" y="83" width="68" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="8Nc-Xl-XhI"/>
@@ -3775,9 +3775,11 @@
                             <constraint firstItem="zNX-iw-FA3" firstAttribute="trailing" secondItem="ssn-E4-cyf" secondAttribute="trailingMargin" id="Aax-q2-8Xv"/>
                             <constraint firstItem="ZIM-Oe-csp" firstAttribute="leading" secondItem="ssn-E4-cyf" secondAttribute="leadingMargin" constant="-5" id="Aji-y9-NyU"/>
                             <constraint firstItem="zNX-iw-FA3" firstAttribute="top" secondItem="HE7-xY-NIQ" secondAttribute="bottom" constant="8" symbolic="YES" id="K6w-iN-YKp"/>
+                            <constraint firstItem="mkc-9F-wH3" firstAttribute="width" secondItem="ssn-E4-cyf" secondAttribute="width" id="LOE-V6-OFd"/>
                             <constraint firstAttribute="centerX" secondItem="caB-wJ-aS5" secondAttribute="centerX" id="M7q-fD-HJE"/>
                             <constraint firstItem="zNX-iw-FA3" firstAttribute="leading" secondItem="ssn-E4-cyf" secondAttribute="leadingMargin" id="Nio-LK-42V"/>
                             <constraint firstItem="ttA-vD-Gu4" firstAttribute="top" secondItem="mkc-9F-wH3" secondAttribute="bottom" id="PNA-Fc-COe"/>
+                            <constraint firstItem="mkc-9F-wH3" firstAttribute="centerX" secondItem="ssn-E4-cyf" secondAttribute="centerX" id="TCb-aI-sJ5"/>
                             <constraint firstItem="caB-wJ-aS5" firstAttribute="top" secondItem="BRb-oL-Hin" secondAttribute="bottom" id="TiM-Ua-vLb"/>
                             <constraint firstItem="BRb-oL-Hin" firstAttribute="top" secondItem="ZIM-Oe-csp" secondAttribute="bottom" id="U36-ac-DDy"/>
                             <constraint firstItem="mkc-9F-wH3" firstAttribute="top" secondItem="caB-wJ-aS5" secondAttribute="bottom" id="Yc8-E2-3Fc"/>
@@ -3802,7 +3804,9 @@
                                 <exclude reference="jPa-Uq-otY"/>
                                 <exclude reference="uEl-rB-HZD"/>
                                 <exclude reference="3jU-t1-RZT"/>
+                                <exclude reference="7Cb-QW-Kq6"/>
                                 <exclude reference="AaH-Mk-ukP"/>
+                                <exclude reference="Z3L-Cq-7p2"/>
                                 <exclude reference="nRV-JT-H3o"/>
                                 <exclude reference="tLV-HP-8Zz"/>
                                 <exclude reference="PNA-Fc-COe"/>
@@ -4931,11 +4935,11 @@
         <image name="btnRound" width="11" height="16"/>
         <image name="camera" width="29" height="23"/>
         <image name="camera-white" width="29" height="23"/>
-        <image name="dummy_avatar" width="75" height="85"/>
         <image name="email_input" width="285" height="37"/>
         <image name="email_input.png" width="285" height="37"/>
         <image name="envelope" width="30" height="30"/>
         <image name="eye" width="18" height="13"/>
+        <image name="genericavatar" width="96" height="96"/>
         <image name="home-white" width="30" height="30"/>
         <image name="imageBorder" width="107" height="106"/>
         <image name="logo" width="200" height="40"/>
@@ -4955,12 +4959,12 @@
         <segue reference="DRp-1t-WNc"/>
         <segue reference="sw5-fw-ulw"/>
         <segue reference="C26-jZ-Sjl"/>
-        <segue reference="xm7-nE-fcs"/>
         <segue reference="v7h-oQ-d3S"/>
-        <segue reference="XNZ-ng-ebc"/>
-        <segue reference="f8n-jW-t9J"/>
-        <segue reference="Sh4-6s-X9J"/>
         <segue reference="kgY-B9-zM2"/>
-        <segue reference="3r5-SJ-zjd"/>
+        <segue reference="GNd-Wo-Hrw"/>
+        <segue reference="EYx-dI-yCG"/>
+        <segue reference="CE9-GG-Yoe"/>
+        <segue reference="M5f-4n-50k"/>
+        <segue reference="YVH-jF-Mn7"/>
     </inferredMetricsTieBreakers>
 </document>
