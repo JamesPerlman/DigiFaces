@@ -9,8 +9,11 @@
 #define kUAPushChannelIDKeyPath @"channelID"
 #define kLSMyUserIDKeyPath @"myUserInfo"
 
+static NSString * const kDFPSAppIdentifier = @"com.shamsu.digifaces3";
+
 #import "DFPushService.h"
 #import <AirshipKit/AirshipKit.h>
+#import <LNNotificationsUI/LNNotificationsUI.h>
 
 @implementation DFPushService
 
@@ -44,6 +47,9 @@
                                                  UIUserNotificationTypeSound);
         
         [[self manager] beginObservingPushReadiness];
+        
+        /* LNNotificationsUI */
+        [[LNNotificationCenter defaultCenter] registerApplicationWithIdentifier:kDFPSAppIdentifier name:@"DigiFaces" icon:[UIImage imageNamed:@"plus"] defaultSettings:LNNotificationDefaultAppSettings];
     }
     
 }
@@ -88,11 +94,28 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     UA_LINFO(@"Application received remote notification: %@", userInfo);
     [[UAirship push] appReceivedRemoteNotification:userInfo applicationState:application.applicationState];
+    [self handleNotification:userInfo application:application];
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     UA_LINFO(@"Application received remote notification: %@", userInfo);
     [[UAirship push] appReceivedRemoteNotification:userInfo applicationState:application.applicationState fetchCompletionHandler:completionHandler];
+    [self handleNotification:userInfo application:application];
+}
+
+- (void)handleNotification:(NSDictionary*)userInfo application:(UIApplication*)application {
+    BOOL fromBackground = ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground );
+    
+    if (!fromBackground) {
+        // show LNNotificationsUI
+        LNNotification* notification = [LNNotification notificationWithMessage:userInfo[@"aps"][@"alert"]];
+        notification.title = @"DigiFaces";
+        notification.defaultAction = [LNNotificationAction actionWithTitle:@"Default Action" handler:^(LNNotificationAction *action) {
+            NSLog(@"Handled notification action");
+        }];
+        // Present the LNNotification UI
+        [[LNNotificationCenter defaultCenter] presentNotification:notification forApplicationIdentifier:kDFPSAppIdentifier];
+    }
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())handler {

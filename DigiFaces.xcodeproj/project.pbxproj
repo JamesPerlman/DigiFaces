@@ -115,6 +115,8 @@
 		F48F8ACD1C084742002CA8D0 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48F8ACC1C084742002CA8D0 /* AirshipConfig.plist */; };
 		F48F8AD31C08485C002CA8D0 /* AirshipKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */; };
 		F48F8AD41C08485C002CA8D0 /* AirshipKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F4950EDD1C33B8AA008542A4 /* LNNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4950EDC1C33B89D008542A4 /* LNNotificationsUI.framework */; };
+		F4950EDE1C33B8AA008542A4 /* LNNotificationsUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F4950EDC1C33B89D008542A4 /* LNNotificationsUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */; };
 		F4A759D61B71510400B94176 /* AnnouncementsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759D51B71510400B94176 /* AnnouncementsTableViewController.m */; };
 		F4A759E11B7193F600B94176 /* AnnouncementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A759E01B7193F600B94176 /* AnnouncementCell.m */; };
@@ -171,6 +173,20 @@
 			remoteGlobalIDString = 19F0BD091B1DBC6400E4B048;
 			remoteInfo = DigiFaces;
 		};
+		F4950EDB1C33B89D008542A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4950ED71C33B89D008542A4 /* LNNotificationsUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 39FC4F8319B8EFB400E45E37;
+			remoteInfo = LNNotificationsUI;
+		};
+		F4950EDF1C33B8AA008542A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4950ED71C33B89D008542A4 /* LNNotificationsUI.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 39FC4F8219B8EFB400E45E37;
+			remoteInfo = LNNotificationsUI;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -181,6 +197,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F48F8AD41C08485C002CA8D0 /* AirshipKit.framework in Embed Frameworks */,
+				F4950EDE1C33B8AA008542A4 /* LNNotificationsUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,6 +432,7 @@
 		F48F8ACE1C084751002CA8D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F48F8AD01C084847002CA8D0 /* AirshipKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AirshipKit.framework; path = "AirshipKit/build/Debug-iphoneos/AirshipKit.framework"; sourceTree = "<group>"; };
 		F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = AirshipKit.framework; path = "/Users/home/Library/Developer/Xcode/DerivedData/DigiFaces-gozvzuqhtapwalfsatrgiodizseo/Build/Products/Debug-iphoneos/AirshipKit.framework"; sourceTree = "<absolute>"; };
+		F4950ED71C33B89D008542A4 /* LNNotificationsUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LNNotificationsUI.xcodeproj; path = LNNotificationsUI/LNNotificationsUI.xcodeproj; sourceTree = "<group>"; };
 		F4A759D01B7150E300B94176 /* ConversationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsTableViewController.h; sourceTree = "<group>"; };
 		F4A759D11B7150E300B94176 /* ConversationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsTableViewController.m; sourceTree = "<group>"; };
 		F4A759D41B71510400B94176 /* AnnouncementsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementsTableViewController.h; sourceTree = "<group>"; };
@@ -513,6 +531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4B8B3761BA4C43A007E4104 /* CoreData.framework in Frameworks */,
+				F4950EDD1C33B8AA008542A4 /* LNNotificationsUI.framework in Frameworks */,
 				F4DD49C91B6585B800F4016B /* MediaPlayer.framework in Frameworks */,
 				19F0BD361B1F12CA00E4B048 /* Foundation.framework in Frameworks */,
 				19F0BE2D1B28519B00E4B048 /* QuartzCore.framework in Frameworks */,
@@ -540,6 +559,7 @@
 		19F0BD011B1DBC6400E4B048 = {
 			isa = PBXGroup;
 			children = (
+				F4950ED71C33B89D008542A4 /* LNNotificationsUI.xcodeproj */,
 				F48F8AD21C08485C002CA8D0 /* AirshipKit.framework */,
 				19F0BD0C1B1DBC6400E4B048 /* DigiFaces */,
 				19F0BD261B1DBC6400E4B048 /* DigiFacesTests */,
@@ -1232,6 +1252,14 @@
 			name = About;
 			sourceTree = "<group>";
 		};
+		F4950ED81C33B89D008542A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4950EDC1C33B89D008542A4 /* LNNotificationsUI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F4A759CF1B7150C800B94176 /* Conversations */ = {
 			isa = PBXGroup;
 			children = (
@@ -1613,6 +1641,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F4950EE01C33B8AA008542A4 /* PBXTargetDependency */,
 			);
 			name = DigiFaces;
 			productName = DigiFaces;
@@ -1671,6 +1700,12 @@
 			mainGroup = 19F0BD011B1DBC6400E4B048;
 			productRefGroup = 19F0BD0B1B1DBC6400E4B048 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F4950ED81C33B89D008542A4 /* Products */;
+					ProjectRef = F4950ED71C33B89D008542A4 /* LNNotificationsUI.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				19F0BD091B1DBC6400E4B048 /* DigiFaces */,
@@ -1678,6 +1713,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F4950EDC1C33B89D008542A4 /* LNNotificationsUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LNNotificationsUI.framework;
+			remoteRef = F4950EDB1C33B89D008542A4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		19F0BD081B1DBC6400E4B048 /* Resources */ = {
@@ -1905,6 +1950,11 @@
 			isa = PBXTargetDependency;
 			target = 19F0BD091B1DBC6400E4B048 /* DigiFaces */;
 			targetProxy = 19F0BD241B1DBC6400E4B048 /* PBXContainerItemProxy */;
+		};
+		F4950EE01C33B8AA008542A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LNNotificationsUI;
+			targetProxy = F4950EDF1C33B8AA008542A4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
