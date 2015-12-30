@@ -70,8 +70,12 @@ static NSString *messageCellID = @"conversationCell";
     Message *message = [self messageForIndex:indexPath.row];
     
     // Configure the cell...
-    
-    [cell.userImage sd_setImageWithURL:message.fromUserInfo.avatarFile.filePathURL];
+    NSURL *avatarURL = message.fromUserInfo.avatarFile.filePathURL;
+    if (avatarURL) {
+        [cell.userImage sd_setImageWithURL:avatarURL];
+    } else {
+        [cell.userImage sd_setImageWithURL:[NSURL URLWithString:DFAvatarGenericImageURLKey] placeholderImage:[UIImage imageNamed:@"genericavatar" ]];
+    }
     cell.lblDate.text = message.dateCreatedFormatted;
     cell.lblUserName.text = message.fromUserInfo.appUserName;
     cell.contentLabel.text = message.subject;

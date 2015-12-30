@@ -52,11 +52,12 @@
     
     // Do any additional setup after loading the view.
     [self localizeUI];
+    self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"CheckMark"];
 }
 
 - (void)localizeUI {
     self.navigationItem.title = DFLocalizedString(@"view.profile.navbar.title", nil);
-    self.navigationItem.rightBarButtonItem.title = DFLocalizedString(@"view.profile.button.save", nil);
+    //self.navigationItem.rightBarButtonItem.title = DFLocalizedString(@"view.profile.button.save", nil);
 }
 
 - (void)didReceiveMemoryWarning {
