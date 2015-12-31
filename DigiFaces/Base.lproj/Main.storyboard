@@ -2248,7 +2248,7 @@
         <!--MY PROFILE-->
         <scene sceneID="IeD-Ma-4te">
             <objects>
-                <viewController id="nlG-jE-LXY" customClass="MyProfileViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyProfileViewController" id="nlG-jE-LXY" customClass="MyProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wKG-Md-xwR"/>
                         <viewControllerLayoutGuide type="bottom" id="CoN-ki-aNy"/>
@@ -2456,7 +2456,7 @@
         <!--SETTINGS-->
         <scene sceneID="syj-XQ-C2G">
             <objects>
-                <viewController id="UEE-JQ-pvA" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" id="UEE-JQ-pvA" customClass="SettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gK7-Au-uGO"/>
                         <viewControllerLayoutGuide type="bottom" id="wj0-A2-d4G"/>
@@ -2510,6 +2510,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="logoutButton" destination="Uc7-Um-CI4" id="V3h-Tb-zeW"/>
+                        <outlet property="tableView" destination="b4Y-4n-THC" id="Fn5-5P-5J9"/>
                         <segue destination="G6a-51-0WT" kind="presentation" identifier="ToProfile" id="F1A-G7-9Ui"/>
                         <segue destination="ZtB-sA-XQx" kind="push" identifier="aboutDigiFacesSegue" id="sAo-OF-q8I"/>
                         <segue destination="izl-Pu-hBs" kind="push" identifier="versionSegue" id="KZN-8q-lsM"/>
@@ -2566,7 +2567,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="zdO-2q-lor">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="16c-aZ-rzb">
                             <rect key="frame" x="0.0" y="20" width="320" height="44"/>
@@ -2710,6 +2711,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="didTapHelp:" destination="d5u-Mt-xe6" eventType="touchUpInside" id="bC1-0Z-qgl"/>
                                             <segue destination="UEE-JQ-pvA" kind="custom" identifier="toSettings" customClass="SWRevealViewControllerSegueSetController" id="UiX-b3-JNV"/>
                                         </connections>
                                     </button>
@@ -2731,12 +2733,14 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="alertCountLabel" destination="Rsn-2p-64g" id="S70-qZ-ORJ"/>
+                        <outlet property="helpButton" destination="WRn-9b-FEp" id="DZA-bu-nfm"/>
                         <outlet property="homeBarButtonItem" destination="n2I-6q-CVU" id="3IG-GQ-D0J"/>
                         <outlet property="messagesButton" destination="3hw-Qz-vSD" id="FYg-KA-OSP"/>
                         <segue destination="duU-Ko-xcz" kind="custom" identifier="toAnnouncements" customClass="SWRevealViewControllerSegueSetController" id="AKX-Yq-6Ud"/>
                         <segue destination="XSR-oX-cgN" kind="custom" identifier="toConversations" customClass="SWRevealViewControllerSegueSetController" id="wsb-bp-3DM"/>
                         <segue destination="FCz-w7-kM6" kind="custom" identifier="toNotifications" customClass="SWRevealViewControllerSegueSetController" id="e6f-55-v2y"/>
                         <segue destination="fDA-CY-80H" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="5kd-sE-sfC"/>
+                        <segue destination="k8K-Xn-cg1" kind="custom" identifier="logoutSegue" customClass="LogoutSegue" id="6o2-de-Er0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuI-mt-QXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2746,7 +2750,7 @@
         <!--ABOUT DIGIFACES-->
         <scene sceneID="4gd-Xt-Zpv">
             <objects>
-                <viewController id="ZtB-sA-XQx" customClass="AboutDigifacesController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutDigiFacesViewController" id="ZtB-sA-XQx" customClass="AboutDigifacesController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="prh-Mr-U2m"/>
                         <viewControllerLayoutGuide type="bottom" id="uRY-zB-GhK"/>
@@ -2789,7 +2793,7 @@
         <!--VERSION-->
         <scene sceneID="c7I-Ba-JBV">
             <objects>
-                <viewController id="izl-Pu-hBs" customClass="VersionViewContrller" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VersionViewController" id="izl-Pu-hBs" customClass="VersionViewContrller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FgH-R0-Vhi"/>
                         <viewControllerLayoutGuide type="bottom" id="dhS-Rc-GZB"/>
@@ -2848,7 +2852,7 @@
         <!--EMAIL MODERATOR-->
         <scene sceneID="8rC-SD-8Sd">
             <objects>
-                <tableViewController id="ilS-qE-tPv" customClass="EmailModeratorController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EmailModeratorViewController" id="ilS-qE-tPv" customClass="EmailModeratorController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gx7-6X-rKE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2963,7 +2967,7 @@
         <!--TECH SUPPORT-->
         <scene sceneID="MND-mf-h65">
             <objects>
-                <tableViewController id="AFJ-IC-PLj" customClass="TechSupportController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EmailTechSupportViewController" id="AFJ-IC-PLj" customClass="TechSupportController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="bVH-Er-RcY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4956,14 +4960,14 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DRp-1t-WNc"/>
-        <segue reference="sw5-fw-ulw"/>
+        <segue reference="6o2-de-Er0"/>
         <segue reference="xm7-nE-fcs"/>
         <segue reference="v7h-oQ-d3S"/>
         <segue reference="kgY-B9-zM2"/>
         <segue reference="C26-jZ-Sjl"/>
-        <segue reference="YVH-jF-Mn7"/>
         <segue reference="EYx-dI-yCG"/>
         <segue reference="GNd-Wo-Hrw"/>
         <segue reference="M5f-4n-50k"/>
+        <segue reference="YVH-jF-Mn7"/>
     </inferredMetricsTieBreakers>
 </document>

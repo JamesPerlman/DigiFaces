@@ -7,13 +7,18 @@
 //
 
 #import "HomeRootViewController.h"
+#import "HomeViewController.h"
+#import "NSArray+Search.h"
 
-static NSString *kHomeToAnnouncementsSegueID = @"toAnnouncements";
-static NSString *kHomeToConversationsSegueID = @"toConversations";
-static NSString *kHomeToNotificationsSegueID = @"toNotifications";
-static NSString *kHomeToSettingsSegueID = @"toSettings";
+static NSString * const kHomeToAnnouncementsSegueID = @"toAnnouncements";
+static NSString * const kHomeToConversationsSegueID = @"toConversations";
+static NSString * const kHomeToNotificationsSegueID = @"toNotifications";
+static NSString * const kHomeToHelpSegueID = @"toSettings";
+
+static NSString * const kHelpViewControllerID = @"SettingsViewController";
 
 @interface HomeRootViewController ()
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *sideMenuRevealButtonItem;
 @end
@@ -22,6 +27,7 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     self.navigationItem.leftBarButtonItem = nil;
     
@@ -32,6 +38,9 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
     
     self.messagesVC = [[MessagesMenuTableViewController alloc] init];
     self.messagesVC.delegate = self;
+    
+    self.helpVC = (SettingsViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:kHelpViewControllerID];
+    self.helpVC.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,13 +73,12 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
     if ([segueID isEqualToString:@"sw_front"]) {
         [self addRevealControls];
         [self setViewController:destVC animated:true];
-    } else {
+    } else if (![segueID isEqualToString:kHomeToHelpSegueID]) {
         [self removeRevealControls];
         self.navigationItem.leftBarButtonItem = self.homeBarButtonItem;
         if ([segueID isEqualToString:kHomeToConversationsSegueID]
             || [segueID isEqualToString:kHomeToAnnouncementsSegueID]
-            || [segueID isEqualToString:kHomeToNotificationsSegueID]
-            || [segueID isEqualToString:kHomeToSettingsSegueID]) {
+            || [segueID isEqualToString:kHomeToNotificationsSegueID]) {
             [self setViewController:destVC animated:true];
         }
     }
@@ -80,36 +88,68 @@ static NSString *kHomeToSettingsSegueID = @"toSettings";
     }
 }
 
-#pragma mark - Popover
-
-- (WYPopoverController*)popover {
-    if (!_popover) {
-        _popover = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
-        _popover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * [self.messagesVC tableView:self.messagesVC.tableView numberOfRowsInSection:0]);
+- (void)setViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if ([viewController isKindOfClass:[HomeViewController class]]) {
+        [self addRevealControls];
+    } else {
+        [self removeRevealControls];
+        self.navigationItem.leftBarButtonItem = self.homeBarButtonItem;
     }
-    return _popover;
+    [super setViewController:viewController animated:animated];
 }
 
+#pragma mark - Popovers
+
+- (WYPopoverController*)alertsPopover {
+    if (!_alertsPopover) {
+        _alertsPopover = [[WYPopoverController alloc] initWithContentViewController:self.messagesVC];
+        _alertsPopover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * [self.messagesVC tableView:self.messagesVC.tableView numberOfRowsInSection:0]);
+    }
+    return _alertsPopover;
+}
+
+- (WYPopoverController*)helpPopover {
+    if (!_helpPopover) {
+        _helpPopover = [[WYPopoverController alloc] initWithContentViewController:self.helpVC];
+        _helpPopover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * ([self.helpVC tableView:self.helpVC.tableView numberOfRowsInSection:0] + 2));
+        
+    }
+    return _helpPopover;
+}
+
+#pragma mark - Alert actions
+- (void)didTapAnnouncements {
+    [self performSegueWithIdentifier:kHomeToAnnouncementsSegueID sender:nil];
+    [self.alertsPopover dismissPopoverAnimated:YES];
+}
+
+- (void)didTapConversations {
+    [self performSegueWithIdentifier:kHomeToConversationsSegueID sender:nil];
+    [self.alertsPopover dismissPopoverAnimated:YES];
+}
+
+- (void)didTapNotifications {
+    [self performSegueWithIdentifier:kHomeToNotificationsSegueID sender:nil];
+    [self.alertsPopover dismissPopoverAnimated:YES];
+}
+
+#pragma mark - IBActions
 - (IBAction)didTapAlerts:(id)sender {
-    [self.popover presentPopoverFromRect:[self.view convertRect:self.messagesButton.bounds fromView:self.messagesButton]
+    [self.alertsPopover presentPopoverFromRect:[self.view convertRect:self.messagesButton.bounds fromView:self.messagesButton]
                                   inView:self.view
                 permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
     
 }
 
-- (void)didTapAnnouncements {
-    [self performSegueWithIdentifier:kHomeToAnnouncementsSegueID sender:nil];
-    [self.popover dismissPopoverAnimated:YES];
+- (IBAction)didTapHelp:(id)sender {
+    [self.helpPopover presentPopoverFromRect:[self.view convertRect:self.helpButton.bounds fromView:self.helpButton]
+                                          inView:self.view
+                        permittedArrowDirections:WYPopoverArrowDirectionUp
+                                        animated:true];
 }
 
-- (void)didTapConversations {
-    [self performSegueWithIdentifier:kHomeToConversationsSegueID sender:nil];
-    [self.popover dismissPopoverAnimated:YES];
-}
-
-- (void)didTapNotifications {
-    [self performSegueWithIdentifier:kHomeToNotificationsSegueID sender:nil];
-    [self.popover dismissPopoverAnimated:YES];
+- (void)hideHelpPopover {
+    [self.helpPopover dismissPopoverAnimated:YES];
 }
 
 #pragma mark - messages delegate callbacks

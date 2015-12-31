@@ -162,6 +162,7 @@
 		F4E670E11B61669B00871FA9 /* DFMediaUploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4E670DD1B61669B00871FA9 /* DFMediaUploadView.xib */; };
 		F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E670E31B61720E00871FA9 /* AddResponseViewController.m */; };
 		F4EB32A31C26135C00CEB646 /* GalleryImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB32A21C26135C00CEB646 /* GalleryImageCollectionViewCell.m */; };
+		F4FC58FE1C34EDA4002645D2 /* NSArray+Search.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FC58FD1C34EDA4002645D2 /* NSArray+Search.m */; };
 		F4FC8CAD1BBEE88C00B12DEE /* DFDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */; };
 /* End PBXBuildFile section */
 
@@ -521,6 +522,8 @@
 		F4E670E31B61720E00871FA9 /* AddResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddResponseViewController.m; sourceTree = "<group>"; };
 		F4EB32A11C26135C00CEB646 /* GalleryImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryImageCollectionViewCell.h; sourceTree = "<group>"; };
 		F4EB32A21C26135C00CEB646 /* GalleryImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryImageCollectionViewCell.m; sourceTree = "<group>"; };
+		F4FC58FC1C34EDA4002645D2 /* NSArray+Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Search.h"; sourceTree = "<group>"; };
+		F4FC58FD1C34EDA4002645D2 /* NSArray+Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Search.m"; sourceTree = "<group>"; };
 		F4FC8CAB1BBEE88C00B12DEE /* DFDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFDataManager.h; sourceTree = "<group>"; };
 		F4FC8CAC1BBEE88C00B12DEE /* DFDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1610,6 +1613,8 @@
 				F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */,
 				F4336C561C24E41800FC2892 /* UIView+GestureRecognizerControls.h */,
 				F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */,
+				F4FC58FC1C34EDA4002645D2 /* NSArray+Search.h */,
+				F4FC58FD1C34EDA4002645D2 /* NSArray+Search.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1805,6 +1810,7 @@
 				F42669F11B71399800A6E6D7 /* MessagesMenuTableViewController.m in Sources */,
 				F4336C541C23BF7D00FC2892 /* SWRevealViewController.m in Sources */,
 				F4B9883F1BC6E2940010F139 /* NSArray+Reverse.m in Sources */,
+				F4FC58FE1C34EDA4002645D2 /* NSArray+Search.m in Sources */,
 				4ACDB9DB1B3E7E66009EFB91 /* NSDate+InternetDateTime.m in Sources */,
 				F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */,
 				F4336C651C24FA7D00FC2892 /* Announcement+CoreDataProperties.m in Sources */,

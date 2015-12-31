@@ -11,25 +11,34 @@
 #import "MessagesMenuTableViewController.h"
 #import "NotificationsViewController.h"
 #import "AnnouncementsTableViewController.h"
+#import "SettingsViewController.h"
 #import <WYPopoverController/WYPopoverController.h>
 
 @interface HomeRootViewController : MultiDisplayMenuViewController<MessagesMenuDelegate, NotificationVCDelegate, AnnouncementsVCDelegate>
 
-@property (nonatomic,strong)IBOutlet UILabel * alertCountLabel;
+@property (nonatomic, weak) IBOutlet UILabel * alertCountLabel;
 
 @property (nonatomic, strong) MessagesMenuTableViewController *messagesVC;
 
+@property (nonatomic, strong) SettingsViewController *helpVC;
+
 @property (nonatomic, weak) IBOutlet UIButton *messagesButton;
 
+@property (nonatomic, weak) IBOutlet UIButton *helpButton;
 
 
-@property (nonatomic, strong) WYPopoverController *popover;
+
+@property (nonatomic, strong) WYPopoverController *alertsPopover;
+
+@property (nonatomic, strong) WYPopoverController *helpPopover;
 
 - (void)setAlertCounts:(APIAlertCounts*)alertCounts;
 
 - (void)addRevealControls;
 
 - (void)removeRevealControls;
+
+- (void)hideHelpPopover;
 
 @end
 

@@ -11,6 +11,11 @@
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 
+static NSString * const kDFAboutDFVCID = @"AboutDigiFacesViewController";
+static NSString * const kDFEmailTechSupportVCID = @"EmailTechSupportViewController";
+static NSString * const kDFEmailModeratorVCID = @"EmailModeratorViewController";
+static NSString * const kDFVersionVCID = @"VersionViewController";
+static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
 
 @interface SettingsViewController () {
     BOOL canEmailMod;
@@ -46,16 +51,22 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.row == 0){
-        [self performSegueWithIdentifier: @"ToProfile" sender: self];
+        //[self performSegue:@"ToProfile"];
+        [self goToVC:kDFMyProfileVCID];
     }
     else if (indexPath.row == 1){
-        [self performSegueWithIdentifier:@"emailTecSupportSegue" sender:self];
+        
+        //[self performSegue:@"emailTecSupportSegue"];
+        [self goToVC:kDFEmailTechSupportVCID];
     }
     else if (indexPath.row == 2 && canEmailMod){
-        [self performSegueWithIdentifier:@"emailModeratorSegue" sender:self];
+        
+        //[self performSegue:@"emailModeratorSegue"];
+        [self goToVC:kDFEmailModeratorVCID];
     }
     else if (indexPath.row == 3){
-        [self performSegueWithIdentifier:@"aboutDigiFacesSegue" sender:self];
+        //[self performSegue:@"aboutDigiFacesSegue"];
+        [self goToVC:kDFAboutDFVCID];
     }
     else if (indexPath.row == 4){
         //[self performSegueWithIdentifier:@"versionSegue" sender:self];
@@ -112,7 +123,8 @@
         defsself
         
         [MBProgressHUD hideHUDForView:sself.view animated:YES];
-        [sself performSegueWithIdentifier:@"logoutSegue" sender:sself];
+        [sself.delegate performSegueWithIdentifier:@"logoutSegue" sender:sself];
+        [sself.delegate hideHelpPopover];
         
     } failure:^(NSError *error) {
         defsself
@@ -123,7 +135,23 @@
     
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    return NO; // no segues.  Let delegate take care of them in -prepareForSegue
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController *destVC = [segue destinationViewController];
+    [self.delegate setViewController:destVC animated:YES];
+}
 
+- (void)performSegue:(NSString*)segueID {
+    [self performSegueWithIdentifier:segueID sender:self];
+}
+
+- (void)goToVC:(NSString*)VCID {
+    id vc = [[self storyboard] instantiateViewControllerWithIdentifier:VCID];
+    [self.delegate setViewController:vc animated:YES];
+    [self.delegate hideHelpPopover];
+}
 /*
  #pragma mark - Navigation
  

@@ -8,10 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
+@protocol HelpPopoverDelegate <NSObject>
 
-    
+- (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated;
+
+- (void)hideHelpPopover;
+
+@end
+
+@interface SettingsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
 }
+
+@property (nonatomic, assign) UIViewController<HelpPopoverDelegate>*delegate;
+
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 
 @end
