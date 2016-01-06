@@ -66,6 +66,11 @@ static NSString *mdmvc_assoc_key = @"MultiDisplayMenuViewControllerAssociatedKey
     }
 }
 
+- (void)setViewControllerWithID:(NSString *)VCID {
+    id vc = [[self storyboard] instantiateViewControllerWithIdentifier:VCID];
+    [self setViewController:vc animated:YES];
+}
+
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated {
     
     

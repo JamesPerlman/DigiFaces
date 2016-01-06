@@ -6,7 +6,7 @@
  */
 
 /* The following line ("localization.test") is for debugging purposes and is not visible to the user.  Please do not translate it. */
-"localization.test" = "Failed to pull localization data.  Using local localization file";
+"localization.test" = "Success! Using remote localization file.";
 
 /* Uncategorized */
 

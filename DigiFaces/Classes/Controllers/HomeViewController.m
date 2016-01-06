@@ -7,6 +7,7 @@
 //
 #import <SDWebImage/UIImageView+WebCache.h>
 
+
 #import "AppDelegate.h"
 
 #import "HomeViewController.h"
@@ -33,6 +34,7 @@
 
 #import "DFPushService.h"
 
+
 typedef enum : NSUInteger {
     DFHomeCellTypeNone,
     DFHomeCellTypeHome,
@@ -42,6 +44,8 @@ typedef enum : NSUInteger {
     DFHomeCellTypeVideoTheme,
     DFHomeCellTypeMarkupTheme
 } DFHomeCellType;
+
+static NSString * const kMyProfileViewControllerID = @"MyProfileViewController";
 
 @interface HomeViewController ()<ProfilePicCellDelegate, ProfilePictureViewControllerDelegate, NSFetchedResultsControllerDelegate>
 {
@@ -95,6 +99,10 @@ typedef enum : NSUInteger {
 }
 - (void)updateTitle {
     self.navigationItem.title = LS.myUserInfo.currentProject.projectName ?: DFLocalizedString(@"view.home.navbar.title", nil);
+}
+
+- (IBAction)goToMyAccount:(id)sender {
+    [self.multiDisplayViewController setViewControllerWithID:kMyProfileViewControllerID];
 }
 
 -(void)viewDidAppear:(BOOL)animated

@@ -22,6 +22,8 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
 }
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
+@property (nonatomic, strong) NSArray *topics;
+
 @end
 
 @implementation SettingsViewController
@@ -38,6 +40,24 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
     [self.logoutButton setTitle:DFLocalizedString(@"view.settings.button.log_out", nil) forState:UIControlStateNormal];
 }
 
+- (NSArray*)topics {
+    if (!_topics) {
+        _topics = @[
+                    /*@{@"name" : @"view.settings.button.profile",
+                      @"id" : kDFMyProfileVCID},*/
+                    @{@"name" : @"view.settings.button.email_support",
+                      @"id" : kDFEmailTechSupportVCID},
+                    @{@"name" : @"view.settings.button.email_mod",
+                      @"id" : kDFEmailModeratorVCID},
+                    @{@"name" : @"view.settings.button.about",
+                      @"id" : kDFAboutDFVCID},
+                    @{@"name" : @"view.settings.button.version",
+                      @"id" : kDFVersionVCID}
+                    ];
+    }
+    return _topics;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -45,31 +65,15 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 5;
+    return [self.topics count];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.row == 0){
-        //[self performSegue:@"ToProfile"];
-        [self goToVC:kDFMyProfileVCID];
-    }
-    else if (indexPath.row == 1){
-        
-        //[self performSegue:@"emailTecSupportSegue"];
-        [self goToVC:kDFEmailTechSupportVCID];
-    }
-    else if (indexPath.row == 2 && canEmailMod){
-        
-        //[self performSegue:@"emailModeratorSegue"];
-        [self goToVC:kDFEmailModeratorVCID];
-    }
-    else if (indexPath.row == 3){
-        //[self performSegue:@"aboutDigiFacesSegue"];
-        [self goToVC:kDFAboutDFVCID];
-    }
-    else if (indexPath.row == 4){
-        //[self performSegueWithIdentifier:@"versionSegue" sender:self];
+    
+    NSString *vcID = self.topics[indexPath.row][@"id"];
+    if (vcID != kDFVersionVCID) {
+        [self goToVC:vcID];
     }
 }
 
@@ -78,34 +82,28 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
     UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if (indexPath.row == 0) {
-        cell.textLabel.text = DFLocalizedString(@"view.settings.button.profile", nil);
-    }
-    else if (indexPath.row == 1){
-        cell.textLabel.text = DFLocalizedString(@"view.settings.button.email_support", nil);
-    }
-    else if (indexPath.row == 2){
-        cell.textLabel.text = DFLocalizedString(@"view.settings.button.email_mod", nil);
-        if (!canEmailMod || [LS.myUserInfo.isModerator boolValue]) {
-            cell.textLabel.textColor = [UIColor lightGrayColor];
-        }
-    }
-    else if(indexPath.row ==3){
-        cell.textLabel.text = DFLocalizedString(@"view.settings.button.about", nil);
-        
+    NSString *localizedName = DFLocalizedString(self.topics[indexPath.row][@"name"], nil);
+    NSString *vcID = self.topics[indexPath.row][@"id"];
+    // special case for the version cell
+    if (vcID == kDFVersionVCID) {
+        NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+        cell.textLabel.text = [NSString stringWithFormat:localizedName, version];
+    } else {
+        cell.textLabel.text = DFLocalizedString(localizedName, nil);
     }
     
-    else if(indexPath.row ==4){
-        cell.textLabel.text = [NSString stringWithFormat:DFLocalizedString(@"view.settings.button.version", nil), [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]];
-        
+    // if the user is a mod, or the user can't email the mod, gray out the Email Moderator option
+    if (vcID == kDFEmailModeratorVCID
+        && (!canEmailMod || [LS.myUserInfo.isModerator boolValue])) {
+        cell.textLabel.textColor = [UIColor lightGrayColor];
     }
-    
     
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 2 && !canEmailMod) {
+    NSString *vcID = self.topics[indexPath.row][@"id"];
+    if (vcID == kDFVersionVCID || (vcID == kDFEmailModeratorVCID && !canEmailMod)) {
         return false;
     } else return true;
 }
@@ -148,8 +146,7 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
 }
 
 - (void)goToVC:(NSString*)VCID {
-    id vc = [[self storyboard] instantiateViewControllerWithIdentifier:VCID];
-    [self.delegate setViewController:vc animated:YES];
+    [self.delegate setViewControllerWithID:VCID];
     [self.delegate hideHelpPopover];
 }
 /*

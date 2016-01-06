@@ -17,4 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtSubject;
 @property (weak, nonatomic) IBOutlet UILabel *lblPlaceholder;
 
+- (UIBarButtonItem*)rightBarButtonItem;
+
 @end

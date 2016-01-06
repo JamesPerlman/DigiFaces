@@ -40,6 +40,10 @@
     self.txtSubject.placeholder = DFLocalizedString(@"view.email_support.input.subject.placeholder", nil);
 }
 
+- (UIBarButtonItem*)rightBarButtonItem {
+    return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"check-white-30px"] style:UIBarButtonItemStylePlain target:self action:@selector(send:)];
+}
+
 - (IBAction)cancelThis:(id)sender {
     if (![_textArea.text isEqualToString:@""]) {
         [self resignAllResponder];

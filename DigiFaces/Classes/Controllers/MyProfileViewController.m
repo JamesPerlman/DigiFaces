@@ -27,6 +27,9 @@
     BOOL isTextChanged;
 }
 @property (nonatomic, strong) AboutMe *aboutMe;
+
+@property (nonatomic, weak) IBOutlet UIView *profilePicBGView;
+@property (nonatomic, weak) IBOutlet UIView *cameraBGView;
 @end
 
 @implementation MyProfileViewController
@@ -39,11 +42,8 @@
     [self.profilePicView sd_setImageWithURL:LS.myUserInfo.avatarFile.filePathURL];
     
     self.aboutMeTextView.text = @"";
-    self.titleName.text = [NSString stringWithFormat:@"%@ %@",LS.myUserInfo.firstName,LS.myUserInfo.lastName];
+    self.titleName.text = LS.myUserInfo.appUserName;//[NSString stringWithFormat:@"%@ %@",LS.myUserInfo.firstName,LS.myUserInfo.lastName];
     
-    self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.height /2;
-    self.profilePicView.layer.masksToBounds = YES;
-    self.profilePicView.layer.borderWidth = 0;
     
     //    [self.aboutMe becomeFirstResponder];
     
@@ -52,12 +52,28 @@
     
     // Do any additional setup after loading the view.
     [self localizeUI];
-    self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"CheckMark"];
+    [self setupUI];
+    self.navigationItem.rightBarButtonItem.image = [UIImage imageNamed:@"check-white-30px"];
 }
 
 - (void)localizeUI {
     self.navigationItem.title = DFLocalizedString(@"view.profile.navbar.title", nil);
     //self.navigationItem.rightBarButtonItem.title = DFLocalizedString(@"view.profile.button.save", nil);
+}
+
+- (void)setupUI {
+    self.profilePicView.layer.cornerRadius = self.profilePicView.bounds.size.width / 2.0;
+    self.profilePicView.clipsToBounds = true;
+    
+    self.profilePicBGView.layer.cornerRadius = self.profilePicBGView.bounds.size.width / 2.0;
+    self.profilePicBGView.clipsToBounds = true;
+    
+    self.cameraBGView.layer.cornerRadius = 4.0;
+    self.cameraBGView.clipsToBounds = true;
+}
+
+- (UIBarButtonItem*)rightBarButtonItem {
+    return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"check-white-40px"] style:UIBarButtonItemStylePlain target:self action:@selector(postpressed:)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,7 +141,8 @@
                       [Utility saveString:_aboutMeTextView.text forKey:kAboutMeText];
                       [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                       [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.alert.save_success", nil) inView:sself.view withTag:0];
-                      LS.myUserInfo.aboutMeText = _aboutMeTextView.text;                      [sself dismissViewControllerAnimated:YES completion:nil];
+                      LS.myUserInfo.aboutMeText = _aboutMeTextView.text;
+                      //[sself dismissViewControllerAnimated:YES completion:nil];
                   } failure:^(NSError *error) {
                       defsself
                       [alertview showAlertWithMessage:DFLocalizedString(@"view.profile.alert.save_failure", nil) inView:sself.view withTag:0];
@@ -135,9 +152,11 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 }
 
--(IBAction)changePicture:(id)sender{
-    
+-(IBAction)changePicture
+{
+    [self performSegueWithIdentifier:@"profilePicSegue" sender:self];
 }
+
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     
@@ -195,7 +214,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"profilePictureSegue"]) {
+    if ([segue.identifier isEqualToString:@"profilePicSegue"]) {
         UINavigationController * navController = segue.destinationViewController;
         
         ProfilePictureCollectionViewController * profileController = (ProfilePictureCollectionViewController*)[navController topViewController];

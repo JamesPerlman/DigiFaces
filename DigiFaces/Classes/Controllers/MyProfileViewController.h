@@ -10,7 +10,10 @@
 
 @interface MyProfileViewController : UIViewController<UITextViewDelegate>
 
-@property(nonatomic,strong)IBOutlet UILabel * titleName;
-@property(nonatomic,strong)IBOutlet UITextView * aboutMeTextView;
-@property(nonatomic,strong)IBOutlet UIImageView * profilePicView;
+@property(nonatomic, weak)IBOutlet UILabel * titleName;
+@property(nonatomic, weak)IBOutlet UITextView * aboutMeTextView;
+@property(nonatomic, weak)IBOutlet UIImageView * profilePicView;
+
+- (UIBarButtonItem*)rightBarButtonItem;
+
 @end

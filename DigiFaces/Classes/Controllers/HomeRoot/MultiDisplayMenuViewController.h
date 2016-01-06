@@ -18,6 +18,8 @@
 
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated;
 
+- (void)setViewControllerWithID:(NSString*)VCID;
+
 @end
 
 @interface MDMSetViewControllerSegue : UIStoryboardSegue

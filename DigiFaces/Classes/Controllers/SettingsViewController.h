@@ -11,6 +11,7 @@
 @protocol HelpPopoverDelegate <NSObject>
 
 - (void)setViewController:(UIViewController*)viewController animated:(BOOL)animated;
+- (void)setViewControllerWithID:(NSString*)VCID;
 
 - (void)hideHelpPopover;
 

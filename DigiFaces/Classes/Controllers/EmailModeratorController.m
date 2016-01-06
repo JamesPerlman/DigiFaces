@@ -44,6 +44,10 @@
     }
 }
 
+- (UIBarButtonItem*)rightBarButtonItem {
+    return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"check-white-30px"] style:UIBarButtonItemStylePlain target:self action:@selector(sendEmail:)];
+}
+
 -(void)resignAllResponder
 {
     [_txtSubject resignFirstResponder];
