@@ -12,6 +12,11 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self localizeUI];
+}
+
+- (void)localizeUI {
+    [self.editProfileButton setTitle:DFLocalizedString(@"view.home.button.edit_profile", nil) forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

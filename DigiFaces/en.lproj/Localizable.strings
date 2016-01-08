@@ -80,6 +80,7 @@
 "view.home.cell.home" = "Home";
 "view.home.cell.diary" = "Diary";
 "view.home.error.load_failure" = "Something went wrong.  Press OK or swipe down to try again.";
+"view.home.button.edit_profile" = "edit";
 
 /* Project Intro View */
 "view.proj_intro.navbar.title" = "PROJECT INTRO";

@@ -413,8 +413,10 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     infoCell = [self.tableView dequeueReusableCellWithIdentifier:infoCellReuseIdentifier];
     if (dailyDiary.userDiaries.count) {
         [infoCell minimize];
+        infoCell.moreLessButton.hidden = false;
     } else {
         [infoCell maximize];
+        infoCell.moreLessButton.hidden = true;
     }
     
 }

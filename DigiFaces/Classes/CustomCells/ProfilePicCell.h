@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblUserName;
+@property (weak, nonatomic) IBOutlet UIButton *editProfileButton;
 
 - (IBAction)cameraClicked:(id)sender;
 @end
