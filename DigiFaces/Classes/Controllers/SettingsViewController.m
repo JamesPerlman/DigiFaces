@@ -87,9 +87,11 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
     // special case for the version cell
     if (vcID == kDFVersionVCID) {
         NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-        cell.textLabel.text = [NSString stringWithFormat:localizedName, version];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",localizedName, version];
+        cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
         cell.textLabel.text = DFLocalizedString(localizedName, nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     // if the user is a mod, or the user can't email the mod, gray out the Email Moderator option

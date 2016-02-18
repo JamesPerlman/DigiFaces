@@ -45,6 +45,7 @@
     BOOL willClose;
     
     id lastFocusedField;
+    NSString *_selectionImage;
 }
 @property (nonatomic, strong) NSDate * selectedDate;
 @property (nonatomic, retain) NSMutableArray * dataArray;
@@ -79,6 +80,7 @@
     if (_diaryTheme) {
         _constDateHeight.constant = 0;
         _constTitleHeight.constant = 0;
+        [self.txtResponse becomeFirstResponder];
         
         if (imageGalleryModule)   {
             profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfilePictureCollectionViewController"];
@@ -87,10 +89,12 @@
             profileController.delegate = self;
             profileController.files = [[imageGalleryModule.imageGallery files] allObjects];
             profileController.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            _selectionImage = @"gallery";
             [self.view addSubview:profileController.collectionView];
             [self.view addConstraints:[NSLayoutConstraint equalSizeAndCentersWithItem:profileController.collectionView toItem:self.imageContainerView]];
-            
         } else if ([_diaryTheme getModuleWithThemeType:ThemeTypeVideoResponse]) {
+            _selectionImage = @"videocam_blue";
             [self.cameraButton setImage:[UIImage imageNamed:@"videocam_blue"] forState:UIControlStateNormal];
             
             for (DFMediaUploadView *view in self.mediaUploadManager.mediaUploadViews) {
@@ -98,14 +102,24 @@
             }
             self.mediaUploadManager.maximumNumberOfSelection = 1;
             self.videoUploadView.hidden = false;
+        } else {
+            _selectionImage = @"camera";
         }
-        [self.txtResponse becomeFirstResponder];
+        [self.cameraButton setImage:[UIImage imageNamed:_selectionImage] forState:UIControlStateNormal];
+        
     } else {
         
         [self.txtTitle becomeFirstResponder];
     }
     
     [self localizeUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (_diaryTheme && [_diaryTheme getModuleWithThemeType:ThemeTypeImageGallery] && ([self.txtResponse isFirstResponder] || [self.txtTitle isFirstResponder])) {
+        [self cameraSwitched:self];
+    }
 }
 
 - (void)localizeUI {
@@ -466,7 +480,8 @@
         [_txtTitle resignFirstResponder];
         
         [self setTextActive:false];
-        if ([self.mediaUploadManager numberOfUnusedMediaViews] > 0 && ![self.diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]) {
+        BOOL isImageGallery = (BOOL)([self.diaryTheme getModuleWithThemeType:ThemeTypeImageGallery]!=nil);
+        if ([self.mediaUploadManager numberOfUnusedMediaViews] > 0 && !isImageGallery) {
             [self.mediaUploadManager presentMediaSelectionDialog];
         }
     } else {
@@ -544,7 +559,7 @@
 
 - (void)setTextActive:(BOOL)active {
     _textActive = active;
-    NSString *imageName = active? @"camera":@"keyboard";
+    NSString *imageName = active? _selectionImage:@"keyboard";
     [self.cameraButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 - (void)textViewDidBeginEditing:(UITextView*)textView {
