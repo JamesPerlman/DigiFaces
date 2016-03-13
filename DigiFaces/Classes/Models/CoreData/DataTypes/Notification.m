@@ -13,6 +13,7 @@
 @implementation Notification
 
 @dynamic activityId;
+@dynamic activityName;
 @dynamic dateCreated;
 @dynamic dateCreatedFormatted;
 @dynamic isDailyDiaryNotification;
@@ -43,19 +44,26 @@
 
 - (NSString*)usefulMessage {
     NSInteger t = self.notificationTypeId.integerValue;
+    //return [NSString stringWithFormat:@"%@ %@", self.commenterUserInfo.appUserName ?: @"(null)", self.activityName?: @"(null)"];
     switch (t) {
         case 1:
-            return DFLocalizedString(@"app.notification.new_thread_comment", nil);
+            return [self formatNotificationString:DFLocalizedString(@"app.notification.new_thread_comment", nil)];
             break;
         case 2:
-            return DFLocalizedString(@"app.notification.new_comment_on_my_thread", nil);
+            return [self formatNotificationString:DFLocalizedString(@"app.notification.new_comment_on_my_thread", nil)];
             break;
         case 3:
-            return DFLocalizedString(@"app.notification.new_thread_response", nil);
+            return [self formatNotificationString:DFLocalizedString(@"app.notification.new_thread_response", nil)];
+            break;
         default:
             return self.notificationType;
             break;
     }
 }
 
+- (NSString*)formatNotificationString:(NSString*)notificationString {
+    NSString *modifiedString = [notificationString stringByReplacingOccurrencesOfString:@"{user}" withString:self.commenterUserInfo.appUserName];
+    modifiedString = [modifiedString stringByReplacingOccurrencesOfString:@"{activity}" withString:self.activityName];
+    return modifiedString;
+}
 @end

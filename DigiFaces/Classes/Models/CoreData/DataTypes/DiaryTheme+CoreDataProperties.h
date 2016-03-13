@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *activityDesc;
 @property (nullable, nonatomic, retain) NSNumber *activityId;
+@property (nullable, nonatomic, retain) NSNumber *activitySortOrder;
 @property (nullable, nonatomic, retain) NSString *activityTitle;
 @property (nullable, nonatomic, retain) NSNumber *activityTypeId;
 @property (nullable, nonatomic, retain) NSNumber *isActive;

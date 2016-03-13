@@ -15,6 +15,7 @@
 
 @dynamic activityDesc;
 @dynamic activityId;
+@dynamic activitySortOrder;
 @dynamic activityTitle;
 @dynamic activityTypeId;
 @dynamic isActive;

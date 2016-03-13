@@ -28,6 +28,7 @@
 #import "VideoCell.h"
 #import "GalleryCell.h"
 #import "RTCell.h"
+#import "YouTubeCell.h"
 
 #import "Diary.h"
 #import "DisplayFile.h"
@@ -38,6 +39,7 @@
 #import "TextAreaResponse.h"
 #import "ImageGallery.h"
 #import "ImageGalleryResponse.h"
+
 
 @interface DiaryThemeViewController () <GalleryCellDelegate, NSFetchedResultsControllerDelegate, PopUpDelegate>
 {
@@ -485,9 +487,17 @@
                 }
                 else if ([module themeType] == ThemeTypeDisplayText){
                     
-                    RTCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+                    RTCell * textCell;
+                    if (module.displayText.activityYouTubeKey.length) {
+                        NSLog(@"%@", module.displayText.activityYouTubeKey);
+                        textCell = [tableView dequeueReusableCellWithIdentifier:@"youtubeCell" forIndexPath:indexPath];
+                        [((YouTubeCell*)textCell) setYoutubeKey:module.displayText.activityYouTubeKey];
+                    } else {
+                        textCell = [tableView dequeueReusableCellWithIdentifier:@"textCell" forIndexPath:indexPath];
+                    }
                     
                     [textCell setText:module.displayText.text];
+                    
                     if (self.fetchedResultsController.fetchedObjects.count) {
                         [_heightArray replaceObjectAtIndex:indexPath.row withObject:@(MIN(textCell.fullHeight, 100))];
                     }

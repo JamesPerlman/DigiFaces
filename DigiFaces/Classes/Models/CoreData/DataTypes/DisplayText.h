@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSNumber * activityId;
 @property (nonatomic, retain) NSNumber * displayTextId;
 @property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * activityYouTubeKey;
 
 @end

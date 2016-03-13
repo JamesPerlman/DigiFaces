@@ -22,9 +22,9 @@
 "app.dates.text.just_now" = "Just now";
 
 /* Notification types */
-"app.notification.new_thread_comment" = "New comment on your thread.";
-"app.notification.new_comment_on_my_thread" = "New comment on a thread you commented on.";
-"app.notification.new_thread_response" = "New response to your post.";
+"app.notification.new_thread_comment" = "{user} commented on the {activity} thread you've commented on.";
+"app.notification.new_comment_on_my_thread" = "{user} commented on a your thread {activity}.";
+"app.notification.new_thread_response" = "{user} responded to you on {activity}.";
 
 
 /* Misc Views / Cells */

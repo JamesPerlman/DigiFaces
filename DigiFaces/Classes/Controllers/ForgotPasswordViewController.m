@@ -42,7 +42,7 @@
 }
 
 - (void)localizeUI {
-    self.header1Label.text = DFLocalizedString(@"view.forgot_pass.header1", nil);
+    self.navigationItem.title = DFLocalizedString(@"view.forgot_pass.header1", nil);
     self.header2Label.text = DFLocalizedString(@"view.forgot_pass.header2", nil);
     self.emailTextField.placeholder = DFLocalizedString(@"view.forgot_pass.input.email.placeholder", nil);
     [self.submitButton setTitle:DFLocalizedString(@"view.forgot_pass.button.submit", nil) forState:UIControlStateNormal];

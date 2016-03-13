@@ -14,6 +14,7 @@
 @interface Notification : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * activityId;
+@property (nonatomic, retain) NSString * activityName;
 @property (nonatomic, retain) NSString * dateCreated;
 @property (nonatomic, retain) NSString * dateCreatedFormatted;
 @property (nonatomic, retain) NSNumber * isDailyDiaryNotification;

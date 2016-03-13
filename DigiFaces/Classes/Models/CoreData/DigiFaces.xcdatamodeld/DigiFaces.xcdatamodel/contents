@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 4.3">
     <entity name="About" representedClassName="About" syncable="YES">
         <attribute name="aboutId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="aboutText" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,6 +73,7 @@
     <entity name="DiaryTheme" representedClassName="DiaryTheme" syncable="YES">
         <attribute name="activityDesc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activitySortOrder" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="activityTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="activityTypeId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -91,6 +92,7 @@
     </entity>
     <entity name="DisplayText" representedClassName="DisplayText" syncable="YES">
         <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityYouTubeKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayTextId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -163,6 +165,7 @@
     </entity>
     <entity name="Notification" representedClassName="Notification" syncable="YES">
         <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isDailyDiaryNotification" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -263,9 +266,9 @@
         <element name="DailyDiary" positionX="27" positionY="450" width="128" height="148"/>
         <element name="DailyDiaryResponse" positionX="673" positionY="72" width="128" height="150"/>
         <element name="Diary" positionX="72" positionY="117" width="128" height="208"/>
-        <element name="DiaryTheme" positionX="-153" positionY="72" width="128" height="208"/>
+        <element name="DiaryTheme" positionX="-153" positionY="72" width="128" height="225"/>
         <element name="DisplayFile" positionX="-173" positionY="642" width="128" height="105"/>
-        <element name="DisplayText" positionX="-56" positionY="756" width="128" height="90"/>
+        <element name="DisplayText" positionX="-56" positionY="756" width="128" height="105"/>
         <element name="File" positionX="448" positionY="270" width="128" height="253"/>
         <element name="ImageGallery" positionX="-45" positionY="852" width="128" height="118"/>
         <element name="ImageGalleryResponse" positionX="547" positionY="575" width="128" height="163"/>
@@ -273,7 +276,7 @@
         <element name="MarkUp" positionX="-488" positionY="924" width="128" height="30"/>
         <element name="Message" positionX="799" positionY="344" width="128" height="223"/>
         <element name="Module" positionX="-425" positionY="603" width="128" height="210"/>
-        <element name="Notification" positionX="385" positionY="-108" width="128" height="238"/>
+        <element name="Notification" positionX="385" positionY="-108" width="128" height="255"/>
         <element name="Project" positionX="-137" positionY="306" width="128" height="313"/>
         <element name="Response" positionX="304" positionY="809" width="128" height="253"/>
         <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>

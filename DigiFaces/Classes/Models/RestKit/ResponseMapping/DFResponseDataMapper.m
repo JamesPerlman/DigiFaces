@@ -215,6 +215,7 @@
     [mapping setIdentificationAttributes:@[@"activityId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
+                                                  @"ActivitySortOrder",
                                                   @"ActivityTypeId",
                                                   @"ParentActivityId",
                                                   @"ActivityTitle",
@@ -249,7 +250,8 @@
     
     [mapping addAttributeMappingsFromDictionary:@[@"DisplayTextId",
                                                   @"ActivityId",
-                                                  @"Text"].camelCaseDict];
+                                                  @"Text",
+                                                  @"ActivityYouTubeKey"].camelCaseDict];
     
     return mapping;
 }
@@ -383,6 +385,7 @@
     [mapping setIdentificationAttributes:@[@"notificationId"]];
     
     [mapping addAttributeMappingsFromDictionary:@[@"ActivityId",
+                                                  @"ActivityName",
                                                   @"DateCreated",
                                                   @"DateCreatedFormatted",
                                                   @"IsDailyDiaryNotification",

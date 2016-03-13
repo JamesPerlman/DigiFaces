@@ -14,5 +14,6 @@
 @dynamic activityId;
 @dynamic displayTextId;
 @dynamic text;
+@dynamic activityYouTubeKey;
 
 @end

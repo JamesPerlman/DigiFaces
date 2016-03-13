@@ -601,7 +601,7 @@ static NSString * const kMyProfileViewControllerID = @"MyProfileViewController";
         
         fetchRequest.entity = [NSEntityDescription entityForName:@"DiaryTheme" inManagedObjectContext:self.managedObjectContext];
         
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"activityId" ascending:YES]];
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"activitySortOrder" ascending:YES]];
         
         fetchRequest.fetchBatchSize = 20;
         
