@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 
 #import "UserInfo.h"
+#import "DFUserPermissions.h"
 
 @interface LocalStorage : NSObject
 
@@ -23,6 +24,7 @@
 @property (nonatomic, readonly) NSNumber *currentProjectId;
 
 @property (nonatomic, strong) UserInfo *myUserInfo;
+@property (nonatomic, strong, readonly) DFUserPermissions *myUserPermissions;
 
 - (id)objectForKeyedSubscript:(NSString*)key;
 - (void)setObject:(id)obj forKeyedSubscript:(NSString*)key;

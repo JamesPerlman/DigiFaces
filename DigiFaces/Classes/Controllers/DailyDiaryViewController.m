@@ -62,7 +62,7 @@ static NSString *infoCellReuseIdentifier = @"textCell";
     self.tableView.layoutMargins = UIEdgeInsetsZero;
     
     // check if user has enough permissions to see edit button (projectRoleId != 1 and projectRoleId != 3 or 4)
-    if ([LS.myUserInfo canReplyToDiaries]) {
+    if ([LS.myUserPermissions canAddResponses]) {
         [self addEditButton];
     }
     

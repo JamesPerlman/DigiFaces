@@ -30,7 +30,7 @@ static NSString * const kDFMyProfileVCID = @"MyProfileViewController";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    canEmailMod = [LS.myUserInfo canEmailMods];
+    canEmailMod = [LS.myUserPermissions canEmailMods];
     // Do any additional setup after loading the view.
     [self localizeUI];
 }

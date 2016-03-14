@@ -34,6 +34,7 @@
 @dynamic projectRoleId;
 @dynamic projects;
 
+
 @end
 
 @implementation UserInfo (DynamicMethods)
@@ -50,12 +51,9 @@
     return [self canReplyToDiaries];
 }
 
-- (BOOL)canAddCommentsToDiaryResponses {
+- (BOOL)canAddComments {
     return !([self.projectRoleId isEqualToNumber:@3] || [self.projectRoleId isEqualToNumber:@4]);
 }
 
-- (BOOL)canAddCommentsToThemeResponses {
-    return [self canAddCommentsToDiaryResponses];
-}
 
 @end

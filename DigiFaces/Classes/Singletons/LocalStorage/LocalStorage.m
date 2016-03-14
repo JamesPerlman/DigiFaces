@@ -15,6 +15,7 @@
 
 @interface LocalStorage () {
     UserInfo *_myUserInfo;
+    DFUserPermissions *_myUserPermissions;
     NSNumber *_currentProjectId;
 }
 @end
@@ -47,6 +48,13 @@
     }
 }
 
+- (DFUserPermissions*)myUserPermissions {
+    if (!_myUserPermissions) {
+        _myUserPermissions = [[DFUserPermissions alloc] initWithUserInfo:[self myUserInfo]];
+    }
+    return _myUserPermissions;
+}
+
 - (UserInfo*)myUserInfo {
     if (_myUserInfo) {
         return _myUserInfo;
@@ -75,10 +83,13 @@
 }
 
 - (void)setMyUserInfo:(UserInfo *)myUserInfo {
-    _myUserInfo = myUserInfo;
-    _myUserInfo.userId = myUserInfo.id;
-    [_myUserInfo.managedObjectContext save:nil];
-    _currentProjectId = [myUserInfo.currentProjectId copy];
+    if (myUserInfo) {
+        _myUserInfo = myUserInfo;
+        _myUserPermissions = [[DFUserPermissions alloc] initWithUserInfo:myUserInfo];
+        _myUserInfo.userId = myUserInfo.id;
+        [_myUserInfo.managedObjectContext save:nil];
+        _currentProjectId = [myUserInfo.currentProjectId copy];
+    }
 }
 
 - (id)objectForKeyedSubscript:(NSString *)key {

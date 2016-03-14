@@ -45,6 +45,11 @@ NSString * const APIPathLogout = @"api/Account/Logout";
 // activity
 NSString * const APIPathActivityGetResponses = @"api/Activity/GetResponses/:activityId";
 NSString * const APIPathActivityUpdateComment = @"api/Activity/UpdateComment";
+NSString * const APIPathActivityUpdateInternalComment = @"api/Activity/UpdateInternalComment";
+NSString * const APIPathActivityUpdateResearcherComment = @"api/Activity/UpdateResearcherComment";
+
+
+
 NSString * const APIPathActivityUpdateThread = @"api/Activity/UpdateThread";
 NSString * const APIPathActivityUpdateImageGalleryResponse = @"api/Activity/UpdateImageGalleryResponse";
 NSString * const APIPathActivityUpdateTextareaResponse = @"api/Activity/UpdateTextareaResponse";

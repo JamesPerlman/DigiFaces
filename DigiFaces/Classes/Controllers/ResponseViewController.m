@@ -105,7 +105,7 @@ typedef enum {
         [self prepareAndLoadData];
     
     
-    self.messageTextView.hidden = ![LS.myUserInfo canAddCommentsToDiaryResponses];
+    self.messageTextView.hidden = ![LS.myUserPermissions canAddComments];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     

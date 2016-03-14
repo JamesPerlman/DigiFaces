@@ -80,7 +80,7 @@ typedef enum {
         }
     }
     
-    if (!_isViewOnly && [LS.myUserInfo canReplyToDiaries]) {
+    if (!_isViewOnly && [LS.myUserPermissions canAddResponses]) {
         [self addEditButton];
     }
     

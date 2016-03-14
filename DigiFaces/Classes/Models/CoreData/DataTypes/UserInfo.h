@@ -36,16 +36,6 @@
 
 @end
 
-@interface UserInfo (DynamicMethods)
-
-- (BOOL)canEmailMods;
-- (BOOL)canReplyToDiaries;
-- (BOOL)canReplyToThemes;
-- (BOOL)canAddCommentsToDiaryResponses;
-- (BOOL)canAddCommentsToThemeResponses;
-
-@end
-
 @interface  UserInfo (CoreDataGeneratedAccessors)
 
 - (void)addProjectsObject:(Project *)value;

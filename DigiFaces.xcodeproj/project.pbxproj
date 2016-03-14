@@ -104,6 +104,7 @@
 		F4336C6B1C25F73100FC2892 /* ProjectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4336C6A1C25F73100FC2892 /* ProjectTableViewCell.m */; };
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
 		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
+		F4417B871C96498900086EF5 /* DFUserPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417B861C96498900086EF5 /* DFUserPermissions.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
 		F4864FAC1B682519000D2615 /* DFResponseDescriptorsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */; };
@@ -414,6 +415,8 @@
 		F43529011BA0BE4B00B7FF0A /* DigiFaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DigiFaces.xcdatamodel; sourceTree = "<group>"; };
 		F439EC8C1BD4610000386A8B /* AVAsset+Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+Transformations.h"; sourceTree = "<group>"; };
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
+		F4417B851C96498900086EF5 /* DFUserPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUserPermissions.h; sourceTree = "<group>"; };
+		F4417B861C96498900086EF5 /* DFUserPermissions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUserPermissions.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4864F681B670E06000D2615 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
@@ -776,6 +779,7 @@
 		4ACDB96A1B3E7E66009EFB91 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F4417B841C96496200086EF5 /* DFUserPermissions */,
 				F4C4A4A01C7A4EDD0026D5D0 /* YTPlayerView */,
 				F4336C511C23BF5500FC2892 /* SWRevealViewController */,
 				F4C8AA461BD2DBFA00B137CB /* DFLanguageSynchronizer */,
@@ -959,6 +963,15 @@
 				F4336C5B1C24E9D300FC2892 /* ProjectsMenuViewController.m */,
 			);
 			path = ProjectsMenu;
+			sourceTree = "<group>";
+		};
+		F4417B841C96496200086EF5 /* DFUserPermissions */ = {
+			isa = PBXGroup;
+			children = (
+				F4417B851C96498900086EF5 /* DFUserPermissions.h */,
+				F4417B861C96498900086EF5 /* DFUserPermissions.m */,
+			);
+			path = DFUserPermissions;
 			sourceTree = "<group>";
 		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
@@ -1954,6 +1967,7 @@
 				4A00E83D1B4BD060000F6A6B /* TextFieldCell.m in Sources */,
 				F4A759D21B7150E300B94176 /* ConversationsTableViewController.m in Sources */,
 				4A00E8431B4BF130000F6A6B /* CalendarViewController.m in Sources */,
+				F4417B871C96498900086EF5 /* DFUserPermissions.m in Sources */,
 				F4B8B3451BA35B1D007E4104 /* MarkUp.m in Sources */,
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
 				F4336C6B1C25F73100FC2892 /* ProjectTableViewCell.m in Sources */,

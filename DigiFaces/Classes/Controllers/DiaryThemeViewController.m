@@ -75,7 +75,7 @@
     
     
     Module * markup = [self getModuleWithThemeType:ThemeTypeMarkup];
-    if (!markup && [LS.myUserInfo canReplyToThemes]) {
+    if (!markup && [LS.myUserPermissions canAddResponses]) {
         [self addEditButton];
     }
     if (markup && [LS.myUserInfo.projectRoleId isEqualToNumber:@2]) {
