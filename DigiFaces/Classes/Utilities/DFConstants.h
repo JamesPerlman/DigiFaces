@@ -70,12 +70,14 @@ extern NSString * const APIPathProjectGetAnnouncements;
 extern NSString * const APIPathGetAbout;
 extern NSString * const APIPathGetAvatarFiles;
 extern NSString * const APIPathSendHelpMessage;
+extern NSString * const APIPathGetLanguages;
 
 #pragma mark - LocalStorage Keys
 extern NSString * const LSAuthTokenKey;
 extern NSString * const LSPasswordKey;
 extern NSString * const LSUsernameKey;
 extern NSString * const LSMyUserIdKey;
+extern NSString * const LSMyLanguageCodeKey;
 
 
 

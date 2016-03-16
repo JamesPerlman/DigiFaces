@@ -20,6 +20,7 @@
 - (RKEntityMapping*)aboutMeMapping;
 - (RKEntityMapping*)activityResponseMapping;
 - (RKEntityMapping*)announcementMapping;
+- (RKEntityMapping*)commentMapping;
 - (RKEntityMapping*)dailyDiaryMapping;
 - (RKEntityMapping*)dailyDiaryResponseMapping;
 - (RKEntityMapping*)diaryMapping;
@@ -29,15 +30,14 @@
 - (RKEntityMapping*)fileMapping;
 - (RKEntityMapping*)imageGalleryResponseMapping;
 - (RKEntityMapping*)imageGalleryMapping;
-- (RKEntityMapping*)commentMapping;
 - (RKEntityMapping*)internalCommentMapping;
-- (RKEntityMapping*)researcherCommentMapping;
 - (RKEntityMapping*)markUpMapping;
 - (RKEntityMapping*)messageMapping;
 - (RKEntityMapping*)messageMappingRecursive;
 - (RKEntityMapping*)moduleMapping;
 - (RKEntityMapping*)notificationMapping;
 - (RKEntityMapping*)projectMapping;
+- (RKEntityMapping*)researcherCommentMapping;
 - (RKEntityMapping*)textareaMapping;
 - (RKEntityMapping*)textareaResponseMapping;
 - (RKEntityMapping*)threadMapping;
@@ -51,6 +51,7 @@
 - (RKObjectMapping*)emptyResponseMapping;
 - (RKObjectMapping*)homeAnnouncementMapping;
 - (RKObjectMapping*)isUserNameAvailableResponseMapping;
+- (RKObjectMapping*)languageMapping;
 - (RKObjectMapping*)setUserNameResponseMapping;
 - (RKObjectMapping*)tokenMapping;
 

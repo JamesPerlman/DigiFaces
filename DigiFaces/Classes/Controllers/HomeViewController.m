@@ -35,6 +35,7 @@
 #import "DFPushService.h"
 
 
+
 typedef enum : NSUInteger {
     DFHomeCellTypeNone,
     DFHomeCellTypeHome,
@@ -95,7 +96,7 @@ static NSString * const kMyProfileViewControllerID = @"MyProfileViewController";
 
 - (void)localizeUI {
     [self updateTitle];
-    [self.tableView reloadData];
+    [self.tableView reloadData]; 
 }
 - (void)updateTitle {
     self.navigationItem.title = LS.myUserInfo.currentProject.projectName ?: DFLocalizedString(@"view.home.navbar.title", nil);
@@ -133,7 +134,7 @@ static NSString * const kMyProfileViewControllerID = @"MyProfileViewController";
                               [DFDataManager removeEntitiesWithEntityName:@"DailyDiary" idKey:@"diaryId" notInArray:@[result] predicate:nil];
                               LS.myUserInfo.currentProject.dailyDiary = result;
                               defsself
-                              [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                              [sself.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0],[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                           }
                           
                       }
@@ -219,6 +220,8 @@ static NSString * const kMyProfileViewControllerID = @"MyProfileViewController";
                    params:nil
                   success:^(NSDictionary *response, UserInfo *result) {
                       LS.myUserInfo = result;
+                      
+                      [[DFLanguageSynchronizer sharedInstance] synchronizeStringsWithCompletion:nil];
                       
                       LS[LSMyUserIdKey] = result.id;
                       

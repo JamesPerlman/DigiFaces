@@ -120,9 +120,9 @@
 "view.response.text.n_researcher_comments" = "%lu Notes";
 
 // "add comment" list (part of Response view)
-"list.comment_options.comment" = "Add comment";
-"list.comment_options.researcher" = "Add note";
-"list.comment_options.internal" = "Add internal note";
+"list.comment_options.comment" = "Kommentarer";
+"list.comment_options.researcher" = "Bemærkninger";
+"list.comment_options.internal" = "Private bemærkninger";
 
 /* Add Diary Entry / Add Theme Response View  */
 "view.respond.navbar.title" = "RESPOND";

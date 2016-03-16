@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomAlertView.h"
+#import "UIViewController+DFLocalization.h"
+
 @protocol MessageToViewMain;
 
 @interface HomeViewController : UITableViewController<UITableViewDelegate,UITableViewDataSource>

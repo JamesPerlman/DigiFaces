@@ -12,6 +12,7 @@
 @implementation UIViewController (DFLocalization)
 
 +(void)initialize {
+    [super initialize];
     Method vdl1 = class_getInstanceMethod([UIViewController class], @selector(viewDidLoad));
     Method vdl2 = class_getInstanceMethod([UIViewController class], @selector(viewDidLoad_override));
     method_exchangeImplementations(vdl1, vdl2);
@@ -46,3 +47,6 @@
 }
 
 @end
+
+
+

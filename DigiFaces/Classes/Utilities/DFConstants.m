@@ -61,6 +61,7 @@ NSString * const APIPathActivityMarkCommentRead = @"api/Activity/MarkCommentRead
 NSString * const APIPathGetAbout = @"api/System/GetAbout/:languageCode";
 NSString * const APIPathGetAvatarFiles = @"api/System/GetAvatarFiles";
 NSString * const APIPathSendHelpMessage = @"api/System/SendHelpMessage";
+NSString * const APIPathGetLanguages = @"api/System/GetLanguages";
 
 // project
 NSString * const APIPathGetAlertCounts = @"api/Project/GetAlertsCount/:projectId";
@@ -77,3 +78,4 @@ NSString * const LSAuthTokenKey = @"com.digifaces.api.auth_token";
 NSString * const LSPasswordKey = @"com.digifaces.api.password";
 NSString * const LSUsernameKey = @"com.digifaces.api.username";
 NSString * const LSMyUserIdKey = @"com.digifaces.var.myUserId";
+NSString * const LSMyLanguageCodeKey = @"com.digifaces.var.langCode";

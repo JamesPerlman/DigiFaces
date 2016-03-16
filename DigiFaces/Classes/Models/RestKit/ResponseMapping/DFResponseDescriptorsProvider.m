@@ -54,6 +54,7 @@
              DESCRIPTOR(APIPathGetAvatarFiles,                      kGET,  fileMapping),
              DESCRIPTOR(APIPathGetDailyDiary,                       kPOST, dailyDiaryMapping),
              DESCRIPTOR(APIPathGetHomeAnnouncement,                 kGET,  homeAnnouncementMapping),
+             DESCRIPTOR(APIPathGetLanguages,                        kGET,  languageMapping),
              DESCRIPTOR(APIPathGetMessages,                         kGET,  messageMappingRecursive),
              DESCRIPTOR(APIPathGetNotifications,                    kGET,  notificationMapping),
              DESCRIPTOR(APIPathGetProjects,                         kGET,  projectMapping),

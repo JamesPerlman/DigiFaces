@@ -112,6 +112,7 @@
                   
                   LS.loginPassword = nil;
                   LS.apiAuthToken = nil;
+                  [[DFLanguageSynchronizer sharedInstance] reset];
                   if (success) success(response, result);
               } failure:failure];
     

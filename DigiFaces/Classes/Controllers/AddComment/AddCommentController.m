@@ -10,7 +10,7 @@
 #import "AddInternalCommentAction.h"
 #import "AddResearcherCommentAction.h"
 
-#import "NSString+FontAwesome.h"
+#import "NSString+DigiFaces.h"
 
 #import "Comment.h"
 
@@ -101,28 +101,23 @@ static CGFloat commentCellHeight = 40.0;
 
 #pragma mark - UITableView setup
 
-NSString *titleStringForOption(NSString *iconIdentifier, NSString *localizedTitleKey) {
-    NSString *iconString = [NSString fontAwesomeIconStringForIconIdentifier:iconIdentifier];
-    NSString *titleString = DFLocalizedString(localizedTitleKey, nil);
-    return [NSString stringWithFormat:@"%@ %@", iconString, titleString];
-}
 
 - (void)initTitlesAndActions {
     NSMutableArray *mutableActions = [NSMutableArray array];
     NSMutableArray *mutableTitles = [NSMutableArray array];
     
     if ([LS.myUserPermissions canAddInternalComments]) {
-        [mutableTitles addObject:titleStringForOption(@"fa-comments-o", @"list.comment_options.internal")];
+        [mutableTitles addObject:[NSString stringPrefixedWithFontAwesomeIcon:@"fa-comments-o" withLocalizedKey:@"list.comment_options.internal"]];
         [mutableActions addObject:[[AddInternalCommentAction alloc] init]];
     }
     
     if ([LS.myUserPermissions canAddResearcherComments]) {
-        [mutableTitles addObject:titleStringForOption(@"fa-comments", @"list.comment_options.researcher")];
+        [mutableTitles addObject:[NSString stringPrefixedWithFontAwesomeIcon:@"fa-comments" withLocalizedKey:@"list.comment_options.researcher"]];
         [mutableActions addObject:[[AddResearcherCommentAction alloc] init]];
     }
     
     if ([LS.myUserPermissions canAddComments]) {
-        [mutableTitles addObject:titleStringForOption(@"fa-comment-o", @"list.comment_options.comment")];
+        [mutableTitles addObject:[NSString stringPrefixedWithFontAwesomeIcon:@"fa-comment-o" withLocalizedKey:@"list.comment_options.comment"]];
         [mutableActions addObject:[[AddCommentAction alloc] init]];
     }
     

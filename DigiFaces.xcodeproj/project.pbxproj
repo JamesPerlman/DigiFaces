@@ -113,11 +113,14 @@
 		F4417BE01C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BDD1C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m */; };
 		F4417BE11C97EB7200086EF5 /* ResearcherComment.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BDF1C97EB7200086EF5 /* ResearcherComment.m */; };
 		F4417BE41C97EDDC00086EF5 /* AddResearcherCommentAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BE31C97EDDC00086EF5 /* AddResearcherCommentAction.m */; };
+		F44538151C991138003650FA /* DFCommentTypesSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F44538141C991138003650FA /* DFCommentTypesSegmentedControl.m */; };
+		F44538181C991416003650FA /* NSString+DigiFaces.m in Sources */ = {isa = PBXBuildFile; fileRef = F44538171C991416003650FA /* NSString+DigiFaces.m */; };
+		F44538211C99365C003650FA /* DFResponseDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F44538201C99365C003650FA /* DFResponseDataMapper.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
 		F4864FAC1B682519000D2615 /* DFResponseDescriptorsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */; };
 		F4864FAF1B682607000D2615 /* DFConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FAE1B682607000D2615 /* DFConstants.m */; };
-		F4864FB21B683450000D2615 /* DFResponseDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB11B683450000D2615 /* DFResponseDataMapper.m */; };
+		F4864FB21B683450000D2615 /* Language.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB11B683450000D2615 /* Language.m */; };
 		F4864FB51B6835E4000D2615 /* APITokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FB41B6835E4000D2615 /* APITokenResponse.m */; };
 		F4864FB61B6839E1000D2615 /* DFClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F6E1B680859000D2615 /* DFClient.m */; };
 		F48C33411B7BC6EA00D7C764 /* ConversationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F48C33401B7BC6EA00D7C764 /* ConversationDetailViewController.m */; };
@@ -442,6 +445,12 @@
 		F4417BDF1C97EB7200086EF5 /* ResearcherComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResearcherComment.m; sourceTree = "<group>"; };
 		F4417BE21C97EDDC00086EF5 /* AddResearcherCommentAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddResearcherCommentAction.h; sourceTree = "<group>"; };
 		F4417BE31C97EDDC00086EF5 /* AddResearcherCommentAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddResearcherCommentAction.m; sourceTree = "<group>"; };
+		F44538131C991138003650FA /* DFCommentTypesSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFCommentTypesSegmentedControl.h; sourceTree = "<group>"; };
+		F44538141C991138003650FA /* DFCommentTypesSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFCommentTypesSegmentedControl.m; sourceTree = "<group>"; };
+		F44538161C991416003650FA /* NSString+DigiFaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DigiFaces.h"; sourceTree = "<group>"; };
+		F44538171C991416003650FA /* NSString+DigiFaces.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DigiFaces.m"; sourceTree = "<group>"; };
+		F445381C1C9932A5003650FA /* Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Language.h; sourceTree = "<group>"; };
+		F44538201C99365C003650FA /* DFResponseDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFResponseDataMapper.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4864F681B670E06000D2615 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
@@ -455,7 +464,7 @@
 		F4864FAD1B682573000D2615 /* DigiFaces.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DigiFaces.pch; sourceTree = "<group>"; };
 		F4864FAE1B682607000D2615 /* DFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFConstants.m; path = ../Utilities/DFConstants.m; sourceTree = "<group>"; };
 		F4864FB01B683450000D2615 /* DFResponseDataMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFResponseDataMapper.h; sourceTree = "<group>"; };
-		F4864FB11B683450000D2615 /* DFResponseDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFResponseDataMapper.m; sourceTree = "<group>"; };
+		F4864FB11B683450000D2615 /* Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Language.m; sourceTree = "<group>"; };
 		F4864FB31B6835E4000D2615 /* APITokenResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APITokenResponse.h; sourceTree = "<group>"; };
 		F4864FB41B6835E4000D2615 /* APITokenResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APITokenResponse.m; sourceTree = "<group>"; };
 		F48C333F1B7BC6EA00D7C764 /* ConversationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationDetailViewController.h; path = Controllers/ConversationDetailViewController.h; sourceTree = "<group>"; };
@@ -673,6 +682,7 @@
 		4ACDB9291B3E7E66009EFB91 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F44538101C9910BE003650FA /* Views */,
 				F4864F6B1B6807E0000D2615 /* Singletons */,
 				F4DD49C21B65512600F4016B /* Categories */,
 				4AC844701B581F63006CDB45 /* Others */,
@@ -1047,6 +1057,31 @@
 			name = ResearcherComment;
 			sourceTree = "<group>";
 		};
+		F44538101C9910BE003650FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F44538111C9910DD003650FA /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F44538111C9910DD003650FA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F44538121C9910F0003650FA /* DFCommentTypesSegmentedControl */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F44538121C9910F0003650FA /* DFCommentTypesSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				F44538131C991138003650FA /* DFCommentTypesSegmentedControl.h */,
+				F44538141C991138003650FA /* DFCommentTypesSegmentedControl.m */,
+			);
+			path = DFCommentTypesSegmentedControl;
+			sourceTree = "<group>";
+		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1092,7 +1127,7 @@
 				F4864FAA1B682519000D2615 /* DFResponseDescriptorsProvider.h */,
 				F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */,
 				F4864FB01B683450000D2615 /* DFResponseDataMapper.h */,
-				F4864FB11B683450000D2615 /* DFResponseDataMapper.m */,
+				F44538201C99365C003650FA /* DFResponseDataMapper.m */,
 			);
 			path = ResponseMapping;
 			sourceTree = "<group>";
@@ -1100,6 +1135,8 @@
 		F4864F771B680AC3000D2615 /* ResponseObjects */ = {
 			isa = PBXGroup;
 			children = (
+				F445381C1C9932A5003650FA /* Language.h */,
+				F4864FB11B683450000D2615 /* Language.m */,
 			);
 			path = ResponseObjects;
 			sourceTree = "<group>";
@@ -1724,6 +1761,8 @@
 				F4336C571C24E41800FC2892 /* UIView+GestureRecognizerControls.m */,
 				F4FC58FC1C34EDA4002645D2 /* NSArray+Search.h */,
 				F4FC58FD1C34EDA4002645D2 /* NSArray+Search.m */,
+				F44538161C991416003650FA /* NSString+DigiFaces.h */,
+				F44538171C991416003650FA /* NSString+DigiFaces.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1932,7 +1971,7 @@
 				4ACDB9D51B3E7E66009EFB91 /* DetailTableViewController.m in Sources */,
 				4ACDB9BE1B3E7E66009EFB91 /* ImageCell.m in Sources */,
 				4AD850151B4584CD0059A457 /* LoginTableController.m in Sources */,
-				F4864FB21B683450000D2615 /* DFResponseDataMapper.m in Sources */,
+				F4864FB21B683450000D2615 /* Language.m in Sources */,
 				4ACDB9AC1B3E7E66009EFB91 /* AppDelegate.m in Sources */,
 				4ACDB9E71B3E7E66009EFB91 /* Utility.m in Sources */,
 				4ACDB9AD1B3E7E66009EFB91 /* AboutDigifacesController.m in Sources */,
@@ -1982,6 +2021,7 @@
 				4ACDB9AF1B3E7E66009EFB91 /* ForgotPasswordViewController.m in Sources */,
 				4ACDB9D61B3E7E66009EFB91 /* GTMNSString+HTML.m in Sources */,
 				4AC8446C1B57FA3E006CDB45 /* CarouselViewController.m in Sources */,
+				F44538211C99365C003650FA /* DFResponseDataMapper.m in Sources */,
 				F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */,
 				F4B8B33E1BA35B1D007E4104 /* ImageGalleryResponse.m in Sources */,
 				F4417BD11C97DD5E00086EF5 /* AddInternalCommentAction.m in Sources */,
@@ -1989,12 +2029,14 @@
 				4ACDB9B51B3E7E66009EFB91 /* ProjectIntroViewController.m in Sources */,
 				F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */,
 				F4B8B34F1BA35B1D007E4104 /* UserInfo.m in Sources */,
+				F44538151C991138003650FA /* DFCommentTypesSegmentedControl.m in Sources */,
 				F4B8B36C1BA36C99007E4104 /* Diary.m in Sources */,
 				4ACDB9DA1B3E7E66009EFB91 /* MWFeedParserAppDelegate.m in Sources */,
 				F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */,
 				F4B8B33B1BA35B1D007E4104 /* DailyDiary.m in Sources */,
 				F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */,
 				F4417BE01C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m in Sources */,
+				F44538181C991416003650FA /* NSString+DigiFaces.m in Sources */,
 				F4336C621C24FA7500FC2892 /* Project+CoreDataProperties.m in Sources */,
 				F4B8B33F1BA35B1D007E4104 /* DisplayFile.m in Sources */,
 				F4B8B3411BA35B1D007E4104 /* ImageGallery.m in Sources */,

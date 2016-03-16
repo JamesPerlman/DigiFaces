@@ -56,6 +56,7 @@
     NSDate * d = [inputFormatter dateFromString:date];
     
     NSDateFormatter * outputFormater = [[NSDateFormatter alloc] init];
+    outputFormater.locale = [NSLocale localeWithLocaleIdentifier:LS[LSMyLanguageCodeKey]];
     [outputFormater setDateFormat:@"MMMM dd, yyy"];
     
     NSString *finalDate = [outputFormater stringFromDate:d];

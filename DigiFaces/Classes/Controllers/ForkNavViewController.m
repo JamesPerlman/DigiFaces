@@ -82,6 +82,8 @@
         
         LS.myUserInfo = userInfo;
         
+        [[DFLanguageSynchronizer sharedInstance] synchronizeStringsWithCompletion:nil];
+        
         [sself moveToHomeScreen];
         /*
         if (userInfo.isUserNameSet.boolValue) {

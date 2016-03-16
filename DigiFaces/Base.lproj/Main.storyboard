@@ -917,7 +917,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Ui-Jr-adg">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="502"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="userCell" rowHeight="75" id="hw1-4w-Clg" customClass="UserCell">
@@ -1119,17 +1119,17 @@
                                         </connections>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJo-C6-tLT">
-                                        <rect key="frame" x="0.0" y="504" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="502" width="320" height="46"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dVL-KV-ifl" customClass="HPGrowingTextView">
-                                                <rect key="frame" x="8" y="7" width="264" height="30"/>
+                                                <rect key="frame" x="8" y="8" width="264" height="30"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="INs-fg-hQy"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7cY-LN-dil">
-                                                <rect key="frame" x="276" y="4" width="36" height="36"/>
+                                                <rect key="frame" x="276" y="5" width="36" height="36"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="12F-Zf-pfr"/>
                                                     <constraint firstAttribute="width" constant="34" id="AsI-MS-QEN"/>
@@ -1152,15 +1152,17 @@
                                         <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="7cY-LN-dil" secondAttribute="bottom" constant="7" id="7PX-P2-PAC"/>
-                                            <constraint firstAttribute="bottom" secondItem="dVL-KV-ifl" secondAttribute="bottom" constant="7" id="D8k-IY-uLl"/>
+                                            <constraint firstAttribute="bottom" secondItem="dVL-KV-ifl" secondAttribute="bottom" constant="8" id="D8k-IY-uLl"/>
                                             <constraint firstItem="7cY-LN-dil" firstAttribute="centerY" secondItem="dVL-KV-ifl" secondAttribute="centerY" id="IFf-WW-pP1"/>
                                             <constraint firstItem="dVL-KV-ifl" firstAttribute="leading" secondItem="AJo-C6-tLT" secondAttribute="leading" constant="8" id="PC0-be-wGp"/>
+                                            <constraint firstItem="dVL-KV-ifl" firstAttribute="top" secondItem="AJo-C6-tLT" secondAttribute="top" constant="8" id="PKh-lw-hru"/>
                                             <constraint firstAttribute="trailing" secondItem="7cY-LN-dil" secondAttribute="trailing" constant="8" id="et6-vf-U1A"/>
-                                            <constraint firstItem="dVL-KV-ifl" firstAttribute="top" secondItem="AJo-C6-tLT" secondAttribute="top" constant="7" id="hGU-wB-ZAh"/>
+                                            <constraint firstItem="dVL-KV-ifl" firstAttribute="top" secondItem="AJo-C6-tLT" secondAttribute="top" constant="4" id="hGU-wB-ZAh"/>
                                             <constraint firstItem="7cY-LN-dil" firstAttribute="leading" secondItem="dVL-KV-ifl" secondAttribute="trailing" constant="4" id="t5l-A6-W2l"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="hGU-wB-ZAh"/>
                                                 <exclude reference="7PX-P2-PAC"/>
                                             </mask>
                                         </variation>
@@ -4508,7 +4510,7 @@
                                                     <constraint firstAttribute="width" secondItem="pJL-wg-cdK" secondAttribute="height" multiplier="1:1" id="PaO-27-D6e"/>
                                                     <constraint firstAttribute="height" constant="30" id="qeo-mF-fpD"/>
                                                 </constraints>
-                                                <state key="normal" image="blue_arrow">
+                                                <state key="normal" image="paperplane-blue">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
@@ -5037,7 +5039,6 @@
     <resources>
         <image name="CheckMark" width="24" height="24"/>
         <image name="backArrow" width="8" height="16"/>
-        <image name="blue_arrow" width="40" height="40"/>
         <image name="bluebar" width="285" height="48"/>
         <image name="btnComment" width="11" height="19"/>
         <image name="btnRound" width="11" height="16"/>
@@ -5068,13 +5069,13 @@
     <inferredMetricsTieBreakers>
         <segue reference="DRp-1t-WNc"/>
         <segue reference="sw5-fw-ulw"/>
-        <segue reference="v7h-oQ-d3S"/>
-        <segue reference="XNZ-ng-ebc"/>
-        <segue reference="kgY-B9-zM2"/>
-        <segue reference="3r5-SJ-zjd"/>
-        <segue reference="f8n-jW-t9J"/>
-        <segue reference="GFi-U1-0d9"/>
-        <segue reference="C26-jZ-Sjl"/>
         <segue reference="NZs-g3-7p0"/>
+        <segue reference="C26-jZ-Sjl"/>
+        <segue reference="v7h-oQ-d3S"/>
+        <segue reference="Sh4-6s-X9J"/>
+        <segue reference="Taj-qP-dlL"/>
+        <segue reference="Z1a-cS-acW"/>
+        <segue reference="veF-sC-LAA"/>
+        <segue reference="YVH-jF-Mn7"/>
     </inferredMetricsTieBreakers>
 </document>

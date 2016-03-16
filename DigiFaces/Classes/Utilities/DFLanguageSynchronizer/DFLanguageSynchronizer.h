@@ -12,6 +12,7 @@
 + (instancetype)sharedInstance;
 + (NSString*)localizedStringForKey:(NSString*)key withComment:(NSString*)comment;
 
--(void)synchronizeStringsWithCompletion:(void (^)(NSError* error))completionBlock;
+- (void)synchronizeStringsWithCompletion:(void (^)(NSError* error))completionBlock;
+- (void)reset;
 
 @end

@@ -31,6 +31,7 @@
 #import "File.h"
 #import "ImageGallery.h"
 #import "ImageGalleryResponse.h"
+#import "Language.h"
 #import "MarkUp.h"
 #import "Message.h"
 #import "Module.h"
@@ -328,7 +329,7 @@
     
     [mapping setIdentificationAttributes:@[@"internalCommentId"]];
     
-    [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
+    [mapping addAttributeMappingsFromDictionary:@[@"InternalCommentId",
                                                   @"DateCreated",
                                                   @"DateCreatedFormatted",
                                                   @"IsActive",
@@ -459,7 +460,7 @@
     
     [mapping setIdentificationAttributes:@[@"researcherCommentId"]];
     
-    [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
+    [mapping addAttributeMappingsFromDictionary:@[@"ResearcherCommentId",
                                                   @"DateCreated",
                                                   @"DateCreatedFormatted",
                                                   @"IsActive",
@@ -578,6 +579,17 @@
 - (RKObjectMapping*)isUserNameAvailableResponseMapping {
     RKObjectMapping *mapping = MAPCLASS(APIIsUserNameAvailableResponse);
     [mapping addAttributeMappingsFromDictionary:@[@"IsAvailable", @"Error"].camelCaseDict];
+    return mapping;
+}
+
+
+- (RKObjectMapping*)languageMapping {
+    RKObjectMapping *mapping = MAPCLASS(Language);
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"LanguageId",
+                                                  @"LanguageCode",
+                                                  @"LanguageName"].camelCaseDict];
+    
     return mapping;
 }
 
