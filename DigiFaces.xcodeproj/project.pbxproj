@@ -105,6 +105,14 @@
 		F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43529001BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld */; };
 		F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */; };
 		F4417B871C96498900086EF5 /* DFUserPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417B861C96498900086EF5 /* DFUserPermissions.m */; };
+		F4417B8B1C965FC600086EF5 /* AddCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417B8A1C965FC600086EF5 /* AddCommentController.m */; };
+		F4417B911C968A5200086EF5 /* AddCommentAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417B901C968A5200086EF5 /* AddCommentAction.m */; };
+		F4417BD11C97DD5E00086EF5 /* AddInternalCommentAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BD01C97DD5E00086EF5 /* AddInternalCommentAction.m */; };
+		F4417BD91C97EB2600086EF5 /* InternalComment+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BD61C97EB2600086EF5 /* InternalComment+CoreDataProperties.m */; };
+		F4417BDA1C97EB2600086EF5 /* InternalComment.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BD81C97EB2600086EF5 /* InternalComment.m */; };
+		F4417BE01C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BDD1C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m */; };
+		F4417BE11C97EB7200086EF5 /* ResearcherComment.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BDF1C97EB7200086EF5 /* ResearcherComment.m */; };
+		F4417BE41C97EDDC00086EF5 /* AddResearcherCommentAction.m in Sources */ = {isa = PBXBuildFile; fileRef = F4417BE31C97EDDC00086EF5 /* AddResearcherCommentAction.m */; };
 		F4595A011B6177D500D4BA38 /* DFMediaUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */; };
 		F4864F6A1B670E06000D2615 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864F691B670E06000D2615 /* HomeTableViewCell.m */; };
 		F4864FAC1B682519000D2615 /* DFResponseDescriptorsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F4864FAB1B682519000D2615 /* DFResponseDescriptorsProvider.m */; };
@@ -417,6 +425,23 @@
 		F439EC8D1BD4610000386A8B /* AVAsset+Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+Transformations.m"; sourceTree = "<group>"; };
 		F4417B851C96498900086EF5 /* DFUserPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFUserPermissions.h; sourceTree = "<group>"; };
 		F4417B861C96498900086EF5 /* DFUserPermissions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUserPermissions.m; sourceTree = "<group>"; };
+		F4417B891C965FC600086EF5 /* AddCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddCommentController.h; path = AddComment/AddCommentController.h; sourceTree = "<group>"; };
+		F4417B8A1C965FC600086EF5 /* AddCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddCommentController.m; path = AddComment/AddCommentController.m; sourceTree = "<group>"; };
+		F4417B8C1C965FEF00086EF5 /* AddCommentControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AddCommentControllerDelegate.h; path = AddComment/AddCommentControllerDelegate.h; sourceTree = "<group>"; };
+		F4417B8F1C968A5200086EF5 /* AddCommentAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCommentAction.h; sourceTree = "<group>"; };
+		F4417B901C968A5200086EF5 /* AddCommentAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCommentAction.m; sourceTree = "<group>"; };
+		F4417BCF1C97DD5E00086EF5 /* AddInternalCommentAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInternalCommentAction.h; sourceTree = "<group>"; };
+		F4417BD01C97DD5E00086EF5 /* AddInternalCommentAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInternalCommentAction.m; sourceTree = "<group>"; };
+		F4417BD51C97EB2600086EF5 /* InternalComment+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InternalComment+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F4417BD61C97EB2600086EF5 /* InternalComment+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "InternalComment+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F4417BD71C97EB2600086EF5 /* InternalComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalComment.h; sourceTree = "<group>"; };
+		F4417BD81C97EB2600086EF5 /* InternalComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternalComment.m; sourceTree = "<group>"; };
+		F4417BDC1C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ResearcherComment+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F4417BDD1C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ResearcherComment+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F4417BDE1C97EB7200086EF5 /* ResearcherComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResearcherComment.h; sourceTree = "<group>"; };
+		F4417BDF1C97EB7200086EF5 /* ResearcherComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResearcherComment.m; sourceTree = "<group>"; };
+		F4417BE21C97EDDC00086EF5 /* AddResearcherCommentAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddResearcherCommentAction.h; sourceTree = "<group>"; };
+		F4417BE31C97EDDC00086EF5 /* AddResearcherCommentAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddResearcherCommentAction.m; sourceTree = "<group>"; };
 		F45959FF1B6177D500D4BA38 /* DFMediaUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMediaUploadManager.h; sourceTree = "<group>"; };
 		F4595A001B6177D500D4BA38 /* DFMediaUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMediaUploadManager.m; sourceTree = "<group>"; };
 		F4864F681B670E06000D2615 /* HomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
@@ -663,6 +688,7 @@
 		4ACDB92C1B3E7E66009EFB91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F4417B881C965F5F00086EF5 /* AddComment */,
 				F4A759D31B7150E700B94176 /* Announcements */,
 				F4864FA81B6822D4000D2615 /* About */,
 				F4864FA21B6822A6000D2615 /* AddResponse */,
@@ -972,6 +998,53 @@
 				F4417B861C96498900086EF5 /* DFUserPermissions.m */,
 			);
 			path = DFUserPermissions;
+			sourceTree = "<group>";
+		};
+		F4417B881C965F5F00086EF5 /* AddComment */ = {
+			isa = PBXGroup;
+			children = (
+				F4417B8C1C965FEF00086EF5 /* AddCommentControllerDelegate.h */,
+				F4417B891C965FC600086EF5 /* AddCommentController.h */,
+				F4417B8A1C965FC600086EF5 /* AddCommentController.m */,
+				F4417B8E1C9689D100086EF5 /* Actions */,
+			);
+			name = AddComment;
+			sourceTree = "<group>";
+		};
+		F4417B8E1C9689D100086EF5 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				F4417B8F1C968A5200086EF5 /* AddCommentAction.h */,
+				F4417B901C968A5200086EF5 /* AddCommentAction.m */,
+				F4417BCF1C97DD5E00086EF5 /* AddInternalCommentAction.h */,
+				F4417BD01C97DD5E00086EF5 /* AddInternalCommentAction.m */,
+				F4417BE21C97EDDC00086EF5 /* AddResearcherCommentAction.h */,
+				F4417BE31C97EDDC00086EF5 /* AddResearcherCommentAction.m */,
+			);
+			name = Actions;
+			path = AddComment/Actions;
+			sourceTree = "<group>";
+		};
+		F4417BD41C97E62B00086EF5 /* InternalComment */ = {
+			isa = PBXGroup;
+			children = (
+				F4417BD51C97EB2600086EF5 /* InternalComment+CoreDataProperties.h */,
+				F4417BD61C97EB2600086EF5 /* InternalComment+CoreDataProperties.m */,
+				F4417BD71C97EB2600086EF5 /* InternalComment.h */,
+				F4417BD81C97EB2600086EF5 /* InternalComment.m */,
+			);
+			name = InternalComment;
+			sourceTree = "<group>";
+		};
+		F4417BDB1C97EB5700086EF5 /* ResearcherComment */ = {
+			isa = PBXGroup;
+			children = (
+				F4417BDC1C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.h */,
+				F4417BDD1C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m */,
+				F4417BDE1C97EB7200086EF5 /* ResearcherComment.h */,
+				F4417BDF1C97EB7200086EF5 /* ResearcherComment.m */,
+			);
+			name = ResearcherComment;
 			sourceTree = "<group>";
 		};
 		F4864F6B1B6807E0000D2615 /* Singletons */ = {
@@ -1338,11 +1411,13 @@
 				F4B8B3651BA35B9C007E4104 /* ImageGallery */,
 				F4B8B3561BA35B45007E4104 /* ImageGalleryResponse */,
 				F4B8B3731BA4BFD0007E4104 /* Integer */,
+				F4417BD41C97E62B00086EF5 /* InternalComment */,
 				F4B8B3621BA35B8E007E4104 /* MarkUp */,
 				F4B8B3571BA35B4E007E4104 /* Message */,
 				F4B8B3551BA35B3F007E4104 /* Module */,
 				F4B8B3661BA35BA1007E4104 /* Notification */,
 				F4B8B3581BA35B53007E4104 /* Project */,
+				F4417BDB1C97EB5700086EF5 /* ResearcherComment */,
 				F4B8B35D1BA35B70007E4104 /* Response */,
 				F4B8B35E1BA35B76007E4104 /* Textarea */,
 				F4B8B35F1BA35B7C007E4104 /* TextareaResponse */,
@@ -1873,6 +1948,7 @@
 				F42669DE1B6EDBCA00A6E6D7 /* GTMNSString+HTML.m in Sources */,
 				F4B8B3441BA35B1D007E4104 /* Announcement.m in Sources */,
 				4ACDBA111B3EDF75009EFB91 /* ImagesCell.m in Sources */,
+				F4417BE41C97EDDC00086EF5 /* AddResearcherCommentAction.m in Sources */,
 				F4336C5C1C24E9D300FC2892 /* ProjectsMenuViewController.m in Sources */,
 				4ACDB9B61B3E7E66009EFB91 /* ProjectViewController.m in Sources */,
 				F4B8B3501BA35B1D007E4104 /* Thread.m in Sources */,
@@ -1908,6 +1984,7 @@
 				4AC8446C1B57FA3E006CDB45 /* CarouselViewController.m in Sources */,
 				F439EC8E1BD4610000386A8B /* AVAsset+Transformations.m in Sources */,
 				F4B8B33E1BA35B1D007E4104 /* ImageGalleryResponse.m in Sources */,
+				F4417BD11C97DD5E00086EF5 /* AddInternalCommentAction.m in Sources */,
 				F4864FAF1B682607000D2615 /* DFConstants.m in Sources */,
 				4ACDB9B51B3E7E66009EFB91 /* ProjectIntroViewController.m in Sources */,
 				F43529021BA0BE4B00B7FF0A /* DigiFaces.xcdatamodeld in Sources */,
@@ -1917,6 +1994,7 @@
 				F4E670E41B61720E00871FA9 /* AddResponseViewController.m in Sources */,
 				F4B8B33B1BA35B1D007E4104 /* DailyDiary.m in Sources */,
 				F40FE1BD1B6C2C5F003C4DE7 /* NSString+StripHTML.m in Sources */,
+				F4417BE01C97EB7200086EF5 /* ResearcherComment+CoreDataProperties.m in Sources */,
 				F4336C621C24FA7500FC2892 /* Project+CoreDataProperties.m in Sources */,
 				F4B8B33F1BA35B1D007E4104 /* DisplayFile.m in Sources */,
 				F4B8B3411BA35B1D007E4104 /* ImageGallery.m in Sources */,
@@ -1926,6 +2004,7 @@
 				F4DD49C51B65517500F4016B /* NSLayoutConstraint+ConvenienceMethods.m in Sources */,
 				4ACDB9D41B3E7E66009EFB91 /* MBProgressHUD.m in Sources */,
 				F4864FB61B6839E1000D2615 /* DFClient.m in Sources */,
+				F4417BD91C97EB2600086EF5 /* InternalComment+CoreDataProperties.m in Sources */,
 				F4B8B3721BA4BFC8007E4104 /* Integer.m in Sources */,
 				19F0BD101B1DBC6400E4B048 /* main.m in Sources */,
 				F4B8B34A1BA35B1D007E4104 /* Textarea.m in Sources */,
@@ -1943,6 +2022,7 @@
 				F4022FCB1B68789D0080C157 /* APIUploadAvatarResponse.m in Sources */,
 				4ACDB9B01B3E7E66009EFB91 /* HomeViewController.m in Sources */,
 				4ABC3D3B1B4001460090A619 /* ResponseViewCell.m in Sources */,
+				F4417B8B1C965FC600086EF5 /* AddCommentController.m in Sources */,
 				4ACDB9BF1B3E7E66009EFB91 /* ImageCollectionCell.m in Sources */,
 				4ACDB9B31B3E7E66009EFB91 /* PhotoGalleryViewController.m in Sources */,
 				F4EB32A31C26135C00CEB646 /* GalleryImageCollectionViewCell.m in Sources */,
@@ -1955,6 +2035,7 @@
 				F42A67BB1B647A840047F420 /* ProfilePictureCollectionViewController.m in Sources */,
 				4ACDB9DD1B3E7E66009EFB91 /* NSString+XMLEntities.m in Sources */,
 				F4B8B3431BA35B1D007E4104 /* AboutMe.m in Sources */,
+				F4417B911C968A5200086EF5 /* AddCommentAction.m in Sources */,
 				4ACDB9C21B3E7E66009EFB91 /* ProfilePicCell.m in Sources */,
 				F4B8B3471BA35B1D007E4104 /* About.m in Sources */,
 				4ACDB9B81B3E7E66009EFB91 /* TechSupportController.m in Sources */,
@@ -1972,12 +2053,14 @@
 				4AD8501E1B45ABB40059A457 /* Reachability.m in Sources */,
 				F4336C6B1C25F73100FC2892 /* ProjectTableViewCell.m in Sources */,
 				F42669ED1B7125D500A6E6D7 /* ForkNavViewController.m in Sources */,
+				F4417BE11C97EB7200086EF5 /* ResearcherComment.m in Sources */,
 				4AA275981B5E64C200367E92 /* GalleryCell.m in Sources */,
 				F4B8B3421BA35B1D007E4104 /* Message.m in Sources */,
 				F4DD49BF1B65490400F4016B /* PhotoGallerySelectionViewController.m in Sources */,
 				F4B8B33D1BA35B1D007E4104 /* Module.m in Sources */,
 				4ACDB9BC1B3E7E66009EFB91 /* CustomAlertView.m in Sources */,
 				4ACDBA0E1B3ED814009EFB91 /* UserCell.m in Sources */,
+				F4417BDA1C97EB2600086EF5 /* InternalComment.m in Sources */,
 				F4022FDB1B6975670080C157 /* APIIsUserNameAvailableResponse.m in Sources */,
 				4A00E8401B4BD07A000F6A6B /* TextViewCell.m in Sources */,
 				F4A75A491B72AB9800B94176 /* MultiDisplayMenuViewController.m in Sources */,
@@ -2201,7 +2284,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shamsu.digifaces3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "af71af2e-bf2c-4321-bee9-295a2ada6316";
+				PROVISIONING_PROFILE = "e745d2dc-691f-4611-9de5-1bdf766c5670";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

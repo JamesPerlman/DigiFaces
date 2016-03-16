@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Comment, File, UserInfo;
+@class Comment, InternalComment, ResearcherComment, File, UserInfo;
 
 @interface Diary : NSManagedObject
 
@@ -24,6 +24,9 @@
 @property (nonatomic, retain) UserInfo *userInfo;
 @property (nonatomic, retain) NSSet *files;
 @property (nonatomic, retain) NSSet *comments;
+@property (nonatomic, retain) NSSet *internalComments;
+@property (nonatomic, retain) NSSet *researcherComments;
+
 @end
 
 @interface Diary (CoreDataGeneratedAccessors)
@@ -37,6 +40,16 @@
 - (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
+
+- (void)addInternalCommentsObject:(InternalComment *)value;
+- (void)removeInternalCommentsObject:(InternalComment *)value;
+- (void)addInternalComments:(NSSet *)values;
+- (void)removeInternalComments:(NSSet *)values;
+
+- (void)addResearcherCommentsObject:(ResearcherComment *)value;
+- (void)removeResearcherCommentsObject:(ResearcherComment *)value;
+- (void)addResearcherComments:(NSSet *)values;
+- (void)removeResearcherComments:(NSSet *)values;
 
 @end
 

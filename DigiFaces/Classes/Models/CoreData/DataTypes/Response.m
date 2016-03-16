@@ -30,5 +30,6 @@
 @dynamic comments;
 @dynamic textareaResponses;
 @dynamic imageGalleryResponses;
-
+@dynamic internalComments;
+@dynamic researcherComments;
 @end

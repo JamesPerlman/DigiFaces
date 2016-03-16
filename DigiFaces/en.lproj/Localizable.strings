@@ -114,6 +114,15 @@
 "view.response.alert.content_load_failure" = "Unable to load the content you requested.";
 "view.response.text.1_comment" = "1 Comment";
 "view.response.text.n_comments" = "%lu Comments";
+"view.response.text.1_internal_comment" = "1 Private Note";
+"view.response.text.n_internal_comments" = "%lu Private Notes";
+"view.response.text.1_researcher_comment" = "1 Note";
+"view.response.text.n_researcher_comments" = "%lu Notes";
+
+// "add comment" list (part of Response view)
+"list.comment_options.comment" = "Add comment";
+"list.comment_options.researcher" = "Add note";
+"list.comment_options.internal" = "Add internal note";
 
 /* Add Diary Entry / Add Theme Response View  */
 "view.respond.navbar.title" = "RESPOND";

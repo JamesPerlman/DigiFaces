@@ -47,6 +47,8 @@ extern NSString * const APIPathLogout;
 // activity
 extern NSString * const APIPathActivityGetResponses;
 extern NSString * const APIPathActivityUpdateComment;
+extern NSString * const APIPathActivityUpdateInternalComment;
+extern NSString * const APIPathActivityUpdateResearcherComment;
 extern NSString * const APIPathActivityUpdateThread;
 extern NSString * const APIPathActivityUpdateImageGalleryResponse;
 extern NSString * const APIPathActivityUpdateTextareaResponse;

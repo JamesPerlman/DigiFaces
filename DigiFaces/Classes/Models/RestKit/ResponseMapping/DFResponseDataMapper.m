@@ -108,6 +108,10 @@
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Comments" toKeyPath:@"comments" withMapping:[self commentMapping]]];
     
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"InternalComments" toKeyPath:@"internalComments" withMapping:[self internalCommentMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ResearcherComments" toKeyPath:@"researcherComments" withMapping:[self researcherCommentMapping]]];
+    
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"TextareaResponse" toKeyPath:@"textareaResponses" withMapping:[self textareaResponseMapping]]];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ImageGalleryResponse" toKeyPath:@"imageGalleryResponses" withMapping:[self imageGalleryResponseMapping]]];
@@ -204,6 +208,10 @@
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Files" toKeyPath:@"files" withMapping:[self fileMapping]]];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"Comments" toKeyPath:@"comments" withMapping:[self commentMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"InternalComments" toKeyPath:@"internalComments" withMapping:[self internalCommentMapping]]];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ResearcherComments" toKeyPath:@"researcherComments" withMapping:[self researcherCommentMapping]]];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
     return mapping;
@@ -315,6 +323,25 @@
     return integerMapping;
 }
 
+- (RKEntityMapping*)internalCommentMapping {
+    RKEntityMapping *mapping = MAPENTITY(@"InternalComment");
+    
+    [mapping setIdentificationAttributes:@[@"internalCommentId"]];
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted",
+                                                  @"IsActive",
+                                                  @"IsRead",
+                                                  @"Response",
+                                                  @"ThreadId",
+                                                  @"UserId"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
+    
+    return mapping;
+}
+
 - (RKEntityMapping*)markUpMapping {
     RKEntityMapping *mapping = MAPENTITY(@"MarkUp");
     
@@ -423,6 +450,25 @@
                                                   @"IsActive"].camelCaseDict];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"DailyDiaryList" toKeyPath:@"dailyDiaryList" withMapping:[self integerListMapping]]];
+    
+    return mapping;
+}
+
+- (RKEntityMapping*)researcherCommentMapping {
+    RKEntityMapping *mapping = MAPENTITY(@"ResearcherComment");
+    
+    [mapping setIdentificationAttributes:@[@"researcherCommentId"]];
+    
+    [mapping addAttributeMappingsFromDictionary:@[@"CommentId",
+                                                  @"DateCreated",
+                                                  @"DateCreatedFormatted",
+                                                  @"IsActive",
+                                                  @"IsRead",
+                                                  @"Response",
+                                                  @"ThreadId",
+                                                  @"UserId"].camelCaseDict];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"UserInfo" toKeyPath:@"userInfo" withMapping:[self userInfoMapping]]];
     
     return mapping;
 }

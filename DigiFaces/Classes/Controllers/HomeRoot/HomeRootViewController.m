@@ -123,7 +123,7 @@ static NSString * const kHelpViewControllerID = @"SettingsViewController";
 - (WYPopoverController*)helpPopover {
     if (!_helpPopover) {
         _helpPopover = [[WYPopoverController alloc] initWithContentViewController:self.helpVC];
-        _helpPopover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * ([self.helpVC tableView:self.helpVC.tableView numberOfRowsInSection:0] + 2));
+        _helpPopover.popoverContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width-40.0f, 40.0f * ([self.helpVC tableView:self.helpVC.tableView numberOfRowsInSection:0] + 1));
         _helpPopover.passthroughViews = @[self.rightBarButtonItemsContainerView];
         
     }

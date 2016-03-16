@@ -66,8 +66,10 @@
         <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" syncable="YES"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="File" syncable="YES"/>
+        <relationship name="internalComments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InternalComment" syncable="YES"/>
+        <relationship name="researcherComments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ResearcherComment" syncable="YES"/>
         <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" syncable="YES"/>
     </entity>
     <entity name="DiaryTheme" representedClassName="DiaryTheme" syncable="YES">
@@ -131,6 +133,16 @@
     </entity>
     <entity name="Integer" representedClassName="Integer" syncable="YES">
         <attribute name="value" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="InternalComment" representedClassName="InternalComment" syncable="YES">
+        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="internalCommentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" syncable="YES"/>
     </entity>
     <entity name="MarkUp" representedClassName="MarkUp" syncable="YES">
         <attribute name="markupId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -199,6 +211,16 @@
         <relationship name="dailyDiary" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="DailyDiary" inverseName="project" inverseEntity="DailyDiary" syncable="YES"/>
         <relationship name="dailyDiaryList" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Integer" syncable="YES"/>
     </entity>
+    <entity name="ResearcherComment" representedClassName="ResearcherComment" syncable="YES">
+        <attribute name="dateCreated" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateCreatedFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="researcherCommentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="response" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="threadId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" syncable="YES"/>
+    </entity>
     <entity name="Response" representedClassName="Response" syncable="YES">
         <attribute name="activityId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="dateCreated" optional="YES" attributeType="String" syncable="YES"/>
@@ -212,6 +234,8 @@
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" syncable="YES"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="File" syncable="YES"/>
         <relationship name="imageGalleryResponses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ImageGalleryResponse" syncable="YES"/>
+        <relationship name="internalComments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="InternalComment" syncable="YES"/>
+        <relationship name="researcherComments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ResearcherComment" syncable="YES"/>
         <relationship name="textareaResponses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TextareaResponse" syncable="YES"/>
         <relationship name="userInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserInfo" syncable="YES"/>
     </entity>
@@ -261,11 +285,11 @@
         <element name="About" positionX="675" positionY="228" width="128" height="105"/>
         <element name="AboutMe" positionX="675" positionY="-117" width="128" height="105"/>
         <element name="Announcement" positionX="531" positionY="-123" width="128" height="163"/>
-        <element name="Comment" positionX="648" positionY="765" width="128" height="178"/>
+        <element name="Comment" positionX="675" positionY="774" width="128" height="178"/>
         <element name="Company" positionX="-371" positionY="45" width="128" height="105"/>
         <element name="DailyDiary" positionX="27" positionY="450" width="128" height="148"/>
         <element name="DailyDiaryResponse" positionX="673" positionY="72" width="128" height="150"/>
-        <element name="Diary" positionX="72" positionY="117" width="128" height="208"/>
+        <element name="Diary" positionX="72" positionY="117" width="128" height="238"/>
         <element name="DiaryTheme" positionX="-153" positionY="72" width="128" height="225"/>
         <element name="DisplayFile" positionX="-173" positionY="642" width="128" height="105"/>
         <element name="DisplayText" positionX="-56" positionY="756" width="128" height="105"/>
@@ -278,10 +302,12 @@
         <element name="Module" positionX="-425" positionY="603" width="128" height="210"/>
         <element name="Notification" positionX="385" positionY="-108" width="128" height="255"/>
         <element name="Project" positionX="-137" positionY="306" width="128" height="313"/>
-        <element name="Response" positionX="304" positionY="809" width="128" height="253"/>
+        <element name="Response" positionX="304" positionY="809" width="128" height="283"/>
         <element name="Textarea" positionX="-252" positionY="906" width="128" height="30"/>
         <element name="TextareaResponse" positionX="-126" positionY="981" width="128" height="120"/>
         <element name="Thread" positionX="673" positionY="15" width="128" height="30"/>
         <element name="UserInfo" positionX="268" positionY="344" width="128" height="343"/>
+        <element name="InternalComment" positionX="817" positionY="776" width="128" height="163"/>
+        <element name="ResearcherComment" positionX="961" positionY="774" width="128" height="163"/>
     </elements>
 </model>

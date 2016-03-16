@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Comment, File, ImageGalleryResponse, TextareaResponse, UserInfo;
+@class Comment, InternalComment, ResearcherComment, File, ImageGalleryResponse, TextareaResponse, UserInfo;
 
 @interface Response : NSManagedObject
 
@@ -25,6 +25,8 @@
 @property (nonatomic, retain) UserInfo *userInfo;
 @property (nonatomic, retain) NSSet *files;
 @property (nonatomic, retain) NSSet *comments;
+@property (nonatomic, retain) NSSet *internalComments;
+@property (nonatomic, retain) NSSet *researcherComments;
 @property (nonatomic, retain) NSSet *textareaResponses;
 @property (nonatomic, retain) NSSet *imageGalleryResponses;
 //@property (nonatomic, retain) NSSet * tags;
@@ -41,6 +43,16 @@
 - (void)removeCommentsObject:(Comment *)value;
 - (void)addComments:(NSSet *)values;
 - (void)removeComments:(NSSet *)values;
+
+- (void)addInternalCommentsObject:(InternalComment *)value;
+- (void)removeInternalCommentsObject:(InternalComment *)value;
+- (void)addInternalComments:(NSSet *)values;
+- (void)removeInternalComments:(NSSet *)values;
+
+- (void)addResearcherCommentsObject:(ResearcherComment *)value;
+- (void)removeResearcherCommentsObject:(ResearcherComment *)value;
+- (void)addResearcherComments:(NSSet *)values;
+- (void)removeResearcherComments:(NSSet *)values;
 
 - (void)addTextareaResponsesObject:(TextareaResponse *)value;
 - (void)removeTextareaResponsesObject:(TextareaResponse *)value;

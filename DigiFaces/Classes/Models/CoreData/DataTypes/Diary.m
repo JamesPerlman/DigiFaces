@@ -25,6 +25,8 @@
 @dynamic userInfo;
 @dynamic files;
 @dynamic comments;
+@dynamic internalComments;
+@dynamic researcherComments;
 
 @end
 

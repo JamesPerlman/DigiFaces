@@ -30,6 +30,8 @@
 - (RKEntityMapping*)imageGalleryResponseMapping;
 - (RKEntityMapping*)imageGalleryMapping;
 - (RKEntityMapping*)commentMapping;
+- (RKEntityMapping*)internalCommentMapping;
+- (RKEntityMapping*)researcherCommentMapping;
 - (RKEntityMapping*)markUpMapping;
 - (RKEntityMapping*)messageMapping;
 - (RKEntityMapping*)messageMappingRecursive;

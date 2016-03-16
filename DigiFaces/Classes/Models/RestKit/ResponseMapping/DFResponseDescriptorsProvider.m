@@ -40,6 +40,8 @@
              DESCRIPTOR(APIPathActivityUpdateThread,                kPOST, threadMapping),
              DESCRIPTOR(APIPathActivityInsertThreadFile,            kPOST, fileMapping),
              DESCRIPTOR(APIPathActivityUpdateComment,               kPOST, commentMapping),
+             DESCRIPTOR(APIPathActivityUpdateInternalComment,       kPOST, internalCommentMapping),
+             DESCRIPTOR(APIPathActivityUpdateResearcherComment,     kPOST, researcherCommentMapping),
              DESCRIPTOR(APIPathActivityUpdateImageGalleryResponse,  kPOST, imageGalleryResponseMapping),
              DESCRIPTOR(APIPathActivityUpdateTextareaResponse,      kPOST, textareaResponseMapping),
              DESCRIPTOR(APIPathActivityMarkThreadRead,              kPOST, emptyResponseMapping),

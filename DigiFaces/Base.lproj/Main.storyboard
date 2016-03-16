@@ -2504,16 +2504,11 @@
                                 <rect key="frame" x="80" y="142" width="160" height="284"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="b4Y-4n-THC">
-                                <rect key="frame" x="0.0" y="20" width="320" height="500"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="UEE-JQ-pvA" id="L2d-CP-dh3"/>
-                                    <outlet property="delegate" destination="UEE-JQ-pvA" id="dxU-bo-jrR"/>
-                                </connections>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uc7-Um-CI4">
-                                <rect key="frame" x="0.0" y="520" width="320" height="48"/>
+                                <rect key="frame" x="0.0" y="528" width="320" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="XZq-zT-ea8"/>
+                                </constraints>
                                 <state key="normal" title="LOGOUT" backgroundImage="bluebar">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2521,6 +2516,14 @@
                                     <action selector="logout:" destination="UEE-JQ-pvA" eventType="touchUpInside" id="cOs-pE-dLY"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="b4Y-4n-THC">
+                                <rect key="frame" x="0.0" y="20" width="320" height="508"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="UEE-JQ-pvA" id="L2d-CP-dh3"/>
+                                    <outlet property="delegate" destination="UEE-JQ-pvA" id="dxU-bo-jrR"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -5064,7 +5067,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DRp-1t-WNc"/>
-        <segue reference="6o2-de-Er0"/>
+        <segue reference="sw5-fw-ulw"/>
         <segue reference="v7h-oQ-d3S"/>
         <segue reference="XNZ-ng-ebc"/>
         <segue reference="kgY-B9-zM2"/>
